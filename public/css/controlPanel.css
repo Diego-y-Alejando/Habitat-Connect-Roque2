@@ -1,0 +1,161 @@
+@import './colors.css';
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: var(--Azul);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.app-name{
+    color: var(--blanco);
+    text-align: center;
+    width: 20%;
+    margin-top: 2%;
+    font-size:2.5rem ;
+    font-family: montserrat-light;
+}
+.newyork-font {
+    font-family: newYork;
+}
+.container-content {
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
+    background-color: var(--blanco);
+    width: 100%;
+    padding-top: 2%;
+    margin-top: 2%;
+    display: grid;
+    padding-bottom: 3%;
+}
+.menu{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    font-family: montserrat-regular;
+}
+.item-menu{
+    display: flex;
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 1.1rem;
+    padding: 0.5% 0.9% 0.5% 0.9%;
+}
+.selected-item{
+    background-color: var(--Azul-claro);
+    color: var(--blanco);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.profile-item{
+    position: absolute;
+    left: 0;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+}
+.profile-icon{
+    width: 10%;
+    margin-right: 1%;
+}
+/* grid de aptos */
+
+.container-grid-apartaments{
+    display: grid;
+    width: 75%;
+    grid-template-columns: repeat(3,33%);
+    justify-self: center;
+    gap: 10px;
+    margin-top: 5%;
+}
+.filter-level{
+    width: 30%;
+    border: 1px solid #b8b2ad;
+    grid-column: span 3; 
+    color: #817068;
+    font-family: montserrat-regular;
+    margin-bottom: 2%;
+    font-size: 1.3rem;
+}
+.apartament-item{
+    padding: 5%;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    background-color: #eeeeee;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.column-1{
+    grid-column: 1;
+}
+.column-span-2{
+    grid-column: span 2;
+}
+.apartament-number{
+    font-family: montserrat-semi-bold;
+}
+.tower-icon{
+    width: 90%;
+    margin-top:15%;
+}
+.secondary-data{
+    color:#484848 ;
+    font-family: montserrat-light;
+}
+.container-primary-data{
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3%;
+}
+
+.apartament-name{
+
+    width: 100%;
+    overflow: hidden;
+    font-size: 0.9rem;
+    color: #484848;
+    font-family: montserrat-semi-bold;
+
+}
+.primary-data{
+    font-family: montserrat-regular;
+    width: 100%;
+    color: #919191;
+    font-size: 0.9rem;
+}
+.see-more{
+    font-family: montserrat-light;
+    background-color: var(--Azul-claro);
+    color: var(--blanco);
+    border-radius: 20px;
+    width: 50%;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 15%;
+    border: 1px solid var(--Azul-claro);
+}
+.see-more:hover{
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--Azul);
+    border: 1px solid #5a4534;
+    transition: all 0.5ms ease-in;
+    -webkit-transition: all 0.5ms ease-in;
+    -moz-transition: all 0.5ms ease-in;
+    -ms-transition: all 0.5ms ease-in;
+    -o-transition: all 0.5ms ease-in;
+}
+/* iapartament-item */
+
