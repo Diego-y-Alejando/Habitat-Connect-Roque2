@@ -10,7 +10,7 @@ const maintenance_record = sequelizeObj.define(
             autoIncrement:true,
             unique:true,
             allowNull:false
-        }
+        },
         current_year:{
             type: DataTypes.INTEGER,
             allowNull: false,

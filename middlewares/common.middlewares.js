@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const regex=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9 ]+/
+const regex=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
 const  {findData} = require('../helpers/helpers');
 const validateName = (name ,size) => {
     if (!name) {
@@ -31,8 +31,8 @@ const validateDpi = (dpi) => {
     }
   }
   
-const validatePersonalPhone = (phone) => {
-    const regexPhone= /^\(\d{3}\)\d{4}-\d{4}$/
+const validatePhoneNumber = (phone) => {
+    const regexPhone= /^\d{4}-\d{4}$/
     if (!phone) {
       throw new Error('El numero de teléfono  es obligatorio')
     } else if (!regexPhone.test(phone)) {
@@ -52,11 +52,11 @@ const validationPath=(path,regexPath)=>{
       throw new Error('el path es demasiado largo porfavor revisa el path algo anda mal')
     }
   }
-const bodyVerification=(object,alloProperties)=>{
-    if (!object || typeof object !== 'object' || !Object.keys(object).length) {
+const bodyVerification=(object,allowProperties)=>{
+  if (!object || typeof object !== 'object' || !Object.keys(object).length) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }
-    else if (!Object.keys(object).every(property => alloProperties.includes(property))) {
+    else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
       throw new Error('Contiene propiedades no válidas');
     }
 }
@@ -159,13 +159,13 @@ const paramsValidation=(param,description)=>{
   }
   // validar que no se exceda de cierta catnidad de caracteres
 }
-const validatePage =(page)=>{
-  const regexPage=/^[1-9]+$/
-  if (!page) {
-      throw new Error('La pagina no puede venir vacía')
+const ValidationIdOrLevel =(message,level)=>{
+  const regexLevel=/^[\d]+$/
+  if (!level) {
+      throw new Error('El '+message+' viene vacio')
   }
-  if (!regexPage.test(page)) {
-    throw new Error('La paginacion es invalida')
+  if (!regexLevel.test(level)) {
+    throw new Error('El '+message+' es invalido ')
   }
 }
 const allowAcction =(employePosition,requirePosition)=>{
@@ -185,17 +185,16 @@ const validationDates=(date,campo)=>{
     throw new Error(`El campo ${campo} no puede venir vacío`)
   }
   if(!regexDate.test(date)){
-    console.log(regexDate.test(date));
     throw new Error(`El campo ${campo} tiene un formato inválido`)
   }
 }
-const validateState = (state) => {
+const validationOcupationState = (state) => {
   const regexState = /^[0|1]+$/
 
   if (state === null || state === undefined) {
-    throw new Error('El estado del ticket es obligatorio')
+    throw new Error('El estado de ocupacion es obligatorio')
   } else if (!regexState.test(state)) {
-    throw new Error('El estado  del ticket no es correcto')
+    throw new Error('El estado  de ocupacion no es correcto')
   }
 }
 const isTicketOpen=async(message,model,searchField,targetField,findActiveState,excludeArr)=>{
@@ -227,11 +226,59 @@ const compareDates=(openning_date,closing_date)=>{
   }
   
 }
+const validationYear = (year)=>{
+  const regexYear=/^(\d{4})/
+  if (!year) {
+    throw new Error('El año no puede venir vacío')
+  }else if (!regexYear.test(year)){
+    throw new Error('El año contiene caracteres no válidos ')
+  }else if (year<1998 || year>2070) {
+    throw new Error('El valor del año excede los limites')
+
+  }
+
+}
+const validationCost = (cost, message)=>{
+  const regexCost = /^[\d]{2,3}.[\d]{2}$/
+  if (!cost) {
+    throw new Error(`El costo de ${message} no puede venir vacío`);
+  }else if(!regexCost.test(cost)){
+    throw new Error(`El costo de ${message} tiene caracteres inválidos`);
+  }
+}
+
+const validationHour = (hour, message)=>{
+  const regexHour = /^(0[0-9]|1[0-9]|2[0-4]):([0-5][0-9])/
+
+  if (!hour) {
+    throw new Error(`La hora de ${message} no puede venir vacía`);
+  }else if(!regexHour.test(hour)){
+    throw new Error(`La hora de ${message} contiene caracteres no válidos `)
+  }
+}
+const compareHours =(start_time,end_time,flag,message)=>{
+    const [start_hour, start_minutes] = start_time.split(':').map(Number);
+    const [end_hour, end_minutes] = end_time.split(':').map(Number);
+
+    const inicioMS = (start_hour * 60 + start_minutes) * 60 * 1000;
+    const finMS = (end_hour * 60 + end_minutes) * 60 * 1000;
+
+    const diferenciaHoras = (finMS - inicioMS)/3600000;
+    if (flag) {
+      if (diferenciaHoras<10) {
+        throw new Error(message)
+      }
+    }if (!flag) {
+      if (diferenciaHoras>6) {
+        throw new Error(message);
+      }
+    }
+}
 module.exports ={
     validateName,
     validateLastName,
     validateDpi,
-    validatePersonalPhone,
+    validatePhoneNumber,
     validationPath,
     bodyVerification,
     validationEmail,
@@ -243,12 +290,16 @@ module.exports ={
     tokenValidation,
     validationOfIdenticatedlId,
     paramsValidation,
-    validatePage,
+    ValidationIdOrLevel,
     allowAcction,
     validationParagraph,
     validationDates,
-    validateState,
+    validationOcupationState,
     isTicketOpen,
     objectOwner,
-    compareDates
+    compareDates,
+    validationYear,
+    validationCost,
+    validationHour,
+    compareHours
 }

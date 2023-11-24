@@ -90,6 +90,14 @@ const apartament = sequelizeObj.define(
                 key: 'feature_id'
             }
         
+        },
+        ocupation_state:{
+            type:DataTypes.TINYINT,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                is:/^[1-2]+$/
+            }
         }
     },
     {
@@ -97,7 +105,8 @@ const apartament = sequelizeObj.define(
         modelName:"apartament",
         freezeTableName:true,
         createdAt:false,
-        updatedAt:false
+        updatedAt:false,
+        logging: console.log
     }
 
 );
@@ -110,6 +119,5 @@ apartament.belongsTo(features_apartaments,{
     as:'apartamentFeatures',
     foreignKey:'id_features_apartament'
 });
-
 
 module.exports=apartament

@@ -9,7 +9,6 @@ const jwtGenerate =(id,user_type,secret)=>{
             if (err) {
                 reject("no se pudo generar el token")
             }else{
-               
                 resolve(token)
             }
         })
@@ -23,6 +22,7 @@ const hashingPassword = (password)=>{
     return hash
 }
 const updateData = async(model,objectToEdit,searchField, targetField)=>{
+
     try {
         const update = await model.update(objectToEdit,{
             where:{
@@ -40,7 +40,7 @@ const updateData = async(model,objectToEdit,searchField, targetField)=>{
  
 }
 const findData=async(model, searchField, targetField, excludeArr)=>{
-
+    
     try {
         const foundData= await model.findOne({
             where:{
@@ -59,7 +59,13 @@ const findData=async(model, searchField, targetField, excludeArr)=>{
         throw new Error(error);
     }
 }
-
+// const findAllData = async(model , searchField,targetField,includeAttributes)=>{
+//     try {
+//         const findAll =  await 
+//     } catch (error) {
+//         throw new Error(error)
+//     }
+// }
 module.exports={
         jwtGenerate,
         hashingPassword,
