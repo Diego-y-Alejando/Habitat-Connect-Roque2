@@ -11,7 +11,7 @@ body{
     align-items: center;
 }
 .app-name{
-    color: var(--blanco);
+    color: var(--white);
     text-align: center;
     width: 20%;
     margin-top: 2%;
@@ -24,7 +24,7 @@ body{
 .container-content {
     border-top-right-radius: 5%;
     border-top-left-radius: 5%;
-    background-color: var(--blanco);
+    background-color: var(--white);
     width: 100%;
     padding-top: 2%;
     margin-top: 2%;
@@ -47,7 +47,7 @@ body{
 }
 .selected-item{
     background-color: var(--Azul-claro);
-    color: var(--blanco);
+    color: var(--white);
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -138,7 +138,7 @@ body{
 .see-more{
     font-family: montserrat-light;
     background-color: var(--Azul-claro);
-    color: var(--blanco);
+    color: var(--white);
     border-radius: 20px;
     width: 50%;
     text-align: center;

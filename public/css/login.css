@@ -1,0 +1,261 @@
+@import './colors.css';
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: grid;
+    background-color: var(--Azul-oscuro);
+    background-color:#ffffff;
+    overflow: hidden;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 20px 40px 0px;
+    border-top-right-radius: 20px;
+    background-color: var(--Azul-oscuro);
+    color: var(--Beige);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    background-color: var(--Azul-oscuro);
+    color: var(--Beige);
+}
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    width: 50%;
+    padding: 0px 40px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--Azul-oscuro);
+    color: var(--Beige);
+}
+aside{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 52%;
+    height: 100%; 
+    background-image: url('../icons/backgroundLogin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+
+h1 {
+    font-size: 5rem;
+    font-family: NewYork;
+    font-weight: 100;
+    color: var(--white);
+    margin: 0px;
+    text-align: center;
+    line-height: 4rem;
+}
+
+h2{
+    font-family: montserrat-light;
+    margin-top: 0px;
+    font-size: 1.5rem;
+    font-weight: 100;
+    line-height: 2rem;
+    color: var(--Beige);
+}
+
+h3{
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-family: montserrat-light;
+    color: var(--white);
+    margin: 17px 0px 8px 0px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    border-radius: 20px;
+    background-color: var(--Azul);
+    padding: 0px 40px;
+    gap: 10px;
+}
+
+.input-credentials{
+    padding: 7px;
+    font-size: 1em;
+    font-family: montserrat-light;
+}
+.label-credentials{
+    font-weight: 100;
+    font-family: montserrat-light;
+    color: var(--white);
+}
+
+.link{
+    font-size: 15px;
+    color: var(--Beige);
+}
+
+#password-details{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-family: montserrat-light;
+}
+
+#password-details a{
+    width: 52%;
+    font-size: 0.7rem;
+    font-family: montserrat-light;
+    text-align: end;
+}
+
+.link{
+    text-decoration: none;
+    color: var(--white);
+}
+.link:hover{
+    color: var(--Beige);
+}
+
+#buttonon-login{
+    padding: 10px 15px;
+    margin: 20px 0px 30px;
+    font-size: 15px;
+    background-color: var(--Beige);
+    color: #000000;
+    border: none;
+    cursor: pointer;
+}
+
+#buttonon-login:hover {
+    background-color: var(--Cafe);
+    color: var(--Beige);
+    
+}
+
+.line-with-text {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+}
+
+.line{
+    flex-grow: 1;
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 0 5px;
+}
+
+.text {
+    white-space: nowrap;
+    font-size: 0.7rem;
+    font-weight: 100;
+    font-family: montserrat-light;
+}
+
+#login-external{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
+
+#login-external a:first-child img{
+    width: 40px;
+}
+
+#login-external a:last-child img{
+    width: 31px;
+    padding-left: 8px;
+    padding-top: 3px;
+}
+
+#login-external a img:hover{
+    opacity: 0.7;
+}
+
+#pRegistrer{
+    margin-top: 0px;
+    margin-bottom: 30px;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+#pRegistrer a:hover{
+    color: var(--Cafe);
+}
+
+#name{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.nameClient p{
+    font-family: montserrat-light;
+    font-weight: 100;
+    color: var(--white);
+}
+
+.nameHabitad p:first-child{
+    font-family:newYork;
+    color: var(--white);
+}
+.nameHabitad p:last-child{
+    font-family:montserrat-light;
+    color: var(--Beige);
+}
+
+.nameHabitad,
+.nameClient{
+    flex: 1;
+    text-align: center;
+}
+
+.nameHabitad p,
+.nameClient p{
+    margin: 0;
+    padding: 0 20px;
+    font-size: 25px;
+    line-height: 76%;
+}
+
+
+.nameClient{
+    content: "";
+    border-left: 1px solid #ffffff;
+    height: 100%;
+    margin: 0 10px;    
+}
+
+
+
+.hidden{
+    display: none;
+}
