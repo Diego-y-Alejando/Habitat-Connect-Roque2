@@ -1,0 +1,8 @@
+@import './colors.css';
+@import url('./text.css');
+@import url('./controlPanel.css');
+
+.return-icon{
+    width: 20%;
+    margin-right: 3%;
+}

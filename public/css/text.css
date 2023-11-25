@@ -1,0 +1,18 @@
+.newyork-font {
+    font-family: newYork;
+}
+.montserrat-light{
+    font-family: montserrat-light;
+}
+.white{
+    color: var(--white)!important;
+}
+.black{
+    color: var(--black);
+}
+.beige{
+    color: var(--Beige)!important;
+}
+.dark-blue{
+    color: var(--Azul-oscuro);
+}

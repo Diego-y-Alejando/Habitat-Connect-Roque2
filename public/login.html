@@ -7,24 +7,27 @@
     <title>Habitad Connect - Iniciar Sesión</title>
 </head>
 <body>
-    <header>
-        <h1>Bienvenido</h1>
-        <h2>Vive, conéctate y prospera</h2>
-    </header>
-    <main>
-        <form action="#" class="form">
-            <h3>Inicia Sesión</h3>
 
-                <label for="accountType" class="hidden label-credentials">Tipo de Cuenta</label>
-                <select id="accountType" class="hidden">
+    <header>
+        <h1 class="newyork-font white">Bienvenido</h1>
+        <h2 class="montserrat-light beige">Vive, conéctate y prospera</h2>
+    </header>
+
+    <main>
+        <form action="#" class="form montserrat-light">
+
+            <h3 class="montserrat-light white">Inicia Sesión</h3>
+
+                <label for="accountType" class="label-credentials  white hidden">Tipo de Cuenta</label>
+                <select id="accountType" class="input-credentials hidden">
                     <option value="admin">Administrador</option>
                     <option value="user">Usuario</option>
                 </select>
                 
-                <label for="email" class="label-credentials">Correo Electrónico</label>
+                <label for="email" class="label-credentials montserrat-light white">Correo Electrónico</label>
                 <input id="email" type="email" placeholder="Correo Electrónico" class="input-credentials">
 
-                <label for="password" class="label-credentials" >Contraseña</label>
+                <label for="password" class="label-credentials montserrat-light white" >Contraseña</label>
                 <input id="password" type="password" placeholder="Contraseña" class="input-credentials">
 
                 <section id="password-details">
@@ -32,7 +35,7 @@
                         <input type="checkbox" name="recuerdarme" id="recuerdarme">
                         Recuérdame
                     </label>
-                        <a href="#" class="link ">¿Olvidaste tu contraseña?</a>
+                        <a href="#" class="link">¿Olvidaste tu contraseña?</a>
                 </section>
                 
                 <input type="submit" value="Ingresar" id="buttonon-login"> 
@@ -59,10 +62,10 @@
     <footer>
         <div id="name">
             <div class = "nameHabitad">
-                <p>Habitat</p>
-                <p>Connect</p>
+                <p class="newyork-font white">Habitat</p>
+                <p class="montserrat-light">Connect</p>
             </div>
-            <div class ="nameClient">
+            <div class ="nameClient montserrat-light white">
                 <p>Villas</p>
                 <p>Oviedo</p>
             </div>
