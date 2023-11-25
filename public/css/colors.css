@@ -1,0 +1,28 @@
+:root{
+    --Azul-oscuro:  #0f1946;
+    --Azul: #131f57;
+    --Azul-claro: #105ef5;
+    --Beige: #bbaba0;
+    --Cafe:  #594535;
+    --blanco :#FFFF
+}
+@font-face{
+    font-family:montserrat-semi-bold;
+    src: url('../css/fonts/Montserrat-SemiBold.ttf');
+}
+@font-face{
+    font-family:montserrat-light;
+    src: url('../css/fonts/Montserrat-Light.ttf');
+}
+@font-face{
+    font-family:montserrat-medium;
+    src: url('../css/fonts/Montserrat-Medium.ttf');
+}
+@font-face{
+    font-family:montserrat-regular;
+    src: url('../css/fonts/Montserrat-Regular.ttf');
+}
+@font-face{
+    font-family:newYork;
+    src: url('../css/fonts/newYork.otf');
+}
