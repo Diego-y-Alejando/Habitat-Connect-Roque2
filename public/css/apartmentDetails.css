@@ -9,3 +9,50 @@
 .secondary-menu{
     margin-top: 2%;
 }
+.container-datos{
+    position: relative;
+    overflow: hidden;
+    max-width: 100%; 
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2%;
+}
+.container-list{
+    list-style-type: none;
+    display: flex;
+    transition: transform 0.5s ease; 
+}
+.container-item{
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+.apt-details{
+    width: 60%;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: auto; 
+    grid-template-columns: auto;
+    border: 1px solid gray;
+    border-radius: 25px;
+}
+
+.level{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#input-family{
+    width: 100%;
+}
+#apartment-icon{
+    width: 15%;
+}
+#edit-family{
+    width: 8%;
+}

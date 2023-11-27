@@ -16,3 +16,6 @@
 .dark-blue{
     color: var(--Azul-oscuro);
 }
+.center{
+    text-align: center;
+}
