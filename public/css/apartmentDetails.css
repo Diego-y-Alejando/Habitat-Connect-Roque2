@@ -94,3 +94,11 @@
     width: 25px;
     cursor: pointer;
 }
+
+.info-details{
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto; 
+    grid-template-columns: 1fr;
+    justify-content: space-between;
+}
