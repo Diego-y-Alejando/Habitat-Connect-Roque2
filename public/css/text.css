@@ -19,3 +19,9 @@
 .center{
     text-align: center;
 }
+.bold{
+    font-weight: bold;
+}
+.gray{
+    color: gray!important;
+}
