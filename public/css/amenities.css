@@ -1,0 +1,114 @@
+@import url('./colors.css');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: grid;
+    background-color: #fefefe;
+}
+.general-title{
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    font-size: 2.1rem;
+    margin-top: 3%;
+    color: #6e4734;
+    width: 40%;
+}
+.app-title{
+    width: min-content;
+ 
+}
+.title-separator{
+    background-color: #6e4734;
+    margin: 0 3% 0 3%;
+  
+}
+.tower-name{
+    margin: auto;
+    margin-left: 0;
+}
+/* container amenities */
+.container-amenities-list{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    justify-self: center;
+    gap: 2%;
+    margin-top: 5%;
+}
+.amenity{
+    display: grid;
+    width: 100%;
+    padding-bottom: 1%;
+    background: #efefef;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.img-amenity{
+    width: 100%;
+    height: auto;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+}
+.amenity-data{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    place-items: center;    
+}
+.amenity-name{
+    grid-column: span 2;
+    text-align: center;
+    margin-top: 3%;
+    font-family: montserrat-semi-bold;
+}
+.icon-amenity{
+    width: 50%;
+    height: auto;
+    grid-column: 1;
+}
+.data-schedule-cost{
+    font-family: montserrat-regular;
+    font-size: 1rem;
+    color: #484848;
+    grid-column:  2;
+    margin-right: 115%;
+    white-space:pre;
+}
+.booking-btn{
+    width: 20%;
+    grid-column: span 2;
+    background: var(--Azul-claro);
+    text-decoration: none;
+    border: none;
+    padding: 1% ;
+    color: white;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+}
+.container-booking-form{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16,94,245,0.5);
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    left: 0;
+    right: 0;
+}
+.booking-form{
+    background: white;
+    width: 60%;
+    height: 60%;
+    display: none;
+}
+#ec{
+    width: 50%;
+    height: auto;
+    background-color: white;
+}
