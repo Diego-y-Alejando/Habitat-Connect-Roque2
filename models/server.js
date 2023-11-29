@@ -8,7 +8,7 @@ class Server {
         this.middlewares();
         this.adminPath='/admin'
         this.routes()
-        this.port =process.env.port
+        this.port =process.env.PORT
     }
     middlewares(){
         // this.app.use(cookieParser());
@@ -16,6 +16,13 @@ class Server {
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.static('public'));
+        this.app.use((req, res, next) => {
+            console.log(req);
+            if (req.path.endsWith('.mjs')) {
+                res.type('text/javascript');
+            }
+            next();
+        });
     }
     routes(){
         this.app.use(this.adminPath, require('../routes/admin.routes'));
