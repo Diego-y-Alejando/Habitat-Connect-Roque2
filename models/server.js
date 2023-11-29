@@ -17,12 +17,12 @@ class Server {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.static('public'));
         this.app.use((req, res, next) => {
-            console.log(req);
-            if (req.path.endsWith('.mjs')) {
+            if (req.path.endsWith('.js')) {
                 res.type('text/javascript');
             }
             next();
         });
+        this.app.use(express.static('dist'));
     }
     routes(){
         this.app.use(this.adminPath, require('../routes/admin.routes'));
