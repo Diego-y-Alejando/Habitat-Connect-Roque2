@@ -11,14 +11,17 @@
   "dependencies": {
     "@event-calendar/interaction": "^2.4.1",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "mysql2": "^3.6.3",
+    "sequelize": "^6.34.0"
   },
   "devDependencies": {
-    "@event-calendar/core": "^2.4.1",
-    "@event-calendar/time-grid": "^2.4.1"
+
   }
+
 }
