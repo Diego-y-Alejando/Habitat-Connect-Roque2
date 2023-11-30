@@ -164,5 +164,12 @@ header{
     -ms-transition: all 0.5ms ease-in;
     -o-transition: all 0.5ms ease-in;
 }
-/* iapartament-item */
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+
+@media screen and (max-width: 767px) {
+
+}
