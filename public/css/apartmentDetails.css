@@ -102,3 +102,56 @@
     grid-template-columns: 1fr;
     justify-content: space-between;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    #secondary-menu{
+        display: none;
+    }
+    .secondary-menu {
+        margin-top: 0;
+    }
+    .profile-item{
+        margin: 0;
+    }
+    .apt-details{
+        width: 45%;
+    }
+    .apt-info{
+        width: 40%;
+    }
+    main{
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    #secondary-menu{
+        display: none;
+    }
+    .secondary-menu {
+        margin-top: 0;
+    }
+    .profile-item{
+        margin: 0;
+    }
+    main{
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+    }
+    .container-item{
+        flex-direction: column;
+        gap: 10px;
+    }
+    .apt-details{
+        width: 80%;
+    }
+    .apt-info{
+        width: 80%;
+    }
+    #apartment-icon {
+        width: 20%;
+        margin-right: 0;
+    }
+}

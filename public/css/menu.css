@@ -1,15 +1,16 @@
 @import './colors.css';
 @import url('./text.css');
 
-/* Estilos generales del cuerpo (body) */
+
 body {
     background-color: var(--Azul-oscuro);
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 }
 
-/* Estilos del encabezado (header) */
+
 header {
     display: flex;
     flex-direction: column;
@@ -21,14 +22,13 @@ header {
 .app-name {
     color: var(--white);
     text-align: center;
-    width: 20%;
+    width: 15%;
     margin-top: 2%;
     font-size: 2.7rem;
     font-family: montserrat-light;
     font-weight: 300;
 }
 
-/* Estilos para el menú hamburguesa */
 .menu-toggle {
     display: none;
 }
@@ -40,7 +40,7 @@ header {
     margin: 4px 0;
 }
 
-/* Estilos para el contenido del contenedor principal */
+
 .container-content {
     background-color: var(--white);
     width: 100%;
@@ -50,7 +50,6 @@ header {
     border-bottom-right-radius: 30px;
 }
 
-/* Estilos para el menú */
 .menu {
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
@@ -71,7 +70,7 @@ header {
     text-decoration: none;
     margin-right: 10px;
     font-size: 1.1rem;
-    padding: 0.5% 0.9% 0.5% 0.9%;
+    padding: 7px;
 }
 
 .selected-item {
@@ -105,7 +104,7 @@ header {
     display: none;
 }
 
-/* Estilos para pantallas más pequeñas (máximo 1023px) */
+
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .app-name {
         width: 30%;
@@ -120,8 +119,9 @@ header {
     .profile-item {
         position: relative;
         left: 0;
+        padding-left: 10px;
         justify-items: center;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
     }
     .menu {
@@ -142,7 +142,7 @@ header {
         margin-left: 25px;
     }
     
-}   /* Muestra los elementos del menú cuando el menú hamburguesa está activo */
+}   
 
 
 @media screen and (max-width: 767px) {
@@ -159,8 +159,9 @@ header {
     .profile-item {
         position: relative;
         left: 0;
+        padding-left: 10px;
         justify-items: center;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
     }
     .menu {

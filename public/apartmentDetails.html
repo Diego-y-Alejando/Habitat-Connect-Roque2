@@ -12,12 +12,18 @@
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
 
-    <nav class="menu" id="menu">
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="menu" id="secondary-menu"">
         <a class="item-menu profile-item">
             <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
             Hola, administrador 
         </a>
-        <a class="item-menu selected-item" href="">Inicio</a>
+        <a class="item-menu selected-item" href="./controlPanel.html">Inicio</a>
         <a class="item-menu" href="">Amenidades</a>
         <a class="item-menu" href="">Finanzas</a>
         <a class="item-menu" href="">Configuración</a>
@@ -26,8 +32,8 @@
     <main class="container-content">
         
         <section>
-            <nav class="secondary-menu menu" id="secondary-menu">
-                <a class="item-menu profile-item" href="#">
+            <nav class="secondary-menu menu" id="menu">
+                <a class="item-menu profile-item" href="./controlPanel.html">
                     <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
                     Regresar
                 </a>
@@ -153,6 +159,7 @@
         
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/controlPanel.js"></script>
+    <script type="module" src="./js/controlPanel.js"></script>
+    <script type="module" src="./js/menu.js"></script>
 </body>
 </html>

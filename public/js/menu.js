@@ -1,22 +1,21 @@
 $(document).ready(function () {
-    // Obtén el botón del menú hamburguesa y la barra de navegación
     const menuToggle = $("#menu-toggle");
     const menu = $("#menu");
-
-    // Define el ancho del menú (ajústalo según tu diseño)
-    const menuWidth = 250; // Puedes cambiar este valor
-
-    // Variable para rastrear si el menú está abierto o cerrado
+    const menuWidth = 250; 
     let menuOpen = false;
+    let startX = 0;
+    let endX = 0;
 
-    // Agrega un evento de clic al botón del menú hamburguesa
+    if ($(window).width() < 1023) {
+        menu.css("left", "-250px");
+        menuOpen = false;
+    }
+
     menuToggle.click(function () {
         if (menuOpen) {
-            // Cierra el menú (desliza hacia la izquierda)
-            menu.animate({ left: -menuWidth }, 300); // 300ms para la animación
+            menu.animate({ left: -menuWidth }, 300);
             menuOpen = false;
         } else {
-            // Abre el menú (desliza desde la izquierda)
             menu.animate({ left: 0 }, 300); 
             menuOpen = true;
         }
@@ -30,6 +29,23 @@ $(document).ready(function () {
     $(window).resize(function () {
         if ($(window).width() > 1023) {
             menu.css("left", "0px");
+            menuOpen = false;
         }
     });
+
+    $("body").click(function (e) {
+        if (menuOpen && e.target.id !== "menu-toggle" && e.target.id !== "menu") {
+            menu.animate({ left: -menuWidth }, 300);
+            menuOpen = false;
+        }
+    });
+
+    menu.click(function (e) {
+        e.stopPropagation();
+    });
+    menuToggle.click(function (e) {
+        e.stopPropagation();
+    });
+
+
 });
