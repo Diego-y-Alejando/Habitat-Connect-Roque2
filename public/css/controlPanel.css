@@ -12,13 +12,6 @@ body{
     flex-direction: column;
     align-items: center;
 }
-header{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
 .container-grid-apartaments{
     display: grid;
@@ -119,14 +112,7 @@ header{
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .profile-item {
-        position: absolute;
-        left: -50px;
-        top: 50px;
-        justify-items: center;
-        justify-content: center;
-        align-items: center;
-    }
+
 }
 
 

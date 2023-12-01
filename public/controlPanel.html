@@ -13,18 +13,27 @@
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
 
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    
+
+    <nav class="menu" id="menu">
+        <a class="item-menu profile-item">
+            <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
+            Hola, administrador 
+        </a>
+        <a class="item-menu selected-item" href="">Inicio</a>
+        <a class="item-menu" href="">Amenidades</a>
+        <a class="item-menu" href="">Finanzas</a>
+        <a class="item-menu" href="">Configuración</a>
+    
+    </nav>
+
     <main class="container-content">
-        <nav class="menu" id="menu">
-            <a class="item-menu profile-item">
-                <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
-                Hola, administrador 
-            </a>
-            <a class="item-menu selected-item" href="">Inicio</a>
-            <a class="item-menu" href="">Amenidades</a>
-            <a class="item-menu" href="">Finanzas</a>
-            <a class="item-menu" href="">Configuración</a>
         
-        </nav>
         <form action="" class="form-select-level">
             <select class="filter-level" name="level-select">
                 <option value="1">Primer nivel</option>
@@ -101,7 +110,12 @@
                 </div>
             </a>
         </div>
+
         
     </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="./js/menu.js"></script>
 </body>
 </html>
