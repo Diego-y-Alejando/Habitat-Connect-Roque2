@@ -35,7 +35,7 @@ body{
     color: #817068;
     font-family: montserrat-regular;
     margin-bottom: 2%;
-    font-size: 1.3rem;
+    font-size: 20px;
 }
 .apartament-item{
     padding: 5%;
@@ -55,6 +55,7 @@ body{
     grid-column: span 2;
 }
 .apartament-number{
+    font-size: 20px;
     font-family: montserrat-semi-bold;
 }
 .tower-icon{
@@ -62,6 +63,7 @@ body{
     margin-top:15%;
 }
 .secondary-data{
+    font-size: 18px;
     color:#484848 ;
     font-family: montserrat-light;
 }
@@ -74,19 +76,18 @@ body{
 }
 
 .apartament-name{
-
     width: 100%;
     overflow: hidden;
-    font-size: 0.9rem;
+    font-size: 15px;
     color: #484848;
     font-family: montserrat-semi-bold;
-
+    
 }
 .primary-data{
     font-family: montserrat-regular;
     width: 100%;
     color: #919191;
-    font-size: 0.9rem;
+    font-size: 15px;
 }
 .see-more{
     font-family: montserrat-light;
@@ -95,8 +96,9 @@ body{
     border-radius: 20px;
     width: 50%;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 18px;
     margin-top: 15%;
+    padding: 5px;
     border: 1px solid var(--Azul-claro);
 }
 .see-more:hover{
@@ -112,7 +114,6 @@ body{
 }
 
 .input-form{
-    width: 100%;
     height: 30px;
     border: none;
     border-bottom: 1px solid gray;

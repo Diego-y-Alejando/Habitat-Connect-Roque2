@@ -29,6 +29,18 @@ td{
 }
 
 
+.column-1{
+    grid-column: span 1;
+}
+.columnn-2{
+    grid-column: span 2;
+}
+.columns-3{
+    grid-column: span 3;
+}
+.column-4{
+    grid-column: span 4;
+}
 
 
 .finance-cart-backbround{
@@ -64,23 +76,20 @@ td{
     height: 40px;
 }
 .info-finance-card{
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;; 
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-gap: 20px;
     font-size: 18px;
 }
 
 
-.carta p {
-    display: inline-block;
-    margin-bottom: 10px;
-}
 
-  .boton-editar {
+.boton-editar {
     display: inline-block;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
-  }
+}
