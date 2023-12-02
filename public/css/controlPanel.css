@@ -111,6 +111,18 @@ body{
     -o-transition: all 0.5ms ease-in;
 }
 
+.input-form{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid gray;
+    background: transparent;
+    font-size: 18px;
+}
+.input-form:focus{
+    outline: none;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .filter-level {
         width: 50%;

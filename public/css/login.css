@@ -98,17 +98,20 @@ h3{
 
 .input-credentials{
     padding: 7px;
-    font-size: 1em;
+    font-size: 18px;
     border-radius: 5px;
 }
 .label-credentials{
+    font-size: 18px;
     font-weight: 100;
 }
 
 .link{
     font-size: 15px;
 }
-
+#recuerdame{
+    font-size: 14px;
+}
 #password-details{
     display: flex;
     justify-content: space-between;
@@ -119,7 +122,7 @@ h3{
 }
 
 #password-details a{
-    font-size: 0.7rem;
+    font-size: 14px;
     font-family: montserrat-light;
     text-align: end;
 }

@@ -1,0 +1,86 @@
+@import './colors.css';
+@import url('./text.css');
+@import url('./controlPanel.css');
+@import url('./apartmentDetails.css');
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2%;
+}
+.table-titel{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    height: 50px;
+    background-color: var(--Azul-oscuro);
+    color: var(--white);
+}
+th{
+    padding-left: 2%;
+}
+td{
+    padding-left: 2%;
+}
+.table-row{
+    height: 50px;
+}
+.table tbody tr:nth-child(odd) {
+    background-color: lightgray; 
+}
+
+
+
+
+.finance-cart-backbround{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: inherit;
+    background-color: #cccccc1a;
+}
+
+.finance-card {
+    height: 50%;
+    width: 80%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.return{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    color: var(--Azul-oscuro);
+}
+.return-button{
+    height: 40px;
+}
+.info-finance-card{
+    display: grid;
+    grid-template-columns: 1fr 1fr;; 
+    grid-gap: 20px;
+    font-size: 18px;
+}
+
+
+.carta p {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+  .boton-editar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }

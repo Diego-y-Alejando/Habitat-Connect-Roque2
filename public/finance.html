@@ -3,9 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/finance.css">
+    <title>Finanzas</title>
 </head>
 <body>
+
+    <header>
+        <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
+    </header>
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="menu" id="secondary-menu"">
+        <a class="item-menu profile-item">
+            <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
+            Hola, administrador 
+        </a>
+        <a class="item-menu" href="./controlPanel.html">Inicio</a>
+        <a class="item-menu" href="">Amenidades</a>
+        <a class="item-menu selected-item" href="">Finanzas</a>
+        <a class="item-menu" href="">Configuración</a>
+    </nav>
+
+    <main class="container-content">
+        
+        <section>
+            <nav class="secondary-menu menu" id="menu">
+                <a class="item-menu profile-item" href="./controlPanel.html">
+                    <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
+                    Regresar
+                </a>
+                <a class="item-menu subitem-menu selected-item" href="#" data-target="suppliers">Proveedores</a>
+                <a class="item-menu subitem-menu" href="#" data-target="record-for-pay">Historial de cuentas por pagas</a>
+                <a class="item-menu subitem-menu" href="#" data-target="activity-report">Informe de actividades</a>
+            </nav>
+        </section>
+
+        <section class="container-datos">
+            <ul class="container-list">
+
+                <li class="container-item" id="suppliers">
+                    <table class="table montserrat-light">
+                        <thead class="table-titel">
+                            <tr class="titel-row">
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Cuenta de Banco</th>
+                                <th>Banco</th>
+                                <th>Tipo de Cuenta</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-content">
+                            <tr class="table-row">
+                                <td>Juan Pérez</td>
+                                <td>123-456-7890</td>
+                                <td>1234567890123456</td>
+                                <td>Banco ABC</td>
+                                <td>Ahorros</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td>María Gómez</td>
+                                <td>987-654-3210</td>
+                                <td>9876543210987654</td>
+                                <td>Banco XYZ</td>
+                                <td>Corriente</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td>María Gómez</td>
+                                <td>987-654-3210</td>
+                                <td>9876543210987654</td>
+                                <td>Banco XYZ</td>
+                                <td>Corriente</td>
+                            </tr><tr class="table-row">
+                                <td>María Gómez</td>
+                                <td>987-654-3210</td>
+                                <td>9876543210987654</td>
+                                <td>Banco XYZ</td>
+                                <td>Corriente</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+
+                <li class="container-item" id="record-for-pay">
+                    
+                </li>
+
+                <li class="container-item" id="activity-report">
+
+                </li>
+
+                </li>
+            </ul>
+                
+        </section>
+        
+    </main>
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="./js/finance.js"></script>
+    <script type="module" src="./js/menu.js"></script>
+
 </body>
 </html>

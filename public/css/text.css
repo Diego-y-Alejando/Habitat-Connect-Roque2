@@ -1,3 +1,4 @@
+
 .newyork-font {
     font-family: newYork;
 }
@@ -24,4 +25,7 @@
 }
 .gray{
     color: gray!important;
+}
+.dark-blue{
+    color: var(--Azul-oscuro)!important;
 }
