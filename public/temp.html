@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <section class="finance-cart-backbround"> 
+    <section class="finance-cart-backbround hide"> 
         <div class="finance-card montserrat-light">
             <a class="return" href="./controlPanel.html">
                 <img alt="return-icon" src="./icons/backward_icon.png" class="return-button">
@@ -42,5 +42,95 @@
         </div>
     </section>
     
+    <section id="filter-record-for-pay" class="montserrat-light hide">
+
+        <form action="" id="form-filter-record">
+
+            <fieldset class="section-filter">
+                <legend class="legend-filter">Año</legend>
+                <input type="checkbox" name="2024" id="2024" title="2024">
+                <label for="2024">2024</label>
+                <input type="checkbox" name="2025" id="2025" title="2025">
+                <label for="2025">2025</label>
+            </fieldset>
+            
+            <fieldset class="section-filter">
+                <legend class="legend-filter">Mes</legend>
+                <input type="checkbox" name="enero" id="enero" title="enero">
+                <label for="enero">enero</label>
+                <input type="checkbox" name="febrero" id="febrero" title="febrero">
+                <label for="febrero">febrero</label>
+                <input type="checkbox" name="marzo" id="marzo" title="marzo">
+                <label for="marzo">marzo</label>
+                <input type="checkbox" name="abril" id="abril" title="abril">
+                <label for="abril">abril</label>
+                <input type="checkbox" name="mayo" id="mayo" title="mayo">
+                <label for="mayo">mayo</label>
+                <input type="checkbox" name="junio" id="junio" title="junio">
+                <label for="junio">junio</label>
+                <input type="checkbox" name="julio" id="julio" title="julio">
+                <label for="julio">julio</label>
+                <input type="checkbox" name="agosto" id="agosto" title="agosto">
+                <label for="agosto">agosto</label>
+                <input type="checkbox" name="septiembre" id="septiembre" title="septiembre">
+                <label for="septiembre">septiembre</label>
+                <input type="checkbox" name="octubre" id="octubre" title="octubre">
+                <label for="octubre">octubre</label>
+                <input type="checkbox" name="noviembre" id="noviembre" title="noviembre">
+                <label for="noviembre">noviembre</label>
+                <input type="checkbox" name="diciembre" id="diciembre" title="diciembre">
+                <label for="diciembre">diciembre</label>
+            </fieldset>
+            
+            <fieldset class="section-filter">
+                <legend class="legend-filter">Pagadas / no pagadas</legend>
+                <input type="checkbox" name="pagadas" id="pagadas" title="pagadas">
+                <label for="pagadas">pagadas</label>
+                <input type="checkbox" name="no-pagadas" id="no-pagadas" title="no-pagadas">
+                <label for="no-pagadas">no pagadas</label>
+            </fieldset>
+
+        </form>
+
+    </section>
+
+    <section class="finance-cart-backbround"> 
+        <div class="finance-card montserrat-light">
+            <a class="return" href="./controlPanel.html">
+                <img alt="return-icon" src="./icons/backward_icon.png" class="return-button">
+                Regresar
+            </a>
+            <form class="info-finance-card">
+
+                <label class="bold dark-blue grid-column-1">Proeedor:</label>
+                <input type="text" class="gray input-form grid-column-3" placeholder="[Proveedor]"></input>
+
+                <label for="" class="bold darkblue grid-column-1">No. de factura:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[No. de factura]"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Fecha de factura:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Fecha de factura]"></input>
+
+                <label for="" class="bold darkblue grid-column-4">Concepto:</label>
+                <input type="text" class="gray input-form grid-column-4" placeholder="[Concepto]"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Cuenta de banco:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Cuenta de banco]"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Numero de transaccion:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Numero de transaccion]"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Métodos de pago:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Metodo de pago]"></input>   
+
+                <label for="" class="bold darkblue grid-column-1">Monto:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Monto]"></input>
+
+            </form>
+            
+            <a href="#" class="boton-editar"><img src="./icons/editar-texto.png" alt="edit"></a>
+        </div>
+    </section>
+
 </body>
 </html>

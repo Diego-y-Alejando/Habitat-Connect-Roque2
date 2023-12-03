@@ -1,12 +1,12 @@
 $(document).ready(function() {
     loadSuppliers();
-    
+    loadRecordsForPay();
+
     const menuItems = $(".subitem-menu");
     const contenidoItems = $(".container-item");
-    const supplierName = $(".supplier-name");
-    const suplierScreen = $(".finance-cart-backbround");
-    const returnSuppliers = $("#Return-suppliers");
-    const supplierInputName = $("#input-name-supplier");
+
+  
+
     const supplierInputPhone = $("#input-phone-supplier");
     const supplierInputBank = $("#input-bank-supplier");
     const supplierInputAccount = $("#input-account-supplier");
@@ -30,13 +30,21 @@ $(document).ready(function() {
         $(this).addClass("selected-item");
     });
 
-    supplierName.click(function(event) {
+    $(".supplier-name").click(function(event) {
         event.preventDefault();
-        suplierScreen.removeClass("hide");
-        supplierInputName.attr('placeholder', $(this).text());
+
+        //entrar a la correcta
+
+        $("#edit-supplier").removeClass("hide");
+        $("#edit-record").removeClass("hide");
+        $("#record-provider").attr('placeholder', $(this).text());
+        $("#input-name-supplier").attr('placeholder', $(this).text());
+
+
+
     });
 
-    returnSuppliers.click(function(event) {
+    $("#Return-suppliers").click(function(event) {
         event.preventDefault();
         suplierScreen.addClass("hide");
     });
@@ -55,6 +63,11 @@ $(document).ready(function() {
         }
     });
 
+    $("#settings-icon").click(function(event) {
+        event.preventDefault();
+        $("#filter-record-for-pay").toggleClass("hide");
+        $("#filter-record-for-pay")
+    });
 });
 
 function loadSuppliers() {
@@ -98,27 +111,87 @@ function loadSuppliers() {
     suppliers.forEach(supplier => {
         const newRow = tableRow.clone();
 
-        // Clona las celdas para cada proveedor
         const clonedSupplierName = supplierName.clone();
         const clonedSupplierPhone = supplierPhone.clone();
         const clonedSupplierAccountNumber = supplierAccountNumber.clone();
         const clonedSupplierBank = supplierBank.clone();
         const clonedSupplierAccount = supplierAccount.clone();
     
-        // Establece el texto y las clases para cada celda
         clonedSupplierName.text(supplier.name).addClass("supplier-name");
         clonedSupplierPhone.text(supplier.phone);
         clonedSupplierAccountNumber.text(supplier.accountNumber);
         clonedSupplierBank.text(supplier.bank);
         clonedSupplierAccount.text(supplier.account);
     
-        // Adjunta las celdas a la fila clonada
         newRow.append(clonedSupplierName, clonedSupplierPhone, clonedSupplierAccountNumber, clonedSupplierBank, clonedSupplierAccount);
     
-        // Agrega la fila clonada (con todas las celdas) a la tabla
-        $(".table-content").append(newRow);
+        $("#table-suppliers").append(newRow);
     });
     
+}
+
+function loadRecordsForPay() {
+    /* $.ajax({
+        url: "/supplier",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            let suppliers = data.suppliers;
+            let html = "";
+            suppliers.forEach(supplier => {
+                html += `<div class="supplier-name" data-phone="${supplier.phone}">${supplier.name}</div>`;
+            });
+            $(".suppliers-list").html(html);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    }); */
+
+    let recordsForPay = [
+        new RecordForPay("Juan Perez", "12345678", "29-11-23", "Q230.00", true),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+    ];
+
+
+    const tableRow = $("<tr>").addClass("table-row");
+    const reocrdSupplier = $("<td>").addClass("supplier-name");
+    const recordNumberBill = $("<td>");
+    const recordDate = $("<td>");
+    const recordPrice = $("<td>");
+    const recordState = $("<td>");
+    const recordCheckBox = $("<input>").attr("type", "checkbox");
+
+
+    recordsForPay.forEach(record => {
+        const newRow = tableRow.clone();
+
+        const clonedReocrdSupplier = reocrdSupplier.clone();
+        const clonedRecordNumberBill = recordNumberBill.clone();
+        const clonedRecordDate = recordDate.clone();
+        const clonedRecordPrice = recordPrice.clone();
+        const clonedRecordState = recordState.clone();
+        const clonedRecordCheckBox = recordCheckBox.clone();
+    
+        clonedReocrdSupplier.text(record.supplier);//.addClass("supplier-name");
+        clonedRecordNumberBill.text(record.numberBill);
+        clonedRecordDate.text(record.date);
+        clonedRecordPrice.text(record.amount);
+        
+        if(record.isPayed){
+            //clonedRecordState.text("Pagado");
+            clonedRecordCheckBox.attr("checked", "checked");
+        }else{
+            //clonedRecordState.text("Pendiente");
+            clonedRecordCheckBox.removeAttr("checked");
+        }
+        clonedRecordState.append(clonedRecordCheckBox);
+
+        newRow.append(clonedReocrdSupplier, clonedRecordNumberBill, clonedRecordDate, clonedRecordPrice, clonedRecordState);
+    
+        $("#table-record-for-pay").append(newRow);
+    });
 }
 
 
@@ -131,5 +204,14 @@ class Supplier {
         this.accountNumber = accountNumber;
         this.paymentMethod = paymentMethod;
         this.description = description;
+    }
+}
+class RecordForPay{
+    constructor(supplier, numberBill ,date, amount, isPayed){
+        this.supplier = supplier;
+        this.numberBill = numberBill;
+        this.date = date;
+        this.amount = amount;
+        this.isPayed = isPayed;
     }
 }

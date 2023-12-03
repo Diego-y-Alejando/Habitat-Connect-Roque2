@@ -107,23 +107,83 @@ td{
     display: flex;
     justify-content: start;
 }
-.settings-icon{
+#settings-icon{
     width: 50px;
     align-self: flex-start;
 }
-.settings-icon img{
+#settings-icon img{
     width: 50px;
 }
 .container-item{
     display: none;
 }
 
+#filter-record-for-pay{
+    width: 14%;
+    padding: 20px 0px 20px 20px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    position: absolute;
+}
+#form-filter-record{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.section-filter{
+    width: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 30px 1fr;
+    align-items: start;
+    border: none;
+}
+.legend-filter{
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--Azul-oscuro);
+    padding: 15px 0px;
+}
+.section-filter label{
+    cursor: pointer;
+    font-size: 16px;
+}
+.section-filter label:hover{
+    opacity: 0.3; 
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent; 
+    border: 2px solid var(--Azul-oscuro);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer; 
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--Azul-oscuro); 
+}
+
+input[type="checkbox"]:hover {
+    opacity: 0.3; 
+}
 
 
 
 
 .hide{
-    display: none;
+    display: none !important;
 }
 
 
