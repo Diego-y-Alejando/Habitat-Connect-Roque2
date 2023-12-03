@@ -5,18 +5,9 @@ $(document).ready(function() {
     const menuItems = $(".subitem-menu");
     const contenidoItems = $(".container-item");
 
-  
-
-    const supplierInputPhone = $("#input-phone-supplier");
-    const supplierInputBank = $("#input-bank-supplier");
-    const supplierInputAccount = $("#input-account-supplier");
-    const supplierInputAccountNumer = $("#input-type-account-supplier");
-    const supplierInputPaymentMethod = $("#input-payment-method-supplier");
-    const supplierInputDescription = $("#input-description-supplier");
     const inputs = $(".input-form");
-    const btnEdit = $("#btn-edit-supplier");
-    const imageBtnEdit = $("#btn-edit-supplier-img");
-    const imageBtnSave = $("#btn-save-supplier-img");
+
+
     
 
     contenidoItems.hide();
@@ -32,32 +23,49 @@ $(document).ready(function() {
 
     $(".supplier-name").click(function(event) {
         event.preventDefault();
-
-        //entrar a la correcta
-
         $("#edit-supplier").removeClass("hide");
-        $("#edit-record").removeClass("hide");
-        $("#record-provider").attr('placeholder', $(this).text());
         $("#input-name-supplier").attr('placeholder', $(this).text());
+    });
 
-
-
+    $(".record-supplier-name").click(function(event) {  
+        event.preventDefault();
+        $("#edit-record").removeClass("hide");
+        $("#record-supplier").attr('placeholder', $(this).text());
     });
 
     $("#Return-suppliers").click(function(event) {
         event.preventDefault();
-        suplierScreen.addClass("hide");
+        $("#edit-supplier").addClass("hide");
     });
 
-    btnEdit.click(function(event) {
+    $("#Return-record").click(function(event) { 
         event.preventDefault();
-        if (imageBtnSave.hasClass("hide")) {
-            imageBtnSave.removeClass("hide");
-            imageBtnEdit.addClass("hide");
+        $("#edit-record").addClass("hide");
+    });
+
+    $("#btn-edit-supplier").click(function(event) {
+        event.preventDefault();
+        if ($("#btn-save-supplier-img").hasClass("hide")) {
+            $("#btn-save-supplier-img").removeClass("hide");
+            $("#btn-edit-supplier-img").addClass("hide");
             inputs.removeAttr("disabled");
         }else{
-            imageBtnSave.addClass("hide");
-            imageBtnEdit.removeClass("hide");
+            $("#btn-save-supplier-img").addClass("hide");
+            $("#btn-edit-supplier-img").removeClass("hide");
+            inputs.attr("disabled", "disabled");
+            //AQUI SE ACTUALIZARIA EN BD
+        }
+    });
+
+    $("#btn-edit-record").click(function(event) {
+        event.preventDefault();
+        if ($("#btn-save-record-img").hasClass("hide")) {
+            $("#btn-save-record-img").removeClass("hide");
+            $("#btn-edit-record-img").addClass("hide");
+            inputs.removeAttr("disabled");
+        }else{
+            $("#btn-save-record-img").addClass("hide");
+            $("#btn-edit-record-img").removeClass("hide");
             inputs.attr("disabled", "disabled");
             //AQUI SE ACTUALIZARIA EN BD
         }
@@ -156,7 +164,7 @@ function loadRecordsForPay() {
 
 
     const tableRow = $("<tr>").addClass("table-row");
-    const reocrdSupplier = $("<td>").addClass("supplier-name");
+    const reocrdSupplier = $("<td>").addClass("record-supplier-name");
     const recordNumberBill = $("<td>");
     const recordDate = $("<td>");
     const recordPrice = $("<td>");

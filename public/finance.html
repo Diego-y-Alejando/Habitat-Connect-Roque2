@@ -7,6 +7,7 @@
     <title>Finanzas</title>
 </head>
 <body>
+
     <section class="finance-cart-backbround hide" id="edit-supplier"> 
         <div class="finance-card montserrat-light">
             <div class="return">
@@ -47,41 +48,44 @@
         </div>
     </section>
 
-    <section class="finance-cart-backbround" id="edit-record"> 
+    <section class="finance-cart-backbround hide" id="edit-record"> 
         <div class="finance-card montserrat-light">
-            <a class="return" href="./controlPanel.html">
+            <a class="return" href="./controlPanel.html" id="Return-record">
                 <img alt="return-icon" src="./icons/backward_icon.png" class="return-button">
                 Regresar
             </a>
             <form class="info-finance-card">
 
                 <label class="bold dark-blue grid-column-1">Proeedor:</label>
-                <input type="text" class="gray input-form grid-column-3" placeholder="[Proveedor]" id="record-provider"></input>
+                <input type="text" class="gray input-form grid-column-3" placeholder="[Proveedor]" id="record-supplier" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-1">No. de factura:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[No. de factura]"></input>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[No. de factura]" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-1">Fecha de factura:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[Fecha de factura]"></input>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-4">Concepto:</label>
-                <input type="text" class="gray input-form grid-column-4" placeholder="[Concepto]"></input>
+                <input type="text" class="gray input-form grid-column-4" placeholder="[Concepto]" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-1">Cuenta de banco:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[Cuenta de banco]"></input>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Cuenta de banco]" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-1">Numero de transaccion:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[Numero de transaccion]"></input>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
 
                 <label for="" class="bold darkblue grid-column-1">Métodos de pago:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[Metodo de pago]"></input>   
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Metodo de pago]" disabled autocomplete="off"></input>   
 
                 <label for="" class="bold darkblue grid-column-1">Monto:</label>
-                <input type="text" class="gray input-form grid-column-1" placeholder="[Monto]"></input>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Monto]" disabled autocomplete="off"></input>
 
             </form>
             
-            <a href="#" class="boton-editar"><img src="./icons/editar-texto.png" alt="edit"></a>
+            <a href="#" class="boton-editar" id="btn-edit-record">
+                <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-record-img" class="">
+                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-record-img" class="hide">
+            </a>
         </div>
     </section>
 

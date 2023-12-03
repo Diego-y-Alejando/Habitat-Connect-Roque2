@@ -35,6 +35,13 @@ td{
     color: var(--Beige);
 }
 
+.record-supplier-name{
+    cursor: pointer;
+}
+.record-supplier-name:hover{
+    color: var(--Beige);
+}
+
 .grid-column-1{
     grid-column: span 1;
 }
