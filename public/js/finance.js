@@ -1,23 +1,16 @@
 $(document).ready(function() {
+
     loadSuppliers();
     loadRecordsForPay();
 
-    const menuItems = $(".subitem-menu");
-    const contenidoItems = $(".container-item");
-
-    const inputs = $(".input-form");
-
-
-    
-
-    contenidoItems.hide();
+    $(".container-item").hide();
     $("#suppliers").show();
-    menuItems.click(function(event) {
+    $(".subitem-menu").click(function(event) {
         event.preventDefault();
         const target = $(this).data("target");
-        contenidoItems.hide();
+        $(".container-item").hide();
         $("#" + target).show();
-        menuItems.removeClass("selected-item");
+        $(".subitem-menu").removeClass("selected-item");
         $(this).addClass("selected-item");
     });
 
@@ -48,11 +41,11 @@ $(document).ready(function() {
         if ($("#btn-save-supplier-img").hasClass("hide")) {
             $("#btn-save-supplier-img").removeClass("hide");
             $("#btn-edit-supplier-img").addClass("hide");
-            inputs.removeAttr("disabled");
+            $(".input-form").removeAttr("disabled");
         }else{
             $("#btn-save-supplier-img").addClass("hide");
             $("#btn-edit-supplier-img").removeClass("hide");
-            inputs.attr("disabled", "disabled");
+            $(".input-form").attr("disabled", "disabled");
             //AQUI SE ACTUALIZARIA EN BD
         }
     });
@@ -62,11 +55,11 @@ $(document).ready(function() {
         if ($("#btn-save-record-img").hasClass("hide")) {
             $("#btn-save-record-img").removeClass("hide");
             $("#btn-edit-record-img").addClass("hide");
-            inputs.removeAttr("disabled");
+            $(".input-form").removeAttr("disabled");
         }else{
             $("#btn-save-record-img").addClass("hide");
             $("#btn-edit-record-img").removeClass("hide");
-            inputs.attr("disabled", "disabled");
+            $(".input-form").attr("disabled", "disabled");
             //AQUI SE ACTUALIZARIA EN BD
         }
     });
