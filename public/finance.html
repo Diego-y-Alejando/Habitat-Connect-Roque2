@@ -7,6 +7,46 @@
     <title>Finanzas</title>
 </head>
 <body>
+    <section class="finance-cart-backbround hide"> 
+        <div class="finance-card montserrat-light">
+            <div class="return">
+                <a class="a-return" href="./controlPanel.html" id="Return-suppliers">
+                    <img alt="return-icon" src="./icons/backward_icon.png" class="return-button">
+                    Regresar
+                </a>
+            </div>
+            <form class="info-finance-card">
+
+                <label class="bold dark-blue grid-column-1">Nombre:</label>
+                <input type="text" class="gray input-form grid-column-3" placeholder="[Nombre]" id="input-name-supplier" disabled autocomplete="off"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Teléfono:</label>
+                <input type="text" class="gray input-form grid-column-3" placeholder="[Teléfono]" id="input-phone-supplier" disabled autocomplete="off"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Banco:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Banco]" id="input-bank-supplier" disabled autocomplete="off"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Número de cuenta:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Número de cuenta]" id="input-account-supplier" disabled autocomplete="off"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Tipo de cuenta:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Tipo de cuenta]" id="input-type-account-supplier" disabled autocomplete="off"></input>
+
+                <label for="" class="bold darkblue grid-column-1">Métodos de pago:</label>
+                <input type="text" class="gray input-form grid-column-1" placeholder="[Metodo de pago]" id="input-payment-method-supplier" disabled autocomplete="off"></input>   
+
+                <label for="" class="bold darkblue grid-column-1">Descripción de servicio:</label>
+                <input type="text" class="gray input-form grid-column-3" placeholder="[Descripción de servicio]" id="input-description-supplier" disabled autocomplete="off"></input>
+
+            </form>
+            
+            <a href="#" class="boton-editar" id="btn-edit-supplier">
+                <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-supplier-img" class="">
+                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
+            </a>
+        </div>
+    </section>
+
 
     <header>
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
@@ -42,6 +82,7 @@
             </nav>
         </section>
 
+
         <section class="container-datos">
             <ul class="container-list">
 
@@ -57,38 +98,34 @@
                             </tr>
                         </thead>
                         <tbody class="table-content">
-                            <tr class="table-row">
-                                <td>Juan Pérez</td>
-                                <td>123-456-7890</td>
-                                <td>1234567890123456</td>
-                                <td>Banco ABC</td>
-                                <td>Ahorros</td>
-                            </tr>
-                            <tr class="table-row">
-                                <td>María Gómez</td>
-                                <td>987-654-3210</td>
-                                <td>9876543210987654</td>
-                                <td>Banco XYZ</td>
-                                <td>Corriente</td>
-                            </tr>
-                            <tr class="table-row">
-                                <td>María Gómez</td>
-                                <td>987-654-3210</td>
-                                <td>9876543210987654</td>
-                                <td>Banco XYZ</td>
-                                <td>Corriente</td>
-                            </tr><tr class="table-row">
-                                <td>María Gómez</td>
-                                <td>987-654-3210</td>
-                                <td>9876543210987654</td>
-                                <td>Banco XYZ</td>
-                                <td>Corriente</td>
-                            </tr>
                         </tbody>
                     </table>
                 </li>
 
                 <li class="container-item" id="record-for-pay">
+
+                    <section>
+                        <div class="settings-row">
+                            <a class="settings-icon" href="">
+                                <img alt="return-icon" src="./icons/mas.png">
+                            </a>
+                        </div>
+
+                        <table class="table montserrat-light">
+                            <thead class="table-titel">
+                                <tr class="titel-row">
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Cuenta de Banco</th>
+                                    <th>Banco</th>
+                                    <th>Tipo de Cuenta</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-content">
+                            </tbody>
+                        </table>
+                    </section>
+                    
                     
                 </li>
 

@@ -28,33 +28,42 @@ td{
     background-color: lightgray; 
 }
 
+.supplier-name{
+    cursor: pointer;
+}
+.supplier-name:hover{
+    color: var(--Beige);
+}
 
-.column-1{
+.grid-column-1{
     grid-column: span 1;
 }
-.columnn-2{
+.grid-column-2{
     grid-column: span 2;
 }
-.columns-3{
+.grid-column-3{
     grid-column: span 3;
 }
-.column-4{
+.grid-column-4{
     grid-column: span 4;
 }
 
 
 .finance-cart-backbround{
-    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: inherit;
-    background-color: #cccccc1a;
+    background-color: #63636375;
+    z-index: 100;
 }
 
 .finance-card {
-    height: 50%;
+    height: 60%;
     width: 80%;
     padding: 20px;
     border-radius: 20px;
@@ -63,7 +72,9 @@ td{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    z-index: 200;
 }
+
 .return{
     width: 100%;
     display: flex;
@@ -72,9 +83,17 @@ td{
     text-decoration: none;
     color: var(--Azul-oscuro);
 }
+.a-return{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
 .return-button{
     height: 40px;
 }
+
 .info-finance-card{
     width: 100%;
     display: grid;
@@ -83,13 +102,69 @@ td{
     font-size: 18px;
 }
 
+.settings-row{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+.settings-icon{
+    width: 50px;
+    align-self: flex-start;
+}
+.settings-icon img{
+    width: 50px;
+}
+.container-item{
+    display: none;
+}
 
 
-.boton-editar {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
+
+
+
+.hide{
+    display: none;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .finance-card {
+        height: 70%;
+        justify-content: space-between;
+    }
+    .info-finance-card{
+        grid-gap: 5px;
+        height: 80%;
+    }
+    .input-form {
+        width: 100%;
+    }
+    .grid-column-1{
+        grid-column: span 2;
+    }
+    .grid-column-3{
+        grid-column: span 2;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .finance-card {
+        height: 90%;
+        width: 90%;
+    }
+    .info-finance-card{
+        grid-gap: 5px;
+        height: 78%;
+
+    }
+    .input-form {
+        width: 100%;
+    }
+    .grid-column-1{
+        grid-column: span 4;
+    }
+    .grid-column-3{
+        grid-column: span 4;
+    }
 }
