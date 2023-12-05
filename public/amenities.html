@@ -16,6 +16,7 @@
         <h2 class="tower-name">PRIMIUM 2</h2>
     </div>
     <div class="container-amenities-list">
+        <!-- deck azotea -->
         <section class="amenity">
             <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
             <article class="amenity-data">
@@ -28,41 +29,48 @@
                 Hora extra a Q60.00</p>
                 <button class="booking-btn">Reservar</button>
             </article>
-            <div class="container-booking-form">
-                <form class="booking-form">
-                    <h2 class="amenity-for-booking">Deck azotea</h2>
-                    <label class="booking-label" for="name">
-                        Nombre  del Responsable
-                        <input type="text" name="name" class="booking-input" placeholder="Nombre">
-                    </label>
-                    <label class="booking-label" for="phone_number">
-                        Teléfono del Responsable
-                        <input type="text" name="name" class="booking-input" placeholder="">
-                    </label>
-                    <label class="booking-label" for="phone_number">
-                        Teléfono del Responsable
-                        <input type="date" name="name" class="booking-input" placeholder="">
-                    </label>
-                    <label class="booking-label label-booking-schedule">
-                        Selecciona tu horario para Reservar
-                        <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
-                            <option disabled value="nulo">Inicio de reserva</option>
-                            <option>08:00</option>
-                            <option>08:00</option>
-                        </select>
-                        a
-                        <select class="dropdown-schedule" name="end_reserv_time" id="end_reserv_time">
-                            <option disabled value="nulo">Inicio de reserva</option>
-                            <option>08:00</option>
-                            <option>08:00</option>
-                        </select>
-                    </label>
-                </form>
-               <div id="ec">
-
-               </div>
+            <div class="container-booking-form-calendar">
+                <div class="siblings-form-calendar">
+                    
+                    <div  class="calendar" id ="deck-azotea-calendar">
+                        
+                    </div>
+                    <form class="booking-form" id="roof-deck-form">
+                        <h2 class="amenity-for-booking">Deck azotea</h2>
+                        <span class="close-window" id="close-window">X</span>
+                        <label class="booking-label name justify-end" for="name">
+                            Nombre  del Responsable
+                            <input type="text" name="name" class="booking-input" placeholder="Nombre">
+                        </label>
+                        <label class="booking-label phone_number justify-start" for="phone_number">
+                            Teléfono del Responsable
+                            <input type="text" name="name" class="booking-input" placeholder="Teléfono">
+                        </label>
+                        <label class="booking-label justify-end date_input" for="date">
+                            Fecha de la reserva
+                            <input type="date" name="date" class="booking-input" placeholder="">
+                        </label>
+                        <label class="booking-label label-booking-schedule justify-start">
+                            <span class="title-schedule">Horario de la reserva</span> 
+                            <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
+                                <option>Inicio</option>
+                                <option>08:00</option>
+                                <option>08:00</option>
+                            </select>
+                           <span class="preposition-schedule">a</span>
+                            <select class="dropdown-schedule" name="end_reserv_time" id="end_reserv_time">
+                                <option>Fin</option>
+                                <option>08:00</option>
+                                <option>08:00</option>
+                            </select>
+                        </label>
+                       <input type="submit" class="btn-submit" value="Registrar reserva">
+                    </form>
+                </div>
+                
             </div>
         </section>
+        <!-- bussnies center -->
         <section class="amenity">
             <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
             <article class="amenity-data">
@@ -76,6 +84,7 @@
                 <button class="booking-btn">Reservar</button>
             </article>
         </section>
+        <!-- Salon social -->
         <section class="amenity">
             <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
             <article class="amenity-data">

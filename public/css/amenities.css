@@ -90,25 +90,123 @@ body{
     -ms-border-radius: 25px;
     -o-border-radius: 25px;
 }
-.container-booking-form{
+.container-booking-form-calendar{
     position: absolute;
     width: 100%;
-    height: 100%;
+    height:100% ;
+    overflow: hidden;
     background-color: rgba(16,94,245,0.5);
     display: flex;
-    justify-self: center;
-    align-self: center;
+    justify-content: center;
     left: 0;
     right: 0;
+    top: 0;
+  
 }
+.siblings-form-calendar{
+    position: relative;
+    display: flex;
+    width: 95%;
+    height: 90%;
+    align-self: center;
+}
+
 .booking-form{
-    background: white;
-    width: 60%;
-    height: 60%;
-    display: none;
-}
-#ec{
+   
     width: 50%;
-    height: auto;
-    background-color: white;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    place-self: center;
+    place-items: center;
+    background-color: var(--white);
+    position: relative;
+
+}
+.amenity-for-booking{
+    text-align: center;
+    font-family: montserrat-semi-bold;
+    grid-column: span 2;
+}
+.close-window{
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    text-align: center;
+    color: black;
+    font-size: 1.4rem;
+    top: 2%;
+    right:2%;
+    font-family: montserrat-semi-bold;
+    cursor: pointer;
+}
+.booking-label{
+    width: 75%;
+    display: grid;
+    font-family: montserrat-regular;
+}
+
+.booking-input{
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #cac7c7;
+    margin-top:4%;
+}
+.booking-input::placeholder{
+    font-family: montserrat-light;
+}
+.label-booking-schedule{
+    grid-template-columns: 45% 15% 45%;
+
+}
+.title-schedule{
+    grid-column: span 3;
+}
+.dropdown-schedule{
+    grid-row: 2;
+    width:100%;
+    border:none;
+    border-bottom: 0.5px solid #cac7c7;
+}
+.preposition-schedule{
+    grid-row: 2;
+    margin:auto;
+}
+.btn-submit{
+    grid-row:4;
+    grid-column: span 2 ;
+    padding: 1% 1.3% 1% 1.3%;
+    border: none;
+    background-color: var(--Azul-claro);
+    color: white;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.calendar{
+    width: 50%;
+    height: 100%;
+    background-color: #efefef;
+    top: 50%;
+    align-self: center;
+}
+.ec-toolbar{
+    background-color: var(--Azul);
+    margin-bottom: 0.2em !important;
+    padding: 1% ;
+    color: white;
+}
+.ec-title{
+    font-family: montserrat-regular;
+    font-size: 1.3rem;
+}
+.ec-header, .ec-all-day, .ec-body, .ec-days, .ec-day{
+    border: 0px !important;
+    cursor: pointer;
+    font-family: montserrat-regular;
+}
+.ec-button:not(:disabled):hover, .ec-button.ec-active{
+    color: black !important;
 }
