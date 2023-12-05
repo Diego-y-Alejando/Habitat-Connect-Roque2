@@ -15,6 +15,16 @@ body{
     margin-top: 3%;
     color: #6e4734;
     width: 40%;
+    position: relative;
+}
+.backward-icon{
+    width: 5%;
+    height: auto;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+
+
 }
 .app-title{
     width: min-content;
@@ -91,6 +101,7 @@ body{
     -o-border-radius: 25px;
     cursor: pointer;
 }
+/* VENTANA MODAL DEL CALENDARIO Y EL FORMULARIO */
 .container-booking-form-calendar{
     position: absolute;
     width: 100%;
