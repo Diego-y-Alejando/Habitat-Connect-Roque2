@@ -82,5 +82,75 @@ document.addEventListener("DOMContentLoaded", function() {
             }        
         }
     });
+    let bussinesCenterCalendar = new Calendar({
+        target: document.getElementById('bussines-center-calendar'),
+        props: {
+            plugins: [listDay,dayGrid,resourceGrid,TimeGrid,Interaction],
+            options: {
+                view: 'dayGridMonth',
+                events:arrEvents,
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                dateClick: function(info) {
+                    // Función que se ejecuta cuando se hace clic en una fecha
+                    alert('Fecha seleccionada: ' + info.dateStr);
+                },
+                eventClick: function(info) {
+                    // Función que se ejecuta cuando se hace clic en un evento
+                    console.log('Evento seleccionado: ' ,info);
+                },
+                eventContent:function(info){
+                    const end_date = new Date(info.event.end);
+                    const end_time = `${end_date.getHours()}:${end_date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    const start_date = new Date(info.event.start);
+                    const start_time = `${start_date.getHours()}:${start_date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    return `${start_time}-${end_time}`;
+                },
+                datesAboveResources:true,
+                dragScroll:true,
+
+            }        
+        }
+    });
+    let socialHallCalendar = new Calendar({
+        target: document.getElementById('social-hall-calendar'),
+        props: {
+            plugins: [listDay,dayGrid,resourceGrid,TimeGrid,Interaction],
+            options: {
+                view: 'dayGridMonth',
+                events:arrEvents,
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                dateClick: function(info) {
+                    // Función que se ejecuta cuando se hace clic en una fecha
+                    alert('Fecha seleccionada: ' + info.dateStr);
+                },
+                eventClick: function(info) {
+                    // Función que se ejecuta cuando se hace clic en un evento
+                    console.log('Evento seleccionado: ' ,info);
+                },
+                eventContent:function(info){
+                    const end_date = new Date(info.event.end);
+                    const end_time = `${end_date.getHours()}:${end_date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    const start_date = new Date(info.event.start);
+                    const start_time = `${start_date.getHours()}:${start_date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    return `${start_time}-${end_time}`;
+                },
+                datesAboveResources:true,
+                dragScroll:true,
+
+            }        
+        }
+    });
    
 })

@@ -89,19 +89,21 @@ body{
     -moz-border-radius: 25px;
     -ms-border-radius: 25px;
     -o-border-radius: 25px;
+    cursor: pointer;
 }
 .container-booking-form-calendar{
     position: absolute;
     width: 100%;
     height:100% ;
-    overflow: hidden;
+    opacity: 0;
+    overflow-x: hidden;
     background-color: rgba(16,94,245,0.5);
-    display: flex;
+
     justify-content: center;
     left: 0;
     right: 0;
     top: 0;
-  
+    display: none;
 }
 .siblings-form-calendar{
     position: relative;
@@ -191,6 +193,9 @@ body{
     background-color: #efefef;
     top: 50%;
     align-self: center;
+}
+.ec{
+    background-color: #efefef !important;
 }
 .ec-toolbar{
     background-color: var(--Azul);
