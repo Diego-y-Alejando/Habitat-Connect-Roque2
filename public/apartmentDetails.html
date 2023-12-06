@@ -59,8 +59,11 @@
                         </p>
                         <label for="family" class="label-input">
                             <img src="./icons/tower.png" alt="Apartamento" id="apartment-icon">
-                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-form bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                            <a href="" id="btn-family-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-family">
+                                <img src="./icons/cancel_icon.png" alt="edit" id="img-save-family" class="hide">
+                            </a>
                         </label>
                     </div>
                     <div class="apt-info montserrat-light">
@@ -78,14 +81,19 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form">
+                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-owner-name" disabled autocomplete="off">
                         </label>
 
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form">
+                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-owner-phone" disabled autocomplete="off">
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
+                        <div class="edit">
+                            <a href="" id="btn-owner-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-owner">
+                                <img src="./icons/cancel_icon.png" alt="edit" id="img-save-owner" class="hide">
+                            </a>
+                        </div>
                     </div>
 
                     <div class="apt-info">
@@ -94,13 +102,18 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form">
+                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled>
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form ">
+                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled>
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
+                        <div class="edit" >
+                            <a href="" id="btn-tenant-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-tenant">
+                                <img src="./icons/cancel_icon.png" alt="edit" id="img-save-tenant" class="hide">
+                            </a>
+                        </div>
                     </div>
                 </li>
                 <li class="container-item" id="entry-stickers">
@@ -116,7 +129,12 @@
 
                         <label for="" class="label-input">
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <div class="edit">
+                                <a href="" id="btn-edit-parking-stikers">
+                                    <img src="./icons/cancel_icon" alt="Icon-Edit" id="img-edit-parking-stickers">
+                                    <img src="./icons/cancel_icon.png" alt="edit" id="img-save-parking-stickers" class="hide">
+                                </a>
+                            </div>
                         </label>
 
                         <div class="info-details montserrat-light">
@@ -127,10 +145,16 @@
 
                         <label for="" class="label-input">
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <div class="edit">
+                                <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            </div>
                         </label>
 
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
+                        <div class="edit" >
+                            <a href="">
+                                <img src="./icons/editar-texto.png" alt="edit">
+                            </a>
+                        </div>
                     </div>
 
                     <div class="apt-info">
@@ -145,9 +169,15 @@
 
                         <label for="" class="label-input">
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <div class="edit">
+                                <a href="">
+                                <img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family">
+                            </a>
+                            </div>
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
+                        <div class="edit" >
+                            <img src="./icons/editar-texto.png" alt="edit">
+                        </div>
                     </div>
                 </li>
                 <li class="container-item" id="maintenance">

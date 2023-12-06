@@ -44,9 +44,13 @@
     width: 25%;
     margin-right: 3%;
 }
-#edit-family{
+#btn-family-edit{
     width: 25px;
 }
+#btn-family-edit img{
+    width: 25px;
+}
+
 
 .label-input{
     width: 100%;
