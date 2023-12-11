@@ -102,11 +102,11 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled>
+                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled autocomplete="off">
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled>
+                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
                         </label>
                         <div class="edit" >
                             <a href="" id="btn-tenant-edit">
@@ -128,11 +128,10 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
                             <div class="edit">
-                                <a href="" id="btn-edit-parking-stikers">
-                                    <img src="./icons/cancel_icon" alt="Icon-Edit" id="img-edit-parking-stickers">
-                                    <img src="./icons/cancel_icon.png" alt="edit" id="img-save-parking-stickers" class="hide">
+                                <a href="" id="btn-add-parking-stikers" class="enabled">
+                                    <img src="./icons/cancel_icon.png" alt="Icon-Editt" id="img-add-parking-stickers" >
                                 </a>
                             </div>
                         </label>
@@ -144,15 +143,18 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-slot" disabled autocomplete="off">
                             <div class="edit">
-                                <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                                <a href="" id="btn-add-parking-slot" class="enabled">
+                                    <img src="./icons/cancel_icon.png" alt="Icon-Edit" id="img-add-parking-slot" >
+                                </a>
                             </div>
                         </label>
 
                         <div class="edit" >
-                            <a href="">
-                                <img src="./icons/editar-texto.png" alt="edit">
+                            <a href="" id="btn-edit-parking-info">
+                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-parking-info">
+                                <img src="./icons/cancel_icon.png" alt="edit" id="img-save-parking-info" class="hide">
                             </a>
                         </div>
                     </div>
@@ -168,15 +170,18 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light">
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-walking-info" disabled autocomplete="off">
                             <div class="edit">
-                                <a href="">
-                                <img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family">
+                                <a href="" class="enabled" id="btn-add-walking-info">
+                                <img src="./icons/cancel_icon.png" alt="Icon-Edit">
                             </a>
                             </div>
                         </label>
                         <div class="edit" >
-                            <img src="./icons/editar-texto.png" alt="edit">
+                            <a href="" id="btn-edit-walking-info">
+                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-walking-info">
+                                <img src="./icons/cancel_icon.png" alt="edit" id="img-save-walking-info" class="hide">
+                            </a>
                         </div>
                     </div>
                 </li>

@@ -62,4 +62,75 @@ $(document).ready(function() {
             //aqui se actualizaria en BD
         }
     });
+
+    $("#btn-add-parking-stikers").click(function(event) {
+        event.preventDefault();
+        if($("#btn-add-parking-stikers").hasClass("enabled")){
+            alert("NO");
+        }else{
+            alert("SI");
+        }
+        
+    });
+
+    $("#btn-add-parking-slot").click(function(event) {
+        event.preventDefault();
+        if($("#btn-add-parking-slot").hasClass("enabled")){
+            alert("NO");
+        }else{
+            alert("SI");
+        }
+    });
+
+    
+
+    $("#btn-edit-parking-info").click(function(event) {
+        event.preventDefault();
+
+        if($("#img-save-parking-info").hasClass("hide")){
+            $("#img-edit-parking-info").addClass("hide");
+            $("#img-save-parking-info").removeClass("hide");
+            $("#input-parking-stickers").removeAttr("disabled");
+            $("#input-parking-slot").removeAttr("disabled");
+            $("#btn-add-parking-stikers").removeClass("enabled");
+            $("#btn-add-parking-slot").removeClass("enabled");
+        }
+        else{
+            $("#img-save-parking-info").addClass("hide");
+            $("#img-edit-parking-info").removeClass("hide");
+            $("#input-parking-stickers").attr("disabled", "disabled");
+            $("#input-parking-slot").attr("disabled", "disabled");
+            $("#btn-add-parking-stikers").addClass("enabled");
+            $("#btn-add-parking-slot").addClass("enabled");
+            //aqui se actualizaria en BD
+        }
+    });
+
+    $("#btn-add-walking-info").click(function(event) {
+        event.preventDefault();
+        if($("#btn-add-walking-info").hasClass("enabled")){
+            alert("NO");
+        }else{
+            alert("SI");
+        }
+    });
+
+    $("#btn-edit-walking-info").click(function(event) {
+        event.preventDefault();
+
+        if($("#img-save-walking-info").hasClass("hide")){
+            $("#img-edit-walking-info").addClass("hide");
+            $("#img-save-walking-info").removeClass("hide");
+            $("#input-walking-info").removeAttr("disabled");
+            $("#btn-add-walking-info").removeClass("enabled");
+        }
+        else{
+            $("#img-save-walking-info").addClass("hide");
+            $("#img-edit-walking-info").removeClass("hide");
+            $("#input-walking-info").attr("disabled", "disabled");
+            $("#btn-add-walking-info").addClass("enabled");
+            //aqui se actualizaria en BD
+        }
+    });
+
 });

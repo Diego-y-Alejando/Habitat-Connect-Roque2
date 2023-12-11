@@ -25,10 +25,12 @@
                 </select>
                 
                 <label for="email" class="label-credentials montserrat-light white">Correo Electrónico</label>
-                <input id="email" type="email" placeholder="Correo Electrónico" class="input-credentials">
+                <input id="input-email" type="email" placeholder="Correo Electrónico" class="input-credentials" autocomplete="off">
+                <p id="error-input-email" class="input-error hide"></p>
 
                 <label for="password" class="label-credentials montserrat-light white" >Contraseña</label>
-                <input id="password" type="password" placeholder="Contraseña" class="input-credentials">
+                <input id="input-password" type="password" placeholder="Contraseña" class="input-credentials" autocomplete="off">
+                <p id="error-input-password" class="input-error hide"></p>
 
                 <section id="password-details">
                     <label>
@@ -74,5 +76,10 @@
     <aside>
         <div class="building-image">
     </aside>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="./js/validators.js"></script>
+    <script type="module" src="./js/login.js"></script>
+    
 </body>
 </html>
