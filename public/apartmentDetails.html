@@ -18,7 +18,7 @@
         <div class="bar"></div>
     </div>
 
-    <nav class="menu" id="secondary-menu"">
+    <nav class="menu menu-hide">
         <a class="item-menu profile-item">
             <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
             Hola, administrador 
@@ -32,15 +32,29 @@
     <main class="container-content">
         
         <section>
-            <nav class="secondary-menu menu" id="menu">
+            <nav class="secondary-menu sub-menu" id="menu">
+
                 <a class="item-menu profile-item" href="./controlPanel.html">
                     <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
                     Regresar
                 </a>
-                <a class="item-menu subitem-menu selected-item" href="#" data-target="apartment-data">Datos del apto</a>
-                <a class="item-menu subitem-menu" href="#" data-target="ocupaccy-info">Propietario e inquilino</a>
-                <a class="item-menu subitem-menu" href="#" data-target="entry-stickers">Stickers de entrada</a>
-                <a class="item-menu subitem-menu" href="#" data-target="maintenance">Mantenimiento</a>
+                
+                <a class="subitem-menu item-sub-menu selected-item-sub-menu" href="#" data-target="apartment-data">
+                    Datos del apto
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="ocupaccy-info">
+                    Propietario e inquilino
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="entry-stickers">
+                    Stickers de entrada
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="maintenance">
+                    Mantenimiento
+                </a>
+                <span class="selected-item-line"></span>
             </nav>
         </section>
 
@@ -48,7 +62,8 @@
             <ul class="container-list">
 
                 <li class="container-item" id="apartment-data">
-                    <div class="apt-details">
+
+                    <section class="apt-details">
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
                             Primer nivel
@@ -65,18 +80,20 @@
                                 <img src="./icons/cancel_icon.png" alt="edit" id="img-save-family" class="hide">
                             </a>
                         </label>
-                    </div>
-                    <div class="apt-info montserrat-light">
+                    </section>
+
+                    <section class="apt-info montserrat-light">
                         <p class="center bold black">Caracteristicas</p>
                         <p class="infor-row gray ">Area <span>51 mts²</span></p>
                         <p class="infor-row gray ">Cuota extraordinaria <span>Q150.00</span></p>
                         <p class="infor-row gray ">Mantenimiento <span>Q150.00</span></p>
                         <p class="infor-row gray ">Mora <span>Q150.00</span></p>
-                    </div>
+                    </section>
                 </li>
 
                 <li class="container-item" id="ocupaccy-info">
-                    <div class="apt-details">
+
+                    <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de propietario</p>
                         
                         <label for="" class="montserrat-light">
@@ -94,9 +111,9 @@
                                 <img src="./icons/cancel_icon.png" alt="edit" id="img-save-owner" class="hide">
                             </a>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="apt-info">
+                    <section class="apt-info">
 
                         <p class="montserrat-light center bold">Datos de Inquilino</p>
                         
@@ -114,11 +131,12 @@
                                 <img src="./icons/cancel_icon.png" alt="edit" id="img-save-tenant" class="hide">
                             </a>
                         </div>
-                    </div>
+                    </section>
+
                 </li>
                 <li class="container-item" id="entry-stickers">
 
-                    <div class="apt-details">
+                    <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de parqueo</p>
                         
                         <div class="info-details montserrat-light">
@@ -157,9 +175,9 @@
                                 <img src="./icons/cancel_icon.png" alt="edit" id="img-save-parking-info" class="hide">
                             </a>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="apt-info">
+                    <section class="apt-info">
 
                         <p class="montserrat-light center bold">Datos de entrada peatonal</p>
                         
@@ -183,10 +201,30 @@
                                 <img src="./icons/cancel_icon.png" alt="edit" id="img-save-walking-info" class="hide">
                             </a>
                         </div>
-                    </div>
+                    </section>
                 </li>
                 <li class="container-item" id="maintenance">
-                    4
+                    <section class="information-maintance-status">
+                        <div class="circle circle-red"></div>
+                        <p>Impago</p>
+                        <div class="circle circle-yellow"></div>
+                        <p>Pago con Moroso</p>
+                        <div class="circle circle-green"></div>
+                        <p>Pago en tiempo</p>
+                    </section>
+                    <section class="maintance-calendar">
+                        <div class="calendar-nav">
+                            <div class="calendar-nav-item">
+                                <img src="./icons/left-arrow.png" alt="left-arrow" class="calendar-nav-icon">
+                            </div>
+                            <div class="calendar-nav-item">
+                                <p class="calendar-nav-title">2024</p>
+                            </div>
+                            <div class="calendar-nav-item">
+                                <img src="./icons/right-arrow.png" alt="right-arrow" class="calendar-nav-icon">
+                            </div>
+                        </div>
+                    </section>
                 </li>
             </ul>
                 
