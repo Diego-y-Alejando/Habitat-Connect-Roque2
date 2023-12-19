@@ -3,6 +3,7 @@ $(document).ready(function() {
     loadSuppliers();
     loadRecordsForPay();
 
+
     $(".container-item").hide();
     $("#suppliers").show();
     $(".subitem-menu").click(function(event) {
@@ -17,23 +18,37 @@ $(document).ready(function() {
     $(".supplier-name").click(function(event) {
         event.preventDefault();
         $("#edit-supplier").removeClass("hide");
+        $("#edit-supplier").animate({
+            opacity:1
+        }),400;
         $("#input-name-supplier").attr('placeholder', $(this).text());
     });
 
     $(".record-supplier-name").click(function(event) {  
         event.preventDefault();
         $("#edit-record").removeClass("hide");
+        $("#edit-record").animate({
+            opacity:1
+        }),400;
         $("#record-supplier").attr('placeholder', $(this).text());
     });
 
     $("#Return-suppliers").click(function(event) {
         event.preventDefault();
-        $("#edit-supplier").addClass("hide");
+        $("#edit-supplier").animate({
+            opacity:0
+        },400, function() {
+            $("#edit-supplier").addClass("hide");
+        });
     });
 
     $("#Return-record").click(function(event) { 
         event.preventDefault();
-        $("#edit-record").addClass("hide");
+        $("#edit-record").animate({
+            opacity:0
+        },400, function() {
+            $("#edit-record").addClass("hide");
+        });
     });
 
     $("#btn-edit-supplier").click(function(event) {
@@ -66,9 +81,25 @@ $(document).ready(function() {
 
     $("#settings-icon").click(function(event) {
         event.preventDefault();
-        $("#filter-record-for-pay").toggleClass("hide");
-        $("#filter-record-for-pay")
+        if($("#filter-record-for-pay").hasClass("hide")){
+            $("#filter-record-for-pay").removeClass("hide");
+            $("#filter-record-for-pay").css({
+                height: "0px"
+            }).animate({
+                height: "649px"
+            },800);
+        }else{
+            $("#filter-record-for-pay").css({
+                height: "649px"
+            }).animate({
+                height: "0px"
+            },800, function() {
+                $("#filter-record-for-pay").addClass("hide");
+            });
+        }
     });
+
+
 });
 
 function loadSuppliers() {

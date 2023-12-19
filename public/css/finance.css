@@ -67,6 +67,7 @@ td{
     align-items: center;
     background-color: #63636375;
     z-index: 100;
+    opacity: 0;
 }
 
 .finance-card {
@@ -135,6 +136,7 @@ td{
     margin-top: 50px;
     border-radius: 10px;
     position: absolute;
+    height: 0px;
 }
 #form-filter-record{
     width: 100%;
