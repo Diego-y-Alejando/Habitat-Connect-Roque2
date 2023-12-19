@@ -14,9 +14,6 @@
 .beige{
     color: var(--Beige)!important;
 }
-.dark-blue{
-    color: var(--Azul-oscuro);
-}
 .center{
     text-align: center;
 }
@@ -28,4 +25,7 @@
 }
 .dark-blue{
     color: var(--Azul-oscuro)!important;
+}
+.light-blue{
+    color: var(--Azul-claro)!important;
 }
