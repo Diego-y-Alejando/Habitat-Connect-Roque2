@@ -7,6 +7,7 @@ class Server {
         this.app=express();
         this.middlewares();
         this.adminPath='/admin'
+        this.userPath='/user'
         this.routes()
         this.port =process.env.PORT
     }
@@ -26,6 +27,7 @@ class Server {
     }
     routes(){
         this.app.use(this.adminPath, require('../routes/admin.routes'));
+        this.app.use(this.userPath, require('../routes/user.routes'));
     }
     listen(){
         this.app.listen(this.port,()=>{

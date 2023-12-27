@@ -49,14 +49,6 @@ const accounts_payable= sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:false,
         },
-        service_description:{
-            type:DataTypes.CHAR,
-            validate:{
-                is:/^[a-zA-ZñÑ0-9.,\s]+$/,
-                len:[0,180],
-                notEmpty:true,
-            }
-        },
         // llaves foraneas 
         // id_bank_account
         id_bank_account:{

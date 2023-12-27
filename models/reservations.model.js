@@ -52,6 +52,13 @@ const reservations= sequelizeObj.define(
                 is:/^\d{4}-\d{4}$/
             }
         },
+        reserv_state:{
+            type:DataTypes.TINYINT,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        },
         // llaves foraneas
         id_apartament_reservations:{
             type:DataTypes.INTEGER,
