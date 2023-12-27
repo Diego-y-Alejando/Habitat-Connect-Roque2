@@ -114,11 +114,19 @@ h3{
 }
 #password-details{
     display: flex;
+    align-content: center;
     justify-content: space-between;
+    align-items: center;
+    justify-items: stretch;
     flex-direction: row;
-    align-items: flex-start;
-    font-size: 0.8rem;
+    font-size: 14px;
     font-family: montserrat-light;
+    height: 20px;
+}
+#password-details label{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
 }
 
 #password-details a{
@@ -147,7 +155,7 @@ h3{
 
 #buttonon-login:hover {
     background-color: var(--Cafe);
-    color: var(--Beige);
+    opacity: 0.9;
     
 }
 
@@ -256,6 +264,27 @@ h3{
     display: none;
 }
 
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--white); 
+    border: 2px solid var(--Beige);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer; 
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--Beige); 
+}
+
+input[type="checkbox"]:hover {
+    opacity: 0.7; 
+}
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     body {
