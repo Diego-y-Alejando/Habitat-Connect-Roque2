@@ -49,7 +49,7 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
         validationHour(start_reserv_time,'inicio de reserva');
         validationHour(end_reserv_time,'cierre de reserva');
         compareHours(start_reserv_time,end_reserv_time,false,'No puedes reservar mas de 6 horas una amenidad ')
-        validateName(renter_name,65)
+        validateName(renter_name,65);
         validatePhoneNumber(renter_phone)
         ValidationIdOrLevel('id del apartamento que reserva',id_apartament_reservations)
         ValidationIdOrLevel('id de la amenidad',id_amenity_reserved);
