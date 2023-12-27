@@ -1,5 +1,6 @@
 const {request,response}= require('express');
 const user = require('../models/user.model');
+const path = require('path');
 const {
     jwtGenerate,
     hashingPassword,
@@ -7,7 +8,7 @@ const {
 }= require('../helpers/helpers')
 const loggin = async (req= request , res = response)=>{
     try {
-        const token = await jwtGenerate(req.userData.user_id,req.userData.user_type,process.env.SECRETKEYAUTH)
+        const token = await jwtGenerate(req.userData.user_id,req.userData.user_type,process.env.SECRETKEYAUTH,'4h')
         return res.status(200).json({
             msg:'Has iniciado sesion',
             ok:true,
@@ -20,7 +21,12 @@ const loggin = async (req= request , res = response)=>{
         })
     }
 }
-
+const frontendLoggin = (req = request , res = response)=>{
+    const logginHTML = path.join(__dirname, '..','public', 'login.html')
+    console.log(logginHTML);
+    res.sendFile(logginHTML);
+}
 module.exports= {
-    loggin
+    loggin,
+    frontendLoggin
 }

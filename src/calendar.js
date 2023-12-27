@@ -76,12 +76,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     
                     return `${start_time}-${end_time}`;
                 },
+                lazyFetching:false,
+                loading:function (isloading) {
+                    console.log(isloading);
+                },
                 datesAboveResources:true,
                 dragScroll:true,
 
             }        
         }
     });
+    console.log('este es la fecha ',deckAzoteaCalendar.getOption('date'))
     let bussinesCenterCalendar = new Calendar({
         target: document.getElementById('bussines-center-calendar'),
         props: {

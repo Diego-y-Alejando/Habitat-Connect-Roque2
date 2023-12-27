@@ -21,51 +21,51 @@ const maintenance_record = sequelizeObj.define(
             },
         },
         january:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
-        frebuary:{
-            type:DataTypes.TINYINT,
+        february:{
+            type:DataTypes.JSON,
             allowNull:false,
         },
         march:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         april:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         may:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         june:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         juli:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         august:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         september:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         october:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         november:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         december:{
-            type:DataTypes.TINYINT,
+            type:DataTypes.JSON,
             allowNull:false,
         },
         id_apartament_maintenance:{

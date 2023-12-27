@@ -35,9 +35,10 @@ const updateAmenityData = async (req = request , res = response)=>{
         })
     }
 }
+
 module.exports ={
     getAmenities,
-    updateAmenityData
+    updateAmenityData,
 }
 
 

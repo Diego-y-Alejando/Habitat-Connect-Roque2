@@ -3,11 +3,13 @@ const router = Router()
 
 
 const {
-    loggin
+    loggin,
+    frontendLoggin
 }= require('../controllers/loggin.controllers');
 const {
     logginValidations
 }= require('../middlewares/logginValidations.middlewares');
+router.get('/frontend/loggin',frontendLoggin);
 router.post('/loggin',logginValidations,loggin);
 /*=======================
     RUTAS DE APARTAMENTO 
@@ -52,10 +54,9 @@ const {
     updateMaintenance
 }= require('../controllers/maintenanceRecord.controllers');
 router.get('/maintenance/apartament/',getMaintenanceApartamentValidations,getMaintenanceApartament);
-// preguntar sobre la actualizacion de mantenimiento 
-router.post('/maintenance/',updateMaintenanceValidations, updateMaintenance);
+router.post('/update/apartament/maintenance/:apartament_id',updateMaintenanceValidations, updateMaintenance);
 /*=======================
-    RUTAS DE AMENIDADES
+    RUTAS DE AMENIDADES para el admin
 =========================*/
 
 const {
@@ -71,18 +72,10 @@ router.get('/amenities/',getAmenitiesValidations,getAmenities);
 router.post('/update/amenity/data/:amenity_id',updateAmenityDataValidations,updateAmenityData);
 router.get('/amenities/for/booking/',getAmenitiesForBookingValidations,getAmenities)
 /*=======================
-    RUTAS DE RESERVAS
+    Obtener el link para la reserva del usuario 
 =========================*/
-const  {
-    getLinkForBookingValidations,
-    bookingAmenityValidations,
-    
-}= require('../middlewares/reservations.middlewares');
-const {
-    getLinkForBooking,
-    bookingAmenity
-}= require('../controllers/reservations.controllers')
-router.get('/link/for/booking/:apartament_id',getLinkForBookingValidations,getLinkForBooking);
-router.post('/booking/amenity/',bookingAmenityValidations,bookingAmenity);
-
+const  {getLinkForBookingValidations,getEventsOfAmenityValidationsAdmin}= require('../middlewares/reservations.middlewares');
+const {getLinkForBooking,getEventsOfAmenity}= require('../controllers/reservations.controllers')
+router.get('/get/link/for/booking/:apartament_id',getLinkForBookingValidations,getLinkForBooking);
+router.get('/events/',getEventsOfAmenityValidationsAdmin,getEventsOfAmenity);
 module.exports=router;

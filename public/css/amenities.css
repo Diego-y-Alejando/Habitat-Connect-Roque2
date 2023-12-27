@@ -23,8 +23,6 @@ body{
     position: absolute;
     top: 5%;
     left: 5%;
-
-
 }
 .app-title{
     width: min-content;
@@ -157,16 +155,19 @@ body{
     width: 75%;
     display: grid;
     font-family: montserrat-regular;
+    font-size: 18px;
 }
-
 .booking-input{
     outline: none;
     border: none;
     border-bottom: 0.5px solid #cac7c7;
     margin-top:4%;
+    font-family: montserrat-light;
+    font-size: 18px;
 }
 .booking-input::placeholder{
     font-family: montserrat-light;
+    font-size: 18px;
 }
 .label-booking-schedule{
     grid-template-columns: 45% 15% 45%;
@@ -180,6 +181,8 @@ body{
     width:100%;
     border:none;
     border-bottom: 0.5px solid #cac7c7;
+    font-size: 18px;
+   font-family: montserrat-light;
 }
 .preposition-schedule{
     grid-row: 2;

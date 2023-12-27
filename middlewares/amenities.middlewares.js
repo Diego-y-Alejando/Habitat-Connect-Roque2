@@ -50,10 +50,11 @@ const getAmenitiesForBookingValidations = async (req = request , res = response 
         });
     }
 }
+
 module.exports ={
     getAmenitiesValidations,
     updateAmenityDataValidations,
-    getAmenitiesForBookingValidations
+    getAmenitiesForBookingValidations,
 }
 
 const updateAmenityDataValidationsBody =(body,start_time,end_time)=>{

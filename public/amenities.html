@@ -115,11 +115,17 @@
                                 <option>08:00</option>
                             </select>
                            <span class="preposition-schedule">a</span>
-                            <select class="dropdown-schedule" name="end_reserv_time" id="end_reserv_time">
-                                <option>Fin</option>
-                                <option>08:00</option>
-                                <option>08:00</option>
-                            </select>
+                        
+            
+                            <input list="opciones" id="myInput" name="myInput" type="time" placeholder="Hola"/>
+
+                            <datalist id="opciones">
+                            <option value="Opción 1">
+                            <option value="Opción 2">
+                            <option value="Opción 3">
+                            <!-- Agrega más opciones según sea necesario -->
+                            </datalist>
+
                         </label>
                        <input type="submit" class="btn-submit" value="Registrar reserva">
                     </form>

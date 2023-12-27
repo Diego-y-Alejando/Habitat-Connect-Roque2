@@ -264,6 +264,9 @@ const compareHours =(start_time,end_time,flag,message)=>{
     const finMS = (end_hour * 60 + end_minutes) * 60 * 1000;
 
     const diferenciaHoras = (finMS - inicioMS)/3600000;
+    if (diferenciaHoras<0) {
+        throw new Error('Asegúrate de que la hora de inicio sea anterior a la hora de finalización')
+    }
     if (flag) {
       if (diferenciaHoras<10) {
         throw new Error(message)
@@ -274,6 +277,24 @@ const compareHours =(start_time,end_time,flag,message)=>{
       }
     }
 }
+const ValidationPaidStatus=(paid_status)=>{
+  const regexPaidStatus=/^1|2|3/
+  if (!paid_status) {
+    throw new Error('El estado de pago no puede venir vacío')
+  }
+  if (!regexPaidStatus.test(paid_status)) {
+    throw new Error('El estado de pago tiene caracteres inválidos')
+  }
+}
+const validationMonth= (month)=>{
+  const regexMonth =/^january|february|march|april|may|june|juli|august|september|october|november|december/
+  if (!month) {
+      throw new Error('El mes no puede venir vacío')
+  }if (!regexMonth.test(month)) {
+      throw new Error('El valor del mes no es correcto')
+  }
+}
+
 module.exports ={
     validateName,
     validateLastName,
@@ -301,5 +322,7 @@ module.exports ={
     validationYear,
     validationCost,
     validationHour,
-    compareHours
+    compareHours,
+    ValidationPaidStatus,
+    validationMonth
 }
