@@ -10,24 +10,50 @@
     <header>
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="menu menu-hide">
+        <a class="item-menu profile-item">
+            <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
+            Hola, adnmistrador
+        </a>
+        <a class="item-menu selected-item" href="./controlPanel.html">Inicio</a>
+        <a class="item-menu" href="">Amenidades</a>
+        <a class="item-menu" href="">Finanzas</a>
+        <a class="item-menu" href="">Configuración</a>
+    </nav>
+
     <main class="container-content">
-        <nav class="menu" id="menu">
-            <a class="item-menu profile-item" href="#">
-                <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
-                Regresar
-            </a>
-            <a class="item-menu selected-item" href="">Inicio</a>
-            <a class="item-menu" href="">Amenidades</a>
-            <a class="item-menu" href="">Finanzas</a>
-            <a class="item-menu" href="">Configuración</a>
-        </nav>
         
         <section>
-            <nav class="secondary-menu menu" id="secondary-menu">
-                <a class="item-menu subitem-menu selected-item" href="#" data-target="apartment-data">Datos del apto</a>
-                <a class="item-menu subitem-menu" href="#" data-target="ocupaccy-info">Propietario e inquilino</a>
-                <a class="item-menu subitem-menu" href="#" data-target="entry-stickers">Stickers de entrada</a>
-                <a class="item-menu subitem-menu" href="#" data-target="maintenance">Mantenimiento</a>
+            <nav class="secondary-menu sub-menu" id="menu">
+
+                <a class="item-menu profile-item" href="./controlPanel.html">
+                    <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
+                    Regresar
+                </a>
+                
+                <a class="subitem-menu item-sub-menu selected-item-sub-menu" href="#" data-target="apartment-data">
+                    Datos del apto
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="ocupaccy-info">
+                    Propietario e inquilino
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="entry-stickers">
+                    Stickers de entrada
+                </a>
+                
+                <a class="subitem-menu item-sub-menu" href="#" data-target="maintenance">
+                    Mantenimiento
+                </a>
+                <span class="selected-item-line"></span>
             </nav>
         </section>
 
@@ -35,7 +61,8 @@
             <ul class="container-list">
 
                 <li class="container-item" id="apartment-data">
-                    <div class="apt-details">
+
+                    <section class="apt-details">
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
                             Primer nivel
@@ -46,53 +73,69 @@
                         </p>
                         <label for="family" class="label-input">
                             <img src="./icons/tower.png" alt="Apartamento" id="apartment-icon">
-                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-with-icon bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                            <a href="" id="btn-family-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-family">
+                                <img src="./icons/save_icon.png" alt="edit" id="img-save-family" class="hide">
+                            </a>
                         </label>
-                    </div>
-                    <div class="apt-info montserrat-light">
+                    </section>
+
+                    <section class="apt-info montserrat-light">
                         <p class="center bold black">Caracteristicas</p>
                         <p class="infor-row gray ">Area <span>51 mts²</span></p>
                         <p class="infor-row gray ">Cuota extraordinaria <span>Q150.00</span></p>
                         <p class="infor-row gray ">Mantenimiento <span>Q150.00</span></p>
                         <p class="infor-row gray ">Mora <span>Q150.00</span></p>
-                    </div>
+                    </section>
                 </li>
 
                 <li class="container-item" id="ocupaccy-info">
-                    <div class="apt-details">
+
+                    <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de propietario</p>
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-with-icon">
+                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-owner-name" disabled autocomplete="off">
                         </label>
 
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-with-icon">
+                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-owner-phone" disabled autocomplete="off">
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
-                    </div>
+                        <div class="edit">
+                            <a href="" id="btn-owner-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-owner">
+                                <img src="./icons/save_icon.png" alt="edit" id="img-save-owner" class="hide">
+                            </a>
+                        </div>
+                    </section>
 
-                    <div class="apt-info">
+                    <section class="apt-info">
 
                         <p class="montserrat-light center bold">Datos de Inquilino</p>
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-with-icon">
+                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled autocomplete="off">
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-with-icon">
+                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
-                    </div>
+                        <div class="edit" >
+                            <a href="" id="btn-tenant-edit">
+                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-tenant">
+                                <img src="./icons/save_icon.png" alt="edit" id="img-save-tenant" class="hide">
+                            </a>
+                        </div>
+                    </section>
+
                 </li>
                 <li class="container-item" id="entry-stickers">
 
-                    <div class="apt-details">
+                    <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de parqueo</p>
                         
                         <div class="info-details montserrat-light">
@@ -102,8 +145,12 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-with-icon bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
+                            <div class="edit">
+                                <a href="" id="btn-add-parking-stikers" class="enabled">
+                                    <img src="./icons/save_icon.png" alt="Icon-Editt" id="img-add-parking-stickers" >
+                                </a>
+                            </div>
                         </label>
 
                         <div class="info-details montserrat-light">
@@ -113,14 +160,23 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-with-icon bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-slot" disabled autocomplete="off">
+                            <div class="edit">
+                                <a href="" id="btn-add-parking-slot" class="enabled">
+                                    <img src="./icons/save_icon.png" alt="Icon-Edit" id="img-add-parking-slot" >
+                                </a>
+                            </div>
                         </label>
 
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
-                    </div>
+                        <div class="edit" >
+                            <a href="" id="btn-edit-parking-info">
+                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-parking-info">
+                                <img src="./icons/save_icon.png" alt="edit" id="img-save-parking-info" class="hide">
+                            </a>
+                        </div>
+                    </section>
 
-                    <div class="apt-info">
+                    <section class="apt-info">
 
                         <p class="montserrat-light center bold">Datos de entrada peatonal</p>
                         
@@ -131,21 +187,100 @@
                         </div>
 
                         <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-with-icon bold montserrat-light">
-                            <a href=""><img src="./icons/cancel_icon.png" alt="Icon-Edit" id="edit-family"></a>
+                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-walking-info" disabled autocomplete="off">
+                            <div class="edit">
+                                <a href="" class="enabled" id="btn-add-walking-info">
+                                <img src="./icons/save_icon.png" alt="Icon-Edit">
+                            </a>
+                            </div>
                         </label>
-                        <div class="edit" ><img src="./icons/cancel_icon.png" alt="edit"></div>
-                    </div>
+                        <div class="edit" >
+                            <a href="" id="btn-edit-walking-info">
+                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-walking-info">
+                                <img src="./icons/save_icon.png" alt="edit" id="img-save-walking-info" class="hide">
+                            </a>
+                        </div>
+                    </section>
                 </li>
-                <li class="container-item" id="maintenance">
-                    4
+                <li class="container-item montserrat-light" id="maintenance">
+                    <section class="information-maintance-status">
+                        <div class="circle circle-red"></div>
+                        <p>Impago</p>
+                        <div class="circle circle-yellow"></div>
+                        <p>Pago con Moroso</p>
+                        <div class="circle circle-green"></div>
+                        <p>Pago en tiempo</p>
+                    </section>
+                    <section class="maintance-calendar">
+                        <div class="calendar-nav grid-column-6">
+                            <div class="calendar-nav-item" id="calendar-go-back">
+                                <p id="calendar-go-back">&lt</p>
+                            </div>
+                            <div class="calendar-nav-item">
+                                <p class="calendar-nav-title">2024</p>
+                            </div>
+                            <div class="calendar-nav-item" id="calendar-go-next">
+                                <p id="calendar-go-next">&gt</p>
+                            </div>
+                        </div>
+                        <div class="calendar-month">
+                            ENE
+                            <div class="circle circle-red"></div>
+                        </div>
+                        <div class="calendar-month">
+                            FEB
+                            <div class="circle circle-yellow"></div>
+                        </div>
+                        <div class="calendar-month">
+                            MAR
+                            <div class="circle circle-yellow"></div>
+                        </div>
+                        <div class="calendar-month">
+                            ABR
+                            <div class="circle circle-green"></div>
+                        </div>
+                        <div class="calendar-month">
+                            MAY
+                            <div class="circle circle-green"></div>
+                        </div>
+                        <div class="calendar-month">
+                            JUN
+                            <div class="circle circle-yellow"></div>
+                        </div>
+                        <div class="calendar-month">
+                            JUL
+                            <div class="circle circle-green"></div>
+                        </div>
+                        <div class="calendar-month">
+                            AGO
+                            <div class="circle circle-yellow"></div>
+                        </div>
+                        <div class="calendar-month">
+                            SEP
+                            <div class="circle circle-green"></div>
+                        </div>
+                        <div class="calendar-month">
+                            OCT
+                            <div class="circle circle-yellow"></div>
+                        </div>
+                        <div class="calendar-month">
+                            NOV
+                            <div class="circle circle-green"></div>
+                        </div>
+                        <div class="calendar-month">
+                            DEC
+                            <div class="circle circle-green"></div>
+                        </div>
+                    </section>
                 </li>
             </ul>
                 
         </section>
         
     </main>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/controlPanel.js"></script>
+    <script type="module" src="./js/apartmentDetails.js"></script>
+    <script type="module" src="./js/menu.js"></script>
 </body>
 </html>

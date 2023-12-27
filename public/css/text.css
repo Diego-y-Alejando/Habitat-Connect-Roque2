@@ -1,3 +1,4 @@
+
 .newyork-font {
     font-family: newYork;
 }
@@ -13,9 +14,6 @@
 .beige{
     color: var(--Beige)!important;
 }
-.dark-blue{
-    color: var(--Azul-oscuro);
-}
 .center{
     text-align: center;
 }
@@ -24,4 +22,10 @@
 }
 .gray{
     color: gray!important;
+}
+.dark-blue{
+    color: var(--Azul-oscuro)!important;
+}
+.light-blue{
+    color: var(--Azul-claro)!important;
 }
