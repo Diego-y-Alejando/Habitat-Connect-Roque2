@@ -102,14 +102,12 @@ const updateBookingValidations = async (req = request , res = response, next)=>{
         ValidationIdOrLevel('id del apartamento que reserva',id_apartament_reservations);
         ValidationIdOrLevel('id de la reserva',reserv_id);
         await userExist('apartamento que reserva',apartament,id_apartament_reservations,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-        // await userExist('booking que intentas recuperar',reservations,reserv_id,'reserv_id',[ 'reservation_date', 'start_reserv_time', 'end_reserv_time', 'renter_name', 'renter_phone', 'id_apartament_reservations']);   
-        // await verifyAviableTime(id_amenity_reserved,reservation_date,start_reserv_time,end_reserv_time)
-        
-        // crear una consulta para poder traer los datos  de la tabla de
-        // const {start_time, end_time} =await userExist('ambiente que intentas reservar',amenities,id_amenity_reserved,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
-        // validationTime(start_time,start_reserv_time,true)
-        // validationTime(end_time,end_reserv_time,false)
-        innerJoinChildToFatherTables(reservations,amenities,reserv_id,'reserv_id',[],[]);
+        const {dataValues,reservationHaveAmenity}= await innerJoinChildToFatherTables(reservations,amenities,'id_amenity_reserved','reservationHaveAmenity',reserv_id,'reserv_id',['reserv_id','id_amenity_reserved'],['start_time','end_time'],'No existe la reserva que deseas recuperar');
+        const {id_amenity_reserved}=dataValues
+        const { start_time, end_time } = reservationHaveAmenity.amenities.dataValues;
+        await verifyAviableTime(id_amenity_reserved,reservation_date,start_reserv_time,end_reserv_time)
+        validationTime(start_time,start_reserv_time,true)
+        validationTime(end_time,end_reserv_time,false) 
         next();
     }catch (error) {
         return res.status(400).json({
@@ -169,7 +167,7 @@ module.exports={
     getEventsOfAmenityValidationsUser,
     getEventsOfAmenityValidationsAdmin,
 }
-
+// me verifica que no haya excedido la cantidad de reservas en un dia 
 const verifyAviableTime =async(amenity_id,date,start_reserv_time,end_reserv_time)=>{
     let hourDifference;
     let totalHoursPerReservation=[];
@@ -189,7 +187,7 @@ const verifyAviableTime =async(amenity_id,date,start_reserv_time,end_reserv_time
         let  totalHours = totalHoursPerReservation.reduce((acumulador, hours) => acumulador + hours, 0);
         if (Math.ceil(totalHours)>=10 ) {
             throw new Error('Ya no hay espacio para mas reservas');
-        }else if(totalHours<15){
+        }else if(totalHours<10){
             hourDifference=hourAdder(start_reserv_time,end_reserv_time);
             totalHoursPerReservation.push(hourDifference);
             totalHours = totalHoursPerReservation.reduce((acumulador, hours) => acumulador + hours, 0);
@@ -201,6 +199,8 @@ const verifyAviableTime =async(amenity_id,date,start_reserv_time,end_reserv_time
         throw new Error(error)
     }
 }
+// Valida que la el tiempo de una reserva ya sea el incial o el final  de dicha reserva no sea previo al
+// el horario de apertura de una amenidad  o  posterior al cierre de la amenidad, el true o false me permite controlar esos estados  
 const validationTime = (amenity_time,reserv_time,flag)=>{
     const [amenity_time_hour, amenity_time_minutes] = amenity_time.split(':').map(Number);
     const [reserv_time_hour,reserv_time_minutes] = reserv_time.split(':').map(Number);
@@ -221,26 +221,31 @@ const validationTime = (amenity_time,reserv_time,flag)=>{
         }
     }
 }
+// FUNCION QUE ME AYUDA A RECUPERAR LOS HORARIOS DE LA AMENIDAD que se ha reservado a travez del id de la reservacion
+//  y recuepera el id de la amenidad 
 
-const innerJoinChildToFatherTables =async(childModel,fatherModel,searchFieldChildTable,targetFieldChildTable,fieldsChildTable,filedsFatherTable)=>{
+const innerJoinChildToFatherTables =async(childModel,fatherModel,foreignKeyName,relationshipName,searchFieldChildTable,targetFieldChildTable,fieldsChildTable,filedsFatherTable,errorMessage)=>{
     try {
-        const fields = await reservations.findOne({
+        const fields = await childModel.findOne({
             where:{
-                reserv_id:29
+                [targetFieldChildTable]:searchFieldChildTable
             },
-            attributes:['reserv_id'],
+            attributes:fieldsChildTable,
             include:[{
-                model:amenities,
-                as:'reservationHaveAmenity',
+                model:fatherModel,
+                as:relationshipName,
                 where:{
-                    amenity_id:Sequelize.col('id_amenity_reserved')
+                    amenity_id:Sequelize.col(foreignKeyName)
                 },
-                attributes:['start_time','end_time']
+                attributes:filedsFatherTable
             }]
         })
-        console.log(fields);
+        if (!fields) {
+            throw (errorMessage)
+        }
+        return fields
     } catch (error) {
-        throw error
+        throw  new Error (error)
     }
 
 }

@@ -81,11 +81,11 @@ $(document).ready(function() {
 
     $("#settings-icon").click(function(event) {
         event.preventDefault();
+    
         if($("#filter-record-for-pay").hasClass("hide")){
-            $("#filter-record-for-pay").removeClass("hide");
-            $("#filter-record-for-pay").css({
-                height: "0px"
-            }).animate({
+            $("#filter-record-for-pay").
+            removeClass("hide")
+            .animate({
                 height: "649px"
             },800);
         }else{

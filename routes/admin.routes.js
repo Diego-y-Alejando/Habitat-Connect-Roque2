@@ -45,6 +45,10 @@ router.post('/update/apartament/name/:apartament_id',updateApartamentNameValidat
 /*=======================
     RUTAS DE MANTENIMIENTO
 =========================*/
+
+
+// FALTA QUE EL CONTROLADOR ESCOJA SI ES PAGO MOROSO O EN TIEMPO ,
+// EL  PAGO MOROSO OCURRE DESPUES DEL 6TO DIA DEL MES
 const {
     getMaintenanceApartamentValidations,
     updateMaintenanceValidations
