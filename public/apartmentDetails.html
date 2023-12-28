@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/apartmentDetails.css">
+    <link rel="stylesheet" href="./css/submenu.css">
     <title>Detalles Apartamento</title>
 </head>
 <body>
@@ -31,30 +32,35 @@
     <main class="container-content">
         
         <section>
-            <nav class="secondary-menu sub-menu" id="menu">
+            <nav class="secondary-menu sub-menu" id="sub-menu">
 
                 <a class="item-menu profile-item" href="./controlPanel.html">
                     <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
                     Regresar
                 </a>
                 
-                <a class="subitem-menu item-sub-menu selected-item-sub-menu" href="#" data-target="apartment-data">
+                <a class="subitem-menu item-sub-menu" href="#" data-target="apartment-data">
                     Datos del apto
+                    <span class="selected-item-line"></span>
                 </a>
+                
                 
                 <a class="subitem-menu item-sub-menu" href="#" data-target="ocupaccy-info">
                     Propietario e inquilino
+                    <span class="selected-item-line hide"></span>
                 </a>
                 
                 <a class="subitem-menu item-sub-menu" href="#" data-target="entry-stickers">
                     Stickers de entrada
+                    <span class="selected-item-line hide"></span>
                 </a>
                 
                 <a class="subitem-menu item-sub-menu" href="#" data-target="maintenance">
                     Mantenimiento
+                    <span class="selected-item-line hide"></span>
                 </a>
-                <span class="selected-item-line"></span>
             </nav>
+
         </section>
 
         <section class="container-datos">
@@ -148,7 +154,7 @@
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
                             <div class="edit">
                                 <a href="" id="btn-add-parking-stikers" class="enabled">
-                                    <img src="./icons/save_icon.png" alt="Icon-Editt" id="img-add-parking-stickers" >
+                                    <img src="./icons/mas.png" alt="Icon-Editt" id="img-add-parking-stickers" >
                                 </a>
                             </div>
                         </label>
@@ -163,7 +169,7 @@
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-slot" disabled autocomplete="off">
                             <div class="edit">
                                 <a href="" id="btn-add-parking-slot" class="enabled">
-                                    <img src="./icons/save_icon.png" alt="Icon-Edit" id="img-add-parking-slot" >
+                                    <img src="./icons/mas.png" alt="Icon-Edit" id="img-add-parking-slot" >
                                 </a>
                             </div>
                         </label>
@@ -190,7 +196,7 @@
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-walking-info" disabled autocomplete="off">
                             <div class="edit">
                                 <a href="" class="enabled" id="btn-add-walking-info">
-                                <img src="./icons/save_icon.png" alt="Icon-Edit">
+                                <img src="./icons/mas.png" alt="Icon-Edit">
                             </a>
                             </div>
                         </label>
@@ -282,5 +288,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="./js/apartmentDetails.js"></script>
     <script type="module" src="./js/menu.js"></script>
+    <script type="module" src="./js/submenu.js"></script>
 </body>
 </html>

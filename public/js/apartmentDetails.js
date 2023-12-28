@@ -3,33 +3,6 @@ $(document).ready(function() {
     $(".container-item").hide();
     $("#apartment-data").show();
 
-    const primerElemento = $("#menu").find(".subitem-menu").first();
-    console.log(primerElemento.position().left);
-
-    $(".selected-item-line").css({
-        left: $("#menu").find(".subitem-menu").first().position().left  + "px",
-        width: $("#menu").find(".subitem-menu").first().outerWidth() + "px"
-    });
-
-
-    $(".subitem-menu").click(function(event) {
-        event.preventDefault();
-        const target = $(this).data("target");
-        $(".container-item").hide();
-        $("#" + target).show();
-
-        var leftPosition = $(this).position().left;
-        var itemWidth = $(this).outerWidth();
-
-        $(".selected-item-line").css({
-            left: leftPosition + "px",
-            width: itemWidth + "px"
-        });
-
-        $(".subitem-menu").removeClass("selected-item-sub-menu")
-        $(this).addClass("selected-item-sub-menu");
-
-    });
 
     $('#btn-family-edit').click(function(event) {  
         event.preventDefault();
