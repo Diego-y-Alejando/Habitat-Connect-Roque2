@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/finance.css">
+    <link rel="stylesheet" href="./css/submenu.css">
     <title>Finanzas</title>
 </head>
 <body>
@@ -92,13 +93,14 @@
     <header>
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
+
     <div class="menu-toggle" id="menu-toggle">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
     </div>
 
-    <nav class="menu" id="secondary-menu"">
+    <nav class="menu" id="menu"">
         <a class="item-menu profile-item">
             <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
             Hola, administrador 
@@ -112,14 +114,23 @@
     <main class="container-content">
         
         <section>
-            <nav class="secondary-menu menu" id="menu">
+            <nav class="secondary-menu sub-menu" id="sub-menu">
                 <a class="item-menu profile-item" href="./controlPanel.html">
                     <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
                     Regresar
                 </a>
-                <a class="item-menu subitem-menu selected-item" href="#" data-target="suppliers">Proveedores</a>
-                <a class="item-menu subitem-menu" href="#" data-target="record-for-pay">Historial de cuentas por pagas</a>
-                <a class="item-menu subitem-menu" href="#" data-target="activity-report">Informe de actividades</a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="suppliers">
+                    Proveedores
+                    <span class="selected-item-line"></span>
+                </a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="record-for-pay">
+                    Historial de cuentas por pagas
+                    <span class="selected-item-line hide"></span>
+                </a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="activity-report">
+                    Informe de actividades
+                    <span class="selected-item-line hide"></span>
+                </a>
             </nav>
         </section>
 
@@ -235,6 +246,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="./js/finance.js"></script>
     <script type="module" src="./js/menu.js"></script>
+    <script type="module" src="./js/submenu.js"></script>
 
 </body>
 </html>
