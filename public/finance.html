@@ -44,7 +44,7 @@
             
             <a href="#" class="boton-editar" id="btn-edit-supplier">
                 <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-supplier-img" class="">
-                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
+                <img src="./icons/save_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
             </a>
         </div>
     </section>
@@ -85,7 +85,7 @@
             
             <a href="#" class="boton-editar" id="btn-edit-record">
                 <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-record-img" class="">
-                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-record-img" class="hide">
+                <img src="./icons/save_icon.png" alt="edit" id="btn-save-record-img" class="hide">
             </a>
         </div>
     </section>
@@ -158,10 +158,12 @@
 
                     <section>
                         <div class="settings-row">
-                            <a id="settings-icon" href="">
-                                <img alt="return-icon" src="./icons/filter-icon.png">
-                            </a>
-                            <section id="filter-record-for-pay" class="montserrat-light hide">
+
+                            <section id="filter-record-for-pay" class="montserrat-light ">
+
+                                <button class="dropbtn">
+                                    <img alt="return-icon" src="./icons/filter-icon.png">
+                                </button>
 
                                 <form action="" id="form-filter-record">
                         
@@ -247,6 +249,8 @@
     <script type="module" src="./js/finance.js"></script>
     <script type="module" src="./js/menu.js"></script>
     <script type="module" src="./js/submenu.js"></script>
+    <script type="module" src="./js/edit-suppliers.js"></script>
+    <script type="module" src="./js/edit-record.js"></script>
 
 </body>
 </html>
