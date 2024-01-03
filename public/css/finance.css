@@ -151,11 +151,12 @@ td{
     opacity: 0.98;
 }
 #form-filter-record{
-    width: 100%;
-    min-width: 649px;
-    padding: 20px 0px 20px 20px;
+    width: 250px;
+    border-radius: 20px;
+    min-height: 649px;
+    padding: 0px 0px 20px 20px;
     background-color: lightgray;
-    display: none;
+    display: flex;
     position: absolute;
     flex-direction: column;
     justify-content: center;
@@ -203,8 +204,6 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:hover {
     opacity: 0.3; 
 }
-
-
 
 
 
