@@ -139,7 +139,7 @@ input[type="checkbox"]:hover {
     justify-content: space-between;
 }
 
-.information-maintance-status{
+.information-maintenance-status{
     width: 25%;
     height: 100px;
     display: grid;
@@ -157,7 +157,7 @@ input[type="checkbox"]:hover {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: var(--Azul-oscuro);
+    background-color: transparent;
 }
 
 .circle-red{
@@ -170,7 +170,7 @@ input[type="checkbox"]:hover {
     background-color: rgb(30, 241, 30);
 }
 
-.maintance-calendar{
+.maintenace-calendar{
     width: 50%;
     height: auto;
     display: grid;
@@ -223,7 +223,7 @@ input[type="checkbox"]:hover {
     border: 1px solid gray;
 }
 
-.maintance-info{
+.maintenance-info{
     width: 50%;
     height: 400px;
     background-color: var(--white);
@@ -233,21 +233,21 @@ input[type="checkbox"]:hover {
     border-radius: 15px;
 }
 
-.maintance-info .cancel-row{
+.maintenance-info .cancel-row{
     width: 100%;
     display: flex;
     justify-items: center;
     justify-content: end;
     align-items: center;
 }
-.maintance-info p{
+.maintenance-info p{
     width: 100%;
     font-size: 20px;
     text-align: center;
     padding: 30px 0px;
 }
 
-.maintance-info form{
+.maintenance-info form{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -257,12 +257,12 @@ input[type="checkbox"]:hover {
     text-align: center;
 }
 
-.maintance-info .cancel-row a{
+.maintenance-info .cancel-row a{
     margin-right: 10px;
     margin-top: 10px;
 }
 
-.maintance-info .cancel-row a img{
+.maintenance-info .cancel-row a img{
     width: 35px;
 }
 .enabled{
