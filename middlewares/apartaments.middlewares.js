@@ -16,7 +16,7 @@ const getApartamentsValidations=async(req=request , res = response, next)=>{
     const token = req.headers.authorization
     const level = req.params.level
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         ValidationIdOrLevel('nivel deseado',level)
         next();
     } catch (error) {
@@ -32,7 +32,7 @@ const getApartamentValidations = async(req = request , res = response, next)=>{
     try {
         ValidationIdOrLevel('id del apartamento',req.params.apartament_id);
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        const apartamentData =  await userExist('apartamento que solicita',apartament,req.params.apartament_id,'apartament_id',[]);
+        const apartamentData =  await userExist('El apartamento que solicita',apartament,req.params.apartament_id,'apartament_id',[]);
         req.apartament= apartamentData
         next()
     } catch (error) {
@@ -49,7 +49,7 @@ const updateParkingDataValidations = async(req= request , res = response , next)
         ValidationIdOrLevel('id del apartamento ',apartament_id);
 
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
 
         updateParkingDataValidationsBody(req.body)
         next()
@@ -60,13 +60,14 @@ const updateParkingDataValidations = async(req= request , res = response , next)
         })
     }
 }
+// TODO Validar el nombre de las propiedades de los stickets
 const updatePedestrianDataValidations = async(req= request , res = response , next)=>{
     const token =req.headers.authorization
     const apartament_id = req.params.apartament_id
     try {
         ValidationIdOrLevel('id del apartamento ',apartament_id);
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         Object.entries(req.body).forEach(([sticker, stickerNumber ]) => {
             ValidationStickerValues(stickerNumber)
         });
@@ -83,10 +84,11 @@ const changeOcupationStateValidations = async (req = request, res = respose, nex
     const apartament_id = req.params.apartament_id
     const {ocupation_state}= req.body
     try {
+        bodyVerification(req.body,['ocupation_state'])
         validationOcupationState('estado de ocupacion',ocupation_state);
         ValidationIdOrLevel('id del apartamento ',apartament_id);
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next()
     } catch (error) {
         return res.status(400).json({
@@ -104,7 +106,7 @@ const updateLandlordOrTenantDataValidations = async(req= request , res = respons
         validateName(name,60);
         validatePhoneNumber(phone_number);
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next()
     } catch (error) {
         return res.status(400).json({
@@ -121,13 +123,29 @@ const updateApartamentNameValidations = async(req= request , res = response, nex
     try {
         validateName(apartament_name,60)
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next();
     } catch (error) {
         return res.status(400).json({
             error:error.message,
             ok:false
         })
+    }
+}
+const path = require('path');
+const error404HTML = path.join(__dirname, '..','views','components','404.ejs');
+
+const getControlPanelValidations =(req= request , res = response, next)=>{
+    const token = req.headers.authorization
+
+    try {
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        next();
+    } catch (error) {
+       return  res.render(error404HTML,{
+            error:error.message,
+            ok:false
+        });
     }
 }
 module.exports= {
@@ -137,7 +155,8 @@ module.exports= {
     updatePedestrianDataValidations,
     changeOcupationStateValidations,
     updateLandlordOrTenantDataValidations,
-    updateApartamentNameValidations
+    updateApartamentNameValidations,
+    getControlPanelValidations
 }
 // validaciones especificas de los parqueos
 const updateParkingDataValidationsBody=(objectBody)=>{

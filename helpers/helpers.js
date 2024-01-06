@@ -1,5 +1,6 @@
 // Generación de tokens
 const jwt = require('jsonwebtoken');
+const {Sequelize}=require('sequelize')
 const jwtGenerate =(id,user_type,secret,expiresTime)=>{
     return new Promise((resolve,reject)=>{
         const payload ={id,user_type}
@@ -88,11 +89,37 @@ const hourAdder =(start_reserv_time,end_reserv_time)=>{
     return hourDifference
     
 }
+const innerJoinChildToFatherTables =async(childModel,fatherModel,foreignKeyName,relationshipName,searchFieldChildTable,targetFieldChildTable,fieldsChildTable,filedsFatherTable,errorMessage)=>{
+    try {
+        const fields = await childModel.findOne({
+            where:{
+                [targetFieldChildTable]:searchFieldChildTable
+            },
+            attributes:fieldsChildTable,
+            include:[{
+                model:fatherModel,
+                as:relationshipName,
+                where:{
+                    amenity_id:Sequelize.col(foreignKeyName)
+                },
+                attributes:filedsFatherTable
+            }]
+        })
+        if (!fields) {
+            throw (errorMessage)
+        }
+        return fields
+    } catch (error) {
+        throw  new Error (error)
+    }
+
+}
 module.exports={
         jwtGenerate,
         hashingPassword,
         updateData,
         findData,
         getStartAndEndOfMonth,
-        hourAdder
+        hourAdder,
+        innerJoinChildToFatherTables
 }

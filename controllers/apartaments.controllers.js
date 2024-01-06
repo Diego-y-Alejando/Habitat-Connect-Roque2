@@ -10,11 +10,11 @@ const getApartaments= async(req= request , res = response)=>{
     const level =parseInt(req.params.level)
     try{
         
-        const apartamentsLevelList = await apartament.findAll({
+        const apartamentLevel = await apartament.findAll({
             where:{ 
                 apartament_level:level 
             }, 
-            attributes:['apartament_id','apartament_number','apartament_name','phone_number_tenant'],
+            attributes:['apartament_id','apartament_number','apartament_name','phone_number_tenant','phone_number_landlord','ocupation_state'],
             include: [
                 {
                   model: features_apartaments, // Modelo asociado (por ejemplo, PostModel)
@@ -25,8 +25,8 @@ const getApartaments= async(req= request , res = response)=>{
               ]
         });
        return res.status(200).json({
-        msg:'get-aptos',
-        apartamentsLevelList
+            [`level_${level}`]:apartamentLevel,
+            ok:true
        })
     }catch (error) {
         return res.status(400).json({
@@ -172,6 +172,19 @@ const updateApartamentName = async(req = request , res = response)=>{
         })
     }
 }
+const path = require('path');
+const controlPanel = path.join(__dirname, '..','views','controlPanel.ejs');
+const error404HTML = path.join(__dirname, '..','views','404.ejs');
+const getControlPanel =(req = request , res = response)=>{
+    try {
+        return  res.render(controlPanel,{});
+    } catch (error) {
+        return  res.render(error404HTML,{
+            error:error.message,
+            ok:false
+        });
+    }
+}
 module.exports={
     getApartaments,
     getApartament,
@@ -180,5 +193,6 @@ module.exports={
     changeOcupationState,
     updateLanlordData,
     updateTenantData,
-    updateApartamentName
+    updateApartamentName,
+    getControlPanel
 }

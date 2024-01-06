@@ -45,12 +45,18 @@ const accounts_payable= sequelizeObj.define(
                 max:{args: [1000000], msg: 'El precio es demasiado alto' },
             }
         },
-        number_of_transaccion:{
+        number_of_transaction:{
             type:DataTypes.INTEGER,
             allowNull:false,
         },
-        // llaves foraneas 
-        // id_bank_account
+        paid:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
+            validate:{
+                is:/^[1|2]/,
+                notEmpty:true
+            }
+        },
         id_bank_account:{
             type:DataTypes.INTEGER,
             allowNull:false,
@@ -64,8 +70,8 @@ const accounts_payable= sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:false,
             references: {
-                model: provider_id,
-                key: 'account_id'
+                model: providers,
+                key: 'provider_id'
             }
         }
 
@@ -78,24 +84,26 @@ const accounts_payable= sequelizeObj.define(
         updatedAt:false
     }
 )
-// relacion con la cuenta bancaria 
-bank_accounts.hasMany(accounts_payable,{
-    as:'accountOfBill',
-    foreingKey:'id_bank_account'
-})
-accounts_payable.belongsTo(bank_accounts,{
-    as:'paidByBankAccount',
-    foreingKey:'id_bank_account'
-})
-
-// Relacion proveedor cuenta 
-providers.hasMany(accounts_payable,{
-    as:'providerHaveAccountPayable',
-    foreingKey:'id_provider_account'
-})
-accounts_payable.belongsTo(providers,{
-    as:'acccountHaveProvider',
-    foreingKey:'id_provider_account'
-
-})
+// Relación con la cuenta bancaria
+bank_accounts.hasMany(accounts_payable, {
+    as: 'accountOfBill',
+    foreignKey: 'id_bank_account',  // Corregido el nombre de la propiedad
+  });
+  
+  accounts_payable.belongsTo(bank_accounts, {
+    as: 'paidByBankAccount',
+    foreignKey: 'id_bank_account',  // Corregido el nombre de la propiedad
+  });
+  
+  // Relación proveedor cuenta
+  providers.hasMany(accounts_payable, {
+    as: 'providerHaveAccountPayable',
+    foreignKey: 'id_provider_account',  // Corregido el nombre de la propiedad
+  });
+  
+  accounts_payable.belongsTo(providers, {
+    as:'accountHaveProvider',
+    foreignKey: 'id_provider_account',  // Corregido el nombre de la propiedad
+  });
+  
 module.exports=accounts_payable

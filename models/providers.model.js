@@ -12,7 +12,7 @@ const providers= sequelizeObj.define(
         },
         provider_name:{
             type:DataTypes.CHAR,
-            allowNull:false
+            allowNull:false,
             validate:{
                 notEmpty:true,
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ0-9.,\s]+$/

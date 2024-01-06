@@ -108,8 +108,7 @@ const validateSupervisor=(supervisor)=>{
   }
 }
 const userExist =async(message,model, searchField, targetField, excludeArr )=>{
-
-  try {
+  try{
    const searchRecord = await model.findOne({
       where:{
         [targetField]:searchField
@@ -120,7 +119,7 @@ const userExist =async(message,model, searchField, targetField, excludeArr )=>{
     });
 
     if (!searchRecord) {
-      throw new Error(`El ${message} no existe`);
+      throw new Error(`${message} no existe`);
     }
     return searchRecord.dataValues 
    } catch (error) {
@@ -278,6 +277,7 @@ const compareHours =(start_time,end_time,flag,message)=>{
     }
 }
 const ValidationPaidStatus=(paid_status)=>{
+  // 1 pago a tiempo 2 pago con mora 3 impago
   const regexPaidStatus=/^1|2|3/
   if (!paid_status) {
     throw new Error('El estado de pago no puede venir vacío')
@@ -294,7 +294,15 @@ const validationMonth= (month)=>{
       throw new Error('El valor del mes no es correcto')
   }
 }
-
+const validatePage =(page)=>{
+  const regexPage=/^[1-9]+$/
+  if (!page) {
+      throw new Error('La pagina no puede venir vacía')
+  }
+  if (!regexPage.test(page)) {
+    throw new Error('La paginacion es invalida')
+  }
+}
 module.exports ={
     validateName,
     validateLastName,
@@ -324,5 +332,7 @@ module.exports ={
     validationHour,
     compareHours,
     ValidationPaidStatus,
-    validationMonth
+    validationMonth,
+    validatePage
+    
 }

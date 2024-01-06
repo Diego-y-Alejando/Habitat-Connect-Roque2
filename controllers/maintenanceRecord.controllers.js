@@ -27,12 +27,12 @@ const getMaintenanceApartament =async(req = request, res = response)=>{
 }
 const updateMaintenance= async (req = request , res = response)=>{
     const apartament_id = req.params.apartament_id
-    const {year,month,paid_status,date_paid}=req.body
+    const {year,month,date_paid}=req.body
     try {
 
         const updateData = await maintenance_record.update({
             [month]:{
-                paid_status:paid_status,
+                paid_status:req.paid,
                 date_paid:date_paid
             }
         },{
@@ -44,6 +44,7 @@ const updateMaintenance= async (req = request , res = response)=>{
 
             return res.status(200).json({
             msg:updateData,
+            maintenanceMsg:req.msgLateFee,
             ok:true
         })
     } catch (error) {

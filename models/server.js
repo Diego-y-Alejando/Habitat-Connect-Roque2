@@ -28,6 +28,9 @@ class Server {
     routes(){
         this.app.use(this.adminPath, require('../routes/admin.routes'));
         this.app.use(this.userPath, require('../routes/user.routes'));
+        this.app.use('/public',express.static('public'));
+        this.app.set('view engine', 'ejs');
+        this.app.set('views', path.join(__dirname, 'views'));
     }
     listen(){
         this.app.listen(this.port,()=>{

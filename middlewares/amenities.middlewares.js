@@ -26,7 +26,7 @@ const updateAmenityDataValidations = async(req = request , res = response , next
     const amenity_id = req.params.amenity_id
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        const {start_time,end_time} = await userExist('id de la amenidad que solicita',amenities,amenity_id,'amenity_id',[ 'amenity_name', 'rent_cost', 'additional_cost_per_hour']);
+        const {start_time,end_time} = await userExist('El id de la amenidad que solicita',amenities,amenity_id,'amenity_id',[ 'amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         updateAmenityDataValidationsBody(req.body,start_time,end_time)
         next()
     } catch (error) {
@@ -41,7 +41,7 @@ const getAmenitiesForBookingValidations = async (req = request , res = response 
 
     try {
         await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
-        await userExist('número de apartamento que tiene el token',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
+        await userExist('El número de apartamento que tiene el token',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next()
     } catch (error) {
         return res.status(400).json({
