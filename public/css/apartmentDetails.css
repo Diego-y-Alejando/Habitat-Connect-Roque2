@@ -79,7 +79,7 @@ input[type="checkbox"]:hover {
     align-items: center;
 }
 #apartment-icon{
-    width: 25%;
+    width: 22%;
     margin-right: 3%;
 }
 #btn-family-edit{
@@ -89,6 +89,33 @@ input[type="checkbox"]:hover {
     width: 25px;
 }
 
+.error {
+    border-color: red;
+}
+.label-error{
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    gap: 5px;
+}
+
+.input-error{
+    color: red;
+    font-family: montserrat-light;
+    font-weight: 800;
+    font-size: 12px;
+    line-height: 10px;
+}
+
+.label-center{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
 
 .label-input{
     width: 100%;

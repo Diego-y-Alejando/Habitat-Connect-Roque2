@@ -1,9 +1,10 @@
 // regex utilizado para nombres de laboratorios, nombres y apellidos por eso permite números
 const regex=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9 ]+/
 const validateName = (name ,size) => {
+  const regexName = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/;
     if (!name) {
       throw new Error('El nombre es obligatorio')
-    } else if (!regex.test(name)) {
+    } else if (!regexName.test(name)) {
       throw new Error('El nombre sólo puede contener letras y espacios')
     }else if(name.trim().length>size){
       throw new Error('El nombre se exede de 55 caracteres puedes colocar unicamente dos nombres ')
@@ -19,6 +20,8 @@ const validateLastName = (lastName,size) => {
       throw new Error('El apellido se exede de 55 caracteres ')
     }
 }
+
+
   
 const validateDpi = (dpi) => {
     const regexDpi= /^[0-9-]+$/

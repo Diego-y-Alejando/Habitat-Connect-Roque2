@@ -72,14 +72,17 @@
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
                             Primer nivel
-                            <label for="occupy" class="montserrat-light gray">
+                            <label for="occupy" class="montserrat-light gray label-center">
                                 Habitado    
-                                <input type="checkbox" name="occupy" id="recuerdarme">
+                                <input type="checkbox" name="occupy" id="ocupay-checkbox">
                             </label>
                         </p>
                         <label for="family" class="label-input">
                             <img src="./icons/tower.png" alt="Apartamento" id="apartment-icon">
-                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="family" placeholder="Familia no registrada" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                                <p id="error-input-family-name" class="input-error hide"></p>
+                            </div>
                             <a href="" id="btn-family-edit">
                                 <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-family">
                                 <img src="./icons/save_icon.png" alt="edit" id="img-save-family" class="hide">
@@ -103,12 +106,19 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-owner-name" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="owner-name" placeholder="Nombre no registrado" class="input-form" id="input-owner-name" disabled autocomplete="off">
+                                <p id="error-input-owner-name" class="input-error hide"></p>
+                            </div>
+                    
                         </label>
 
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-owner-phone" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="owner-phone" placeholder="Numero no registrado" class="input-form" id="input-owner-phone" disabled autocomplete="off">
+                                <p id="error-input-owner-phone" class="input-error hide"></p>
+                            </div>
                         </label>
                         <div class="edit">
                             <a href="" id="btn-owner-edit">
@@ -124,11 +134,17 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="" placeholder="Inquilino no registrado" class="input-form" id="input-tenant-name" disabled autocomplete="off">
+                                <p id="error-input-tenant-name" class="input-error hide"></p>
+                            </div>
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="" placeholder="Numero no registrado" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
+                                <p id="error-input-tenant-phone" class="input-error hide"></p>
+                            </div>
                         </label>
                         <div class="edit" >
                             <a href="" id="btn-tenant-edit">
