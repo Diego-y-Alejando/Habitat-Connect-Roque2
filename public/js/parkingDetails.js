@@ -1,10 +1,23 @@
+
+
 $(document).ready(function() {
+
+    let parkingStickers = 0;
+    let numberOfParkingStickers = 0;
+    let parkingSlot = 0;
+    let canAddStickers = false;
+
     $("#btn-add-parking-stikers").click(function(event) {
         event.preventDefault();
         if($("#btn-add-parking-stikers").hasClass("enabled")){
-            alert("NO");
+            canAddStickers = false;
         }else{
-            alert("SI");
+            canAddStickers = true;
+            parkingStickers = $("#input-parking-stickers").val();
+            numberOfParkingStickers++;
+            console.log(parkingStickers, numberOfParkingStickers);
+            addParkingStickers(numberOfParkingStickers , parkingStickers);
+            $("#input-parking-stickers").val("");
         }
         
     });
@@ -32,14 +45,31 @@ $(document).ready(function() {
             $("#btn-add-parking-slot").removeClass("enabled");
         }
         else{
+            
+            
+
+            if(canAddStickers){
+                parkingStickers = parkingStickers + 1;
+            };
+
             $("#img-save-parking-info").addClass("hide");
             $("#img-edit-parking-info").removeClass("hide");
             $("#input-parking-stickers").attr("disabled", "disabled");
             $("#input-parking-slot").attr("disabled", "disabled");
             $("#btn-add-parking-stikers").addClass("enabled");
             $("#btn-add-parking-slot").addClass("enabled");
+
+
             //aqui se actualizaria en BD
         }
     });
 
 });
+
+function addParkingStickers(numberOfParkingStickers, parkingStickers){
+    console.log(numberOfParkingStickers, parkingStickers)
+    let span = $("<span></span>").text(parkingStickers);
+    let p = $("<p></p>").addClass("info-row gray").text(`Sticker ${numberOfParkingStickers}:`).append(span);
+    $("#parking-stikers-container").append(p);
+    console.log(p.text());
+}
