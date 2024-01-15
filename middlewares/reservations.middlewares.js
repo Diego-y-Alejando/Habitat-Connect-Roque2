@@ -134,7 +134,7 @@ const getEventsOfAmenityValidationsUser = async (req = request , res = response,
     try {
         validationDates(date,'fecha del calendario')
         ValidationIdOrLevel('id de la amenidad',amenity_id);
-        await userExist('La amenidad del que intentas recuperar los eventos',amenities,amenity_id,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
+        await userExist('La amenidad de la que intentas recuperar los eventos',amenities,amenity_id,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         next()
     } catch (error) {
         return res.status(400).json({

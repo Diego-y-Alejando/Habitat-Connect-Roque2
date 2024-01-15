@@ -53,7 +53,8 @@ const validationPath=(path,regexPath)=>{
     }
   }
 const bodyVerification=(object,allowProperties)=>{
-  if (!object || typeof object !== 'object' || !Object.keys(object).length) {
+  console.log(object);
+  if (!object || typeof object !== 'object' || Object.keys(object).length==0) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }
     else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
@@ -137,7 +138,10 @@ const tokenValidation = async (token, model, targetField, excludeArr, secretKey,
     const user = await findData(model, id, targetField, excludeArr);
     if (!user) throw new Error('El usuario no existe en la base de datos');
 
-    return id;
+    return {
+      id,
+      user_type
+    };
   } catch (error) {
     throw new Error(error);
   }
@@ -238,11 +242,11 @@ const validationYear = (year)=>{
 
 }
 const validationCost = (cost, message)=>{
-  const regexCost = /^[\d]{2,3}.[\d]{2}$/
+  const regexCost = /^[\d]{2,3}\.[\d]{2}$/
   if (!cost) {
     throw new Error(`El costo de ${message} no puede venir vacío`);
   }else if(!regexCost.test(cost)){
-    throw new Error(`El costo de ${message} tiene caracteres inválidos`);
+    throw new Error(`El costo de ${message} tiene  un formato invalido , debe ser 00.00`);
   }
 }
 

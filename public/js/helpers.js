@@ -48,10 +48,8 @@ const apartamentItemGenerator =(apartamentList,containerGridApartaments,BASE_URL
         
         arrayApartament.push(apartamentHtml)
     });
-
-    containerGridApartaments.append(arrayApartament)
+    containerGridApartaments.empty().append(arrayApartament)
 }
-
 export{
     BASE_URL,
     headers,

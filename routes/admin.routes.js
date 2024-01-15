@@ -61,7 +61,6 @@ router.post('/update/apartament/maintenance/:apartament_id',updateMaintenanceVal
 /*=======================
     RUTAS DE AMENIDADES para el admin
 =========================*/
-
 const {
     getAmenitiesValidations,
     updateAmenityDataValidations,
@@ -73,7 +72,7 @@ const {
 }= require('../controllers/amenities.controllers')
 router.get('/amenities/',getAmenitiesValidations,getAmenities);
 router.post('/update/amenity/data/:amenity_id',updateAmenityDataValidations,updateAmenityData);
-router.get('/amenities/for/booking/',getAmenitiesForBookingValidations,getAmenities)
+
 /*=======================
     Obtener el link para la reserva del usuario 
 =========================*/

@@ -43,6 +43,10 @@ const amenities = sequelizeObj.define(
         additional_cost_per_hour:{
             type:DataTypes.DECIMAL(10,2),
             allowNull:false
+        },
+        nickName :{
+            type:DataTypes.CHAR,
+            allowNull:false
         }
     },
     {

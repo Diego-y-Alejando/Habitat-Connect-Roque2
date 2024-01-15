@@ -10,43 +10,45 @@ import {
     const SelectFilterLevel = document.getElementById('filter-level');
     document.addEventListener("DOMContentLoaded", async function() {
         try {
-            // Verificar que el localStorage no contenga ningun nivel ya registrado 
-            const dataApartaments =await makeRequest(BASE_URL+'admin/apartamentos/'+SelectFilterLevel.value,'GET',null,headers);
+            //TO DO Verificar que el localStorage no contenga ningun nivel ya registrado 
+            const dataApartaments = await makeRequest(`${BASE_URL}admin/apartamentos/${SelectFilterLevel.value}`, 'GET', null,{});
             apartamentItemGenerator(dataApartaments.level_1,$('#container-grid-apartaments'),BASE_URL);
             localStorage.setItem('apartamentsLevels', JSON.stringify({level_1:dataApartaments.level_1}));
-           
-           
-        } catch (error) {
+        } catch (error){
             console.log(error);
         }
 
     })
+    //evento para obtener el valor seleccionado del filtro por nivel
     SelectFilterLevel.addEventListener('change', async function(event) {
-        // Obtener el valor seleccionado
-     
-        // implementar una forma de hacer que el localStorage expire  
-
-        
-        const levelSelected = event.target.value;
-        const level =JSON.parse(localStorage.getItem('apartamentsLevels'))
-        const levelsOnLocalStorage = Object.entries(level)
-        for (let index = 0; index < levelsOnLocalStorage.length; index++) {
-            if(!levelsOnLocalStorage[index].includes(`level_${levelSelected}`)){
-                const remaningData =await makeRequest(BASE_URL+'admin/apartamentos/'+levelSelected,'GET',null,headers);
-                let levels =(JSON.parse(localStorage.getItem('apartamentsLevels')))
-                const newDataToLocalStorage = {
-                    ...levels,
-                    ...remaningData
-                }
-                localStorage.setItem('apartamentsLevels',JSON.stringify(newDataToLocalStorage))
-                apartamentItemGenerator(remaningData[`level_${levelSelected}`],$('#container-grid-apartaments'),BASE_URL);
-
-                return
-            }
+        try {
+            await checkDataApartamentsOnLocalStorage(event.target.value);
+        } catch (error) {
+            console.log(error);
         }
       });
-
-
-
+        // TO DO implementar una forma de hacer que el localStorage expire  
+    const checkDataApartamentsOnLocalStorage = async(levelSelected)=>{
+        try {
+            const dataApartamentOnLocalStorage=JSON.parse(localStorage.getItem('apartamentsLevels'))
+            const levelsOnLocalStorage = Object.entries(dataApartamentOnLocalStorage)
+            // recorre el arreglo de elementos de la lista apartaments Level
+            for (let index = 0; index < levelsOnLocalStorage.length; index++) {
+                // verifica si el nivel solicitado existe o no 
+                if(!levelsOnLocalStorage[index].includes(`level_${levelSelected}`)){
+                    const remaningData =await makeRequest(BASE_URL+'admin/apartamentos/'+levelSelected,'GET',null,{});
+                    localStorage.setItem('apartamentsLevels',JSON.stringify({
+                        ...dataApartamentOnLocalStorage,
+                        ...remaningData
+                    }))
+                    apartamentItemGenerator(remaningData[`level_${levelSelected}`],$('#container-grid-apartaments'),BASE_URL);
+                    return
+                }
+            }
+        } catch (error) {
+            throw (error)
+        }
+        
+    }
 
  }(window.jQuery, window, document));

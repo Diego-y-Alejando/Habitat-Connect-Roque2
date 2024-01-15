@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/amenities.css">
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.6.0/event-calendar.min.css">
+    <title>Document</title>
+    <script src="/public/js/jquery-3.6.3.min.js"></script>
+
+</head>
+<body>
+    <a href=""><img class="backward-icon" alt="Regresar" src="/public/icons/backward_icon.png" /></a>
+    <div class="general-title">
+       
+        <h2 class="app-title"> HABITAT CONNECT</h2>
+        <hr class="title-separator">
+        <h2 class="tower-name">PRIMIUM 2</h2>
+    </div>
+    <div class="container-amenities-list">
+        <!-- deck azotea -->
+        <% amenitiesData.forEach(amenity => { %>
+            <section class="amenity">
+                <img class=" img-amenity" src="/public/icons/deck3.jpeg" alt="deck-azotea"/>
+                <article class="amenity-data">
+                    <h2 class="amenity-name"><%=amenity.amenity_name%></h2>
+                    <img class="icon-amenity" src="/public/icons/amenity_2.png">
+                    <p class="data-schedule-cost">
+                    <b>Lunes a sábado</b>
+                    Horario <%=amenity.formatStartHour.toString()%> a <%=amenity.formatEndHour.toString()%>
+                    Alquiler 6hrs Q<%=amenity.rent_cost%>
+                    Hora extra a Q<%=amenity.additional_cost_per_hour%></p>
+                    <% if(user_type ==='admin'){ %>
+                        <button class="booking-btn" id="booking-amenity-btn">Editar</button>
+                    <% } else if (user_type==='user') {%>
+                        <button class="booking-btn" id="booking-amenity-btn">Reservar</button> 
+                    <% } %> 
+                   
+                </article>
+                <div class="container-amenity-form-calendar">
+                    <div class="siblings-form-calendar">
+                      
+                        <% if(user_type ==='admin'){ %>
+                            <%- include('./components/editAmenityForm',{
+                                nickName:amenity.nickName,
+                                amenity_name:amenity.amenity_name,
+                                amenity_id:amenity.amenity_id
+                            }) %>
+                        <% } else if (user_type==='user') {%>
+                            <%- include('./components/bookingForm',{
+                                nickName:amenity.nickName,
+                                amenity_name:amenity.amenity_name,
+                                amenity_id:amenity.amenity_id
+                            }) %>    
+                        <% } %> 
+                    </div>
+                    
+                </div>
+            </section>
+        <% }); %>
+       
+
+    </div>
+
+    
+</body>
+    <script  src="/public/js/handleModalWindow.js"></script>
+    <% if(user_type ==='admin'){ %>
+        <script type="module" src="/public/js/handleUpdateAmenityForm.js"></script>
+    <% } else if (user_type==='user') {%>
+        <script type="module" src="/public/js/bundle.js"></script>
+        <script type="module" src="/public/js/handleBookingAmenity.js"></script>
+    <% } %> 
+    
+   
+</html>

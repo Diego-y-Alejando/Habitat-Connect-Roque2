@@ -4,7 +4,8 @@ const amenities = require('../models/amenities.model');
 const reservations = require('../models/reservations.model')
 const {
     jwtGenerate,
-    getStartAndEndOfMonth
+    getStartAndEndOfMonth,
+    changeObjectNames
 }= require('../helpers/helpers');
 const getLinkForBooking = async (req = request , res = response)=>{
     const apartament_id = req.params.apartament_id
@@ -181,6 +182,7 @@ const getEventsOfAmenity = async (req = request , res = response)=>{
     try {
 
         const {start_month,end_month} =getStartAndEndOfMonth(date)
+       
         const events = await reservations.findAll({
             where:{
                 id_amenity_reserved:amenity_id,
@@ -188,10 +190,24 @@ const getEventsOfAmenity = async (req = request , res = response)=>{
                     [Op.between]:[start_month,end_month]
                 }
             },
+            attributes:['reserv_id','reservation_date','start_reserv_time','end_reserv_time'],
             order: [['reservation_date', 'ASC']]
         })
+        let newEvents=[]
+        events.forEach(event => {
+            const { dataValues } = event;
+            const newObjectEvent=changeObjectNames(dataValues, {
+                "reserv_id": "id",
+                "reservation_date": "date",
+                "start_reserv_time": "start",
+                "end_reserv_time": "end"
+            })
+            newEvents.push(newObjectEvent)
+          });
+       
+        console.log('estos son',newEvents);
         return res.status(200).json({
-            eventos:events,
+            events:newEvents,
             ok:true
         })
     } catch (error) {

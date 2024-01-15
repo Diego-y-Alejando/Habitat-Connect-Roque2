@@ -26,3 +26,14 @@
     font-family:newYork;
     src: url('../css/fonts/newYork.otf');
 }
+.error-input{
+    font-size: 0.9rem;
+    font-family: montserrat-regular;
+    color: red;
+    position: relative; 
+}
+.succes-result{
+    color: green;
+    font-size: 0.9rem;
+    font-family: montserrat-regular;
+}

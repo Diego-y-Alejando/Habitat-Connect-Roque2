@@ -26,11 +26,13 @@ const getApartaments= async(req= request , res = response)=>{
         });
        return res.status(200).json({
             [`level_${level}`]:apartamentLevel,
+
             ok:true
        })
     }catch (error) {
         return res.status(400).json({
             error:error.message,
+            
             ok:false
         })
     }
@@ -177,7 +179,9 @@ const controlPanel = path.join(__dirname, '..','views','controlPanel.ejs');
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
 const getControlPanel =(req = request , res = response)=>{
     try {
-        return  res.render(controlPanel,{});
+        return  res.render(controlPanel,{
+            BASE_URL:process.env.BASE_URL
+        });
     } catch (error) {
         return  res.render(error404HTML,{
             error:error.message,
