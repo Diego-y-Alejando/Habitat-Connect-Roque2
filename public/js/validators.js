@@ -1,8 +1,9 @@
 
 const validateName = (name ,size) => {
+  const regexName = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/;
     if (!name) {
       throw new Error('El nombre es obligatorio')
-    } else if (!regex.test(name)) {
+    } else if (!regexName.test(name)) {
       throw new Error('El nombre sólo puede contener letras y espacios')
     }else if(name.trim().length>size){
       throw new Error('El nombre se exede de 55 caracteres puedes colocar unicamente dos nombres ')
@@ -17,6 +18,8 @@ const validateLastName = (lastName,size) => {
       throw new Error('El apellido se exede de 55 caracteres ')
     }
 }
+
+
   
 const validateDpi = (dpi) => {
     const regexDpi= /^[0-9-]+$/
@@ -29,12 +32,13 @@ const validateDpi = (dpi) => {
     }
   }
   
-const validatePhoneNumber = (phone) => {
+const validatePersonalPhone = (phone) => {
     const regexPhone= /^\d{4}-\d{4}$/
+    console.log(phone);
     if (!phone) {
       throw new Error('El numero de teléfono  es obligatorio')
     } else if (!regexPhone.test(phone)) {
-      throw new Error('El numero de  teléfono  debe tener el siguiente formato: (XXX)XXXX-XXXX')
+      throw new Error('El numero de  teléfono  debe tener el siguiente formato: XXXX-XXXX')
     }else if(phone.trim().length>14){
       throw new Error('El numero de  teléfono se exede de 14 caracteres revisa que este correcto ')
     }

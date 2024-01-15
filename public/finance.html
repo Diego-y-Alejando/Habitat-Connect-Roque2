@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/finance.css">
+    <link rel="stylesheet" href="./css/submenu.css">
     <title>Finanzas</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
             
             <a href="#" class="boton-editar" id="btn-edit-supplier">
                 <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-supplier-img" class="">
-                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
+                <img src="./icons/save_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
             </a>
         </div>
     </section>
@@ -84,7 +85,7 @@
             
             <a href="#" class="boton-editar" id="btn-edit-record">
                 <img src="./icons/editar-texto.png" alt="edit" id="btn-edit-record-img" class="">
-                <img src="./icons/cancel_icon.png" alt="edit" id="btn-save-record-img" class="hide">
+                <img src="./icons/save_icon.png" alt="edit" id="btn-save-record-img" class="hide">
             </a>
         </div>
     </section>
@@ -92,13 +93,14 @@
     <header>
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
+
     <div class="menu-toggle" id="menu-toggle">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
     </div>
 
-    <nav class="menu" id="secondary-menu"">
+    <nav class="menu" id="menu"">
         <a class="item-menu profile-item">
             <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
             Hola, administrador 
@@ -112,14 +114,23 @@
     <main class="container-content">
         
         <section>
-            <nav class="secondary-menu menu" id="menu">
+            <nav class="secondary-menu sub-menu" id="sub-menu">
                 <a class="item-menu profile-item" href="./controlPanel.html">
                     <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
                     Regresar
                 </a>
-                <a class="item-menu subitem-menu selected-item" href="#" data-target="suppliers">Proveedores</a>
-                <a class="item-menu subitem-menu" href="#" data-target="record-for-pay">Historial de cuentas por pagas</a>
-                <a class="item-menu subitem-menu" href="#" data-target="activity-report">Informe de actividades</a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="suppliers">
+                    Proveedores
+                    <span class="selected-item-line"></span>
+                </a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="record-for-pay">
+                    Historial de cuentas por pagas
+                    <span class="selected-item-line hide"></span>
+                </a>
+                <a class="subitem-menu item-sub-menu" href="#" data-target="activity-report">
+                    Informe de actividades
+                    <span class="selected-item-line hide"></span>
+                </a>
             </nav>
         </section>
 
@@ -147,12 +158,14 @@
 
                     <section>
                         <div class="settings-row">
-                            <a id="settings-icon" href="">
-                                <img alt="return-icon" src="./icons/filter-icon.png">
-                            </a>
-                            <section id="filter-record-for-pay" class="montserrat-light hide">
 
-                                <form action="" id="form-filter-record">
+                            <section id="filter-record-for-pay" class="montserrat-light ">
+
+                                <button class="dropbtn" id="btn-filter">
+                                    <img alt="return-icon" src="./icons/filter-icon.png">
+                                </button>
+
+                                <form action="" id="form-filter-record" class="hide">
                         
                                     <fieldset class="section-filter">
                                         <legend class="legend-filter">Año</legend>
@@ -235,6 +248,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="./js/finance.js"></script>
     <script type="module" src="./js/menu.js"></script>
+    <script type="module" src="./js/submenu.js"></script>
+    <script type="module" src="./js/edit-suppliers.js"></script>
+    <script type="module" src="./js/edit-record.js"></script>
+    <script type="module" src="./js/filter-record.js"></script>
 
 </body>
 </html>

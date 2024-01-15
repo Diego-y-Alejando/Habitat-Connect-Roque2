@@ -100,6 +100,8 @@ h3{
     padding: 7px;
     font-size: 18px;
     border-radius: 5px;
+    border: none;
+    outline: none;
 }
 .label-credentials{
     font-size: 18px;

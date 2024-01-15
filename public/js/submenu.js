@@ -1,9 +1,24 @@
-$(document).ready(function () {
+$(document).ready(function() {
+
+    const firstElement = $("#menu").find(".subitem-menu").first();
     const menuToggle = $("#menu-toggle");
-    const menu = $("#menu");
+    const menu = $("#sub-menu");
     const menuWidth = 250; 
     let menuOpen = false;
 
+
+    $(".subitem-menu").click(function(event) {
+        event.preventDefault();
+        const target = $(this).data("target");
+        $(".container-item").hide();
+        $("#" + target).show();
+
+        $(".subitem-menu").find(".selected-item-line").addClass("hide");
+        $(this).find(".selected-item-line").removeClass("hide");
+
+    });
+
+    
     if ($(window).width() < 1023) {
         menu.css("left", "-250px");
         menuOpen = false;
@@ -50,3 +65,4 @@ $(document).ready(function () {
 
 
 });
+
