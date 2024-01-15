@@ -24,8 +24,8 @@
             Hola, adnmistrador
         </a>
         <a class="item-menu selected-item" href="./controlPanel.html">Inicio</a>
-        <a class="item-menu" href="">Amenidades</a>
-        <a class="item-menu" href="">Finanzas</a>
+        <a class="item-menu" href="./amenities.html">Amenidades</a>
+        <a class="item-menu" href="./finance.html">Finanzas</a>
         <a class="item-menu" href="">Configuración</a>
     </nav>
 
@@ -72,14 +72,17 @@
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
                             Primer nivel
-                            <label for="occupy" class="montserrat-light gray">
+                            <label for="occupy" class="montserrat-light gray label-center">
                                 Habitado    
-                                <input type="checkbox" name="occupy" id="recuerdarme">
+                                <input type="checkbox" name="occupy" id="ocupay-checkbox">
                             </label>
                         </p>
                         <label for="family" class="label-input">
                             <img src="./icons/tower.png" alt="Apartamento" id="apartment-icon">
-                            <input type="text" name="family" placeholder="Familia Solorzano" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="family" placeholder="Familia no registrada" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                                <p id="error-input-family-name" class="input-error hide"></p>
+                            </div>
                             <a href="" id="btn-family-edit">
                                 <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-family">
                                 <img src="./icons/save_icon.png" alt="edit" id="img-save-family" class="hide">
@@ -103,12 +106,19 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-owner-name" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="owner-name" placeholder="Nombre no registrado" class="input-form" id="input-owner-name" disabled autocomplete="off">
+                                <p id="error-input-owner-name" class="input-error hide"></p>
+                            </div>
+                    
                         </label>
 
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-owner-phone" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="owner-phone" placeholder="Numero no registrado" class="input-form" id="input-owner-phone" disabled autocomplete="off">
+                                <p id="error-input-owner-phone" class="input-error hide"></p>
+                            </div>
                         </label>
                         <div class="edit">
                             <a href="" id="btn-owner-edit">
@@ -124,11 +134,17 @@
                         
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
-                            <input type="text" name="" placeholder="Ingrid Solorzano" class="input-form" id="input-tenant-name" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="" placeholder="Inquilino no registrado" class="input-form" id="input-tenant-name" disabled autocomplete="off">
+                                <p id="error-input-tenant-name" class="input-error hide"></p>
+                            </div>
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
-                            <input type="text" name="" placeholder="0000-0000" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
+                            <div class="label-error">
+                                <input type="text" name="" placeholder="Numero no registrado" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
+                                <p id="error-input-tenant-phone" class="input-error hide"></p>
+                            </div>
                         </label>
                         <div class="edit" >
                             <a href="" id="btn-tenant-edit">
@@ -144,25 +160,24 @@
                     <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de parqueo</p>
                         
-                        <div class="info-details montserrat-light">
+                        <div class="info-details montserrat-light" id="parking-stikers-container">
                             <p class="bold black">Stickers de parqueo</p>
-                            <p class="infor-row gray">Sticker 1<span>12345678</span></p>
-                            <p class="infor-row gray">Sticker 2<span>12345678</span></p>
                         </div>
-
-                        <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
-                            <div class="edit">
-                                <a href="" id="btn-add-parking-stikers" class="enabled">
-                                    <img src="./icons/mas.png" alt="Icon-Editt" id="img-add-parking-stickers" >
-                                </a>
-                            </div>
-                        </label>
-
+                        <form>
+                            <label for="" class="label-input">
+                                <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
+                                <div class="edit">
+                                    <a href="" id="btn-add-parking-stikers" class="enabled">
+                                        <img src="./icons/mas.png" alt="Icon-Editt" id="img-add-parking-stickers" >
+                                    </a>
+                                </div>
+                            </label>
+                        </form>
+                        
                         <div class="info-details montserrat-light">
                             <p class="bold black">Parqueos asignados</p>
-                            <p class="infor-row gray">13<span>primer nivel</span></p>
-                            <p class="infor-row gray">12<span>primer nivel</span></p>
+                            <p class="info-row gray">13<span>primer nivel</span></p>
+                            <p class="info-row gray">12<span>primer nivel</span></p>
                         </div>
 
                         <label for="" class="label-input">
@@ -186,10 +201,8 @@
 
                         <p class="montserrat-light center bold">Datos de entrada peatonal</p>
                         
-                        <div class="info-details montserrat-light">
-                            <p class="bold black">Stickers de parqueo</p>
-                            <p class="infor-row gray">Sticker 1<span>12345678</span></p>
-                            <p class="infor-row gray">Sticker 2<span>12345678</span></p>
+                        <div class="info-details montserrat-light" id="walking-stickers-container">
+                            <p class="bold black">Stickers de entrada</p>
                         </div>
 
                         <label for="" class="label-input">
@@ -209,7 +222,7 @@
                     </section>
                 </li>
                 <li class="container-item montserrat-light" id="maintenance">
-                    <section class="information-maintance-status">
+                    <section class="information-maintenance-status">
                         <div class="circle circle-red"></div>
                         <p>Impago</p>
                         <div class="circle circle-yellow"></div>
@@ -217,65 +230,65 @@
                         <div class="circle circle-green"></div>
                         <p>Pago en tiempo</p>
                     </section>
-                    <section class="maintance-calendar">
+                    <section class="maintenace-calendar">
                         <div class="calendar-nav grid-column-6">
                             <div class="calendar-nav-item" id="calendar-go-back">
                                 <p id="calendar-go-back">&lt</p>
                             </div>
                             <div class="calendar-nav-item">
-                                <p class="calendar-nav-title">2024</p>
+                                <p class="calendar-nav-title"></p>
                             </div>
                             <div class="calendar-nav-item" id="calendar-go-next">
                                 <p id="calendar-go-next">&gt</p>
                             </div>
                         </div>
-                        <div class="calendar-month">
+                        <div class="calendar-month" id="maina">
                             ENE
-                            <div class="circle circle-red"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             FEB
-                            <div class="circle circle-yellow"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             MAR
-                            <div class="circle circle-yellow"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             ABR
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             MAY
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             JUN
-                            <div class="circle circle-yellow"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             JUL
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             AGO
-                            <div class="circle circle-yellow"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             SEP
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             OCT
-                            <div class="circle circle-yellow"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             NOV
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                         <div class="calendar-month">
                             DEC
-                            <div class="circle circle-green"></div>
+                            <div class="circle"></div>
                         </div>
                     </section>
                 </li>
@@ -289,5 +302,10 @@
     <script type="module" src="./js/apartmentDetails.js"></script>
     <script type="module" src="./js/menu.js"></script>
     <script type="module" src="./js/submenu.js"></script>
+    <script type="module" src="./js/ownerDetails.js"></script>
+    <script type="module" src="./js/tenantDetails.js"></script>
+    <script type="module" src="./js/parkingDetails.js"></script>
+    <script type="module" src="./js/walkingDetails.js"></script>
+    <script type="module" src="./js/maintenanceDetails.js"></script>
 </body>
 </html>

@@ -3,8 +3,6 @@ $(document).ready(function () {
     const menu = $("#menu");
     const menuWidth = 250; 
     let menuOpen = false;
-    let startX = 0;
-    let endX = 0;
 
     if ($(window).width() < 1023) {
         menu.css("left", "-250px");
@@ -20,12 +18,14 @@ $(document).ready(function () {
             menuOpen = true;
         }
     });
+
     $(window).resize(function () {
         if ($(window).width() < 1023) {
             menu.css("left", "-250px");
             menuOpen = false;
         }
     });
+
     $(window).resize(function () {
         if ($(window).width() > 1023) {
             menu.css("left", "0px");
@@ -33,12 +33,13 @@ $(document).ready(function () {
         }
     });
 
-    $("body").click(function (e) {
+    $(window).click(function (e) {
         if (menuOpen && e.target.id !== "menu-toggle" && e.target.id !== "menu") {
             menu.animate({ left: -menuWidth }, 300);
             menuOpen = false;
         }
     });
+
 
     menu.click(function (e) {
         e.stopPropagation();

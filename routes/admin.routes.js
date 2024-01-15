@@ -9,7 +9,7 @@ const {
 const {
     logginValidations
 }= require('../middlewares/logginValidations.middlewares');
-router.get('/frontend/loggin',frontendLoggin);
+router.get('/login',frontendLoggin);
 router.post('/loggin',logginValidations,loggin);
 /*=======================
     RUTAS DE APARTAMENTO 
@@ -21,7 +21,8 @@ const {
     updatePedestrianDataValidations,
     changeOcupationStateValidations,
     updateLandlordOrTenantDataValidations,
-    updateApartamentNameValidations
+    updateApartamentNameValidations,
+    getControlPanelValidations
 }= require('../middlewares/apartaments.middlewares')
 const {
     getApartaments,
@@ -31,9 +32,11 @@ const {
     changeOcupationState,
     updateLanlordData,
     updateTenantData,
-    updateApartamentName
-}= require('../controllers/apartaments.controllers')
+    updateApartamentName,
+    getControlPanel
+}= require('../controllers/apartaments.controllers');
 router.get('/apartamentos/:level',getApartamentsValidations,getApartaments);
+router.get('/apartamentos/',getControlPanelValidations,getControlPanel)
 // aplicar carga diferida al momento de lanzarlo a produccón
 router.get('/apartamento/:apartament_id',getApartamentValidations,getApartament);
 router.post('/update/data/parking/:apartament_id',updateParkingDataValidations, updateParkingData);
@@ -45,10 +48,6 @@ router.post('/update/apartament/name/:apartament_id',updateApartamentNameValidat
 /*=======================
     RUTAS DE MANTENIMIENTO
 =========================*/
-
-
-// FALTA QUE EL CONTROLADOR ESCOJA SI ES PAGO MOROSO O EN TIEMPO ,
-// EL  PAGO MOROSO OCURRE DESPUES DEL 6TO DIA DEL MES
 const {
     getMaintenanceApartamentValidations,
     updateMaintenanceValidations
@@ -62,7 +61,6 @@ router.post('/update/apartament/maintenance/:apartament_id',updateMaintenanceVal
 /*=======================
     RUTAS DE AMENIDADES para el admin
 =========================*/
-
 const {
     getAmenitiesValidations,
     updateAmenityDataValidations,
@@ -74,7 +72,7 @@ const {
 }= require('../controllers/amenities.controllers')
 router.get('/amenities/',getAmenitiesValidations,getAmenities);
 router.post('/update/amenity/data/:amenity_id',updateAmenityDataValidations,updateAmenityData);
-router.get('/amenities/for/booking/',getAmenitiesForBookingValidations,getAmenities)
+
 /*=======================
     Obtener el link para la reserva del usuario 
 =========================*/
@@ -82,4 +80,48 @@ const  {getLinkForBookingValidations,getEventsOfAmenityValidationsAdmin}= requir
 const {getLinkForBooking,getEventsOfAmenity}= require('../controllers/reservations.controllers')
 router.get('/get/link/for/booking/:apartament_id',getLinkForBookingValidations,getLinkForBooking);
 router.get('/events/',getEventsOfAmenityValidationsAdmin,getEventsOfAmenity);
+
+/*====================
+    PROVEEDORES
+=======================*/
+const{
+    createProviderValidations,
+    getProvidersDataValidations,
+    getProviderDataValidations,
+    updateProviderValidations,
+}= require('../middlewares/providers.middlewares');
+const{
+    createProvider,
+    getProvidersData,
+    updateProvider,
+    getProviderData
+}= require('../controllers/providers.controllers')
+
+router.post('/create/provider',createProviderValidations,createProvider);
+router.get('/providers/',getProvidersDataValidations,getProvidersData);
+router.get('/data/provider/:provider_id',getProviderDataValidations,getProviderData);
+router.post('/update/provider/:provider_id',updateProviderValidations,updateProvider);
+
+/* =============================
+    CUENTAS POR PAGAR
+===============================*/
+const {
+    createAccountPayableValidations,
+    getAccountsPayableValidations,
+    getAccountPayableDataValidations,
+    updateAccountPayableValidations,
+    changeAccountPaidStatusValidations,
+}= require('../middlewares/accounts_payable.middlewares');
+const {
+    createAccountPayable,
+    getAccountsPayable,
+    getAccountPayable,
+    updateAccountPayable,
+    changeAccountPaidStatus,
+}= require('../controllers/accounts_payable.controllers');
+router.post('/create/account/payable',createAccountPayableValidations,createAccountPayable);
+router.get('/accounts/payable/list/',getAccountsPayableValidations,getAccountsPayable);
+router.get('/account/payable/:account_id',getAccountPayableDataValidations,getAccountPayable)
+router.post('/update/account/payable/:account_id',updateAccountPayableValidations,updateAccountPayable);
+router.post('/change/account/paid/status/',changeAccountPaidStatusValidations,changeAccountPaidStatus);
 module.exports=router;

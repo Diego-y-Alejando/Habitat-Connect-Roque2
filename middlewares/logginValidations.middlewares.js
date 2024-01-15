@@ -12,7 +12,7 @@ const logginValidations=async  (req= request, res = response, next)=>{
         bodyVerification(req.body,['email','password']);
         validationEmail(req.body.email);
         validationPassword(req.body.password);
-        const userData =await userExist('Usuario que solicita',user,req.body.email,'email',['name','lastname','email','phone_number','dpi']);
+        const userData =await userExist('El usuario que solicita',user,req.body.email,'email',['name','lastname','email','phone_number','dpi']);
         const validatePassword = bcrypt.compareSync(req.body.password,userData.password);
         if (!validatePassword) {
            throw new Error('Contraseña incorrecta')

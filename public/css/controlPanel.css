@@ -47,6 +47,13 @@ body{
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+    text-decoration: none;
+}
+.ocupations_state_true{
+    background-color: #eeeeee;
+}
+.ocupations_state_false{
+    background-color:;
 }
 .column-1{
     grid-column: 1;

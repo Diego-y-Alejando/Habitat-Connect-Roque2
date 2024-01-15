@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.4.1/event-calendar.min.css">
     <title>Document</title>
     <script src="./js/jquery-3.6.3.min.js"></script>
-
 </head>
 <body>
     <a href=""><img class="backward-icon" alt="Regresar" src="./icons/backward_icon.png" /></a>
@@ -30,31 +29,23 @@
                 Horario 08:00 a 23:00
                 Alquiler 6hrs Q200.00
                 Hora extra a Q60.00</p>
-                <button class="booking-btn" id="booking-amenity-btn">Reservar</button>
+                <button class="booking-btn" id="booking-amenity-btn">Editar</button>
             </article>
-            <div class="container-booking-form-calendar">
+            <div class="container-amenity-form-calendar">
                 <div class="siblings-form-calendar">
-                    
-                    <div  class="calendar" id ="deck-azotea-calendar">
-                        
-                    </div>
-                    <form class="booking-form" id="roof-deck-form">
+                    <form class="amenity-form edit-amenity-form" id="roof-deck-form">
                         <h2 class="amenity-for-booking">Deck azotea</h2>
                         <span class="close-window" id="close-window">X</span>
                         <label class="booking-label name justify-end" for="name">
-                            Nombre  del Responsable
-                            <input type="text" name="name" class="booking-input" placeholder="Nombre">
+                           Costo de renta 
+                            <input type="number" min="0" name="rent_cost"  step="0.01" class="booking-input" placeholder="Precio de renta">
                         </label>
                         <label class="booking-label phone_number justify-start" for="phone_number">
-                            Teléfono del Responsable
-                            <input type="text" name="name" class="booking-input" placeholder="Teléfono">
+                            Costo por hora extra 
+                            <input type="number" min="0" name="additional_cost_per_hour" step="0.01" class="booking-input" placeholder="Costo extra por hora">
                         </label>
-                        <label class="booking-label justify-end date_input" for="date">
-                            Fecha de la reserva
-                            <input type="date" name="date" class="booking-input" placeholder="">
-                        </label>
-                        <label class="booking-label label-booking-schedule justify-start">
-                            <span class="title-schedule">Horario de la reserva</span> 
+                        <label class="booking-label label-booking-schedule ">
+                            <span class="title-schedule">Horario de la ameinidad</span> 
                             <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
                                 <option>Inicio</option>
                                 <option>08:00</option>
@@ -67,7 +58,7 @@
                                 <option>08:00</option>
                             </select>
                         </label>
-                       <input type="submit" class="btn-submit" value="Registrar reserva">
+                       <input type="submit" class="btn-submit" value="Guardar cambios">
                     </form>
                 </div>
                 
@@ -86,13 +77,13 @@
                 Hora extra a Q60.00</p>
                 <button class="booking-btn">Reservar</button>
             </article>
-            <div class="container-booking-form-calendar">
+            <div class="container-amenity-form-calendar">
                 <div class="siblings-form-calendar">
                     
                     <div  class="calendar" id ="bussines-center-calendar">
                         
                     </div>
-                    <form class="booking-form" id="bussines-center-form">
+                    <form class="amenity-form" id="bussines-center-form">
                         <h2 class="amenity-for-booking">Sala de reuniones</h2>
                         <span class="close-window" id="close-window">X</span>
                         <label class="booking-label name justify-end" for="name">
@@ -141,18 +132,18 @@
                 <img class="icon-amenity" src="./icons/amenity_2.png">
                 <p class="data-schedule-cost">
                 <b>Lunes a sábado</b>
-                Horario 08:00 a 23:00
+                Horario  08:00 a 23:00
                 Alquiler 6hrs Q200.00
                 Hora extra a Q60.00</p>
                 <button class="booking-btn">Reservar</button>
             </article>
-            <div class="container-booking-form-calendar">
+            <div class="container-amenity-form-calendar">
                 <div class="siblings-form-calendar">
                     
                     <div  class="calendar" id ="social-hall-calendar">
                         
                     </div>
-                    <form class="booking-form" id="social-hall-form">
+                    <form class="amenity-form" id="social-hall-form">
                         <h2 class="amenity-for-booking">Salón social</h2>
                         <span class="close-window" id="close-window">X</span>
                         <label class="booking-label name justify-end" for="name">

@@ -1,0 +1,29 @@
+<div  class="calendar" id ="<%=nickName%>-calendar">
+                
+</div>
+<form class="amenity-form" id="<%=nickName%>-form">
+    <input type="hidden" name="amenity_id" value="<%=amenity_id%>">
+    <h2 class="amenity-for-booking"><%=amenity_name%></h2>
+    <span class="close-window" id="close-window">X</span>
+    <label class="booking-label name justify-end" for="name">
+        Nombre  del Responsable
+        <input type="text" name="name" class="booking-input" placeholder="Nombre">
+    </label>
+    <label class="booking-label phone_number justify-start" for="phone_number">
+        Teléfono del Responsable
+        <input type="text" name="name" class="booking-input" placeholder="Teléfono">
+    </label>
+    <label class="booking-label justify-end date_input" for="date">
+        Fecha de la reserva
+        <input type="date" name="date" class="booking-input" placeholder="">
+    </label>
+    <div class="booking-label label-booking-schedule">
+        <h9 class="title-schedule">Horario de la amenidad</h9> 
+        <input list="opciones" id="myInput" name="start_time"  class="input-schedule update-amenity-input" type="time" placeholder="Apertura">
+        <h9 class="preposition-schedule">a</h9>
+       <input list="opciones" id="myInput" name="end_time"  class="input-schedule update-amenity-input" type="time" placeholder="Cierre">
+    </div>
+    <label class="booking-label submit-label column-span-2">
+        <input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios" id="<%=nickName%>-btn-submit-updateData">
+    </label>
+</form>

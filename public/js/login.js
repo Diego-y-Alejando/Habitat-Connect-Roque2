@@ -7,7 +7,6 @@ import{
 $(document).ready(function() {
 
     $("#buttonon-login").click(function(event) {
-        event.preventDefault();
 
         const email = $("#input-email").val();
         const password = $("#input-password").val();
@@ -35,28 +34,29 @@ $(document).ready(function() {
             $("#error-input-password").text(error.message);
             console.log(error.message);
         }
-
-    /*  try{
-            $.ajax({
-                type: "POST",
-                url: "/AQUI VA EL END POINT",
-                data: {
-                    email: password,
-                    password: password
-                },
-                success: function(response){
-    
-                },
-                error: function(error){
-                    
-                }
-            });
-        } catch (error) {
-            console.error("Error en la solicitud AJAX: " + error.message);
-            $("#mensaje").text("Se produjo un error en la solicitud. Por favor, inténtalo más tarde.");
-        } */
-
+        $("#login-form").submit(function(){
+            console.log("SUBMIT");
+            /*  try{
+                $.ajax({
+                    type: "POST",
+                    url: "/AQUI VA EL END POINT",
+                    data: {
+                        email: password,
+                        password: password
+                    },
+                    success: function(response){
         
+                    },
+                    error: function(error){
+                        
+                    }
+                });
+            } catch (error) {
+                console.error("Error en la solicitud AJAX: " + error.message);
+                $("#mensaje").text("Se produjo un error en la solicitud. Por favor, inténtalo más tarde.");
+            } */
+        });
     });
+
 
 });

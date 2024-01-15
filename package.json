@@ -10,6 +10,7 @@
   "author": "Diego y Alejandro",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.3",
     "@event-calendar/core": "^2.4.1",
     "@event-calendar/day-grid": "^2.4.1",

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/menu.css">
+    <link rel="stylesheet" href="/public/css/controlPanel.css">
+    <title>Panel de control</title>
+</head>
+<body>
+
+    <header>
+        <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
+    </header>
+    <%- include('./components/menuComponent',{
+        BASE_URL:BASE_URL
+    }) %>
+
+    <main class="container-content">
+        
+        <form action="" class="form-select-level">
+            <select class="filter-level" name="level-select" id="filter-level">
+                <option value="1">Primer nivel</option>
+                <option value="2">Segundo nivel</option>
+                <option value="3">Tercer nivel</option>
+            </select>
+        </form>
+        
+        <div class="container-grid-apartaments" id="container-grid-apartaments">
+           
+            
+                
+        </div>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="/public/js/menu.js"></script>
+    <script type="module" src="/public/js/handleApartamentsFilter.js"></script>
+</body>
+</html>

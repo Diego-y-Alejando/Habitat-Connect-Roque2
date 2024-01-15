@@ -1,16 +1,15 @@
-// regex utilizado para nombres de laboratorios, nombres y apellidos por eso permite números
-const regex=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9 ]+/
+
 const validateName = (name ,size) => {
+  const regexName = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/;
     if (!name) {
       throw new Error('El nombre es obligatorio')
-    } else if (!regex.test(name)) {
+    } else if (!regexName.test(name)) {
       throw new Error('El nombre sólo puede contener letras y espacios')
     }else if(name.trim().length>size){
       throw new Error('El nombre se exede de 55 caracteres puedes colocar unicamente dos nombres ')
     }
 }
 const validateLastName = (lastName,size) => {
-  
     if (!lastName) {
       throw new Error('El apellido es obligatorio')
     } else if (!regex.test(lastName)) {
@@ -19,6 +18,8 @@ const validateLastName = (lastName,size) => {
       throw new Error('El apellido se exede de 55 caracteres ')
     }
 }
+
+
   
 const validateDpi = (dpi) => {
     const regexDpi= /^[0-9-]+$/
@@ -32,23 +33,32 @@ const validateDpi = (dpi) => {
   }
   
 const validatePersonalPhone = (phone) => {
-    const regexPhone= /^\(\d{3}\)\d{4}-\d{4}$/
+    const regexPhone= /^\d{4}-\d{4}$/
     console.log(phone);
     if (!phone) {
       throw new Error('El numero de teléfono  es obligatorio')
     } else if (!regexPhone.test(phone)) {
-      throw new Error('El numero de  teléfono  debe tener el siguiente formato: (XXX)XXXX-XXXX')
+      throw new Error('El numero de  teléfono  debe tener el siguiente formato: XXXX-XXXX')
     }else if(phone.trim().length>14){
       throw new Error('El numero de  teléfono se exede de 14 caracteres revisa que este correcto ')
     }
   }
 
-
-const bodyVerification=(object,alloProperties)=>{
-    if (!object || typeof object !== 'object' || !Object.keys(object).length) {
+const validationPath=(path,regexPath)=>{
+    if (!path) {
+      throw new Error('el path que enviaste viene vacío')
+    }
+    else if(!regexPath.test(path)){
+      throw new Error(`el path ${path} no es el correcto, revisa el path`) 
+    }else if(path.trim().length>200){
+      throw new Error('el path es demasiado largo porfavor revisa el path algo anda mal')
+    }
+  }
+const bodyVerification=(object,allowProperties)=>{
+  if (!object || typeof object !== 'object' || !Object.keys(object).length) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }
-    else if (!Object.keys(object).every(property => alloProperties.includes(property))) {
+    else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
       throw new Error('Contiene propiedades no válidas');
     }
 }
@@ -74,21 +84,168 @@ const validationPassword=(password)=>{
     }
 
 }
-
-
-
-
-
-
-const validationID=(id,description)=>{
-  const regexNumber =/^[0-9]+$/;
-  if (!id===null || id ===0 ) {
-      throw new Error(`El id de ${description} no puede venir vacío `)
+const validationDepartament=(departaments)=>{
+  const allowDepartaments =['SALES-D','PROD-D','MED-D','RECEPTION-D','MANAGER-D'];
+  if (!departaments) {
+    throw new Error('El departamento no puede venir vacío')
   }
-  else if(!regexNumber.test(id)){
-      throw new Error(`El id de ${description} contiene caracteres  no validos o viene vacío`);
+  if (!allowDepartaments.includes(departaments)) {
+    throw new Error('Departamento incorrecto'); 
   }
-  // validar que no se exceda de cierta catnidad de caracteres
+}
+const validatePosition =(position)=>{
+  const allowPositions=['Jefa de departamento','Asistente principal','Asistente secundario','Gerente comercial','Apoyo al paciente','Recepcionista','Dentista']
+  if(position==='nulo') {
+    throw new Error('Debes asignar una posición');
+  }if(!allowPositions.includes(position)) {
+    throw new Error('La posicion es incorrecta');
+  }
+}
+
+
+
+const validationOfIdenticatedlId=(idToken,idUser)=>{
+  if (idToken!=idUser) {
+    throw new Error('Conflicto de Idtoken con idUser');
+  }
+}
+
+const ValidationIdOrLevel =(message,level)=>{
+  const regexLevel=/^[\d]+$/
+  if (!level) {
+      throw new Error('El '+message+' viene vacio')
+  }
+  if (!regexLevel.test(level)) {
+    throw new Error('El '+message+' es invalido ')
+  }
+}
+const allowAcction =(employePosition,requirePosition)=>{
+  if (employePosition!=requirePosition) {
+    throw new Error('No tienes permiso para realizar esta acción');
+  }
+}
+const validationParagraph =(paragaph)=>{
+  const regexParagraph=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9,. ]+/
+  if (!regexParagraph.test(paragaph)) {
+    throw new Error('El parrafo contiene caractéres no válidos ,solo se permiten comas,puntos y números')
+  }
+}
+const validationDates=(date,campo)=>{
+  const regexDate = /^(\d{4})-(0[1-9]|1[012])-(0[1-9]|[1-2]\d|3[0-1])/
+  if (!date) {
+    throw new Error(`El campo ${campo} no puede venir vacío`)
+  }
+  if(!regexDate.test(date)){
+    throw new Error(`El campo ${campo} tiene un formato inválido`)
+  }
+}
+const validationOcupationState = (state) => {
+  const regexState = /^[0|1]+$/
+
+  if (state === null || state === undefined) {
+    throw new Error('El estado de ocupacion es obligatorio')
+  } else if (!regexState.test(state)) {
+    throw new Error('El estado  de ocupacion no es correcto')
+  }
+}
+const isTicketOpen=async(message,model,searchField,targetField,findActiveState,excludeArr)=>{
+  try {
+      const  ticket =  await model.findOne({
+          where:{
+              [targetField]:searchField,
+              state:1
+          }
+      })
+      if (ticket) {
+          throw new Error(message)
+      }
+  } catch (error) {
+      throw new Error(error)
+  }
+}
+const objectOwner=(idToken,employeeToken,message)=>{
+  if (idToken!= employeeToken) {
+    throw new Error(message)
+  }
+}
+const compareDates=(openning_date,closing_date)=>{
+  const diferenciaEnMilisegundos = closing_date - openning_date;
+  // Convierte la diferencia en días dividiendo por la cantidad de milisegundos en un día
+  const diasDiferencia = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+  if ( diasDiferencia<0 ||diasDiferencia<8) {
+      throw new Error(`Hay menos de 8 días de diferencia entre la fecha ${openning_date} y ${closign_date}` )
+  }
+  
+}
+const validationYear = (year)=>{
+  const regexYear=/^(\d{4})/
+  if (!year) {
+    throw new Error('El año no puede venir vacío')
+  }else if (!regexYear.test(year)){
+    throw new Error('El año contiene caracteres no válidos ')
+  }else if (year<1998 || year>2070) {
+    throw new Error('El valor del año excede los limites')
+
+  }
+
+}
+const validationCost = (cost, message)=>{
+  const regexCost = /^[\d]{2,3}\.[\d]{2}$/
+
+  if (!cost) {
+    throw new Error(`El costo de ${message} no puede venir vacío`);
+  }else if(!regexCost.test(cost)){
+    throw new Error(`El costo de ${message} tiene  un formato invalido , debe ser 00.00`);
+  }
+}
+
+const validationHour = (hour, message)=>{
+  const regexHour = /^(0[0-9]|1[0-9]|2[0-4]):([0-5][0-9])/
+
+  if (!hour) {
+    throw new Error(`La hora de ${message} no puede venir vacía`);
+  }else if(!regexHour.test(hour)){
+    throw new Error(`La hora de ${message} contiene caracteres no válidos `)
+  }
+}
+const compareHours =(start_time,end_time,flag,message)=>{
+    const [start_hour, start_minutes] = start_time.split(':').map(Number);
+    const [end_hour, end_minutes] = end_time.split(':').map(Number);
+
+    const inicioMS = (start_hour * 60 + start_minutes) * 60 * 1000;
+    const finMS = (end_hour * 60 + end_minutes) * 60 * 1000;
+
+    const diferenciaHoras = (finMS - inicioMS)/3600000;
+    if (diferenciaHoras<0) {
+        throw new Error('Asegúrate de que la hora de inicio sea anterior a la hora de finalización')
+    }
+    if (flag) {
+      if (diferenciaHoras<10) {
+        throw new Error(message)
+      }
+    }if (!flag) {
+      if (diferenciaHoras>6) {
+        throw new Error(message);
+      }
+    }
+}
+const ValidationPaidStatus=(paid_status)=>{
+  // 1 pago a tiempo 2 pago con mora 3 impago
+  const regexPaidStatus=/^1|2|3/
+  if (!paid_status) {
+    throw new Error('El estado de pago no puede venir vacío')
+  }
+  if (!regexPaidStatus.test(paid_status)) {
+    throw new Error('El estado de pago tiene caracteres inválidos')
+  }
+}
+const validationMonth= (month)=>{
+  const regexMonth =/^january|february|march|april|may|june|juli|august|september|october|november|december/
+  if (!month) {
+      throw new Error('El mes no puede venir vacío')
+  }if (!regexMonth.test(month)) {
+      throw new Error('El valor del mes no es correcto')
+  }
 }
 const validatePage =(page)=>{
   const regexPage=/^[1-9]+$/
@@ -99,50 +256,31 @@ const validatePage =(page)=>{
     throw new Error('La paginacion es invalida')
   }
 }
-
-const validationParagraph =(paragaph)=>{
-  const regexParagraph=/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9 ,.]+/
-  if (!regexParagraph.test(paragaph)) {
-    throw new Error('Debes ingresar una descripcion obligatoriamente o ingresaste  un caracter no válido  solo se permiten comas , números y puntos ')
-  }
-}
-const validationDates=(date)=>{
-  const regexDate = /^(\d{4})-(0[1-9]|1[012])-(0[1-9]|[1-2]\d|3[0-1])/
-  
-  if(!regexDate.test(date)){
-    throw new Error(`El campo que es una fecha  tiene un formato inválido o viene vacío`)
-  }
-}
-const validateState = (state) => {
-  const regexState = /^[01]$/
-  if (!state) {
-    throw new Error('El estado del ticket es obligatorio')
-  } else if (!regexState.test(state)) {
-    throw new Error('El estado  del ticket no es correcto')
-  }
-}
-
-const validateAdress=(adress)=>{
-  const regexAdress =/^[a-zA-Z0-9 -]+$/
-  if (!adress) {
-      throw new Error('La direccion no debe venir vacia')
-  }if(!regexAdress.test(adress)){
-      throw new Error('La direccion no es válida')
-  }
-}
-
-export{
+export {
     validateName,
     validateLastName,
     validateDpi,
-    validatePersonalPhone,
+    validatePhoneNumber,
+    validationPath,
     bodyVerification,
     validationEmail,
     validationPassword,
-    validationID,
-    validatePage,
+    validationDepartament,
+    validationOfIdenticatedlId,
+    ValidationIdOrLevel,
+    allowAcction,
     validationParagraph,
     validationDates,
-    validateState,
-    validateAdress,
+    validationOcupationState,
+    isTicketOpen,
+    objectOwner,
+    compareDates,
+    validationYear,
+    validationCost,
+    validationHour,
+    compareHours,
+    ValidationPaidStatus,
+    validationMonth,
+    validatePage
+    
 }

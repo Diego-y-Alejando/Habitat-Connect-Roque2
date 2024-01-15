@@ -53,7 +53,8 @@ const validationPath=(path,regexPath)=>{
     }
   }
 const bodyVerification=(object,allowProperties)=>{
-  if (!object || typeof object !== 'object' || !Object.keys(object).length) {
+  console.log(object);
+  if (!object || typeof object !== 'object' || Object.keys(object).length==0) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }
     else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
@@ -108,8 +109,7 @@ const validateSupervisor=(supervisor)=>{
   }
 }
 const userExist =async(message,model, searchField, targetField, excludeArr )=>{
-
-  try {
+  try{
    const searchRecord = await model.findOne({
       where:{
         [targetField]:searchField
@@ -120,7 +120,7 @@ const userExist =async(message,model, searchField, targetField, excludeArr )=>{
     });
 
     if (!searchRecord) {
-      throw new Error(`El ${message} no existe`);
+      throw new Error(`${message} no existe`);
     }
     return searchRecord.dataValues 
    } catch (error) {
@@ -138,7 +138,10 @@ const tokenValidation = async (token, model, targetField, excludeArr, secretKey,
     const user = await findData(model, id, targetField, excludeArr);
     if (!user) throw new Error('El usuario no existe en la base de datos');
 
-    return id;
+    return {
+      id,
+      user_type
+    };
   } catch (error) {
     throw new Error(error);
   }
@@ -239,11 +242,11 @@ const validationYear = (year)=>{
 
 }
 const validationCost = (cost, message)=>{
-  const regexCost = /^[\d]{2,3}.[\d]{2}$/
+  const regexCost = /^[\d]{2,3}\.[\d]{2}$/
   if (!cost) {
     throw new Error(`El costo de ${message} no puede venir vacío`);
   }else if(!regexCost.test(cost)){
-    throw new Error(`El costo de ${message} tiene caracteres inválidos`);
+    throw new Error(`El costo de ${message} tiene  un formato invalido , debe ser 00.00`);
   }
 }
 
@@ -278,6 +281,7 @@ const compareHours =(start_time,end_time,flag,message)=>{
     }
 }
 const ValidationPaidStatus=(paid_status)=>{
+  // 1 pago a tiempo 2 pago con mora 3 impago
   const regexPaidStatus=/^1|2|3/
   if (!paid_status) {
     throw new Error('El estado de pago no puede venir vacío')
@@ -294,7 +298,15 @@ const validationMonth= (month)=>{
       throw new Error('El valor del mes no es correcto')
   }
 }
-
+const validatePage =(page)=>{
+  const regexPage=/^[1-9]+$/
+  if (!page) {
+      throw new Error('La pagina no puede venir vacía')
+  }
+  if (!regexPage.test(page)) {
+    throw new Error('La paginacion es invalida')
+  }
+}
 module.exports ={
     validateName,
     validateLastName,
@@ -324,5 +336,7 @@ module.exports ={
     validationHour,
     compareHours,
     ValidationPaidStatus,
-    validationMonth
+    validationMonth,
+    validatePage
+    
 }

@@ -3,10 +3,12 @@ const path = require('path');
 module.exports = {
   entry: './src/calendar.js', // Ruta de tu archivo principal
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js' // Archivo de salida
+    path: path.resolve(__dirname, 'public/js'), 
+    filename: 'bundle.js', // Archivo de salida
+    publicPath: 'http://localhost:8080/'
   },
-  module: {
+  devtool: 'source-map',
+  module:{
     rules: [
         {
             test: /\.js$/,
