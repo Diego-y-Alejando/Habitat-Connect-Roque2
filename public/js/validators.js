@@ -35,16 +35,15 @@ const validateDpi = (dpi) => {
   }
   
 const validatePersonalPhone = (phone) => {
-    /*const regexPhone= /^\(\d{3}\)\d{4}-\d{4}$/
+    const regexPhone= /^\d{4}-\d{4}$/
     console.log(phone);
     if (!phone) {
       throw new Error('El numero de teléfono  es obligatorio')
     } else if (!regexPhone.test(phone)) {
-      throw new Error('El numero de  teléfono  debe tener el siguiente formato: (XXX)XXXX-XXXX')
+      throw new Error('El numero de  teléfono  debe tener el siguiente formato: XXXX-XXXX')
     }else if(phone.trim().length>14){
       throw new Error('El numero de  teléfono se exede de 14 caracteres revisa que este correcto ')
-    }*/
-    return true;
+    }
   }
 
 
