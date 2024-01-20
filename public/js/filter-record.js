@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    
     $("#btn-filter").click(function(event) {
         event.preventDefault();
         $("#form-filter-record").toggleClass("hide");

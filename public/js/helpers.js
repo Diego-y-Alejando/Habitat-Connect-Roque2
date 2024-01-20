@@ -50,9 +50,34 @@ const apartamentItemGenerator =(apartamentList,containerGridApartaments,BASE_URL
     });
     containerGridApartaments.empty().append(arrayApartament)
 }
+const formatEventsArray =(eventsArr)=>{
+    let newArr=[];
+    eventsArr.forEach((event)=>{
+      Object.entries(event).forEach(([propertyName,propertyValue])=>{
+        if (propertyName === 'start' || propertyName === 'end') {
+            const dateStr = `${event['date']} ${event[propertyName]}`;
+            const newDate = new Date(dateStr);
+            // Verifica si la fecha es válida antes de asignarla
+            if (!isNaN(newDate.getTime())) {
+                event[propertyName] = newDate;
+            } else {
+                console.error(`Fecha no válida: ${dateStr}`);
+            }
+
+        }if (propertyName==='end') {
+            delete event.date
+        }
+        
+      })
+       newArr.push(event)
+    })
+    return newArr
+    
+}
 export{
     BASE_URL,
     headers,
     makeRequest,
-    apartamentItemGenerator
+    apartamentItemGenerator,
+    formatEventsArray
 }

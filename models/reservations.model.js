@@ -24,17 +24,17 @@ const reservations= sequelizeObj.define(
         start_reserv_time:{
             type:DataTypes.TIME,
             allowNull:false,
-            validate:{
-                is: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-            }
+            // validate:{
+            //     is: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
+            // }
         },
         end_reserv_time:{
             type:DataTypes.TIME,
             allowNull:false,
-            validate:{
-                // is: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-                notEmpty:true
-            }
+            // validate:{
+            //     // is: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
+            //     notEmpty:true
+            // }
         },
         renter_name:{
             type:DataTypes.CHAR,

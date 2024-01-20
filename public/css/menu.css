@@ -18,7 +18,16 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 175px;
+    background-image: url('../icons/headerBackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: absolute;
+    z-index: -1;
+
 }
+
 
 .app-name {
     color: var(--white);
@@ -47,8 +56,6 @@ header {
     width: 100%;
     display: grid;
     padding-bottom: 3%;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
     min-height: 60vh;
 }
 
@@ -64,6 +71,7 @@ header {
     justify-content: center;
     align-items: center;
     font-family: montserrat-regular;
+    margin-top: 150px;
 }
 
 

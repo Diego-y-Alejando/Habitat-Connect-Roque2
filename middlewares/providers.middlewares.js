@@ -24,7 +24,7 @@ const createProviderValidations = async (req = request , res = response , next)=
         service_description
     }= req.body
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         bodyVerification(req.body,[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description'])
         validateName(provider_name,75);
         validatePhoneNumber(phone_number);
@@ -137,11 +137,11 @@ const validateBankAccount=(bank_account)=>{
     }
 }
 const validateTypeAccount =(type_account)=>{
-    const allowTypesAccount = ['Monetaria','De ahorro','En dólares']
+    const allowTypesAccount = /^monetaria|ahorro|en d[o|ó]lares/gi
     if (!type_account) {
         throw new Error('El tipo de cuenta no puede venir vacío');
     }
-    if (!allowTypesAccount.includes(type_account)) {
+    if (!allowTypesAccount.test(type_account)) {
         throw new Error('No es un tipo de cuenta ')
     }
 }

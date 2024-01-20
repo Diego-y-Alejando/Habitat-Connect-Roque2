@@ -21,11 +21,7 @@ const loggin = async (req= request , res = response)=>{
         })
     }
 }
-const frontendLoggin = (req = request , res = response)=>{
-    const logginHTML = path.join(__dirname, '..','views', 'login.ejs');
-    res.render(logginHTML,{BASE_URL:process.env.BASE_URL});
-}
+
 module.exports= {
-    loggin,
-    frontendLoggin
+    loggin
 }

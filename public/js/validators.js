@@ -18,9 +18,6 @@ const validateLastName = (lastName,size) => {
       throw new Error('El apellido se exede de 55 caracteres ')
     }
 }
-
-
-  
 const validateDpi = (dpi) => {
     const regexDpi= /^[0-9-]+$/
     if (!dpi) {
@@ -32,7 +29,7 @@ const validateDpi = (dpi) => {
     }
   }
   
-const validatePersonalPhone = (phone) => {
+const validatePhoneNumber = (phone) => {
     const regexPhone= /^\d{4}-\d{4}$/
     console.log(phone);
     if (!phone) {
@@ -256,6 +253,43 @@ const validatePage =(page)=>{
     throw new Error('La paginacion es invalida')
   }
 }
+// 
+const validateBankAccount=(bank_account)=>{
+  const regexBankaccount =/^[\d]{3,}/
+  if (bank_account === null || bank_account ===false) {
+      throw new Error('La cuenta de banco no puede venir vacía')
+  }
+  if (!regexBankaccount.test(bank_account)) {
+      throw new Error('La cuenta bancaria solo debe contener número')
+  }
+}
+const validateTypeAccount =(type_account)=>{
+  const allowTypesAccount = /^monetaria|ahorro|en d[o|ó]lares/gi
+  if (!type_account) {
+      throw new Error('El tipo de cuenta no puede venir vacío');
+  }
+  if (!allowTypesAccount.test(type_account)) {
+      throw new Error('No es un tipo de cuenta ')
+  }
+}
+const validatePaymentMethod =(payment_methods)=>{
+  const regexPaymentMethods =/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
+  if (!payment_methods) {
+      throw new Error('El método de pago no puede venir vacío')
+  }if (!regexPaymentMethods.test(payment_methods)) {
+      throw new Error('El método de pago contiene caractéres no válidos')
+  }
+}
+
+const validateBankName = (name ) => {
+  const regexBankName=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
+  if (!name) {
+    throw new Error('El nombre  del banco es obligatorio')
+  } else if (!regexBankName.test(name)) {
+    throw new Error('El nombre  del banco sólo puede contener letras y espacios')
+  }
+  
+}
 export {
     validateName,
     validateLastName,
@@ -281,6 +315,10 @@ export {
     compareHours,
     ValidationPaidStatus,
     validationMonth,
-    validatePage
+    validatePage,
+    validateBankAccount,
+    validateTypeAccount,
+    validatePaymentMethod,
+    validateBankName
     
 }

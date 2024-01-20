@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/amenities.css">
-   
+    <link rel="stylesheet" href="/public/css/amenityForms.css">
+    <link rel="stylesheet" href="/public/css/calendar.css">
+    <link rel="stylesheet" href="/public/css/modalWindow.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.6.0/event-calendar.min.css">
     <title>Document</title>
     <script src="/public/js/jquery-3.6.3.min.js"></script>
@@ -29,17 +31,17 @@
                     <p class="data-schedule-cost">
                     <b>Lunes a sábado</b>
                     Horario <%=amenity.formatStartHour.toString()%> a <%=amenity.formatEndHour.toString()%>
-                    Alquiler 6hrs Q<%=amenity.rent_cost%>
+                    Costo por hora Q<%=amenity.rent_cost%>
                     Hora extra a Q<%=amenity.additional_cost_per_hour%></p>
                     <% if(user_type ==='admin'){ %>
-                        <button class="booking-btn" id="booking-amenity-btn">Editar</button>
+                        <button class="display-modal-window booking-btn" id="booking-amenity-btn">Editar</button>
                     <% } else if (user_type==='user') {%>
-                        <button class="booking-btn" id="booking-amenity-btn">Reservar</button> 
+                        <button class="display-modal-window booking-btn" id="booking-amenity-btn">Reservar</button> 
                     <% } %> 
                    
                 </article>
-                <div class="container-amenity-form-calendar">
-                    <div class="siblings-form-calendar">
+                <div class="modal-window">
+                    <div class="content-modal-window">
                       
                         <% if(user_type ==='admin'){ %>
                             <%- include('./components/editAmenityForm',{
@@ -69,7 +71,7 @@
     <% if(user_type ==='admin'){ %>
         <script type="module" src="/public/js/handleUpdateAmenityForm.js"></script>
     <% } else if (user_type==='user') {%>
-        <script type="module" src="/public/js/bundle.js"></script>
+        <script type="module" src="/public/js/calendars.js"></script>
         <script type="module" src="/public/js/handleBookingAmenity.js"></script>
     <% } %> 
     

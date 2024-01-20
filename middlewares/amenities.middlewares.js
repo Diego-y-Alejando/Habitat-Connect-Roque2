@@ -19,14 +19,10 @@ const getAmenitiesValidations = async(req = request , res = response , next)=>{
         req.user_type='admin';
         next()
     } catch (error) {
-        return res.status(400).json({
+        return  res.render(error404HTML,{
             error:error.message,
             ok:false
         });
-        // return  res.render(error404HTML,{
-        //     error:error.message,
-        //     ok:false
-        // });
     }
 }
 const updateAmenityDataValidations = async(req = request , res = response , next)=>{
@@ -57,10 +53,10 @@ const getAmenitiesForBookingValidations = async (req = request , res = response 
         next();
         req.user_type=user_type;
     } catch (error) {
-        return res.status(400).json({
+        return res.render(error404HTML,{
             error:error.message,
             ok:false
-        });
+        })
     }
 }
 

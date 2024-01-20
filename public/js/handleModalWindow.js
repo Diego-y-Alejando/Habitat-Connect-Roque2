@@ -1,9 +1,13 @@
 (function($, window, document) {    
-    const  bookinBtn = $('.booking-btn');
+    const  btnDisplayModalWIndow = $('.display-modal-window');
     const closeWindowBtn =$('.close-window')
-    bookinBtn.each(function() {
-        $(this).on('click', function() {
-          const containerBookingFormAndCalendar=$(this).parent().siblings('.container-amenity-form-calendar')
+    btnDisplayModalWIndow.each(function() {
+        $(this).on('click', function(event) {
+            console.log('click');
+          const containerBookingFormAndCalendar=$(this).parent().siblings('.modal-window').length > 0 ?
+          $(this).parent().siblings('.modal-window') :
+          $(this).parent().find('div#modal-window');
+
           containerBookingFormAndCalendar.css({
             display: 'flex',
           }).animate({
@@ -15,7 +19,7 @@
     });
     closeWindowBtn.each(function() {
         $(this).on('click', function() {
-           const closeContainer =$(this).closest('.container-amenity-form-calendar');
+           const closeContainer =$(this).closest('.modal-window');
            closeContainer.animate({
                 opacity:0
             }, 400).css({
