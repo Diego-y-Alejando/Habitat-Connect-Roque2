@@ -3,6 +3,9 @@ import{
     validationEmail,
     validationPassword,
 }from "./validators.js"
+import{
+    BASE_URL
+}from "./helpers.js"
 
 $(document).ready(function() {
 
@@ -34,29 +37,33 @@ $(document).ready(function() {
             $("#error-input-password").text(error.message);
             console.log(error.message);
         }
-        $("#login-form").submit(function(){
-            console.log("SUBMIT");
-            /*  try{
-                $.ajax({
-                    type: "POST",
-                    url: "/AQUI VA EL END POINT",
-                    data: {
-                        email: password,
-                        password: password
-                    },
-                    success: function(response){
+
         
-                    },
-                    error: function(error){
-                        
-                    }
-                });
-            } catch (error) {
-                console.error("Error en la solicitud AJAX: " + error.message);
-                $("#mensaje").text("Se produjo un error en la solicitud. Por favor, inténtalo más tarde.");
-            } */
-        });
     });
 
+    $("#login-form").on("submit", function(event) {
+        event.preventDefault();
+        console.log("SUBMIT");
+        const email = $("#input-email").val();
+        const password = $("#input-password").val();
+
+
+        $.ajax({
+            url: BASE_URL + "admin/loggin",
+            method: "POST",
+            data: {
+                email: email,
+                password: password
+            },
+            success: function(response) {
+                window.location.href = BASE_URL + "admin/apartamentos"; 
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.log(error);
+            }
+        });
+    });
 
 });

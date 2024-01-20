@@ -32,7 +32,7 @@ const validateDpi = (dpi) => {
     }
   }
   
-const validatePersonalPhone = (phone) => {
+const validatePhoneNumber = (phone) => {
     const regexPhone= /^\d{4}-\d{4}$/
     console.log(phone);
     if (!phone) {
