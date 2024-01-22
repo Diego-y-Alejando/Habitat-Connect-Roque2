@@ -27,13 +27,12 @@ $(document).ready(function () {
             pageSuplier = pageSuplier + 1;
             const providers = await makeRequest(`${BASE_URL}admin/providers/?page=${pageSuplier}`, 'GET', null, {});
             if (!providers.ok) {
-                throw new Error(providers.error)
-           }
-           
-           providers.providers.rows.forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
+                throw new Error(providers.error);
+            }
+            providers.providers.rows.forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                 table.append(`
                     <tr class='table-row provider' id=${provider_id}>
-                        <td class='supplier-name'>${provider_name}</td>
+                        <td class='provider_name'>${provider_name}</td>
                         <td>${phone_number}</td>
                         <td>${bank_account}</td>
                         <td>${bank_name}</td>
@@ -41,8 +40,7 @@ $(document).ready(function () {
                     </tr>
                 `);
             });
-            
-            totalProviders= providers.providers.count
+            totalProviders= providers.providers.count;
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +63,7 @@ $(document).ready(function () {
                     remainingProviders.providers.rows.forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                         table.append(`
                             <tr class='table-row provider' id=${provider_id}>
-                                <td class='supplier_name'>${provider_name}</td>
+                                <td class='provider_name'>${provider_name}</td>
                                 <td class='phone_number'>${phone_number}</td>
                                 <td class='bank_account'>${bank_account}</td>
                                 <td class='bank_name'>${bank_name}</td>
