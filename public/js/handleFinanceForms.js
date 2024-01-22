@@ -20,7 +20,8 @@ import{
 let dataProvider ={}
 let errorsProvider ={}
 const createProviderForm = $('#create-provider-form')
-const providersInput = $('.providers-input')
+const providersInput = $('.providers-input');
+const editProviderForm =$('#edit-provider-form')
 providersInput.on('change',function({currentTarget}){
     const siblingErrorSpan = $(currentTarget).siblings('span')
     try {
@@ -66,11 +67,17 @@ createProviderForm.on('submit', async function(event){
             }else{
                 $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
             }
-            const table = $("#tablaProveedores tbody")
-            [createProvider.data].forEach(({provider_name , phone_number, bank_account ,bank_name, type_account}) => {
-                table.append(
-                    "<tr><td>" + provider_name + "</td><td>" + phone_number + "</td><td>" + bank_account + "</td><td>" + bank_name + "</td><td>" + type_account + "</td></tr>"
-                  );
+            const table = $("#table-suppliers tbody");
+            [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
+                table.prepend(`
+                    <tr class='table-row' id=${provider_id}>
+                        <td class='supplier-name'>${provider_name}</td>
+                        <td>${phone_number}</td>
+                        <td>${bank_account}</td>
+                        <td>${bank_name}</td>
+                        <td>${type_account}</td>
+                    </tr>
+                `);
             });
         }
     } catch (error) {

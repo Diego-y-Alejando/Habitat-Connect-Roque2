@@ -1,10 +1,14 @@
+const path = require('path');
+const controlPanel = path.join(__dirname, '..','views','controlPanel.ejs');
+const error404HTML = path.join(__dirname, '..','views','404.ejs');
+const apartmentDetailHTML = path.join(__dirname, '..','views','apartmentDetails.ejs');
+const apartament = require('../models/apartament.model');
 const {request, response }= require('express');
 const {sequelizeObj}= require('../database/config');
 const {
     findData,
     updateData
 }= require('../helpers/helpers')
-const apartament = require('../models/apartament.model')
 const features_apartaments = require('../models/features_apartament.model')
 const getApartaments= async(req= request , res = response)=>{
     const level =parseInt(req.params.level)
@@ -38,15 +42,24 @@ const getApartaments= async(req= request , res = response)=>{
     }
 }
 const getApartament = async(req = request , res = response)=>{
+
     try {
 
         // aplicar la carga diferida separando los datos devueltos 
         const features_apartament = await findData(features_apartaments,req.apartament.id_features_apartament,'feature_id',['feature_id']);
-        return res.json({
-            apartamentData:req.apartament,
-            features_apartament,
-            ok:true
+        console.log(features_apartament);
+        return res.render(apartmentDetailHTML,{
+            BASE_URL:process.env.BASE_URL,
+            apartamentData:features_apartament,
         })
+
+        // return res.json({
+        //     apartamentData:req.apartament,
+        //     features_apartament,
+        //     ok:true
+        // })
+
+        
     } catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -174,9 +187,7 @@ const updateApartamentName = async(req = request , res = response)=>{
         })
     }
 }
-const path = require('path');
-const controlPanel = path.join(__dirname, '..','views','controlPanel.ejs');
-const error404HTML = path.join(__dirname, '..','views','404.ejs');
+
 const getControlPanel =(req = request , res = response)=>{
     try {
         return  res.render(controlPanel,{

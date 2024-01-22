@@ -13,7 +13,8 @@ $(document).ready(function() {
         }
     });
 
-    $("#filter-icon").click(function(event) {
+    $("#btn_filter").click(function(event) {
+        console.log("FILTROOO");
         event.preventDefault();
     
         if($("#filter-record-for-pay").hasClass("hide")){
@@ -33,13 +34,5 @@ $(document).ready(function() {
         }
     });
 
-    $("#Return-record").click(function(event) { 
-        event.preventDefault();
-        $("#edit-record").animate({
-            opacity:0
-        },400, function() {
-            $("#edit-record").addClass("hide");
-        });
-    });
     
 });

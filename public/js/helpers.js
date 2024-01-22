@@ -34,7 +34,7 @@ const apartamentItemGenerator =(apartamentList,containerGridApartaments,BASE_URL
     const arrayApartament =[]
     apartamentList.forEach(apartament => {
         const apartamentHtml =` 
-        <a class="apartament-item ${apartament.ocupation_state==1?'ocupation_state_false':'ocupation_state_false'}" href="${BASE_URL}admin/apartament/${apartament.apartament_id}">
+        <a class="apartament-item ${apartament.ocupation_state==1?'ocupation_state_false':'ocupation_state_false'}" href="${BASE_URL}admin/apartamento/${apartament.apartament_id}">
             <h3 class="apartament-number column-span-2 ">Apartamento <span class="special-text-apto">#${apartament.apartament_number}</span></h3>
             <span class="secondary-data column-span-2">Primer nivel| ${apartament.apartamentFeatures.area} mts2</span>
             <img alt="Torre" src="/public/icons/tower.png" class="tower-icon column-1 "/>
