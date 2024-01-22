@@ -47,10 +47,14 @@ const getApartament = async(req = request , res = response)=>{
 
         // aplicar la carga diferida separando los datos devueltos 
         const features_apartament = await findData(features_apartaments,req.apartament.id_features_apartament,'feature_id',['feature_id']);
+        
         console.log(features_apartament);
         return res.render(apartmentDetailHTML,{
             BASE_URL:process.env.BASE_URL,
-            apartamentData:features_apartament,
+            apartamentData:{
+                ...req.apartament,
+                features_apartament
+            },
         })
 
         // return res.json({
