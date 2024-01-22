@@ -248,11 +248,11 @@ h3{
 }
 
 .error {
-    border-color: red;
+    border-color: rgb(255, 79, 79);
 }
 
 .input-error{
-    color: red;
+    color: rgb(255, 79, 79);
     font-size: 12px;
     line-height: 4px;
 }
