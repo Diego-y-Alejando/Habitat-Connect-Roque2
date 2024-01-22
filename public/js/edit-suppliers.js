@@ -1,13 +1,15 @@
 $(document).ready(function() {
-
-    $(".supplier-name").click(function(event) {
-        event.preventDefault();
+    $('#table-suppliers tbody').on('click','.provider_name',function(evet){
+        console.log('clik');
         $("#edit-supplier").removeClass("hide");
         $("#edit-supplier").animate({
             opacity:1
         }),400;
+
+        
+
         $("#input-name-supplier").attr('placeholder', $(this).text());
-    });
+    })
 
     $(".record-supplier-name").click(function(event) {  
         event.preventDefault();

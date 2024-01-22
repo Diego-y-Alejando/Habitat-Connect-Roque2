@@ -133,13 +133,13 @@ const updateApartamentNameValidations = async(req= request , res = response, nex
     }
 }
 const path = require('path');
-const error404HTML = path.join(__dirname, '..','views','components','404.ejs');
+const error404HTML = path.join(__dirname, '..','views','404.ejs');
 
 const getControlPanelValidations = async(req= request , res = response, next)=>{
     const token = req.cookies.authorization
 
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         next();
     } catch (error) {
        return  res.render(error404HTML,{

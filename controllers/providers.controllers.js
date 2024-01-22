@@ -64,6 +64,13 @@ const getProvidersData= async (req = request , res = response )=>{
             limit: 10,
             order: [['provider_id', 'DESC']]
         });
+        if (result.rows.length===0) {
+            return res.status(200).json({
+                msg:'Ya no hay mas proveedores',
+                lastPage:page,
+                ok:true
+            })
+        }
         return res.status(200).json({
             providers:result,
             ok:true
