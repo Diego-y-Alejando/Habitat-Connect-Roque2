@@ -21,7 +21,7 @@ const amenities = require('../models/amenities.model');
 const apartament = require('../models/apartament.model')
 const user = require('../models/user.model')
 const getLinkForBookingValidations =async (req = request, res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const apartament_id= req.params.apartament_id
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -145,6 +145,7 @@ const getEventsOfAmenityValidationsUser = async (req = request , res = response,
 }
 const getEventsOfAmenityValidationsAdmin =  async (req = request , res = response, next)=>{
     const {amenity_id,date} = req.query 
+    const token = req.cookies.authorization
     try {
         validationDates(date,'fecha del calendario')
         ValidationIdOrLevel('id de la amenidad',amenity_id);

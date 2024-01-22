@@ -13,7 +13,7 @@ const{
     ValidationIdOrLevel
 }= require('./common.middlewares.js')
 const createProviderValidations = async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const {
         provider_name, 
         phone_number, 
@@ -24,7 +24,7 @@ const createProviderValidations = async (req = request , res = response , next)=
         service_description
     }= req.body
     try {
-        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         bodyVerification(req.body,[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description'])
         validateName(provider_name,75);
         validatePhoneNumber(phone_number);
@@ -43,7 +43,7 @@ const createProviderValidations = async (req = request , res = response , next)=
 }
 
 const getProvidersDataValidations = async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const page = req.query.page
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -57,7 +57,7 @@ const getProvidersDataValidations = async (req = request , res = response , next
     }
 }
 const getProviderDataValidations =async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const provider_id = req.params.provider_id
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -73,7 +73,7 @@ const getProviderDataValidations =async (req = request , res = response , next)=
 }
 const updateProviderValidations  = async (req = request , res = response , next)=>{
     const provider_id=req.params.provider_id
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist(' El proveedor que solicita',providers,provider_id,'provider_id',['provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description'])

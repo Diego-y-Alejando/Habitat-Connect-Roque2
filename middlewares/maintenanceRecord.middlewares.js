@@ -12,7 +12,7 @@ const {
 const user = require('../models/user.model');
 const apartament = require('../models/apartament.model')
 const getMaintenanceApartamentValidations = async (req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const {apartament_id, current_year}= req.query
     try {
         validationYear(current_year);
@@ -51,7 +51,7 @@ const isLateFee = (month, year, date_paid) => {
     }
 };
 const updateMaintenanceValidations= async (req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const apartament_id = req.params.apartament_id
     const {year,month,date_paid}=req.body
     try {

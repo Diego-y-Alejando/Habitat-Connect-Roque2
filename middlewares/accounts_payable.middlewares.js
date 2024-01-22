@@ -14,7 +14,7 @@ const providers = require('../models/providers.model')
 const user = require('../models/user.model')
 const accounts_payable = require('../models/account_payable.model')
 const createAccountPayableValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const {
         invoice_id,
         invoice_date, 
@@ -47,7 +47,7 @@ const createAccountPayableValidations = async(req = request , res = response, ne
     }
 }
 const getAccountsPayableValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const page = parseInt(req.query.page)
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']); 
@@ -61,7 +61,7 @@ const getAccountsPayableValidations = async(req = request , res = response, next
     }
 }
 const getAccountPayableDataValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const account_id = req.params.account_id
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -76,7 +76,7 @@ const getAccountPayableDataValidations = async(req = request , res = response, n
     }
 }
 const updateAccountPayableValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const account_id = req.params.account_id
     const {
         invoice_id,
@@ -113,7 +113,7 @@ const updateAccountPayableValidations = async(req = request , res = response, ne
 
 }
 const changeAccountPaidStatusValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization;
+    const token = req.cookies.authorization;
     const {
         paid,
         account_id

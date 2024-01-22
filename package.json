@@ -19,6 +19,7 @@
     "@event-calendar/resource-time-grid": "^2.4.1",
     "@event-calendar/time-grid": "^2.4.1",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
