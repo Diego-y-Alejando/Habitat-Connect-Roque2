@@ -20,14 +20,7 @@ $(document).ready(function() {
         $("#record-supplier").attr('placeholder', $(this).text());
     });
 
-    $("#Return-suppliers").click(function(event) {
-        event.preventDefault();
-        $("#edit-supplier").animate({
-            opacity:0
-        },400, function() {
-            $("#edit-supplier").addClass("hide");
-        });
-    });
+    
     
     $("#btn-edit-supplier").click(function(event) {
         console.log('click');

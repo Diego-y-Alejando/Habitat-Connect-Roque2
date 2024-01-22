@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 
         $.ajax({
-            url: BASE_URL + "admin/loggin",
+            url: BASE_URL + "admin/login",
             method: "POST",
             data: {
                 email: email,
@@ -56,10 +56,9 @@ $(document).ready(function() {
             },
             success: function(response) {
                 window.location.href = BASE_URL + "admin/apartamentos"; 
-                
+                console.log(response);
             },
             error: function(xhr, status, error) {
-                console.log("xhr", xhr);
                 console.log("xhr", xhr.responseJSON.error);
                 $("#input-email").addClass("error");
                 $("#error-input-email").removeClass("hide");

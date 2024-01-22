@@ -3,7 +3,6 @@
     const closeWindowBtn =$('.close-window')
     btnDisplayModalWIndow.each(function() {
         $(this).on('click', function(event) {
-            console.log('click');
           const containerBookingFormAndCalendar=$(this).parent().siblings('.modal-window').length > 0 ?
           $(this).parent().siblings('.modal-window') :
           $(this).parent().find('div#modal-window');
@@ -18,9 +17,10 @@
         });
     });
     closeWindowBtn.each(function() {
-        $(this).on('click', function() {
-           const closeContainer =$(this).closest('.modal-window');
-           closeContainer.animate({
+        $(this).on('click', function(event) {
+            event.preventDefault();
+            const closeContainer =$(this).closest('.modal-window');
+            closeContainer.animate({
                 opacity:0
             }, 400).css({
                 display: 'none',
