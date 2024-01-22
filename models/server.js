@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-
+const cookieParser = require('cookie-parser');
 class Server {
     constructor(){
         this.app=express();
@@ -12,8 +12,7 @@ class Server {
         this.port =process.env.PORT
     }
     middlewares(){
-        // this.app.use(cookieParser());
-
+        this.app.use(cookieParser());
         this.app.use(cors());
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }));

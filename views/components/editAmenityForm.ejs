@@ -2,21 +2,21 @@
     <input type="hidden" name="amenity_id" value="<%=amenity_id%>">
     <h2 class="amenity-for-booking"><%=amenity_name%></h2>
     <span class="close-window" id="close-window">X</span>
-    <label class="booking-label name justify-end" for="name">
+    <label class="amenity-label name justify-end" for="name">
         Costo de renta 
-        <input type="number" min="0" name="rent_cost"  step="0.01" class="booking-input  update-amenity-input" placeholder="Precio de renta">
+        <input type="number" min="0" name="rent_cost"  step="0.01" class="amenity-input  update-amenity-input" placeholder="Precio de renta">
     </label>
-    <label class="booking-label phone_number justify-start" for="phone_number">
+    <label class="amenity-label phone_number justify-start" for="phone_number">
         Costo por hora extra 
-        <input type="number" min="0" name="additional_cost_per_hour" step="0.01" class="booking-input  update-amenity-input" placeholder="Costo extra por hora">
+        <input type="number" min="0" name="additional_cost_per_hour" step="0.01" class="amenity-input  update-amenity-input" placeholder="Costo extra por hora">
     </label>
-    <div class="booking-label label-booking-schedule column-span-2 ">
+    <div class="amenity-label label-booking-schedule column-span-2 ">
         <h9 class="title-schedule">Horario de la amenidad</h9> 
         <input list="opciones" id="myInput" name="start_time"  class="input-schedule update-amenity-input" type="time" placeholder="Apertura">
         <h9 class="preposition-schedule">a</h9>
        <input list="opciones" id="myInput" name="end_time"  class="input-schedule update-amenity-input" type="time" placeholder="Cierre">
     </div>
-    <label class="booking-label submit-label column-span-2">
+    <label class="amenity-label submit-label column-span-2">
         <input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios" id="<%=nickName%>-btn-submit-updateData">
     </label>
 </form>

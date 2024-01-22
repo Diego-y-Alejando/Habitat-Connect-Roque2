@@ -1,0 +1,87 @@
+@import url('./colors.css');
+.amenity-form{
+    width: 50%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    place-self: center;
+    place-items: center;
+    background-color: var(--white);
+    position: relative;
+
+}
+.edit-amenity-form{
+    margin: auto; 
+    grid-template-rows: repeat(5,1fr);
+}
+.amenity-for-booking{
+    text-align: center;
+    font-family: montserrat-semi-bold;
+    grid-column: span 2;
+}
+.close-window{
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    text-align: center;
+    color: black;
+    font-size: 1.4rem;
+    top: 2%;
+    right:2%;
+    font-family: montserrat-semi-bold;
+    cursor: pointer;
+}
+.amenity-label{
+    width: 75%;
+    display: grid;
+    font-family: montserrat-regular;
+    font-size: 18px;
+}
+
+.amenity-input{
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #cac7c7;
+    margin-top:4%;
+    font-family: montserrat-light;
+    font-size: 18px;
+}
+.amenity-input::placeholder{
+    font-family: montserrat-light;
+    font-size: 18px;
+}
+.label-booking-schedule{
+    grid-template-columns: 45% 15% 45%;
+}
+.column-span-2 {
+    grid-column: span 2;
+
+}
+.title-schedule{
+    grid-column: span 3;
+}
+.input-schedule{
+    grid-row: 2;
+    width:100%;
+    border:none;
+    border-bottom: 0.5px solid #cac7c7;
+    font-size: 18px;
+   font-family: montserrat-light;
+}
+
+.preposition-schedule{
+    grid-row: 2;
+    margin:auto;
+}
+
+.btn-submit{
+    padding: 5px 10px 5px 10px;
+    border: none;
+    background-color: var(--Azul-claro);
+    color: white;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}

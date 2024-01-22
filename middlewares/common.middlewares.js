@@ -36,7 +36,7 @@ const validatePhoneNumber = (phone) => {
     if (!phone) {
       throw new Error('El numero de teléfono  es obligatorio')
     } else if (!regexPhone.test(phone)) {
-      throw new Error('El numero de  teléfono  debe tener el siguiente formato: (XXX)XXXX-XXXX')
+      throw new Error('El numero de  teléfono  debe tener el siguiente formato XXXX-XXXX')
     }else if(phone.trim().length>14){
       throw new Error('El numero de  teléfono se exede de 14 caracteres revisa que este correcto ')
     }

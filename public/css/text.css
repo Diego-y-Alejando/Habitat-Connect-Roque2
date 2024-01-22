@@ -29,3 +29,16 @@
 .light-blue{
     color: var(--Azul-claro)!important;
 }
+.aling-self{
+    align-self: center;
+}
+.col-span-2{
+    grid-column: span 2;
+}
+.justify-content-start{
+    justify-content: flex-start !important;
+}
+.place-self-center{
+    place-self: center;
+}
+

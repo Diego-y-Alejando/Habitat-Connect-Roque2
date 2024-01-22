@@ -13,30 +13,26 @@ const {
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
 
 const getAmenitiesValidations = async(req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     try {
-        // const {user_type }= await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        const {user_type }= await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         req.user_type='admin';
         next()
     } catch (error) {
-        return res.status(400).json({
+        return  res.render(error404HTML,{
             error:error.message,
             ok:false
         });
-        // return  res.render(error404HTML,{
-        //     error:error.message,
-        //     ok:false
-        // });
     }
 }
 const updateAmenityDataValidations = async(req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const amenity_id = req.params.amenity_id
     try {
         if (Object.keys(req.body).length==0) {
             throw new Error('Debes enviar los datos para actualizar')
         }
-        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         const {start_time,end_time} = await userExist('El id de la amenidad que solicita',amenities,amenity_id,'amenity_id',[ 'amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         updateAmenityDataValidationsBody(req.body,start_time,end_time)
         next()
@@ -57,10 +53,10 @@ const getAmenitiesForBookingValidations = async (req = request , res = response 
         next();
         req.user_type=user_type;
     } catch (error) {
-        return res.status(400).json({
+        return res.render(error404HTML,{
             error:error.message,
             ok:false
-        });
+        })
     }
 }
 

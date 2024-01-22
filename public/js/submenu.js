@@ -11,11 +11,10 @@ $(document).ready(function() {
         event.preventDefault();
         const target = $(this).data("target");
         $(".container-item").hide();
-        $("#" + target).show();
-
+        $('.container-item').removeClass('content-active')
+        $("#" + target).show().addClass('content-active');
         $(".subitem-menu").find(".selected-item-line").addClass("hide");
-        $(this).find(".selected-item-line").removeClass("hide");
-
+        $(this).find(".selected-item-line").removeClass("hide").attr('id','show');
     });
 
     

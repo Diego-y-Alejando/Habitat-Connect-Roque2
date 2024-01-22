@@ -13,7 +13,7 @@ const{
     ValidationIdOrLevel
 }= require('./common.middlewares.js')
 const createProviderValidations = async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const {
         provider_name, 
         phone_number, 
@@ -43,7 +43,7 @@ const createProviderValidations = async (req = request , res = response , next)=
 }
 
 const getProvidersDataValidations = async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const page = req.query.page
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -57,7 +57,7 @@ const getProvidersDataValidations = async (req = request , res = response , next
     }
 }
 const getProviderDataValidations =async (req = request , res = response , next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const provider_id = req.params.provider_id
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
@@ -73,7 +73,7 @@ const getProviderDataValidations =async (req = request , res = response , next)=
 }
 const updateProviderValidations  = async (req = request , res = response , next)=>{
     const provider_id=req.params.provider_id
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     try {
         await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist(' El proveedor que solicita',providers,provider_id,'provider_id',['provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description'])
@@ -137,11 +137,11 @@ const validateBankAccount=(bank_account)=>{
     }
 }
 const validateTypeAccount =(type_account)=>{
-    const allowTypesAccount = ['Monetaria','De ahorro','En dólares']
+    const allowTypesAccount = /^monetaria|ahorro|en d[o|ó]lares/gi
     if (!type_account) {
         throw new Error('El tipo de cuenta no puede venir vacío');
     }
-    if (!allowTypesAccount.includes(type_account)) {
+    if (!allowTypesAccount.test(type_account)) {
         throw new Error('No es un tipo de cuenta ')
     }
 }

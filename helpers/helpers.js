@@ -128,14 +128,21 @@ const changeObjectNames =(originalObject,objectPropertiesForChange)=>{
         return newObject
     }, {});
 }
+const cookieOptions = {
+    httpOnly: true, // Solo accesible desde el servidor
+    secure: true, // Solo en conexiones HTTPS
+    sameSite: 'strict', // Restringir a solicitudes del mismo sitio
+    maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida en milisegundos (1 día)
+};
 module.exports={
-        jwtGenerate,
-        hashingPassword,
-        updateData,
-        findData,
-        getStartAndEndOfMonth,
-        hourAdder,
-        innerJoinChildToFatherTables,
-        formatHour,
-        changeObjectNames
+    jwtGenerate,
+    hashingPassword,
+    updateData,
+    findData,
+    getStartAndEndOfMonth,
+    hourAdder,
+    innerJoinChildToFatherTables,
+    formatHour,
+    changeObjectNames,
+    cookieOptions
 }

@@ -13,10 +13,10 @@ const {
 const user = require('../models/user.model');
 const apartament = require('../models/apartament.model')
 const getApartamentsValidations=async(req=request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const level = req.params.level
     try {
-        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         ValidationIdOrLevel('nivel deseado',level)
         next();
     } catch (error) {
@@ -27,7 +27,7 @@ const getApartamentsValidations=async(req=request , res = response, next)=>{
     }
 }
 const getApartamentValidations = async(req = request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     console.log(req);
     try {
         ValidationIdOrLevel('id del apartamento',req.params.apartament_id);
@@ -43,7 +43,7 @@ const getApartamentValidations = async(req = request , res = response, next)=>{
     }
 }
 const updateParkingDataValidations = async(req= request , res = response , next)=>{
-    const token = req.headers.authorization;
+    const token = req.cookies.authorization;
     const apartament_id = req.params.apartament_id;
     try {
         ValidationIdOrLevel('id del apartamento ',apartament_id);
@@ -62,7 +62,7 @@ const updateParkingDataValidations = async(req= request , res = response , next)
 }
 // TODO Validar el nombre de las propiedades de los stickets
 const updatePedestrianDataValidations = async(req= request , res = response , next)=>{
-    const token =req.headers.authorization
+    const token =req.cookies.authorization
     const apartament_id = req.params.apartament_id
     try {
         ValidationIdOrLevel('id del apartamento ',apartament_id);
@@ -80,7 +80,7 @@ const updatePedestrianDataValidations = async(req= request , res = response , ne
     }
 }
 const changeOcupationStateValidations = async (req = request, res = respose, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const apartament_id = req.params.apartament_id
     const {ocupation_state}= req.body
     try {
@@ -98,7 +98,7 @@ const changeOcupationStateValidations = async (req = request, res = respose, nex
     }
 }
 const updateLandlordOrTenantDataValidations = async(req= request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const apartament_id = req.params.apartament_id
     const {name, phone_number}= req.body
     try {
@@ -117,7 +117,7 @@ const updateLandlordOrTenantDataValidations = async(req= request , res = respons
 }
 
 const updateApartamentNameValidations = async(req= request , res = response, next)=>{
-    const token = req.headers.authorization
+    const token = req.cookies.authorization
     const apartament_id = req.params.apartament_id
     const {apartament_name}= req.body
     try {
@@ -135,11 +135,11 @@ const updateApartamentNameValidations = async(req= request , res = response, nex
 const path = require('path');
 const error404HTML = path.join(__dirname, '..','views','components','404.ejs');
 
-const getControlPanelValidations =(req= request , res = response, next)=>{
-    const token = req.headers.authorization
+const getControlPanelValidations = async(req= request , res = response, next)=>{
+    const token = req.cookies.authorization
 
     try {
-        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         next();
     } catch (error) {
        return  res.render(error404HTML,{

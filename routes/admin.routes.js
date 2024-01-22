@@ -3,14 +3,12 @@ const router = Router()
 
 
 const {
-    loggin,
-    frontendLoggin
+    loggin
 }= require('../controllers/loggin.controllers');
 const {
     logginValidations
 }= require('../middlewares/logginValidations.middlewares');
-router.get('/login',frontendLoggin);
-router.post('/loggin',logginValidations,loggin);
+router.post('/login',logginValidations,loggin);
 /*=======================
     RUTAS DE APARTAMENTO 
 =========================*/
@@ -124,4 +122,14 @@ router.get('/accounts/payable/list/',getAccountsPayableValidations,getAccountsPa
 router.get('/account/payable/:account_id',getAccountPayableDataValidations,getAccountPayable)
 router.post('/update/account/payable/:account_id',updateAccountPayableValidations,updateAccountPayable);
 router.post('/change/account/paid/status/',changeAccountPaidStatusValidations,changeAccountPaidStatus);
+
+/* ===================
+    RUTAS FRONTEND
+======================*/
+const {
+    frontendLoggin,
+    getFinanceFrontend
+} = require('../controllers/frontendViews.controllers')
+router.get('/login',frontendLoggin);
+router.get('/finance', getFinanceFrontend);
 module.exports=router;

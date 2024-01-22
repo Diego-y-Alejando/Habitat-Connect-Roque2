@@ -37,6 +37,12 @@ function loadSuppliers() {
         new Supplier("Carlos López", "77777777", "Banco Davivienda", "Cuenta Corriente", "777777777", "Cheque", "Mantenimiento trimestral"),
         new Supplier("Luisa Martínez", "99999999", "Banco HSBC", "Cuenta de Ahorro", "999999999", "Transferencia", "Contrato anual"),
         new Supplier("Miguel González", "11111111", "Banco Scotiabank", "Cuenta Corriente", "111111111", "Cheque", "Servicio mensual"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
+        new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna"),
         new Supplier("Elena Morales", "44444444", "Banco Citibank", "Cuenta de Ahorro", "444444444", "Transferencia", "Ninguna")
     ];
 

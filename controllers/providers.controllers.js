@@ -28,12 +28,21 @@ const createProvider= async (req = request , res = response )=>{
                 service_description
             }
         })
-        console.log(provider);
         if (!create) {
             throw new Error('Revisa el teléfono o el número de cuenta , no pueden existir duplicados')
         }else{
+            
             return res.status(200).json({
-                msg:req.body,
+                msg:'Se ha creado el proveedor',
+                data:{
+                    'provider_name':provider.provider_name,
+                    'provider_id':provider.provider_id,
+                    'bank_name':provider.bank_name,
+                    'type_account':provider.type_account,
+                    'phone_number':provider.phone_number,
+                    'bank_account':provider.bank_account
+                    
+                },
                 ok:true
             })
         }

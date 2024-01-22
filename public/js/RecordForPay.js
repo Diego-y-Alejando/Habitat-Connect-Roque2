@@ -20,6 +20,28 @@ function loadRecordsForPay() {
         new RecordForPay("Juan Perez", "12345678", "29-11-23", "Q230.00", true),
         new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
         new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false),
+        new RecordForPay("María Rodríguez", "98765432", "29-10-23", "Q2250.00", true),
+        new RecordForPay("Pedro Gómez", "55555555", "29-12-23", "Q1530.00", false)
     ];
 
 

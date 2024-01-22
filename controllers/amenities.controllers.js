@@ -35,10 +35,11 @@ const getAmenities = async (req = request , res = response)=>{
             user_type:req.user_type
         });
     } catch (error) {
-        return res.status(400).json({
+        return res.render(error404HTML,{
             error:error.message,
             ok:false
         })
+
     }
 } 
 

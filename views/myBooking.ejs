@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/amenities.css">
+    <link rel="stylesheet" href="/public/css/calendar.css">
+    <link rel="stylesheet" href="/public/css/amenityForms.css">
+    <link rel="stylesheet" href="/public/css/modalWindow.css">
+    <link rel="stylesheet" href="/public/css/booking.css">
+    <script src="/public/js/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.4.1/event-calendar.min.css">
+
+    <title>Document</title>
+</head>
+<body>
+   <p> </p>
+    <div class="modal-window">
+        <div class="content-modal-window">
+            <div  class="calendar" id ="<%=amenityData.nickName%>-calendar">
+
+            </div>
+            <form class="amenity-form  update-booking-form" id="update-booking-form">
+                <input type="hidden" name="amenity_id" value="<%=reservationData.id_amenity_reserved%>" id="amenity_id">
+                <h2 class="amenity-for-booking"><%=amenityData.amenity_name%></h2>
+                <label class="amenity-label name justify-end" for="name">
+                    Nombre  del Responsable
+                    <input type="text" name="renter_name" class="amenity-input update-booking-input" placeholder="Nombre" value="<%=reservationData.renter_name%>">
+                </label>
+                <label class="amenity-label phone_number justify-start" for="phone_number">
+                    Teléfono del Responsable
+                    <input type="text" name="renter_phone" class="amenity-input  update-booking-input" placeholder="Teléfono" value="<%=reservationData.renter_phone%>">
+                </label>
+                <label class="amenity-label justify-end date_input" for="date">
+                    Fecha de la reserva
+                    <input type="date" name="reservation_date" class="amenity-input  update-booking-input" placeholder="" value="<%=reservationData.reservation_date%>">
+                </label>
+                <div class="amenity-label label-booking-schedule">
+                    <h9 class="title-schedule">Horario de la reserva</h9> 
+                    <input list="opciones" id="myInput" name="start_reserv_time"  class="input-schedule  update-booking-input" type="time"  value="<%=reservationData.start_reserv_time%>" min="00:00" max="23:59">
+                    <h9 class="preposition-schedule">a</h9>
+                    <input list="opciones" id="myInput" name="end_reserv_time"  class="input-schedule  update-booking-input" type="time" value="<%=reservationData.end_reserv_time%>" min="00:00" max="23:59">
+                </div>
+                <label class="amenity-label submit-label column-span-2">
+                    <input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios" id="-btn-submit-updateData">
+                </label>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="module" src="/public/js/calendar.js"></script>
+<!-- <script type="module" src="/public/js/handleUpdateBookingForm.js"></script> -->
+
+</html>
