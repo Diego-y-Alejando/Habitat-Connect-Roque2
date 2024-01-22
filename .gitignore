@@ -1,0 +1,32 @@
+# Dependencias
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Directorio de salida de compilación
+dist/
+
+# Variables de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Directorios de IDE y editores de texto
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de paquete
+package-lock.json
+yarn.lock
