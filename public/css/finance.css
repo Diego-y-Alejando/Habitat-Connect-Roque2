@@ -27,18 +27,17 @@ td{
 .table tbody tr:nth-child(odd) {
     background-color: lightgray; 
 }
-
-.supplier-name{
+.provider_name{
     cursor: pointer;
 }
-.supplier-name:hover{
+.provider_name:hover{
     color: var(--Beige);
 }
 
-.record-supplier-name{
+.record-provider_name{
     cursor: pointer;
 }
-.record-supplier-name:hover{
+.record-provider_name:hover{
     color: var(--Beige);
 }
 
