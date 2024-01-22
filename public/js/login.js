@@ -23,7 +23,6 @@ $(document).ready(function() {
             $("#input-email").addClass("error");
             $("#error-input-email").removeClass("hide");
             $("#error-input-email").text(error.message);
-            console.log(error.message);
         }
         
         try{
@@ -35,7 +34,6 @@ $(document).ready(function() {
             $("#input-password").addClass("error");
             $("#error-input-password").removeClass("hide");
             $("#error-input-password").text(error.message);
-            console.log(error.message);
         }
 
         
@@ -48,6 +46,7 @@ $(document).ready(function() {
         const password = $("#input-password").val();
 
 
+
         $.ajax({
             url: BASE_URL + "admin/loggin",
             method: "POST",
@@ -57,13 +56,20 @@ $(document).ready(function() {
             },
             success: function(response) {
                 window.location.href = BASE_URL + "admin/apartamentos"; 
-                console.log(response);
+                
             },
             error: function(xhr, status, error) {
-                // Handle error response
-                console.log(error);
+                console.log("xhr", xhr);
+                console.log("xhr", xhr.responseJSON.error);
+                $("#input-email").addClass("error");
+                $("#error-input-email").removeClass("hide");
+                $("#error-input-email").text(xhr.responseJSON.error.toString());
+                $("#input-password").addClass("error");
+                $("#error-input-password").removeClass("hide");
+                $("#error-input-password").text(xhr.responseJSON.error.toString());
             }
         });
+
     });
 
 });
