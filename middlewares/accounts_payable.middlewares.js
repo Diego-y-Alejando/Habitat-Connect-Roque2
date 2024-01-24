@@ -26,10 +26,10 @@ const createAccountPayableValidations = async(req = request , res = response, ne
         id_provider_account
     }= req.body
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         bodyVerification(req.body,['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account'])
         validationInvoiceId(invoice_id);
-        validationDates(invoice_date);
+        validationDates(invoice_date,'fecha de factura');
         validationParagraph(concept);
         validationAmount(amount);
         validationNumberOfTransaccion(number_of_transaction);
@@ -90,15 +90,9 @@ const updateAccountPayableValidations = async(req = request , res = response, ne
     }= req.body;
 
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        bodyVerification(req.body,['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
-        validationInvoiceId(invoice_id);
-        validationDates(invoice_date);
-        validationParagraph(concept);
-        validationAmount(amount);
-        validationNumberOfTransaccion(number_of_transaction);
-        ValidationIdOrLevel('id de la cuenta de banco',id_bank_account);
-        ValidationIdOrLevel('id del proveedor',id_provider_account);
+        updatedAccountPayableValidations(req.body)
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);;
+        ValidationIdOrLevel('id de la cuenta por pagar',account_id);
         await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_id',[ 'bank','account_number','type_account']);
         // hacer un innerJoin entre estos dos modelos 
         await  userExist('El provdeedor', providers,id_provider_account,'provider_id',[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description']);
@@ -130,6 +124,42 @@ const changeAccountPaidStatusValidations = async(req = request , res = response,
             ok:false
         })
     }
+}
+
+const updatedAccountPayableValidations =(objectBody)=>{
+    const accountPayableDataValidations ={
+        'invoice_id':(value)=>{
+            validationInvoiceId(value)
+        },
+        'invoice_date':(value)=>{
+            validationDates(value,'fecha de factura')
+        },
+        'concept':(value)=>{
+            validationParagraph(concept);
+        },
+        'amount':(value)=>{
+            validationAmount(value)
+        },
+        'number_of_transaction':(value)=>{
+            validationNumberOfTransaccion(value)
+        },  
+        'paid':(value)=>{
+            validationPaidStatus(value)
+        },
+        'id_bank_account':(value)=>{
+            ValidationIdOrLevel('id de la cuenta bancaria ',value)
+        },
+        'id_provider_account':(value)=>{
+            ValidationIdOrLevel('id del provedor ',value)
+        }
+    }
+    Object.keys(objectBody).forEach(propertyName=>{
+        if (accountPayableDataValidations.hasOwnProperty(propertyName)) {
+            accountPayableDataValidations[propertyName](accountPayableDataValidations[propertyName])
+        }else{
+            throw new Error('Se han enviado propiedades inválidas');
+        }
+    })
 }
 module.exports ={
     createAccountPayableValidations,

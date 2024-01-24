@@ -5,7 +5,9 @@ import {
     validateBankName,
     validateTypeAccount,
     validatePaymentMethod,
-    validationParagraph
+    validationParagraph,
+    ValidationIdOrLevel,
+    validationDates
 } from './validators.js'
 import{
     BASE_URL,
@@ -14,14 +16,16 @@ import{
 } from './helpers.js'
 (function($, window, document) {  
 
-/* 
+/* =======================
     Crear proveedor
-*/
+========================== */
 let dataProvider ={}
 let errorsProvider ={}
 const createProviderForm = $('#create-provider-form')
 const providersInput = $('.providers-input');
-const editProviderForm =$('#edit-provider-form')
+const editProviderForm =$('#edit-provider')
+const iconSaveEditProvider =$('#icon-save-edit-supplier')
+const tableSuppliersTbody =$('#table-suppliers tbody')
 providersInput.on('change',function({currentTarget}){
     const siblingErrorSpan = $(currentTarget).siblings('span')
     try {
@@ -67,9 +71,8 @@ createProviderForm.on('submit', async function(event){
             }else{
                 $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
             }
-            const table = $("#table-suppliers tbody");
             [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
-                table.prepend(`
+                tableSuppliersTbody.prepend(`
                     <tr class='table-row' id=${provider_id}>
                         <td class='supplier-name'>${provider_name}</td>
                         <td>${phone_number}</td>
@@ -91,7 +94,167 @@ createProviderForm.on('submit', async function(event){
     }
 })
 
+iconSaveEditProvider.click(async function(event){
+    const resultOfRequestElement = $('<span class="result-request "></span>');
+    try {
+        console.log('se envio');
+        if (Object.keys(dataProvider).length===0) {
+            throw new Error('No puedes enviar un proveedor vacío')
+        }
+        if (Object.keys(errorsProvider).length > 0) {
+            throw new Error('Corrige los errores del formulario')
+        }else{
+            const provider_id =$('#supplier_id').val()
+            const editProvider = await makeRequest(BASE_URL+'admin/update/provider/'+provider_id,'POST', dataProvider,{});
+            if (!editProvider.ok) {
+                throw new Error(editProvider.error)
+            }
+            const rowEdit = tableSuppliers.find(`#${provider_id}`).find('td')
+            if($(this).find('span.result-request').length==0){
+                resultOfRequestElement.text(editProvider.msg);
+                resultOfRequestElement.addClass('succes-result');
+                $(this).parent().prepend(resultOfRequestElement);
 
+            }else{
+                $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(editProvider.msg)
+            }
+            rowEdit.each((index, field)=>{
+                if (editProvider.updatedData[field.classList[0]]) {
+                    field.textContent=editProvider.updatedData[field.classList[0]]
+                }
+            })
+        }
+    } catch (error) {
+        if($(this).find('span.result-request').length==0){
+            resultOfRequestElement.text(error.message);
+            resultOfRequestElement.addClass('error-input');
+            $(this).parent().prepend(resultOfRequestElement);
+        }else{
+            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+        }
+    }
+})
+
+/* =======================
+    Crear CUENTA POR PAGAR
+========================== */
+
+let dataAccountPayable ={}
+let errorsAccountPyable ={}
+const createAccountPayableForm = $('#create-account-payable-form')
+const accountPayableInput = $('.account-payable-input');
+const tableAccountsPayableTbody = $('#table-accounts-payables')
+accountPayableInput.on('change',function({currentTarget}){
+    const siblingErrorSpan = $(currentTarget).siblings('span')
+
+    try {
+        errorsAccountPyable[currentTarget.name]?delete errorsAccountPyable[currentTarget.name]:errorsAccountPyable={}
+        if(siblingErrorSpan.length>0){
+            siblingErrorSpan.text('')
+        }
+        if (currentTarget.name==='paid') {currentTarget.checked? currentTarget.value=1 :currentTarget.value=2}     
+        updatedAccountPayableValidations(currentTarget.name,currentTarget.value)
+        dataAccountPayable={
+            ...dataAccountPayable,
+            [currentTarget.name]:currentTarget.value
+        }
+    } catch (error) {
+        errorsProvider={
+            ...errorsProvider,
+            [currentTarget.name]:error.message
+        } 
+        if(siblingErrorSpan.length==0){
+            $(`<span class="error-input col-span-2">${errorsProvider[currentTarget.name]}</span>`).insertAfter($(currentTarget));
+        }else{
+            siblingErrorSpan.text(error.message)
+        }   
+    }
+})
+
+createAccountPayableForm.on('submit',async function(event){
+    event.preventDefault()
+    const resultOfRequestElement = $('<span class="result-request "></span>');
+    try {
+        if (Object.keys(dataAccountPayable).length===0) {
+            throw new Error('No puedes enviar un proveedor vacío')
+        }
+        if (Object.keys(errorsAccountPyable).length > 0) {
+            throw new Error('Corrige los errores del formulario')
+        }const createAccountPayable = await makeRequest(BASE_URL+'admin/create/account/payable','POST', dataAccountPayable,{})
+        if (!createAccountPayable.ok)throw new Error(createAccountPayable.error)
+        if($(this).find('span.result-request').length==0){
+            resultOfRequestElement.text(createAccountPayable.msg);
+            resultOfRequestElement.addClass('succes-result');
+            resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+
+        }else{
+            $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createAccountPayable.msg)
+        }
+        // "data": {
+        //     "invoice_date": "2024-01-25",
+        //     "amount": "120.00",
+        //     "paid": "1",
+        //     "invoice_id": "4323",
+        //     "provider_name": "Rodolfo cruz",
+        //     "id_provider_account": "2"
+        // },
+        [createAccountPayable.data].forEach(({account_id,invoice_date,amount ,paid, invoice_id ,provider_name, id_provider_account}) => {
+            tableAccountsPayableTbody.prepend(`
+                <tr class='table-row' id=${account_id}>
+                    <td class='' id='${provider_id}'>${provider_name}</td>
+                    <td>${invoice_date}</td>
+                    <td>${invoice_id}</td>
+                    <td>${amount}</td>
+                    <td>${paid==1}</td>
+                </tr>
+            `);
+        });
+        
+    } catch (error) {
+        if($(this).find('span.result-request').length==0){
+            resultOfRequestElement.text(error.message);
+            resultOfRequestElement.addClass('error-input');
+            resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+        }else{
+            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+        }    
+    }
+})
+
+const updatedAccountPayableValidations =(inputName,inputValue)=>{
+    const accountPayableDataValidations ={
+        'invoice_id':(value)=>{
+            validationInvoiceId(value)
+        },
+        'invoice_date':(value)=>{
+            validationDates(value,'fecha de factura')
+        },
+        'concept':(value)=>{
+            validationParagraph(value);
+        },
+        'amount':(value)=>{
+            validationAmount(value)
+        },
+        'number_of_transaction':(value)=>{
+            validationNumberOfTransaccion(value)
+        },  
+        'paid':(value)=>{
+            validationPaidStatus(value)
+        },
+        'id_provider_account':(value)=>{
+            ValidationIdOrLevel('id del proveedor ',value)
+        },
+        'id_bank_account':(value)=>{
+            ValidationIdOrLevel('id de la cuenta ',value)
+        }
+    }
+    if (accountPayableDataValidations.hasOwnProperty(inputName)) {
+        accountPayableDataValidations[inputName](inputValue)
+
+    }else{
+        throw new Error(`Input inválido: ${inputName}`);
+    }
+}
 
 const providerValidation =(inputName,inputValue)=>{
 
@@ -125,5 +288,42 @@ const providerValidation =(inputName,inputValue)=>{
         throw new Error(`Input inválido: ${inputName}`);
     }
 }
+// validaciones de cuenta porpagar 
+const validationInvoiceId=(invoice_id)=>{
+    const regexInvoiceId =/^[a-zA-Z0-9]+$/
 
+    if (!invoice_id) {
+        throw new Error('El número de factura no puede venir vacío')
+    }if (!regexInvoiceId.test(invoice_id)) {
+        throw new Error('El número de factura contiene caractéres inválidos')
+    }
+}
+const validationAmount =(amount)=>{
+    const regexAmount = /^[\d]{1,5}[.][\d]{2}/
+    if (!amount) {
+        throw new Error('El monto de la cuenta no puede venir vacío');
+    }
+    if (!regexAmount.test(amount)) {
+        throw new Error('El precio debe ser en este formato 0.00')
+    }
+}
+const validationNumberOfTransaccion= (number_of_transaction)=>{
+    const regexNumberOfTransaccion=/^[\d]{1,3}/
+    if (!number_of_transaction) {
+        throw new Error('El número de transaccion no debe venir vacio')
+    }
+    if (!regexNumberOfTransaccion.test(number_of_transaction)) {
+        throw new Error('El número de transaccion solo debe incluir números')
+    }
+}
+const validationPaidStatus =(paid)=>{
+    const regexPaidStatus=/^1|2/
+
+    if (!paid) {
+        throw new Error('La cuenta debe estar registrada como pagada o no pagada su estado no puede venir vacío')
+    }
+    if (!regexPaidStatus.test(paid)) {
+        throw new Error('El estatus de pago de la cuenta trae caractéres inválidos ')
+    }
+}
 }(window.jQuery, window, document));

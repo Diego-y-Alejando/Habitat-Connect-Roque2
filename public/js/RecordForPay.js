@@ -80,7 +80,7 @@ function loadRecordsForPay() {
 
         newRow.append(clonedReocrdSupplier, clonedRecordNumberBill, clonedRecordDate, clonedRecordPrice, clonedRecordState);
     
-        $("#table-record-for-pay").append(newRow);
+        $("#table-accounts-payables").append(newRow);
     });
 }
 

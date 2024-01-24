@@ -63,7 +63,7 @@ function loadSuppliers() {
         const clonedSupplierBank = supplierBank.clone();
         const clonedSupplierAccount = supplierAccount.clone();
     
-        clonedSupplierName.text(supplier.name).addClass("supplier-name");
+        clonedSupplierName.text(supplier.name).addClass("provider_name");
         clonedSupplierPhone.text(supplier.phone);
         clonedSupplierAccountNumber.text(supplier.accountNumber);
         clonedSupplierBank.text(supplier.bank);

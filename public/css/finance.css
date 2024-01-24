@@ -111,12 +111,13 @@ td{
     font-family: montserrat-semi-bold;
     color: var(--Azul-oscuro);
 }
-.label-suplier-form{
+.label-finance-form{
+    width: 90%;
     display: grid;
-    grid-template-columns: 25% 50%;
+    grid-template-columns: 50% 50%;
     column-gap: 0px;
     color: var(--Azul-oscuro);
-
+    place-content: space-between;
 }
 .input-finance-forms{
     height: 30px;
@@ -128,6 +129,19 @@ td{
     color: var(--Azul-oscuro);
 }
 
+.select-finance-form{
+    background-color: var(--Azul-oscuro);
+    color: var(--white);
+    padding: 1%;
+    font-size: 1.1rem;
+    width: fit-content;
+    border: none;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
 #filter-icon{
     width: 50px;
     align-self: flex-start;

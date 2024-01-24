@@ -89,7 +89,8 @@ const getProviderData =async (req = request , res = response )=>{
         const provider = await providers.findOne({
             where:{
                 provider_id:provider_id
-            }
+            },
+            attributes:['payment_methods','service_description']
         })
         return res.status(200).json({
             provider,
@@ -108,7 +109,7 @@ const updateProvider = async (req = request , res = response )=>{
         const updateProvider =await updateData(providers,req.body,provider_id,'provider_id')
         return res.status(200).json({
             updateProvider,
-            updateData:req.body,
+            updatedData:req.body,
             ok:true
         })
     } catch (error) {

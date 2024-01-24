@@ -18,28 +18,47 @@ const createAccountPayable = async(req = request , res = response)=>{
     }= req.body
     // bankAccountAccountId
     try {
-        const [booking,created]= await accounts_payable.findOrCreate({
-            where:{
-                invoice_id:invoice_id
+        const [accountCreated, created] = await accounts_payable.findOrCreate({
+            where: {
+              invoice_id: invoice_id,
+              id_bank_account: id_bank_account,
+              number_of_transaction: number_of_transaction,
             },
-            defaults:{
-                invoice_date:invoice_date,
-                concept:concept,
-                amount:amount,
-                number_of_transaction:number_of_transaction,
-                paid:paid,
-                id_bank_account:id_bank_account,
-                id_provider_account:id_provider_account
-            }
-        })
+            defaults: {
+              invoice_date: invoice_date,
+              concept: concept,
+              amount: amount,
+              paid: paid,
+              id_provider_account: id_provider_account
+            },
+          });
+          
+
+        // concept number_of_transaccion id_bank_account id_provider_account
         if (!created) {
             throw new Error('No se pueden crear facturas con el mismo id')
         }else{
+            const provider = await providers.findOne({
+                where:{
+                    provider_id:accountCreated.id_provider_account
+                },
+                attributes:['provider_name']
+            });
             return res.status(200).json({
                 msg:'Cuenta por pagar creada',
+                data:{
+                    'account_id':accountCreated.account_id,
+                    'invoice_date':accountCreated.invoice_date,
+                    'amount':accountCreated.amount,
+                    'paid':accountCreated.paid,
+                    'invoice_id':accountCreated.invoice_id,
+                    'provider_name':provider.provider_name,
+                    'id_provider_account': accountCreated.id_provider_account
+                },
                 ok:true
             })
         }
+        
     } catch (error) {
         return res.status(400).json({
             error:error.message,

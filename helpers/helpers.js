@@ -134,6 +134,14 @@ const cookieOptions = {
     sameSite: 'strict', // Restringir a solicitudes del mismo sitio
     maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida en milisegundos (1 día)
 };
+const getDataValuesOnly= (array)=>{
+    let newArr=[]
+    array.forEach(element => {
+        let newElement = element.get()
+        newArr.push(newElement)
+    });
+    return newArr
+}
 module.exports={
     jwtGenerate,
     hashingPassword,
@@ -144,5 +152,6 @@ module.exports={
     innerJoinChildToFatherTables,
     formatHour,
     changeObjectNames,
-    cookieOptions
+    cookieOptions,
+    getDataValuesOnly
 }
