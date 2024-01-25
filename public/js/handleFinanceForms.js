@@ -176,7 +176,7 @@ createAccountPayableForm.on('submit',async function(event){
     const resultOfRequestElement = $('<span class="result-request "></span>');
     try {
         if (Object.keys(dataAccountPayable).length===0) {
-            throw new Error('No puedes enviar un proveedor vacío')
+            throw new Error('No puedes enviar una cuenta por pagar  vacía')
         }
         if (Object.keys(errorsAccountPyable).length > 0) {
             throw new Error('Corrige los errores del formulario')
@@ -186,26 +186,17 @@ createAccountPayableForm.on('submit',async function(event){
             resultOfRequestElement.text(createAccountPayable.msg);
             resultOfRequestElement.addClass('succes-result');
             resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
-
         }else{
             $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createAccountPayable.msg)
         }
-        // "data": {
-        //     "invoice_date": "2024-01-25",
-        //     "amount": "120.00",
-        //     "paid": "1",
-        //     "invoice_id": "4323",
-        //     "provider_name": "Rodolfo cruz",
-        //     "id_provider_account": "2"
-        // },
-        [createAccountPayable.data].forEach(({account_id,invoice_date,amount ,paid, invoice_id ,provider_name, id_provider_account}) => {
+        [createAccountPayable.data].forEach(({account_id,invoice_date,amount ,paid, invoice_id ,provider_name, id_provider_account, provider_id}) => {
             tableAccountsPayableTbody.prepend(`
                 <tr class='table-row' id=${account_id}>
                     <td class='' id='${provider_id}'>${provider_name}</td>
-                    <td>${invoice_date}</td>
-                    <td>${invoice_id}</td>
-                    <td>${amount}</td>
-                    <td>${paid==1}</td>
+                    <td class="invoice_id">${invoice_id}</td>
+                    <td class="invoice_date">${invoice_date}</td>
+                    <td class="amount">${amount}</td>
+                    <td class="paid"><input type="checkbox" ${paid == 1 ? 'checked' : ''}></td>
                 </tr>
             `);
         });

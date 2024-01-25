@@ -33,7 +33,8 @@ const createAccountPayableValidations = async(req = request , res = response, ne
         validationParagraph(concept);
         validationAmount(amount);
         validationNumberOfTransaccion(number_of_transaction);
-        validationPaidStatus(paid);
+        // por sino trae la propiedad paid
+        paid?req.body.paid=paid:req.body.paid=2
         ValidationIdOrLevel('id de la cuenta de banco',id_bank_account);
         ValidationIdOrLevel('id del proveedor',id_provider_account);
         await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_id',[ 'bank','account_number','type_account']);
@@ -48,10 +49,14 @@ const createAccountPayableValidations = async(req = request , res = response, ne
 }
 const getAccountsPayableValidations = async(req = request , res = response, next)=>{
     const token = req.cookies.authorization
-    const page = parseInt(req.query.page)
+    const {page,start_range_date,end_range_date,paid}= req.query
+    
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']); 
-        validatePage(page);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']); 
+        validatePage(parseInt(page));
+        req.page=parseInt(page),
+        delete req.query.page
+        validationsFilterFields(req.query)
         next()
     }catch (error) {
         return res.status(400).json({
@@ -167,6 +172,28 @@ module.exports ={
     getAccountPayableDataValidations,
     updateAccountPayableValidations,
     changeAccountPaidStatusValidations,
+}
+const validationsFilterFields =(queryObject)=>{
+    const queryObjectValidations={
+        'start_range_date':(value)=>{
+            validationDates(value,'rango de la fecha inicial')
+        },
+        'end_range_date':(value)=>{
+            validationDates(value,'rango de la fecha final')
+        },
+        'paid':(value)=>{
+            validationPaidStatus(value)
+        }
+    }
+    Object.keys(queryObject).forEach(propertyName=>{
+        if (queryObjectValidations.hasOwnProperty(propertyName)) {
+            queryObjectValidations[propertyName](queryObject[propertyName])
+        }else{
+            console.log(propertyName);
+            throw new Error('Se han enviado propiedades inválidas');
+        }
+    })
+
 }
 const validationInvoiceId=(invoice_id)=>{
     const regexInvoiceId =/^[a-zA-Z0-9]+$/

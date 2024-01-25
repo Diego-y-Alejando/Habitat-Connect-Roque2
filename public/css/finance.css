@@ -195,7 +195,7 @@ td{
     width: 100%;
     display: grid;
     gap: 10px;
-    grid-template-columns: 30px 1fr;
+    grid-template-columns: 50%;
     align-items: start;
     border: none;
 }
@@ -212,25 +212,48 @@ td{
 .section-filter label:hover{
     opacity: 0.3; 
 }
-
+.radio-container{
+    width: 100%;
+    display: flex;
+    place-content: start;
+}
 input[type="checkbox"] {
+    display: none;
+  
+}
+input[type="radio"] {
+    display: none;
+  
+}
+.label-filter{
+    display: flex;
     width: 20px;
     height: 20px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: transparent; 
+    background-color: transparent;
     border: 2px solid var(--Azul-oscuro);
     border-radius: 5px;
     outline: none;
-    cursor: pointer; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
-
-input[type="checkbox"]:checked {
+.radio-description{
+    margin-left: 5%;
+}
+input[type="radio"]:checked + label{
+    background-color: var(--Azul-oscuro); 
+}
+input[type="checkbox"]:checked + label{
     background-color: var(--Azul-oscuro); 
 }
 
-input[type="checkbox"]:hover {
+input[type="radio"]:hover {
     opacity: 0.3; 
 }
 

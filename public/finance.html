@@ -210,46 +210,97 @@
                             <form action="" id="form-filter-record" class="hide">
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Año</legend>
-                                    <input type="checkbox" name="2024" id="2024" title="2024">
-                                    <label for="2024">2024</label>
-                                    <input type="checkbox" name="2025" id="2025" title="2025">
-                                    <label for="2025">2025</label>
+                                    <div class="radio-container">
+                                        <input type="radio" name="year" id="2024" title="2024">
+                                        <label class="label-filter" for="2024"></label>
+                                        <span class="radio-description">2024</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="radio" name="year" id="2025" title="2025">
+                                        <label class="label-filter" for="2025"></label>
+                                        <span class="radio-description">2025</span>
+                                    </div>
                                 </fieldset>
                                 
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Mes</legend>
-                                    <input type="checkbox" name="enero" id="enero" title="enero">
-                                    <label for="enero">enero</label>
-                                    <input type="checkbox" name="febrero" id="febrero" title="febrero">
-                                    <label for="febrero">febrero</label>
-                                    <input type="checkbox" name="marzo" id="marzo" title="marzo">
-                                    <label for="marzo">marzo</label>
-                                    <input type="checkbox" name="abril" id="abril" title="abril">
-                                    <label for="abril">abril</label>
-                                    <input type="checkbox" name="mayo" id="mayo" title="mayo">
-                                    <label for="mayo">mayo</label>
-                                    <input type="checkbox" name="junio" id="junio" title="junio">
-                                    <label for="junio">junio</label>
-                                    <input type="checkbox" name="julio" id="julio" title="julio">
-                                    <label for="julio">julio</label>
-                                    <input type="checkbox" name="agosto" id="agosto" title="agosto">
-                                    <label for="agosto">agosto</label>
-                                    <input type="checkbox" name="septiembre" id="septiembre" title="septiembre">
-                                    <label for="septiembre">septiembre</label>
-                                    <input type="checkbox" name="octubre" id="octubre" title="octubre">
-                                    <label for="octubre">octubre</label>
-                                    <input type="checkbox" name="noviembre" id="noviembre" title="noviembre">
-                                    <label for="noviembre">noviembre</label>
-                                    <input type="checkbox" name="diciembre" id="diciembre" title="diciembre">
-                                    <label for="diciembre">diciembre</label>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="january" title="january">
+                                        <label class="label-filter" for="january"></label>
+                                        <span class="radio-description">enero</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="february" title="february">
+                                        <label class="label-filter" for="february"></label>
+                                        <span class="radio-description">febrero</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="march" title="march">
+                                        <label class="label-filter" for="march"></label>
+                                        <span class="radio-description">marzo</span>
+                                    </div>  
+
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="april" title="april">
+                                        <label class="label-filter" for="april"></label>
+                                        <span class="radio-description">abril</span>
+                                    </div>  
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="may" title="may">
+                                        <label class="label-filter" for="may"></label>
+                                        <span class="radio-description">mayo</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="june" title="june">
+                                        <label class="label-filter" for="june"></label>
+                                        <span class="radio-description">junio</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="juli" title="juli">
+                                        <label class="label-filter" for="juli"></label>
+                                        <span class="radio-description">julio</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="august" title="august">
+                                        <label class="label-filter" for="august"></label>
+                                        <span class="radio-description">agosoto</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="september" title="september">
+                                        <label class="label-filter" for="september"></label>
+                                        <span class="radio-description">septiembre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="october" title="october">
+                                        <label class="label-filter" for="october"></label>
+                                        <span class="radio-description">octubre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="november" title="november">
+                                        <label class="label-filter" for="november"></label>
+                                        <span class="radio-description">noviembre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="december" title="december">
+                                        <label class="label-filter" for="december"></label>
+                                        <span class="radio-description">diciembre</span>
+                                    </div>
+                                    
+                                    
                                 </fieldset>
                                 
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Pagadas / no pagadas</legend>
-                                    <input type="checkbox" name="pagadas" id="pagadas" title="pagadas">
-                                    <label for="pagadas">pagadas</label>
-                                    <input type="checkbox" name="no-pagadas" id="no-pagadas" title="no-pagadas">
-                                    <label for="no-pagadas">no pagadas</label>
+                                    <div class="radio-container">
+                                        <input type="radio" name="paid_status" id="paid" title="paid">
+                                        <label class="label-filter" for="paid"></label>
+                                        <span class="radio-description">pagadas</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="radio" name="paid_status" id="not-paid" title="not-paid">
+                                        <label class="label-filter" for="not-paid"></label>    
+                                        <span class="radio-description">No pagadas</span>
+                                    </div>
                                 </fieldset>
                     
                             </form>
@@ -336,11 +387,10 @@
     <script type="module" src="./js/menu.js"></script>
     <script type="module" src="./js/submenu.js"></script>
     <script type="module" src="./js/edit-record.js"></script>
-    <!-- <script type="module" src="./js/filter-record.js"></script> -->
-    <script src="./js/handleScrollLoading.js"></script>
+    <script type="module" src="./js/filter-record.js"></script>
+    <script type="module" src="./js/handleScrollLoading.js"></script>
     <script src="./js/handleModalWindow.js"></script>
     <script type="module" src="./js/edit-suppliers.js"></script>
-    
     
 </body>
 </html>

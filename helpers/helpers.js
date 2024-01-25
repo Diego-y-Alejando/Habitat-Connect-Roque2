@@ -68,7 +68,6 @@ function getStartAndEndOfMonth(dateString) {
     let dayOfDate = date.getDate();  // Cambiado de getUTCDate a getDate
     const yearOfDate = date.getFullYear();
     const monthOfDate = date.getMonth();
-    
     if (dayOfDate === 1) {
         dayOfDate = dayOfDate + 1;
     }

@@ -1,7 +1,10 @@
 const {response, request}= require('express')
 const accounts_payable = require('../models/account_payable.model')
 const providers = require('../models/providers.model')
-const {Sequelize}=require('sequelize')
+const {Op ,Sequelize}=require('sequelize')
+const {
+    getStartAndEndOfMonth 
+}= require('../helpers/helpers')
 const {
     updateData
 }= require('../helpers/helpers')
@@ -67,14 +70,29 @@ const createAccountPayable = async(req = request , res = response)=>{
     }
 }
 const getAccountsPayable= async(req = request , res = response)=>{
-    const page=parseInt(req.query.page)
+    const page=req.page
+    const {start_range_date,end_range_date,paid}=req.query
     try {
+    
+        let whereObject ={}
+        paid? 
+        whereObject={
+            invoice_date:{
+                [Op.between]:[start_range_date,end_range_date]
+            },
+            paid:paid
+        }:whereObject={
+            invoice_date:{
+                [Op.between]:[start_range_date,end_range_date]
+            }
+        }
         const offset = (page - 1) * 10;
         const result = await accounts_payable.findAndCountAll({
-            attributes: ['invoice_id','invoice_date','amount','paid'],
+            attributes: ['account_id','invoice_id','invoice_date','amount','paid'],
+            where:whereObject,
             offset,
             limit: 10,
-            order: [['account_id', 'DESC']],
+            order: [['invoice_date', 'ASC']],
             include:[{
                 model:providers,
                 as:'accountHaveProvider',
