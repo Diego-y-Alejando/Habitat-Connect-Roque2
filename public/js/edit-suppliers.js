@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $('#table-suppliers tbody').on('click','.provider_name',function(evet){
         console.log('clik');
         $("#edit-supplier").removeClass("hide");

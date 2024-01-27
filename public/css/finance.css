@@ -142,6 +142,7 @@ td{
     height: 400px;
     overflow-y: scroll;
     grid-template-columns:100%;
+    align-content: flex-start;
 }
 
 #filter-record-for-pay{
