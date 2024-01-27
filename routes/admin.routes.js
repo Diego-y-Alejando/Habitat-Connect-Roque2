@@ -118,7 +118,7 @@ const {
     changeAccountPaidStatus,
 }= require('../controllers/accounts_payable.controllers');
 router.post('/create/account/payable',createAccountPayableValidations,createAccountPayable);
-router.get('/accounts/payable/list/',getAccountsPayableValidations,getAccountsPayable);
+router.get('/accounts/payable/list/',getAccountsPayable);//getAccountsPayableValidations
 router.get('/account/payable/:account_id',getAccountPayableDataValidations,getAccountPayable)
 router.post('/update/account/payable/:account_id',updateAccountPayableValidations,updateAccountPayable);
 router.post('/change/account/paid/status/',changeAccountPaidStatusValidations,changeAccountPaidStatus);

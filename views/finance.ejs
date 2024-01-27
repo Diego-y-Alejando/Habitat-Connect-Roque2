@@ -12,35 +12,36 @@
 </head>
 <body>
 
-    <section class="finance-cart-backbround hide" id="edit-supplier"> 
+    <section class="finance-cart-backbround hide modal-window" id="edit-supplier"> 
         <div class="finance-card montserrat-light">
             <div class="return">
-                <a class="a-return" href="/public/controlPanel.html" id="Return-suppliers">
+                <a class="a-return close-window" href="/public/controlPanel.html" id="Return-suppliers">
                     <img alt="return-icon" src="/public/icons/backward_icon.png" class="return-button">
                     Regresar
                 </a>
             </div>
             <form class="info-finance-card" id="edit-suplier-form">
                 <h3 class="title-finance-form col-span-2">Editar proveedor</h3>
-                <label class="bold dark-blue label-suplier-form ">Nombre:
+                <input type="hidden" value="" id="supplier_id">
+                <label class="bold dark-blue label-finance-form">Nombre:
                     <input type="text" name="provider_name" class="gray input-finance-forms  providers-input" placeholder="[Nombre]" id="input-name-supplier" disabled autocomplete="off" ></input>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form ">Teléfono:
+                <label for="" class="bold darkblue label-finance-form">Teléfono:
                     <input type="text"  name="phone_number" class="gray input-finance-forms providers-input" placeholder="[Teléfono]" id="input-phone-supplier" disabled autocomplete="off"></input>
                 </label> 
-                <label for="" class="bold darkblue label-suplier-form ">Banco:
+                <label for="" class="bold darkblue label-finance-form">Banco:
                     <input type="text" name="bank_name" class="gray input-finance-forms providers-input " placeholder="[Banco]" id="input-bank-supplier" disabled autocomplete="off"></input>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form ">Número de cuenta:
+                <label for="" class="bold darkblue label-finance-form">Número de cuenta:
                     <input type="text "name="bank_account"  class="gray input-finance-forms providers-input " placeholder="[Número de cuenta]" id="input-account-supplier" disabled autocomplete="off"></input>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form ">Tipo de cuenta:
+                <label for="" class="bold darkblue label-finance-form">Tipo de cuenta:
                     <input type="text"name="type_account"  class="gray input-finance-forms providers-input" placeholder="[Tipo de cuenta]" id="input-type-account-supplier" disabled autocomplete="off"></input>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form ">Métodos de pago:
+                <label for="" class="bold darkblue label-finance-form">Métodos de pago:
                     <input type="text"name="payment_methods"  class="gray input-finance-forms providers-input" placeholder="[Metodo de pago]" id="input-payment-method-supplier" disabled autocomplete="off"></input>   
                 </label>
-                <label for="" class="bold darkblue col-span-2 label-suplier-form  justify-content-start">Descripción de servicio:
+                <label for="" class="bold darkblue col-span-2 label-finance-form justify-content-start">Descripción de servicio:
                     <input type="text"name="service_description"  class="gray input-finance-forms providers-input" placeholder="[Descripción de servicio]" id="input-description-supplier" disabled autocomplete="off"></input>
                 </label>
             </form>
@@ -48,7 +49,7 @@
             
             <a href="#" class="boton-editar" id="btn-edit-supplier">
                 <img src="/public/icons/editar-texto.png" alt="edit" id="btn-edit-supplier-img" class="">
-                <img src="/public/icons/save_icon.png" alt="edit" id="btn-save-supplier-img" class="hide">
+                <img src="/public/icons/save_icon.png" alt="edit" id="icon-save-edit-supplier" class="hide">
             </a>
         </div>
     </section>
@@ -61,40 +62,52 @@
             </a>
             <form class="info-finance-card" id="edit-account-payable-form">
                 <h3 class="title-finance-form col-span-2">Editar Cuenta por pagar</h4>
-                <label for="" class="bold darkblue label-suplier-form ">Fecha de factura:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">Fecha de factura:
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form ">No. de factura:
-                    <input type="text" class="gray input-finance-forms " placeholder="[No. de factura]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">No. de factura:
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[No. de factura]" disabled autocomplete="off"></input>
                 </label>
-                <label class="bold dark-blue label-suplier-form ">Proveedor:
-                    <input type="text" class="gray input-finance-forms" placeholder="[Proveedor]" id="record-supplier" disabled autocomplete="off"></input>
+                <label class="bold dark-blue label-finance-form">
+                    Proveedor de cuenta
+                    <select class=" account-payable-input select-finance-form" name="select-provider">
+                        <option value="0" selected disabled>Selecciona proveedor</option>
+                        <% providers.forEach(function(provider) { %>
+                            <option value="<%=provider.provider_id%>"><%= provider.provider_name%></option>
+                          <% }); %>
+                    </select>
                 </label>
-                <label for="" class="bold darkblue label-suplier-form">Cuenta de banco:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Cuenta de banco]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">
+                    Cuenta para pagar
+                    <select class="account-payable-input select-finance-form" name="select-bank-account">
+                        <option value="0"s selected disabled>Selecciona cuenta</option>
+                        <% accounts.forEach(function(account) { %>
+                            <option value="<%=account.account_id%>"><%= account.account_number%></option>
+                          <% }); %>
+                    </select>                                   
                 </label>
 
-                <label for="" class="bold darkblue label-suplier-form ">Monto:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Monto]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">Monto:
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Monto]" disabled autocomplete="off"></input>
                 </label>
               
                 <label for="" class="bold darkblue label-suplier-form">Métodos de pago:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Metodo de pago]" disabled autocomplete="off"></input>   
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Metodo de pago]" disabled autocomplete="off"></input>   
                 </label>
 
                 <label for="" class="bold darkblue label-suplier-form">Numero de transaccion:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
                 </label>
 
-                <label for="" class="bold darkblue label-suplier-form ">Concepto:
-                    <input type="text" class="gray input-finance-forms " placeholder="[Concepto]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">Concepto:
+                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Concepto]" disabled autocomplete="off"></input>
                 </label>
 
             </form>
             
             <a href="#" class="boton-editar" id="btn-edit-record">
                 <img src="/public/icons/editar-texto.png" alt="edit" id="btn-edit-record-img" class="">
-                <img src="/public/icons/save_icon.png" alt="edit" id="btn-save-record-img" class="hide">
+                <img src="/public/icons/save_icon.png" alt="edit" id="btn-save-record-img" id="save-edit-provider" class="hide">
             </a>
         </div>
     </section>
@@ -125,7 +138,7 @@
                     Proveedores
                     <span class="selected-item-line"></span>
                 </a>
-                <a class="subitem-menu item-sub-menu" href="#" data-target="record-for-pay">
+                <a class="subitem-menu item-sub-menu" href="#" data-target="record-for-pay" id="account-payable-item">
                     Historial de cuentas por pagas
                     <span class="selected-item-line hide"></span>
                 </a>
@@ -141,7 +154,7 @@
             <ul class="container-list ">
                
                 <li class="container-item content-active" id="suppliers">
-                    <button class=" display-modal-window title-create-element">Crear proveedor</button>
+                    <button class=" display-modal-window title-create-element col-span-2">Crear proveedor</button>
                     <div class="modal-window" id="modal-window">
                         <div class="finance-card aling-self montserrat-light">
                             <div class="return">
@@ -152,25 +165,25 @@
                             </div>
                             <form class="info-finance-card" id="create-provider-form" >
                                 <h3 class="title-finance-form col-span-2">Crear proveedor</h3>
-                                <label class="bold dark-blue label-suplier-form ">Nombre:
+                                <label class="bold dark-blue label-finance-form">Nombre:
                                     <input type="text" name="provider_name" class="gray input-finance-forms providers-input" placeholder="[Nombre]" id="input-name-supplier"  autocomplete="off" ></input>
                                 </label>
-                                <label for="" class="bold darkblue label-suplier-form ">Teléfono:
+                                <label for="" class="bold darkblue label-finance-form">Teléfono:
                                     <input type="text"  name="phone_number" class="gray input-finance-forms providers-input " placeholder="[Teléfono]" id="input-phone-supplier"  autocomplete="off"></input>
                                 </label> 
-                                <label for="" class="bold darkblue label-suplier-form ">Banco:
+                                <label for="" class="bold darkblue label-finance-form">Banco:
                                     <input type="text" name="bank_name" class="gray input-finance-forms providers-input " placeholder="[Banco]" id="input-bank-supplier"  autocomplete="off"></input>
                                 </label>
-                                <label for="" class="bold darkblue label-suplier-form ">Número de cuenta:
+                                <label for="" class="bold darkblue label-finance-form">Número de cuenta:
                                     <input type="text "name="bank_account"  class="gray input-finance-forms providers-input " placeholder="[Número de cuenta]" id="input-account-supplier"  autocomplete="off"></input>
                                 </label>
-                                <label for="" class="bold darkblue label-suplier-form ">Tipo de cuenta:
+                                <label for="" class="bold darkblue label-finance-form">Tipo de cuenta:
                                     <input type="text"name="type_account"  class="gray input-finance-forms providers-input " placeholder="[Tipo de cuenta]" id="input-type-account-supplier"  autocomplete="off"></input>
                                 </label>
-                                <label for="" class="bold darkblue label-suplier-form ">Métodos de pago:
+                                <label for="" class="bold darkblue label-finance-form">Métodos de pago:
                                     <input type="text"name="payment_methods"  class="gray input-finance-forms providers-input " placeholder="[Metodo de pago]" id="input-payment-method-supplier"  autocomplete="off"></input>   
                                 </label>
-                                <label for="" class="bold darkblue col-span-2 label-suplier-form  justify-content-start">Descripción de servicio:
+                                <label for="" class="bold darkblue col-span-2 label-finance-form justify-content-start">Descripción de servicio:
                                     <input type="text"name="service_description"  class="gray input-finance-forms providers-input" placeholder="[Descripción de servicio]" id="input-description-supplier"  autocomplete="off"></input>
                                 </label>
                                 <label class="place-self-center  submit-label col-span-2">
@@ -179,7 +192,7 @@
                             </form>
                         </div>
                     </div>
-                    <table class="table montserrat-light" id="table-suppliers">
+                    <table class="table montserrat-light col-span-2" id="table-suppliers">
                         <thead class="table-titel">
                             <tr class="titel-row">
                                 <th>Nombre</th>
@@ -202,52 +215,103 @@
                             </button>
 
                             <form action="" id="form-filter-record" class="hide">
-                    
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Año</legend>
-                                    <input type="checkbox" name="2024" id="2024" title="2024">
-                                    <label for="2024">2024</label>
-                                    <input type="checkbox" name="2025" id="2025" title="2025">
-                                    <label for="2025">2025</label>
+                                    <div class="radio-container">
+                                        <input type="radio" name="year" id="2023" title="2023" value="2023" class="filter-item" >
+                                        <label class="label-filter" for="2023"></label>
+                                        <span class="radio-description">2023</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="radio" name="year" id="2024" title="2024" value="2024" class="filter-item" >
+                                        <label class="label-filter" for="2024"></label>
+                                        <span class="radio-description">2024</span>
+                                    </div>
                                 </fieldset>
                                 
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Mes</legend>
-                                    <input type="checkbox" name="enero" id="enero" title="enero">
-                                    <label for="enero">enero</label>
-                                    <input type="checkbox" name="febrero" id="febrero" title="febrero">
-                                    <label for="febrero">febrero</label>
-                                    <input type="checkbox" name="marzo" id="marzo" title="marzo">
-                                    <label for="marzo">marzo</label>
-                                    <input type="checkbox" name="abril" id="abril" title="abril">
-                                    <label for="abril">abril</label>
-                                    <input type="checkbox" name="mayo" id="mayo" title="mayo">
-                                    <label for="mayo">mayo</label>
-                                    <input type="checkbox" name="junio" id="junio" title="junio">
-                                    <label for="junio">junio</label>
-                                    <input type="checkbox" name="julio" id="julio" title="julio">
-                                    <label for="julio">julio</label>
-                                    <input type="checkbox" name="agosto" id="agosto" title="agosto">
-                                    <label for="agosto">agosto</label>
-                                    <input type="checkbox" name="septiembre" id="septiembre" title="septiembre">
-                                    <label for="septiembre">septiembre</label>
-                                    <input type="checkbox" name="octubre" id="octubre" title="octubre">
-                                    <label for="octubre">octubre</label>
-                                    <input type="checkbox" name="noviembre" id="noviembre" title="noviembre">
-                                    <label for="noviembre">noviembre</label>
-                                    <input type="checkbox" name="diciembre" id="diciembre" title="diciembre">
-                                    <label for="diciembre">diciembre</label>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="january" title="january" value="1" class="filter-item" checked>
+                                        <label class="label-filter" for="january"></label>
+                                        <span class="radio-description">enero</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="february" title="february" value="2"  class="filter-item" checked>
+                                        <label class="label-filter" for="february"></label>
+                                        <span class="radio-description">febrero</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="march" title="march" value="3" class="filter-item" checked>
+                                        <label class="label-filter" for="march"></label>
+                                        <span class="radio-description">marzo</span>
+                                    </div>  
+
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="april" title="april" value="4" class="filter-item"checked>
+                                        <label class="label-filter" for="april"></label>
+                                        <span class="radio-description">abril</span>
+                                    </div>  
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="may" title="may" value="5" class="filter-item" checked>
+                                        <label class="label-filter" for="may"></label>
+                                        <span class="radio-description">mayo</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="june" title="june" value="6" class="filter-item" checked>
+                                        <label class="label-filter" for="june"></label>
+                                        <span class="radio-description">junio</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="juli" title="juli" value="7" class="filter-item" checked>
+                                        <label class="label-filter" for="juli"></label>
+                                        <span class="radio-description">julio</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="august" title="august" value="8" class="filter-item" checked>
+                                        <label class="label-filter" for="august"></label>
+                                        <span class="radio-description">agosoto</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="september" title="september" value="9" class="filter-item"checked>
+                                        <label class="label-filter" for="september"></label>
+                                        <span class="radio-description">septiembre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="october" title="october" value="10" class="filter-item" checked>
+                                        <label class="label-filter" for="october"></label>
+                                        <span class="radio-description">octubre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="november" title="november" value="11" class="filter-item"checked>
+                                        <label class="label-filter" for="november"></label>
+                                        <span class="radio-description">noviembre</span>
+                                    </div> 
+                                    <div class="radio-container">
+                                        <input type="checkbox" name="month" id="december" title="december" value="12" class="filter-item"checked>
+                                        <label class="label-filter" for="december"></label>
+                                        <span class="radio-description">diciembre</span>
+                                    </div>
+                                    
+                                    
                                 </fieldset>
                                 
                                 <fieldset class="section-filter">
                                     <legend class="legend-filter">Pagadas / no pagadas</legend>
-                                    <input type="checkbox" name="pagadas" id="pagadas" title="pagadas">
-                                    <label for="pagadas">pagadas</label>
-                                    <input type="checkbox" name="no-pagadas" id="no-pagadas" title="no-pagadas">
-                                    <label for="no-pagadas">no pagadas</label>
+                                    <div class="radio-container">
+                                        <input type="radio" name="paid_status" id="paid" title="paid" value="1" class="filter-item">
+                                        <label class="label-filter" for="paid"></label>
+                                        <span class="radio-description">pagadas</span>
+                                    </div>
+                                    <div class="radio-container">
+                                        <input type="radio" name="paid_status" id="not-paid" title="not-paid" value="2" class="filter-item">
+                                        <label class="label-filter" for="not-paid"></label>    
+                                        <span class="radio-description">No pagadas</span>
+                                    </div>
                                 </fieldset>
                     
                             </form>
+                    
                     
                         </section>
                         <button class=" display-modal-window title-create-element">Crear cuenta por pagar</button>
@@ -259,34 +323,43 @@
                                 </a>
                                 <form class="info-finance-card" id="create-account-payable-form">
                                     <h3 class="title-finance-form col-span-2">Crear Cuenta por pagar</h4>
-                                    <label for="" class="bold darkblue label-suplier-form ">Fecha de factura:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
+                                    <label for="" class="bold darkblue label-finance-form">Fecha de factura:
+                                        <input type="date" name="invoice_date" class="gray input-finance-forms  account-payable-input" placeholder="[Fecha de factura]"  autocomplete="off"></input>
+                                    </label>
+                                    <label for="" class="bold darkblue label-finance-form">No. de factura:
+                                        <input type="text" name="invoice_id" class="gray input-finance-forms account-payable-input" placeholder="[No. de factura]"  autocomplete="off"></input>
+                                    </label>
+                                    <label class="bold dark-blue label-finance-form">
+                                        Proveedor de cuenta
+                                        <select class=" account-payable-input select-finance-form" name="id_provider_account">
+                                            <option value="sin vlaor" selected disabled>Selecciona proveedor</option>
+                                            <% providers.forEach(function(provider) { %>
+                                                <option value="<%=provider.provider_id%>"><%= provider.provider_name%></option>
+                                              <% }); %>
+                                        </select>
+                                    </label>
+                                    <label for="" class="bold darkblue label-finance-form">
+                                        Cuenta para pagar
+                                        <select class="account-payable-input select-finance-form" name="id_bank_account">
+                                            <option value="sin valor"selected disabled>Selecciona cuenta</option>
+                                            <% accounts.forEach(function(account) { %>
+                                                <option value="<%=account.account_id%>"><%= account.account_number%></option>
+                                              <% }); %>
+                                        </select>                                   
+                                    </label>
+                                    <label for="" class="bold darkblue label-finance-form">Monto:
+                                        <input type="text"name="amount" class="gray input-finance-forms account-payable-input" placeholder="[Monto]"  autocomplete="off"></input>
+                                    </label>
+                                    <label for="" class="bold darkblue label-finance-form">Numero de transaccion:
+                                        <input type="text" name="number_of_transaction" class="gray input-finance-forms account-payable-input " placeholder="[Numero de transaccion]"  autocomplete="off"></input>
                                     </label>
 
-                                    <label for="" class="bold darkblue label-suplier-form ">No. de factura:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[No. de factura]" disabled autocomplete="off"></input>
+                                    <label for="" class="bold darkblue label-finance-form">Concepto:
+                                        <input type="text" name="concept" class="gray input-finance-forms account-payable-input " placeholder="[Concepto]"  autocomplete="off"></input>
                                     </label>
-                                    <label class="bold dark-blue label-suplier-form ">Proveedor:
-                                        <input type="text" class="gray input-finance-forms" placeholder="[Proveedor]" id="record-supplier" disabled autocomplete="off"></input>
-                                    </label>
-                                    <label for="" class="bold darkblue label-suplier-form">Cuenta de banco:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Cuenta de banco]" disabled autocomplete="off"></input>
-                                    </label>
-
-                                    <label for="" class="bold darkblue label-suplier-form ">Monto:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Monto]" disabled autocomplete="off"></input>
-                                    </label>
-                                  
-                                    <label for="" class="bold darkblue label-suplier-form">Métodos de pago:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Metodo de pago]" disabled autocomplete="off"></input>   
-                                    </label>
-
-                                    <label for="" class="bold darkblue label-suplier-form">Numero de transaccion:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
-                                    </label>
-
-                                    <label for="" class="bold darkblue label-suplier-form ">Concepto:
-                                        <input type="text" class="gray input-finance-forms " placeholder="[Concepto]" disabled autocomplete="off"></input>
+                                    <label class="bold darkblue label-finance-form">
+                                        Cuenta Pagada
+                                        <input type="checkbox" name="paid" value="2" class="account-payable-input">
                                     </label>
                                     <label class="place-self-center  submit-label col-span-2">
                                         <input type="submit" value="Crear cuenta por pagar" class="btn-submit ">
@@ -295,7 +368,7 @@
                             </div>
                         </div>
 
-                        <table class="table montserrat-light" id="table-record-for-pay">
+                        <table class="table montserrat-light col-span-2" id="table-accounts-payables">
                             <thead class="table-titel">
                                 <tr class="titel-row">
                                     <th>Proveedor</th>
@@ -323,15 +396,15 @@
     </main>
     
     <!-- <script type="module" src="/public/js/finance.js"></script> -->
+    <script type="module" src="/public/js/finance.js"></script>
     <script type="module" src="/public/js/menu.js"></script>
     <script type="module" src="/public/js/submenu.js"></script>
     <script type="module" src="/public/js/edit-suppliers.js"></script>
     <script type="module" src="/public/js/edit-record.js"></script>
-    <!-- <script type="module" src="/public/js/filter-record.js"></script> -->
+    <script type="module" src="/public/js/filter-record.js"></script>
     <script type="module" src="/public/js/handleScrollLoading.js"></script>
-    <script src="/public/js/handleModalWindow.js"></script>
+    <script type="module" src="/public/js/handleModalWindow.js"></script>
     <script type="module" src="/public/js/handleFinanceForms.js"></script>
-
     
 </body>
 </html>

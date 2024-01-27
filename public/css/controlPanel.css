@@ -131,9 +131,10 @@ body{
 .input-form:focus{
     outline: none;
 }
-
 .boton-editar {
-    display: inline-block;
+    display: grid;
+    place-self: center;
+    place-items: center;
     background-color: transparent;
     color: #fff;
     text-decoration: none;

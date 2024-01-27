@@ -29,7 +29,7 @@ const updateMaintenance= async (req = request , res = response)=>{
     const apartament_id = req.params.apartament_id
     const {year,month,date_paid}=req.body
     try {
-
+        
         const updateData = await maintenance_record.update({
             [month]:{
                 paid_status:req.paid,

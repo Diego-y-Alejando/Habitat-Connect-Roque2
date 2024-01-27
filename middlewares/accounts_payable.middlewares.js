@@ -7,7 +7,8 @@ const{
     validationParagraph,
     ValidationIdOrLevel,
     userExist,
-    validatePage
+    validatePage,
+    validationYear
 }= require('./common.middlewares')
 const bank_accounts = require('../models/bank_accounts.model');
 const providers = require('../models/providers.model')
@@ -26,14 +27,15 @@ const createAccountPayableValidations = async(req = request , res = response, ne
         id_provider_account
     }= req.body
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         bodyVerification(req.body,['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account'])
         validationInvoiceId(invoice_id);
-        validationDates(invoice_date);
+        validationDates(invoice_date,'fecha de factura');
         validationParagraph(concept);
         validationAmount(amount);
         validationNumberOfTransaccion(number_of_transaction);
-        validationPaidStatus(paid);
+        // por sino trae la propiedad paid
+        paid?req.body.paid=paid:req.body.paid=2
         ValidationIdOrLevel('id de la cuenta de banco',id_bank_account);
         ValidationIdOrLevel('id del proveedor',id_provider_account);
         await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_id',[ 'bank','account_number','type_account']);
@@ -48,10 +50,14 @@ const createAccountPayableValidations = async(req = request , res = response, ne
 }
 const getAccountsPayableValidations = async(req = request , res = response, next)=>{
     const token = req.cookies.authorization
-    const page = parseInt(req.query.page)
+    const {page,start_range_date,end_range_date,paid}= req.query
+    
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']); 
-        validatePage(page);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']); 
+        validatePage(parseInt(page));
+        req.page=parseInt(page),
+        delete req.query.page
+        validationsFilterFields(req.query)
         next()
     }catch (error) {
         return res.status(400).json({
@@ -90,15 +96,9 @@ const updateAccountPayableValidations = async(req = request , res = response, ne
     }= req.body;
 
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        bodyVerification(req.body,['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
-        validationInvoiceId(invoice_id);
-        validationDates(invoice_date);
-        validationParagraph(concept);
-        validationAmount(amount);
-        validationNumberOfTransaccion(number_of_transaction);
-        ValidationIdOrLevel('id de la cuenta de banco',id_bank_account);
-        ValidationIdOrLevel('id del proveedor',id_provider_account);
+        updatedAccountPayableValidations(req.body)
+        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);;
+        ValidationIdOrLevel('id de la cuenta por pagar',account_id);
         await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_id',[ 'bank','account_number','type_account']);
         // hacer un innerJoin entre estos dos modelos 
         await  userExist('El provdeedor', providers,id_provider_account,'provider_id',[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description']);
@@ -131,12 +131,84 @@ const changeAccountPaidStatusValidations = async(req = request , res = response,
         })
     }
 }
+
+const updatedAccountPayableValidations =(objectBody)=>{
+    const accountPayableDataValidations ={
+        'invoice_id':(value)=>{
+            validationInvoiceId(value)
+        },
+        'invoice_date':(value)=>{
+            validationDates(value,'fecha de factura')
+        },
+        'concept':(value)=>{
+            validationParagraph(concept);
+        },
+        'amount':(value)=>{
+            validationAmount(value)
+        },
+        'number_of_transaction':(value)=>{
+            validationNumberOfTransaccion(value)
+        },  
+        'paid':(value)=>{
+            validationPaidStatus(value)
+        },
+        'id_bank_account':(value)=>{
+            ValidationIdOrLevel('id de la cuenta bancaria ',value)
+        },
+        'id_provider_account':(value)=>{
+            ValidationIdOrLevel('id del provedor ',value)
+        }
+    }
+    Object.keys(objectBody).forEach(propertyName=>{
+        if (accountPayableDataValidations.hasOwnProperty(propertyName)) {
+            accountPayableDataValidations[propertyName](accountPayableDataValidations[propertyName])
+        }else{
+            throw new Error('Se han enviado propiedades inválidas');
+        }
+    })
+}
 module.exports ={
     createAccountPayableValidations,
     getAccountsPayableValidations,
     getAccountPayableDataValidations,
     updateAccountPayableValidations,
     changeAccountPaidStatusValidations,
+}
+const validationsFilterFields =(queryObject)=>{
+    const queryObjectValidations={
+        'queryMonths':(value)=>{
+            if ( typeof value !='Array') {
+                throw new Error('Debes enviar un arreglo de meses')
+            }
+            const areNumbers = value.every((element) => typeof element === 'number');
+            if (!areNumbers) {
+                throw new Error('todas las pocisiones del arreglo deben ser números')
+            }
+            const maxValue = Math.max(...value)
+            if (maxValue>12) {
+                throw new Error ('No puede venir un mes que sea mayor a 12')
+            }
+            const minValue = Math.min(...value)
+            if (minValue<=0) {
+                throw new Error('No existe un mes 0 o menor que 0')
+            } 
+        },
+        'year':(value)=>{
+            validationYear(value)
+        },
+        'paid':(value)=>{
+            validationPaidStatus(value)
+        }
+    }
+    Object.keys(queryObject).forEach(propertyName=>{
+        if (queryObjectValidations.hasOwnProperty(propertyName)) {
+            queryObjectValidations[propertyName](queryObject[propertyName])
+        }else{
+            console.log(propertyName);
+            throw new Error('Se han enviado propiedades inválidas');
+        }
+    })
+
 }
 const validationInvoiceId=(invoice_id)=>{
     const regexInvoiceId =/^[a-zA-Z0-9]+$/

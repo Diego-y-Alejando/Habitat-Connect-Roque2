@@ -111,12 +111,13 @@ td{
     font-family: montserrat-semi-bold;
     color: var(--Azul-oscuro);
 }
-.label-suplier-form{
+.label-finance-form{
+    width: 90%;
     display: grid;
-    grid-template-columns: 25% 50%;
+    grid-template-columns: 50% 50%;
     column-gap: 0px;
     color: var(--Azul-oscuro);
-
+    place-content: space-between;
 }
 .input-finance-forms{
     height: 30px;
@@ -128,6 +129,20 @@ td{
     color: var(--Azul-oscuro);
 }
 
+.select-finance-form{
+    background-color: var(--Azul-oscuro);
+    color: var(--white);
+    padding: 1%;
+    font-size: 1.1rem;
+    width: fit-content;
+    border: none;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
 #filter-icon{
     width: 50px;
     align-self: flex-start;
@@ -136,14 +151,20 @@ td{
     width: 50px;
 }
 .container-item{
+    grid-row: 1;
     display: grid;
     border: none;
     height: 400px;
     overflow-y: scroll;
-    grid-template-columns:100%;
+    grid-template-columns: 50%  50%;
+    place-content: start;
+    align-content: flex-start;
 }
 
 #filter-record-for-pay{
+
+    place-self: baseline;
+    grid-row: 1;
     width: 14%;
     display: inline-block;
     justify-content: center;
@@ -181,7 +202,7 @@ td{
     width: 100%;
     display: grid;
     gap: 10px;
-    grid-template-columns: 30px 1fr;
+    grid-template-columns: 50%;
     align-items: start;
     border: none;
 }
@@ -198,40 +219,83 @@ td{
 .section-filter label:hover{
     opacity: 0.3; 
 }
-
+.radio-container{
+    width: 100%;
+    display: flex;
+    place-content: start;
+}
 input[type="checkbox"] {
+    display: none;
+  
+}
+input[type="radio"] {
+    display: none;
+  
+}
+.label-filter{
+    display: flex;
     width: 20px;
     height: 20px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: transparent; 
+    background-color: transparent;
     border: 2px solid var(--Azul-oscuro);
     border-radius: 5px;
     outline: none;
-    cursor: pointer; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
-
-input[type="checkbox"]:checked {
+.radio-description{
+    margin-left: 5%;
+}
+input[type="radio"]:checked + label{
+    background-color: var(--Azul-oscuro); 
+}
+input[name="paid"]{
+    display: block;
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid var(--Azul-oscuro);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+input[type="checkbox"]:checked + label{
     background-color: var(--Azul-oscuro); 
 }
 
-input[type="checkbox"]:hover {
+input[type="radio"]:hover {
     opacity: 0.3; 
 }
 
 .title-create-element{
-    place-self: end;
+
+    grid-row: 1;
+    place-self: self-end;
     font-family: montserrat-regular;
     font-size: 1.2rem;
-    border:0.5px solid var(--Azul-oscuro);
+    border: 0.5px solid var(--Azul-oscuro);
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
     background-color: white;
-    padding:0.6% 0.5% 0.6% 0.5%;
+    padding: 0.6% 0.5% 0.6% 0.5%;
 }
 
 
