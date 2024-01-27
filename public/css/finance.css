@@ -158,7 +158,7 @@ td{
     overflow-y: scroll;
     grid-template-columns: 50%  50%;
     place-content: start;
-
+    align-content: flex-start;
 }
 
 #filter-record-for-pay{

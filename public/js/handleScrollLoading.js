@@ -30,13 +30,13 @@ $(document).ready(function () {
             }
             providers.providers.rows.forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                 table.append(`
-                <tr class='table-row provider' id=${provider_id}>
-                    <td class='provider_name'>${provider_name}</td>
-                    <td class='phone_number'>${phone_number}</td>
-                    <td class='bank_account'>${bank_account}</td>
-                    <td class='bank_name'>${bank_name}</td>
-                    <td class='type_account'>${type_account}</td>
-                </tr>
+                    <tr class='table-row provider' id=${provider_id}>
+                        <td class='supplier-name record-supplier-name'>${provider_name}</td>
+                        <td>${phone_number}</td>
+                        <td>${bank_account}</td>
+                        <td>${bank_name}</td>
+                        <td>${type_account}</td>
+                    </tr>
                 `);
             });
             totalProviders= providers.providers.count;
@@ -57,6 +57,7 @@ $(document).ready(function () {
     loadProviders();
     
     suplierTableContainer.scroll(async function (event){
+        console.log('scroll');
         if (Math.ceil($(this).scrollTop() + $(this).innerHeight() )>= $(this)[0].scrollHeight) {
             pageSuplier=pageSuplier+1
                 let totalSupplierRows =$('#table-suppliers tr.provider').length

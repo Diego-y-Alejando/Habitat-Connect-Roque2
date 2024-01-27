@@ -74,7 +74,7 @@ createProviderForm.on('submit', async function(event){
             [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                 tableSuppliersTbody.prepend(`
                     <tr class='table-row' id=${provider_id}>
-                        <td class='supplier-name'>${provider_name}</td>
+                        <td class='supplier-name record-supplier-name'>${provider_name}</td>
                         <td>${phone_number}</td>
                         <td>${bank_account}</td>
                         <td>${bank_name}</td>
