@@ -41,7 +41,15 @@ $(document).ready(function () {
             });
             totalProviders= providers.providers.count;
         } catch (error) {
-            console.log(error);
+            table.prepend(`
+            <tr class='table-row'>
+                <td class=''></td>
+                <td class="">Hubo un error</td>
+                <td class="">${error.message}</td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+            `)
         }
     }
 
@@ -73,61 +81,125 @@ $(document).ready(function () {
             }        
         }
     });
+    // cuentas por pagar
     const accountsPayable = $('#record-for-pay');
     let pageAccountPayable = 0;
     let totalAccountsPayable = 0;
-    const yearFilter =$('input[name="year"]');
-    const monthFilter= $('input[name="month"]');
-    const paidStatusFilter =$('input[name="paid_status"]');
+    const monthCheckBox = $('input[name="month"]')
+    const yearRadio =$('input[name="year"]')
     const dateYear = new Date().getFullYear()
     const initialYear = $(`input[id="${dateYear}"]`).prop('checked', true);
-    let filterQuery ={}
+    
     let countClickOnSubmenuItem=0
     const submenuAccountPayableItem =$('#account-payable-item')
     const tableAccountsPayableTbody = $('#table-accounts-payables tbody')
+    const filterItem =$('.filter-item')
+    let monthArr =[]
     submenuAccountPayableItem.click(async function(event){
         countClickOnSubmenuItem=countClickOnSubmenuItem+1
         try {
             if (countClickOnSubmenuItem==1) {
+                let year=0
                 pageAccountPayable=pageAccountPayable+1
-                loadAccountPayable(pageAccountPayable,{
-                    start_range_date: `${dateYear}-01-02`,
-                    end_range_date:`${dateYear}-12-31`
+
+                monthCheckBox.each((index,month)=>{
+                    if (month.checked) {
+                        monthArr.push(month.value)
+                    }
                 })
+                yearRadio.each((index,year)=>{
+                    if (year.checked) {
+                        console.log(year.value);
+                        loadAccountPayable(pageAccountPayable,{
+                            year:year.value,
+                            monthArr
+                        })
+                    }
+                })
+                
             }
         } catch (error) {
-            console.log(error);
+            tableAccountsPayableTbody.prepend(`
+            <tr class='table-row'>
+                <td class='account-payable-suplier-name'></td>
+                <td class="invoice_id">Hubo un error</td>
+                <td class="invoice_date">${error.message}</td>
+                <td class="amount"></td>
+                <td class="paid"></td>
+            </tr>
+            `)
         }
     })
-    yearFilter.on('change',function(event){
-        console.log(event.target.value);
-        filterQuery={
-            ...filterQuery,
-            [event.target.name]:event.target.value
+    // let monthClick=0
+    // monthCheckBox.click(function(event){
+    //     monthClick= monthClick+1
+   
+    
+    // })
+    let monthChange=0
+    let filterQuery ={}
+    filterItem.on('change',function(event){
+        const name = event.target.name
+        pageAccountPayable=0
+        pageAccountPayable=pageAccountPayable+1
+        let year;
+        if (name ==='month' & !event.target.checked) {
+            const currentMonth= $(this)
+            monthChange=monthChange+1
+            if (monthChange==1) {
+                monthCheckBox.each((index,element)=>{
+                    if (element.checked  && currentMonth.attr('id')!=element.id) {
+                        element.checked=false
+                        currentMonth.prop('checked',true)
+                        monthArr=[]
+                        monthArr.push(currentMonth.val())
+                    }
+                })   
+            }else{
+                const indice = monthArr.indexOf(currentMonth.val());
+                if (indice !== -1) {
+                    monthArr.splice(indice, 1);
+                }
+            
+                const todosDesmarcados =  monthCheckBox.toArray().every(checkbox => !checkbox.checked);
+
+                // Si todos están desmarcados, marca el primero
+                if (todosDesmarcados) {
+                    monthCheckBox.toArray()[0].checked = true;
+                    monthArr.push(1)
+                }
+            }
         }
-    })
-    monthFilter.on('change', function(event){
-        filterQuery={
-            ...filterQuery,
-            [event.target.name]:event.target.value
+        else if (name === 'month' && event.target.checked) {
+            monthArr.push(event.target.value)
+        }else if(name==='year'){
+            filterQuery={
+                ...filterQuery,
+                [name]:event.target.value
+            }
+        }else if(name==='paid_status'){
+            filterQuery={
+                ...filterQuery,
+                'paid':event.target.value
+            }
         }
-    })
-    paidStatusFilter.on('change',function(event){
-        filterQuery={
+        !filterQuery.year? filterQuery.year= new Date().getFullYear().toString(): filterQuery.year=filterQuery.year
+        loadAccountPayable(pageAccountPayable,{
             ...filterQuery,
-            [event.target.name]:event.target.value
-        }
+            'monthArr':monthArr
+        })
+
+
     })
     async function loadAccountPayable(page,queryData) {
-        const {start_range_date,end_range_date,paid}=queryData
-        let queryString=''
+        const {year,monthArr,paid}=queryData
+        
         try {
-            paid?
-                queryString=`?page=${page}&start_range_date=${start_range_date}&end_range_date=${end_range_date}&paid=${paid}` 
-            :   queryString=`?page=${page}&start_range_date=${start_range_date}&end_range_date=${end_range_date}` 
-
-            const accountsPayableList = await makeRequest(`${BASE_URL}admin/accounts/payable/list/${queryString}`, 'GET', null, {});
-         
+            const queryMonths = JSON.stringify(monthArr)
+            let queryString =''
+            paid?queryString=`page=${page}&queryMonths=${queryMonths}&year=${year}&paid=${paid}`: queryString=`page=${page}&queryMonths=${queryMonths}&year=${year}`
+            const accountsPayableList = await makeRequest(`${BASE_URL}admin/accounts/payable/list/?${queryString}`, 'GET', null, {});
+            
             if (!accountsPayableList.ok) {
                 throw new Error(accountsPayableList.error)
             }
@@ -146,7 +218,15 @@ $(document).ready(function () {
             });
             
         } catch (error) {
-            console.log(error);
+            tableAccountsPayableTbody.prepend(`
+            <tr class='table-row'>
+                <td class='account-payable-suplier-name'></td>
+                <td class="invoice_id">Hubo un error</td>
+                <td class="invoice_date">${error.message}</td>
+                <td class="amount"></td>
+                <td class="paid"></td>
+            </tr>
+            `)
         }
     }
     // Llamada a la función loadProviders en el evento ready de jQuery
@@ -156,3 +236,4 @@ $(document).ready(function () {
         }
     });
 });
+

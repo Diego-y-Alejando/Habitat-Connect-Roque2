@@ -25,7 +25,6 @@ const getFinanceFrontend = async(req = request , res = response)=>{
         
         const newProvidersData = getDataValuesOnly(providersData)
         const newBankAccountsData =getDataValuesOnly(accounts)
-        console.log(newProvidersData);
         res.render(financeHTML,{
             BASE_URL:process.env.BASE_URL,
             accounts:newBankAccountsData,

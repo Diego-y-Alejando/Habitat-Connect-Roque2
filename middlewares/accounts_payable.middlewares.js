@@ -7,7 +7,8 @@ const{
     validationParagraph,
     ValidationIdOrLevel,
     userExist,
-    validatePage
+    validatePage,
+    validationYear
 }= require('./common.middlewares')
 const bank_accounts = require('../models/bank_accounts.model');
 const providers = require('../models/providers.model')
@@ -175,11 +176,25 @@ module.exports ={
 }
 const validationsFilterFields =(queryObject)=>{
     const queryObjectValidations={
-        'start_range_date':(value)=>{
-            validationDates(value,'rango de la fecha inicial')
+        'queryMonths':(value)=>{
+            if ( typeof value !='Array') {
+                throw new Error('Debes enviar un arreglo de meses')
+            }
+            const areNumbers = value.every((element) => typeof element === 'number');
+            if (!areNumbers) {
+                throw new Error('todas las pocisiones del arreglo deben ser números')
+            }
+            const maxValue = Math.max(...value)
+            if (maxValue>12) {
+                throw new Error ('No puede venir un mes que sea mayor a 12')
+            }
+            const minValue = Math.min(...value)
+            if (minValue<=0) {
+                throw new Error('No existe un mes 0 o menor que 0')
+            } 
         },
-        'end_range_date':(value)=>{
-            validationDates(value,'rango de la fecha final')
+        'year':(value)=>{
+            validationYear(value)
         },
         'paid':(value)=>{
             validationPaidStatus(value)

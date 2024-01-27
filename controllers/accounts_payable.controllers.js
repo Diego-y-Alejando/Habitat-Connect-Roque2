@@ -1,7 +1,7 @@
 const {response, request}= require('express')
 const accounts_payable = require('../models/account_payable.model')
-const providers = require('../models/providers.model')
-const {Op ,Sequelize}=require('sequelize')
+const providers = require('../models/providers.model');
+const {Op ,Sequelize}=require('sequelize');
 const {
     getStartAndEndOfMonth 
 }= require('../helpers/helpers')
@@ -70,22 +70,28 @@ const createAccountPayable = async(req = request , res = response)=>{
     }
 }
 const getAccountsPayable= async(req = request , res = response)=>{
-    const page=req.page
-    const {start_range_date,end_range_date,paid}=req.query
+    // const page=req.page
+    const {queryMonths,year,paid,page}=req.query
     try {
+        const arrMonths =  JSON.parse(queryMonths)
+        let whereObject
     
-        let whereObject ={}
-        paid? 
-        whereObject={
-            invoice_date:{
-                [Op.between]:[start_range_date,end_range_date]
-            },
+        const datesCondicion = arrMonths.map((month) => {
+            const stringMonth = month.toString().padStart(2,'0')
+            const date = new Date(`${year}-${stringMonth}-02`)
+            const {start_month,end_month} =getStartAndEndOfMonth(date)
+            return {
+                invoice_date: {
+                  [Op.between]: [start_month, end_month],
+                },
+              };
+          }); 
+          paid? whereObject={
+            [Op.or]: datesCondicion,
             paid:paid
-        }:whereObject={
-            invoice_date:{
-                [Op.between]:[start_range_date,end_range_date]
+          }:whereObject={
+                [Op.or]: datesCondicion,
             }
-        }
         const offset = (page - 1) * 10;
         const result = await accounts_payable.findAndCountAll({
             attributes: ['account_id','invoice_id','invoice_date','amount','paid'],
@@ -102,8 +108,11 @@ const getAccountsPayable= async(req = request , res = response)=>{
                 attributes:['provider_name']
             }]
         });
+        const totalPages = Math.ceil(result.cout / 10);
         return res.status(200).json({
             accountsPayableList:result,
+            currentPage:page,
+            totalPages:totalPages,
             ok:true
         })
     } catch (error) {

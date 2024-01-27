@@ -16,7 +16,7 @@ const getApartamentsValidations=async(req=request , res = response, next)=>{
     const token = req.cookies.authorization
     const level = req.params.level
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         ValidationIdOrLevel('nivel deseado',level)
         next();
     } catch (error) {

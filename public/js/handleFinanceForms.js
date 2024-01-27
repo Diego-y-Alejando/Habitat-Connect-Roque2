@@ -196,7 +196,7 @@ createAccountPayableForm.on('submit',async function(event){
                     <td class="invoice_id">${invoice_id}</td>
                     <td class="invoice_date">${invoice_date}</td>
                     <td class="amount">${amount}</td>
-                    <td class="paid"><input type="checkbox" ${paid == 1 ? 'checked' : ''}></td>
+                    <td class="paid"><input type="checkbox" id="${invoice_id}" ${paid == 1 ? 'checked' : ''}><label class="label-filter" for="${invoice_id}"></label></td>
                 </tr>
             `);
         });
