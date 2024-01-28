@@ -19,7 +19,7 @@ const createAccountPayable = async(req = request , res = response)=>{
         id_bank_account, 
         id_provider_account
     }= req.body
-    // bankAccountAccountId
+    
     try {
         const [accountCreated, created] = await accounts_payable.findOrCreate({
             where: {

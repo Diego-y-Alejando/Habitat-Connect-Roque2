@@ -82,7 +82,10 @@ $(document).ready(function () {
             }        
         }
     });
-    // cuentas por pagar
+/*=====================
+     cuentas por pagar
+========================*/
+
     const accountsPayable = $('#record-for-pay');
     let pageAccountPayable = 0;
     let totalAccountsPayable = 0;
@@ -131,12 +134,7 @@ $(document).ready(function () {
             `)
         }
     })
-    // let monthClick=0
-    // monthCheckBox.click(function(event){
-    //     monthClick= monthClick+1
-   
-    
-    // })
+    // funcionalidades del filtro
     let monthChange=0
     let filterQuery ={}
     filterItem.on('change',function(event){
@@ -236,5 +234,24 @@ $(document).ready(function () {
             console.log('cargar elemento');
         }
     });
+
+
+    $('#table-accounts-payables tbody').on('change','input[type="checkbox"]',async function(evet){
+        try {
+            let newPaidStatusValue=0
+            const account_id = $(this).closest('.table-row').attr('id')
+        
+            event.target.checked? newPaidStatusValue=1 : newPaidStatusValue=2
+            
+            const changePaidStatus = await makeRequest(`${BASE_URL}/change/account/paid/status/`, 'POST', {
+                paid:newPaidStatusValue,
+                account_id:account_id
+            },{});
+            console.log(changeAccountPaidStatus);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    })
 });
 

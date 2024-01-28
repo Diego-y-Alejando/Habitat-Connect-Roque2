@@ -5,7 +5,7 @@ import{
 } from './helpers.js'
 $(document).ready(function() {
 
-    $('#table-suppliers tbody').on('click','.provider_name',function(evet){
+    $('#table-suppliers tbody').on('click','.provider_name',async function(evet){
         console.log('clik');
         $("#edit-supplier").removeClass("hide");
         $("#edit-supplier").animate({
