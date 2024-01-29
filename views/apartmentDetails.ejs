@@ -56,16 +56,30 @@
             </nav>
 
         </section>
-
+        <%=allApartamentData.apartament_id%>
+        <% function obtenerNombreNivel(numero) {
+            switch (numero) {
+              case 1:
+                return 'Primer Nivel';
+              case 2:
+                return 'Segundo Nivel';
+              // Agrega más casos según sea necesario
+              default:
+                return 'Nivel Desconocido';
+            }
+          } %>
+            <% const nivelApartamento = 1; %>
+            <% const nombreNivel = obtenerNombreNivel(allApartamentData.apartament_level); %>
+           
         <section class="container-datos">
             <ul class="container-list">
 
                 <li class="container-item" id="apartment-data">
 
                     <section class="apt-details">
-                        <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
+                        <p class="montserrat-light center bold">Apto <span class="gray">#<%=allApartamentData.apartament_number%></span></p>
                         <p class="level montserrat-light gray">
-                            Primer nivel
+                            <%=nombreNivel %>
                             <label for="occupy" class="montserrat-light gray label-center">
                                 Habitado    
                                 <input type="checkbox" name="occupy" id="ocupay-checkbox">
@@ -74,7 +88,7 @@
                         <label for="family" class="label-input">
                             <img src="/public/icons/tower.png" alt="Apartamento" id="apartment-icon">
                             <div class="label-error">
-                                <input type="text" name="family" placeholder="Familia no registrada" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                                <input type="text" name="family" placeholder="Nombre del apto" value="<%=allApartamentData.apartament_name  %>" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
                                 <p id="error-input-family-name" class="input-error hide"></p>
                             </div>
                             <a href="" id="btn-family-edit">
@@ -86,10 +100,10 @@
 
                     <section class="apt-info montserrat-light">
                         <p class="center bold black">Caracteristicas</p>
-                        <p class="infor-row gray ">Area <span><%=apartamentData.area%> mts²</span></p>
+                        <p class="infor-row gray ">Area <span><%=allApartamentData.features_apartament.area%> mts²</span></p>
                         <p class="infor-row gray ">Cuota extraordinaria <span>Q150.00</span></p>
-                        <p class="infor-row gray ">Mantenimiento <span>Q<%=apartamentData.maintenance_fee%>.00</span></p>
-                        <p class="infor-row gray ">Mora <span>Q<%=apartamentData.late_fee%>.00</span></p>
+                        <p class="infor-row gray ">Mantenimiento <span>Q<%=allApartamentData.features_apartament.maintenance_fee%>.00</span></p>
+                        <p class="infor-row gray ">Mora <span>Q<%=allApartamentData.features_apartament.late_fee%>.00</span></p>
                     </section>
                 </li>
 
@@ -101,7 +115,7 @@
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
                             <div class="label-error">
-                                <input type="text" name="owner-name" placeholder="Nombre no registrado" class="input-form" id="input-owner-name" disabled autocomplete="off">
+                                <input type="text" name="owner-name" placeholder="Nombre del propietario" value="<%=allApartamentData.landlord_name%>" class="input-form" id="input-owner-name" disabled autocomplete="off">
                                 <p id="error-input-owner-name" class="input-error hide"></p>
                             </div>
                     
@@ -110,12 +124,12 @@
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
                             <div class="label-error">
-                                <input type="text" name="owner-phone" placeholder="Numero no registrado" class="input-form" id="input-owner-phone" disabled autocomplete="off">
+                                <input type="text" name="owner-phone" placeholder="Telefono de propietario" value="<%=allApartamentData.phone_number_landlord%>" class="input-form" id="input-owner-phone" disabled autocomplete="off">
                                 <p id="error-input-owner-phone" class="input-error hide"></p>
                             </div>
                         </label>
                         <div class="edit">
-                            <a href="" id="btn-owner-edit">
+                            <a disabled href="" id="btn-owner-edit">
                                 <img src="/public/icons/editar-texto.png" alt="Icon-Edit" id="img-edit-owner">
                                 <img src="/public/icons/save_icon.png" alt="edit" id="img-save-owner" class="hide">
                             </a>
@@ -129,19 +143,19 @@
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
                             <div class="label-error">
-                                <input type="text" name="" placeholder="Inquilino no registrado" class="input-form" id="input-tenant-name" disabled autocomplete="off">
+                                <input type="text" name="" placeholder="Nombre del inquilino " value="<%=allApartamentData.tenant_name%>"class="input-form" id="input-tenant-name" disabled autocomplete="off">
                                 <p id="error-input-tenant-name" class="input-error hide"></p>
                             </div>
                         </label>
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Teléfono</p>
                             <div class="label-error">
-                                <input type="text" name="" placeholder="Numero no registrado" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
+                                <input type="text" name="" placeholder="Numero no registrado"value="<%=allApartamentData.phone_number_tenant%>" class="input-form" id="input-tenant-phone" disabled autocomplete="off">
                                 <p id="error-input-tenant-phone" class="input-error hide"></p>
                             </div>
                         </label>
                         <div class="edit" >
-                            <a href="" id="btn-tenant-edit">
+                            <a disabled href="" id="btn-tenant-edit">
                                 <img src="/public/icons/editar-texto.png" alt="Icon-Edit" id="img-edit-tenant">
                                 <img src="/public/icons/save_icon.png" alt="edit" id="img-save-tenant" class="hide">
                             </a>
@@ -156,35 +170,41 @@
                         
                         <div class="info-details montserrat-light" id="parking-stikers-container">
                             <p class="bold black">Stickers de parqueo</p>
+                            <% const parking_cards= allApartamentData.parking_data.parking_cards %>
+                            <% Object.entries(parking_cards).forEach(function([clave, valor]) { %>
+                                <p class="info-row gray"><%=clave%><span><%= valor?valor:'vacío' %></span>
+                            <% }); %>
                         </div>
                         <form>
                             <label for="" class="label-input">
                                 <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
                                 <div class="edit">
-                                    <a href="" id="btn-add-parking-stikers" class="enabled">
+                                    <a disabled href="" id="btn-add-parking-stikers" class="enabled">
                                         <img src="/public/icons/mas.png" alt="Icon-Editt" id="img-add-parking-stickers" >
                                     </a>
                                 </div>
                             </label>
                         </form>
-                        
                         <div class="info-details montserrat-light">
                             <p class="bold black">Parqueos asignados</p>
-                            <p class="info-row gray">13<span>primer nivel</span></p>
-                            <p class="info-row gray">12<span>primer nivel</span></p>
+                            <%const parkingSpacesArr= allApartamentData.parking_data.parking_spaces%>
+                            <% for (let i = 0; i < parkingSpacesArr.length; i += 2) { %>
+                                <p class="info-row gray"><%= parkingSpacesArr[i] %> <span><%= parkingSpacesArr[i + 1] %></span></p>
+                              <% } %>
+                          
                         </div>
 
                         <label for="" class="label-input">
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-slot" disabled autocomplete="off">
                             <div class="edit">
-                                <a href="" id="btn-add-parking-slot" class="enabled">
+                                <a disabled href="" id="btn-add-parking-slot" class="enabled">
                                     <img src="/public/icons/mas.png" alt="Icon-Edit" id="img-add-parking-slot" >
                                 </a>
                             </div>
                         </label>
 
                         <div class="edit" >
-                            <a href="" id="btn-edit-parking-info">
+                            <a disabled href="" id="btn-edit-parking-info">
                                 <img src="/public/icons/editar-texto.png" alt="edit" id="img-edit-parking-info">
                                 <img src="/public/icons/save_icon.png" alt="edit" id="img-save-parking-info" class="hide">
                             </a>
@@ -202,13 +222,13 @@
                         <label for="" class="label-input">
                             <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-walking-info" disabled autocomplete="off">
                             <div class="edit">
-                                <a href="" class="enabled" id="btn-add-walking-info">
+                                <a disabled href="" class="enabled" id="btn-add-walking-info">
                                 <img src="/public/icons/mas.png" alt="Icon-Edit">
                             </a>
                             </div>
                         </label>
                         <div class="edit" >
-                            <a href="" id="btn-edit-walking-info">
+                            <a disabled href="" id="btn-edit-walking-info">
                                 <img src="/public/icons/editar-texto.png" alt="edit" id="img-edit-walking-info">
                                 <img src="/public/icons/save_icon.png" alt="edit" id="img-save-walking-info" class="hide">
                             </a>

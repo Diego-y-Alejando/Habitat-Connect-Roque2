@@ -2,11 +2,6 @@ import{validateName, validatePersonalPhone} from './validators.js'
 
 $(document).ready(function() {
 
-    let ownerName = "Propietario";
-    let ownerPhone = "0000000000";
-
-    $("#input-owner-name").val(ownerName);
-    $("#input-owner-phone").val(ownerPhone);
 
     $("#btn-owner-edit").click(function(event) {    
         event.preventDefault();

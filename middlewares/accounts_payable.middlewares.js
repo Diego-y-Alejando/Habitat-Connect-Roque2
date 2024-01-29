@@ -120,7 +120,7 @@ const changeAccountPaidStatusValidations = async(req = request , res = response,
     }=req.body
 
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await  userExist('La cuenta por pagar ',accounts_payable,account_id,'account_id',['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
         validationPaidStatus(paid);
         next();

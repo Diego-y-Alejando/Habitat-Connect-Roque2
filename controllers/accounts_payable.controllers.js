@@ -166,7 +166,9 @@ const changeAccountPaidStatus = async(req = request , res = response)=>{
     try {
         const updatedAccount = await updateData(accounts_payable,req.body,account_id,'account_id');
         return res.status(200).json({
-            msg:'Has marcado como pagada la cuenta ',
+            msg:paid==1? 'Has marcado como pagada la cuenta':'Has maracado como NO pagada la cuenta',
+            account_id:account_id,
+            paid,
             ok:true
         });
     } catch (error) {

@@ -31,11 +31,11 @@ $(document).ready(function () {
             providers.providers.rows.forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                 table.append(`
                     <tr class='table-row provider' id=${provider_id}>
-                        <td class='supplier-name record-supplier-name'>${provider_name}</td>
-                        <td>${phone_number}</td>
-                        <td>${bank_account}</td>
-                        <td>${bank_name}</td>
-                        <td>${type_account}</td>
+                        <td class='provider_name'>${provider_name}</td>
+                        <td class='phone_number'>${phone_number}</td>
+                        <td class='bank_account'>${bank_account}</td>
+                        <td class='bank_name'>${bank_name}</td>
+                        <td class='type_account'>${type_account}</td>
                     </tr>
                 `);
             });
@@ -239,15 +239,23 @@ $(document).ready(function () {
     $('#table-accounts-payables tbody').on('change','input[type="checkbox"]',async function(evet){
         try {
             let newPaidStatusValue=0
-            const account_id = $(this).closest('.table-row').attr('id')
+            const fatherRow = $(this).closest('.table-row')
+            const account_id = fatherRow.attr('id')
         
             event.target.checked? newPaidStatusValue=1 : newPaidStatusValue=2
             
-            const changePaidStatus = await makeRequest(`${BASE_URL}/change/account/paid/status/`, 'POST', {
+            const changePaidStatus = await makeRequest(`${BASE_URL}admin/change/account/paid/status/`, 'POST', {
                 paid:newPaidStatusValue,
                 account_id:account_id
             },{});
-            console.log(changeAccountPaidStatus);
+            if(!changePaidStatus.ok){
+                throw new Error(changePaidStatus.error)
+            }
+            $('#modal-result').text(changePaidStatus.msg).addClass('modal-result').fadeIn(2000).delay(2000).fadeOut(2000).promise().done(function() {
+                $('#modal-result').text('')
+                // Puedes agregar más acciones después de que la animación haya terminado
+              });
+            
             
         } catch (error) {
             console.log(error);

@@ -5,9 +5,6 @@ $(document).ready(function() {
     $(".container-item").hide();
     $("#apartment-data").show();
 
-    let familyName = "Familia";
-
-    $("#input-family").val(familyName);
 
 
     $('#btn-family-edit').click(function(event) {  

@@ -12,7 +12,7 @@ const getMaintenanceApartament =async(req = request, res = response)=>{
                 id_apartament_maintenance:apartament_id,
                 current_year:current_year
             },
-            attributes:['january','february','march','april','june','juli','august','september','october','november','december']
+            attributes:['year','january','february','march','april','june','juli','august','september','october','november','december']
         }); 
         return res.status(200).json({
             maintenanceData,

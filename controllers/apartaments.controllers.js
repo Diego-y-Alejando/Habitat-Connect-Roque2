@@ -44,25 +44,17 @@ const getApartaments= async(req= request , res = response)=>{
 const getApartament = async(req = request , res = response)=>{
 
     try {
-
         // aplicar la carga diferida separando los datos devueltos 
         const features_apartament = await findData(features_apartaments,req.apartament.id_features_apartament,'feature_id',['feature_id']);
-        
-        console.log(features_apartament);
+        const allApartamentData={
+            ...req.apartament,
+            features_apartament
+        }
+        console.log(allApartamentData);
         return res.render(apartmentDetailHTML,{
             BASE_URL:process.env.BASE_URL,
-            apartamentData:{
-                ...req.apartament,
-                features_apartament
-            },
+            allApartamentData
         })
-
-        // return res.json({
-        //     apartamentData:req.apartament,
-        //     features_apartament,
-        //     ok:true
-        // })
-
         
     } catch (error) {
         return res.status(400).json({

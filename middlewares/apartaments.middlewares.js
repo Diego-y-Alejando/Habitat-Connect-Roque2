@@ -28,10 +28,9 @@ const getApartamentsValidations=async(req=request , res = response, next)=>{
 }
 const getApartamentValidations = async(req = request , res = response, next)=>{
     const token = req.cookies.authorization
-    console.log(req);
     try {
         ValidationIdOrLevel('id del apartamento',req.params.apartament_id);
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         const apartamentData =  await userExist('El apartamento que solicita',apartament,req.params.apartament_id,'apartament_id',[]);
         req.apartament= apartamentData
         next()

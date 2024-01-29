@@ -2,7 +2,25 @@
 @import url('./text.css');
 @import url('./controlPanel.css');
 @import url('./apartmentDetails.css');
-
+.modal-result {
+    background-color:  var(--Azul-claro);
+    width:300px ;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--white);
+    font-size: 1.2rem;
+    font-family: montserrat-semi-bold;
+    padding: 1%;
+    border: none;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
 .table{
     width: 100%;
     border-collapse: collapse;

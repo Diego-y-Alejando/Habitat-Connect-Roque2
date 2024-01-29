@@ -4,7 +4,8 @@
     btnDisplayModalWIndow.each(function() {
         $(this).on('click', function(event) {
           const containerBookingFormAndCalendar=$(this).parent().siblings('.modal-window').length > 0 ?
-          $(this).parent().siblings('.modal-window') :
+          $(this).parent().siblings('.modal-window') 
+          :
           $(this).parent().find('div#modal-window');
 
           containerBookingFormAndCalendar.css({
