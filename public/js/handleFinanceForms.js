@@ -74,7 +74,7 @@ createProviderForm.on('submit', async function(event){
             [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
                 tableSuppliersTbody.prepend(`
                     <tr class='table-row' id=${provider_id}>
-                        <td class='supplier-name record-supplier-name'>${provider_name}</td>
+                        <td class='provider_name record-supplier-name'>${provider_name}</td>
                         <td>${phone_number}</td>
                         <td>${bank_account}</td>
                         <td>${bank_name}</td>
@@ -110,7 +110,7 @@ iconSaveEditProvider.click(async function(event){
                 throw new Error(editProvider.error)
             }
             const rowEdit = tableSuppliers.find(`#${provider_id}`).find('td')
-            if($(this).find('span.result-request').length==0){
+            if($(this).find('span.result-request').length===0){
                 resultOfRequestElement.text(editProvider.msg);
                 resultOfRequestElement.addClass('succes-result');
                 $(this).parent().prepend(resultOfRequestElement);
@@ -125,12 +125,14 @@ iconSaveEditProvider.click(async function(event){
             })
         }
     } catch (error) {
-        if($(this).find('span.result-request').length==0){
+        console.log(resultOfRequestElement);
+        if($(this).find('span.result-request').length == 1){
+            console.log("UNO")
             resultOfRequestElement.text(error.message);
             resultOfRequestElement.addClass('error-input');
             $(this).parent().prepend(resultOfRequestElement);
         }else{
-            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message);
         }
     }
 })
