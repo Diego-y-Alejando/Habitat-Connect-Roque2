@@ -19,18 +19,7 @@
     font-family: montserrat-semi-bold;
     grid-column: span 2;
 }
-.close-window{
-    position: absolute;
-    width: 5%;
-    height: 5%;
-    text-align: center;
-    color: black;
-    font-size: 1.4rem;
-    top: 2%;
-    right:2%;
-    font-family: montserrat-semi-bold;
-    cursor: pointer;
-}
+
 .amenity-label{
     width: 75%;
     display: grid;

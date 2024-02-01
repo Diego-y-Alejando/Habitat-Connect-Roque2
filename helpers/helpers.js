@@ -141,6 +141,7 @@ const getDataValuesOnly= (array)=>{
     });
     return newArr
 }
+
 module.exports={
     jwtGenerate,
     hashingPassword,

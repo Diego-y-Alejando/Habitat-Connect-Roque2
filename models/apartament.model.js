@@ -96,7 +96,7 @@ const apartament = sequelizeObj.define(
             allowNull:false,
             validate:{
                 notEmpty:true,
-                is:/^[1-2]+$/
+                is:/^0|1/
             }
         }
     },

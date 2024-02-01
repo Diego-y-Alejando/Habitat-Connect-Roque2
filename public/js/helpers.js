@@ -74,10 +74,62 @@ const formatEventsArray =(eventsArr)=>{
     return newArr
     
 }
+
+const defaultMaintenanceMonth = `
+    <div class="calendar-month" id="maina">
+        ENE
+        <div class="circle circle-grey"></div>
+        </div>
+    <div class="calendar-month">
+        FEB
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        MAR
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        ABR
+        <div class="circle circle-grey"></div>
+    </div>
+        <div class="calendar-month">
+        MAY
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        JUN
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        JUL
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        AGO
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        SEP
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        OCT
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        NOV
+        <div class="circle circle-grey"></div>
+    </div>
+    <div class="calendar-month">
+        DEC
+        <div class="circle circle-grey"></div>
+    </div>
+`
 export{
     BASE_URL,
     headers,
     makeRequest,
     apartamentItemGenerator,
-    formatEventsArray
+    formatEventsArray,
+    defaultMaintenanceMonth
 }

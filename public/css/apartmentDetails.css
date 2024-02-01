@@ -20,7 +20,57 @@
 .grid-column-6{
     grid-column: span 6;
 }
-
+.modal-maintenance{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255, 0.5);
+    z-index: 2;
+    display: none;
+    opacity: 0;
+    align-items: center;
+    justify-content: center;
+}
+.container-modal{
+    position: relative;
+    width: 50%;
+    height: 50%;
+    background-color: var(--white);
+}
+.close-window{
+    position: absolute;
+    width: 5%;
+    height: 5%;
+    text-align: center;
+    color: black;
+    font-size: 1.4rem;
+    top: 2%;
+    right:2%;
+    font-family: montserrat-semi-bold;
+    cursor: pointer;
+}
+.form{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-self: center;
+    place-items: center; 
+    font-family: montserrat-regular;
+}  
+.input-label{
+    display: grid;
+    width: 25%;
+    font-size: 18px;
+    font-family: montserrat-regular;
+}
+.input-maintenance{
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid #cac7c7;
+    margin-top:4%;
+    font-family: montserrat-light;
+    font-size: 18px;
+}
 input[type="checkbox"] {
     width: 20px;
     height: 20px;
@@ -184,9 +234,10 @@ input[type="checkbox"]:hover {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: transparent;
 }
-
+.circle-grey{
+    background-color: grey;
+}
 .circle-red{
     background-color: red;
 }
@@ -201,7 +252,7 @@ input[type="checkbox"]:hover {
     width: 50%;
     height: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 100%;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -236,7 +287,15 @@ input[type="checkbox"]:hover {
 #calendar-go-back:hover, #calendar-go-next:hover{
     background-color: #1c2a69;
 }
-
+.container-months{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
 .calendar-month{
     box-sizing: content-box;
     width: 100%;
@@ -248,8 +307,14 @@ input[type="checkbox"]:hover {
     justify-content: space-around;
     align-items: center;
     border: 1px solid gray;
+    cursor: pointer;
 }
-
+.get-maintenance-result{
+    grid-column: span 6;
+    grid-row: span 2;
+    font-family: montserrat-regular;
+    font-size: 1.2rem;
+}
 .maintenance-info{
     width: 50%;
     height: 400px;

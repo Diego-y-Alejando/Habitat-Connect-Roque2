@@ -258,7 +258,10 @@ $(document).ready(function () {
             
             
         } catch (error) {
-            console.log(error);
+          $('#modal-result').text(error.message).addClass('modal-result').fadeIn(2000).delay(2000).fadeOut(2000).promise().done(function() {
+                $('#modal-result').text('')
+                // Puedes agregar más acciones después de que la animación haya terminado
+            });
         }
     })
 });

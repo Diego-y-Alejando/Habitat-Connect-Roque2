@@ -1,4 +1,4 @@
-import{validateName, validatePersonalPhone} from './validators.js'
+import{validateName, validatePhoneNumber} from './validators.js'
 
 $(document).ready(function() {
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
                 //Try para verificar que el telefono sea valido
                 try{
-                    validatePersonalPhone(newOwnerPhone, 55);
+                    validatePhoneNumber(newOwnerPhone, 55);
                     $("#input-owner-phone").removeClass("error");
                     $("#error-input-owner-name").addClass("hide");
                     $("#img-save-owner").addClass("hide");

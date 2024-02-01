@@ -192,11 +192,11 @@ const validationDates=(date,campo)=>{
   }
 }
 const validationOcupationState = (state) => {
-  const regexState = /^[0|1]+$/
+  const regexState = /^0|1/
 
   if (state === null || state === undefined) {
     throw new Error('El estado de ocupacion es obligatorio')
-  } else if (!regexState.test(state)) {
+  }if (!regexState.test(state)) {
     throw new Error('El estado  de ocupacion no es correcto')
   }
 }

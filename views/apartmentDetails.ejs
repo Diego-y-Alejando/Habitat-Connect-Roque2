@@ -8,6 +8,7 @@
     <title>Detalles Apartamento</title>
 </head>
 <body>
+    <span  id="modal-result"></span>
     <header>
         <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
     </header>
@@ -21,7 +22,21 @@
     <%- include('./components/menuComponent',{
         BASE_URL:BASE_URL
     }) %>
-
+    <section class="modal-maintenance">
+        <div class="container-modal">
+            <form class="form" id="update-maintenance-form">
+                <h2 class="title-form" id="month-maintenance">ENERO</h2>
+                <span class="close-window" id="close-window">X</span>
+                <label class="input-label">
+                    Fecha de pago
+                    <input type="date" name="date_paid" class="input-maintenance" value="" id="maintenance-date">
+                </label>
+                <label class="submit-label">
+                    <input type="submit" value="Guardar"  class="btn-submit">
+                </label>
+            </form>
+        </div>
+    </section>
 
     <main class="container-content">
         
@@ -56,7 +71,7 @@
             </nav>
 
         </section>
-        <%=allApartamentData.apartament_id%>
+
         <% function obtenerNombreNivel(numero) {
             switch (numero) {
               case 1:
@@ -81,14 +96,15 @@
                         <p class="level montserrat-light gray">
                             <%=nombreNivel %>
                             <label for="occupy" class="montserrat-light gray label-center">
-                                Habitado    
-                                <input type="checkbox" name="occupy" id="ocupay-checkbox">
+                                Habitado
+                                <% const checked = allApartamentData.ocupation_state ==1? 'checked' : ''%>    
+                                <input type="checkbox" name="inhabitated" id="ocupay-checkbox"  <%=checked%>>
                             </label>
                         </p>
                         <label for="family" class="label-input">
                             <img src="/public/icons/tower.png" alt="Apartamento" id="apartment-icon">
                             <div class="label-error">
-                                <input type="text" name="family" placeholder="Nombre del apto" value="<%=allApartamentData.apartament_name  %>" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
+                                <input type="text" name="apartament_name" placeholder="Nombre del apto" value="<%=allApartamentData.apartament_name%>" class="input-form bold montserrat-light" id="input-family" disabled autocomplete="off">
                                 <p id="error-input-family-name" class="input-error hide"></p>
                             </div>
                             <a href="" id="btn-family-edit">
@@ -191,7 +207,6 @@
                             <% for (let i = 0; i < parkingSpacesArr.length; i += 2) { %>
                                 <p class="info-row gray"><%= parkingSpacesArr[i] %> <span><%= parkingSpacesArr[i + 1] %></span></p>
                               <% } %>
-                          
                         </div>
 
                         <label for="" class="label-input">
@@ -212,11 +227,14 @@
                     </section>
 
                     <section class="apt-info">
-
                         <p class="montserrat-light center bold">Datos de entrada peatonal</p>
                         
                         <div class="info-details montserrat-light" id="walking-stickers-container">
                             <p class="bold black">Stickers de entrada</p>
+                            <%const pedestrianData= allApartamentData.pedestrian_cards%>
+                            <% Object.entries(pedestrianData).forEach(function([clave, valor]) { %>
+                                <p class="info-row gray"><%=clave%><span><%= valor?valor:'vacío' %></span>
+                            <% }); %>
                         </div>
 
                         <label for="" class="label-input">
@@ -256,54 +274,10 @@
                                 <p id="calendar-go-next">&gt</p>
                             </div>
                         </div>
-                        <div class="calendar-month" id="maina">
-                            ENE
-                            <div class="circle"></div>
+                        <div class="container-months">
+
                         </div>
-                        <div class="calendar-month">
-                            FEB
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            MAR
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            ABR
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            MAY
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            JUN
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            JUL
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            AGO
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            SEP
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            OCT
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            NOV
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            DEC
-                            <div class="circle"></div>
-                        </div>
+            
                     </section>
                 </li>
             </ul>
