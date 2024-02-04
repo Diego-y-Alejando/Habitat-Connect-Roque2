@@ -63,6 +63,7 @@
     font-size: 18px;
     font-family: montserrat-regular;
 }
+
 .input-maintenance{
     outline: none;
     border: none;
@@ -106,9 +107,27 @@ input[type="checkbox"]:hover {
 }
 .container-item{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
     padding: 20px;
+}
+.container-button-reservation{
+    width: 75%;
+    display: flex;
+}
+.input-booking-link{
+    width: 36%;
+}
+.btn-copy-link{
+    cursor: pointer;
+    color: var(--white);
+    font-family: montserrat-regular;
+    font-size: 1rem;
+    border: none;
+    padding: 0.5% 1% 0.5% 1%;
+    background-color: var(--Azul-oscuro);
+    
 }
 .apt-details{
     width: 30%;
@@ -121,7 +140,9 @@ input[type="checkbox"]:hover {
     border-radius: 25px;
     font-size: 18px;
 }
-
+.parking-details{
+    width: 40%;
+} 
 .level{
     display: flex;
     flex-direction: row;
@@ -134,6 +155,7 @@ input[type="checkbox"]:hover {
 }
 #btn-family-edit{
     width: 25px;
+    display: grid;
 }
 #btn-family-edit img{
     width: 25px;
@@ -155,8 +177,7 @@ input[type="checkbox"]:hover {
     color: red;
     font-family: montserrat-light;
     font-weight: 800;
-    font-size: 12px;
-    line-height: 10px;
+    font-size: 0.9rem;
 }
 
 .label-center{
@@ -174,6 +195,7 @@ input[type="checkbox"]:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap :10px;
     
 }
 
@@ -192,12 +214,13 @@ input[type="checkbox"]:hover {
 .info-row{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
 .edit{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -215,6 +238,7 @@ input[type="checkbox"]:hover {
     grid-template-columns: 1fr;
     justify-content: space-between;
 }
+
 
 .information-maintenance-status{
     width: 25%;
@@ -356,6 +380,10 @@ input[type="checkbox"]:hover {
 
 .maintenance-info .cancel-row a img{
     width: 35px;
+}
+.btn-add-item{
+    border: none;
+    background-color: transparent;
 }
 .enabled{
     opacity: 0.5;

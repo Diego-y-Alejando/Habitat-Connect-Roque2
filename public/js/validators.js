@@ -290,6 +290,20 @@ const validateBankName = (name ) => {
   }
   
 }
+
+const ValidationStickerValues=(stickerNumber)=>{
+  const regexStickerNumber = /^\d{3,15}$/
+  try {
+      if (!stickerNumber) {
+          throw new Error('El sticker viene vacio')
+      }else if(!regexStickerNumber.test(stickerNumber)){
+          throw new Error('El  sticker de parqueo contiene caracteres no válidos')
+
+      }
+  } catch (error) {
+      throw  new Error(error)
+  }
+}
 export {
     validateName,
     validateLastName,
@@ -319,6 +333,7 @@ export {
     validateBankAccount,
     validateTypeAccount,
     validatePaymentMethod,
-    validateBankName
+    validateBankName,
+    ValidationStickerValues
     
 }

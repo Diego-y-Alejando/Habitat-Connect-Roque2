@@ -51,30 +51,28 @@ $(document).ready(function() {
         }
         else{
 
-            const newFamilyName = $("#input-family").val()
-            if(newFamilyName){
-                try{
-                    $("#input-family").removeClass("error");
-                    $("#img-save-family").addClass("hide");
-                    $("#input-family").attr("disabled", "disabled");
-                    $("#img-edit-family").removeClass("hide");
-                    const updateApartamentName = await makeRequest(BASE_URL+'admin/update/apartament/name/'+id,'POST', newName,{})
-                   if (!updateApartamentName.ok) throw new Error(updateApartamentName.error)
-                   $("#error-input-family-name").removeClass("hide");
-                   $("#error-input-family-name").text(updateApartamentName.msg);
-                }catch(error){
-                    $("#input-family").addClass("error");
-                    $("#error-input-family-name").removeClass("hide");
-                    $("#error-input-family-name").text(error.message);
-                }
-            }else{
+            try{
+                $("#input-family").removeClass("error");
                 $("#img-save-family").addClass("hide");
                 $("#input-family").attr("disabled", "disabled");
                 $("#img-edit-family").removeClass("hide");
+                if (Object.keys(newName).length>0) {
+                    const updateApartamentName = await makeRequest(BASE_URL+'admin/update/apartament/name/'+id,'POST', newName,{})
+                    if (!updateApartamentName.ok) throw new Error(updateApartamentName.error)
+                    $("#error-input-family-name").removeClass("hide");
+                    $("#error-input-family-name").text(updateApartamentName.msg);
+                }
+          
+            }catch(error){
+                $("#input-family").addClass("error");
+                $("#error-input-family-name").removeClass("hide");
+                $("#error-input-family-name").text(error.message);
             }
-
-            
-
+        
+            $("#img-save-family").addClass("hide");
+            $("#input-family").attr("disabled", "disabled");
+            $("#img-edit-family").removeClass("hide");
+    
         }
     });
     // marcar como habitado o  no 
@@ -98,4 +96,18 @@ $(document).ready(function() {
               });
         }
     })
+
+    // OBTENER LINK DE RESERVA
+    $(".btn-copy-link").on("click",async function() {
+        const inputBookingLink = $(".input-booking-link");
+        try {
+            const link = await makeRequest(BASE_URL+'admin/get/link/for/booking/'+id,'GET',null,{})
+            if (!link.ok) throw new Error(link.error)
+            inputBookingLink.val(link.urlForBooking)
+        } catch (error) {
+            inputBookingLink.val(error.message)
+        }
+      });
+  
+    
 });

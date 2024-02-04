@@ -67,7 +67,8 @@ const updatePedestrianDataValidations = async(req= request , res = response , ne
         ValidationIdOrLevel('id del apartamento ',apartament_id);
         // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-        Object.entries(req.body).forEach(([sticker, stickerNumber ]) => {
+        console.log(req.body);
+        Object.entries(req.body).forEach(([sticker,stickerNumber]) => {
             ValidationStickerValues(stickerNumber)
         });
         next()
@@ -101,9 +102,7 @@ const updateLandlordOrTenantDataValidations = async(req= request , res = respons
     const apartament_id = req.params.apartament_id
     const {name, phone_number}= req.body
     try {
-        bodyVerification(req.body,['name','phone_number'])
-        validateName(name,60);
-        validatePhoneNumber(phone_number);
+        validationTenantOrLandlordData(req.body)
         // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next()
@@ -162,7 +161,7 @@ const updateParkingDataValidationsBody=(objectBody)=>{
     const validationsParkingData={
         'parking_cards':(value)=>{
             Object.entries(value).forEach(([sticker, stickerNumber ]) => {
-                ValidationStickerValues(stickerNumber)
+                ValidationStickerValues(stickerNumber);
             });
         },
         'parking_spaces':(value)=>{
@@ -186,7 +185,7 @@ const ValidationStickerValues=(stickerNumber)=>{
         if (!stickerNumber) {
             throw new Error('El sticker viene vacio')
         }else if(!regexStickerNumber.test(stickerNumber)){
-            throw new Error('El  sticker de parqueo contiene caracteres no válidos')
+            throw new Error('El  sticker de contiene caracteres no válidos')
 
         }
     } catch (error) {
@@ -205,4 +204,21 @@ const validationParkingSpacesValues=(parkinSpacesValues)=>{
     } catch (error) {
         throw  new Error(error)
     }
+}
+const validationTenantOrLandlordData =(body)=>{
+    const validationObject ={
+        'name':(value)=>{
+            validateName(value,55)
+        },
+        'phone_number':(value)=>{
+            validatePhoneNumber(value)
+        }
+    }
+    Object.keys(body).forEach(propertyName=>{
+        if (validationObject.hasOwnProperty(propertyName)) {
+            validationObject[propertyName](body[propertyName])
+        }else{
+            throw new Error('Se han enviado propiedades inválidas');
+        }
+    })
 }

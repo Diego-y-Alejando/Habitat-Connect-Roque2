@@ -15,7 +15,7 @@ const error404HTML = path.join(__dirname, '..','views','404.ejs');
 const getAmenitiesValidations = async(req = request , res = response , next)=>{
     const token = req.cookies.authorization
     try {
-        const {user_type }= await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // const {user_type }= await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         req.user_type='admin';
         next()
     } catch (error) {
@@ -32,7 +32,7 @@ const updateAmenityDataValidations = async(req = request , res = response , next
         if (Object.keys(req.body).length==0) {
             throw new Error('Debes enviar los datos para actualizar')
         }
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         const {start_time,end_time} = await userExist('El id de la amenidad que solicita',amenities,amenity_id,'amenity_id',[ 'amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         updateAmenityDataValidationsBody(req.body,start_time,end_time)
         next()
@@ -47,11 +47,10 @@ const getAmenitiesForBookingValidations = async (req = request , res = response 
     const {token,apartament_id} = req.query
 
     try {
-        const {user_type }=await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
+        // const {user_type }=await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
         await userExist('El número de apartamento que tiene el token',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         req.user_type='user';
         next();
-        req.user_type=user_type;
     } catch (error) {
         return res.render(error404HTML,{
             error:error.message,

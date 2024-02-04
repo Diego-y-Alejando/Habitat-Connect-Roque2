@@ -25,6 +25,7 @@ const hashingPassword = (password)=>{
 const updateData = async(model,objectToEdit,searchField, targetField)=>{
     
     try {
+
         const update = await model.update(objectToEdit,{
             where:{
                 [targetField]:searchField

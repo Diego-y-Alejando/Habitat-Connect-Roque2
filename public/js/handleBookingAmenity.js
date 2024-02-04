@@ -75,16 +75,13 @@ import{
                         throw new Error(bookingAmenity.error)
                    }else{
                         if($(this).find('span.result-request').length==0){
-                            resultOfRequestElement.text(bookingAmenity.msg);
+                            resultOfRequestElement.append(bookingAmenity.msg);
                             resultOfRequestElement.addClass('succes-result');
                             resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
-        
                         }else{
                             $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(bookingAmenity.msg)
                         }
-                   }
-                   
-                    
+                   }      
                 }
             } catch (error) {
                 
