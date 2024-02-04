@@ -90,6 +90,9 @@ td{
     color: var(--Azul-oscuro);
 }
 .a-return{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
     text-decoration: none;
     display: flex;
     justify-content: center;

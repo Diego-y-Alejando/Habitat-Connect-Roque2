@@ -6,13 +6,13 @@ import{
 
 $(document).ready(function() {
 
-    $('#table-suppliers tbody').on('click','.provider_name',async function(evet){
-        
+    $('#table-suppliers tbody').on('click','.provider_name',async function(event){
+        console.log('clik');
         $("#edit-supplier").removeClass("hide");
         $("#edit-supplier").animate({
             opacity:1
-        }),400;
-
+        },400);
+        console.log('animacion');
         // trae los datos 
         const selectedRow = $(this).parent();
         const id_row = selectedRow.attr('id');
@@ -42,7 +42,7 @@ $(document).ready(function() {
             $("#edit-supplier").addClass("hide");
             $("#edit-supplier").animate({
                 opacity:0
-            }),400;
+            },400);
         });
 
     })
