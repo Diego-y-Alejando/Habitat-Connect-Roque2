@@ -14,7 +14,7 @@ import  {
     validationHour,
     compareHours,
     validateName,
-    validatePersonalPhone,
+    validatePhoneNumber,
     validationDates,
     ValidationIdOrLevel
 } from '../public/js/validators.js'
@@ -131,11 +131,11 @@ import  {
                 id_apartament_reservations:apartament_id,   
             }
             const updatedBooking = await makeRequest(BASE_URL+'user/update/my/reservation/','POST', updateBookingData,{});
-            if (!updatedBooking.ok){
-                throw new Error(updatedBooking.error)
-            }else{
+            if (!updatedBooking.ok)throw new Error(updatedBooking.error)
+            if (updateBookingData.reserv_date || updateBookingData.start_reserv_time ||  updateBookingData.end_reserv_time ) {
                 const arrEvents =formatEventsArray([updatedBooking.newBooking])
                 calendar.updateEvent(arrEvents[0])
+            }
                 if($(this).find('span.result-request').length==0){
                     resultOfRequestElement.text(updatedBooking.msg);
                     resultOfRequestElement.addClass('succes-result');
@@ -143,8 +143,9 @@ import  {
                 }else{
                     $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(updatedBooking.msg)
                 }
-            }
+            
         } catch (error) {
+            console.log(error);
             if($(this).find('span.result-request').length==0){
                 resultOfRequestElement.text(error.message);
                 resultOfRequestElement.addClass('error-input');
@@ -155,14 +156,27 @@ import  {
         }
     })
 
-
+    const btnCancelBooking =$('#btn-cancel-booking')
+    btnCancelBooking.click(async function(event){
+        // const resultOfRequestElement = $('<span class="result-request "></span>');
+        try {
+            const url = new URL("http://localhost:8080/user/get/my/reservation/?reserv_id=37&apartament_id=2")
+            // Extraer el valor de reserv_id
+            const reservId = url.searchParams.get("reserv_id");
+            const cancelBooking = await makeRequest(BASE_URL+'user/cancel/my/reservation/'+reservId,'POST', {},{});
+            if(cancelBooking) throw new Error(cancelBooking.error)
+            $("#btn-sumit-updateData").attr('disabled',true)
+        } catch (error) {
+            console.log(error);
+        }
+    })
     const updateBookingDataValidations =(inputName,inputValue)=>{
         const updateValidationsObject ={
             'renter_name':(value)=>{
                 validateName(value,55)
             },
             'renter_phone':(value)=>{
-                validatePersonalPhone(value)
+                validatePhoneNumber(value)
             },
             'reservation_date':(value)=>{
                 validationDates(value,'fecha de reserva')

@@ -50,87 +50,90 @@ providersInput.on('change',function({currentTarget}){
         }   
     }
 })
-createProviderForm.on('submit', async function(event){
-    event.preventDefault()
-    const resultOfRequestElement = $('<span class="result-request "></span>');
+// createProviderForm.on('submit', async function(event){
+//     event.preventDefault()
+//     const resultOfRequestElement = $('<span class="result-request "></span>');
 
-    try {
-        if (Object.keys(dataProvider).length===0) {
-            throw new Error('No puedes enviar un proveedor vacío')
-        }
-        if (Object.keys(errorsProvider).length > 0) {
-            throw new Error('Corrige los errores del formulario')
-        }else{
-            const createProvider = await makeRequest(BASE_URL+'admin/create/provider/','POST', dataProvider,{})
-            if (!createProvider.ok)throw new Error(createProvider.error)
-            if($(this).find('span.result-request').length==0){
-                resultOfRequestElement.text(createProvider.msg);
-                resultOfRequestElement.addClass('succes-result');
-                resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+//     try {
+//         if (Object.keys(dataProvider).length===0) {
+//             throw new Error('No puedes enviar un proveedor vacío')
+//         }
+//         if (Object.keys(errorsProvider).length > 0) {
+//             throw new Error('Corrige los errores del formulario')
+//         }else{
+//             const createProvider = await makeRequest(BASE_URL+'admin/create/provider/','POST', dataProvider,{})
+//             if (!createProvider.ok)throw new Error(createProvider.error)
+//             if($(this).find('span.result-request').length==0){
+//                 resultOfRequestElement.text(createProvider.msg);
+//                 resultOfRequestElement.addClass('succes-result');
+//                 resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
 
-            }else{
-                $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
-            }
-            [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
-                tableSuppliersTbody.prepend(`
-                    <tr class='table-row' id=${provider_id}>
-                        <td class='supplier-name record-supplier-name'>${provider_name}</td>
-                        <td>${phone_number}</td>
-                        <td>${bank_account}</td>
-                        <td>${bank_name}</td>
-                        <td>${type_account}</td>
-                    </tr>
-                `);
-            });
-        }
-    } catch (error) {
-        if($(this).find('span.result-request').length==0){
-            resultOfRequestElement.text(error.message);
-            resultOfRequestElement.addClass('error-input');
-            resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
-        }else{
-            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
-        }    
-    }
-})
+//             }else{
+//                 $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
+//             }
+//             [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
+//                 tableSuppliersTbody.prepend(`
+//                     <tr class='table-row' id=${provider_id}>
+//                         <td class='provider_name record-supplier-name'>${provider_name}</td>
+//                         <td>${phone_number}</td>
+//                         <td>${bank_account}</td>
+//                         <td>${bank_name}</td>
+//                         <td>${type_account}</td>
+//                     </tr>
+//                 `);
+//             });
+//         }
+//     } catch (error) {
+//         if($(this).find('span.result-request').length==0){
+//             resultOfRequestElement.text(error.message);
+//             resultOfRequestElement.addClass('error-input');
+//             resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+//         }else{
+//             $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+//         }    
+//     }
+// })
 
 iconSaveEditProvider.click(async function(event){
-    const resultOfRequestElement = $('<span class="result-request "></span>');
+    
+    const resultOfRequestElement = $('<span class="result-request"></span>');
     try {
-        console.log('se envio');
-        if (Object.keys(dataProvider).length===0) {
-            throw new Error('No puedes enviar un proveedor vacío')
-        }
+        console.log('se envio',dataProvider);
         if (Object.keys(errorsProvider).length > 0) {
             throw new Error('Corrige los errores del formulario')
-        }else{
+        }
+        if(Object.keys(dataProvider).length==0) {
+            throw new Error('No has edidado al proveedor')
+        }
+        
             const provider_id =$('#supplier_id').val()
             const editProvider = await makeRequest(BASE_URL+'admin/update/provider/'+provider_id,'POST', dataProvider,{});
             if (!editProvider.ok) {
                 throw new Error(editProvider.error)
             }
             const rowEdit = tableSuppliers.find(`#${provider_id}`).find('td')
-            if($(this).find('span.result-request').length==0){
+            if($(this).parent().find('span.result-request').length==0){
                 resultOfRequestElement.text(editProvider.msg);
                 resultOfRequestElement.addClass('succes-result');
                 $(this).parent().prepend(resultOfRequestElement);
 
             }else{
-                $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(editProvider.msg)
+                $(this).parent().find('span.result-request').removeClass('error-input').addClass('succes-result').text(editProvider.msg)
             }
             rowEdit.each((index, field)=>{
                 if (editProvider.updatedData[field.classList[0]]) {
                     field.textContent=editProvider.updatedData[field.classList[0]]
                 }
             })
-        }
+        
     } catch (error) {
-        if($(this).find('span.result-request').length==0){
+      
+        if($(this).parent().find('span.result-request').length == 0){
             resultOfRequestElement.text(error.message);
             resultOfRequestElement.addClass('error-input');
             $(this).parent().prepend(resultOfRequestElement);
         }else{
-            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+            $(this).parent().find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message);
         }
     }
 })

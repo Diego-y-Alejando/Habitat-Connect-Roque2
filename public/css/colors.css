@@ -43,6 +43,11 @@
     place-content: center;
     height:50%;
 }
+.cancel-label{
+    display: grid;
+    width: 20%;
+
+}   
 .btn-submit{
     padding: 5px 10px 5px 10px;
     border: none;
@@ -54,4 +59,27 @@
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
     cursor: pointer;
+}
+.btn-cancel{
+    background-color: rgb(218, 92, 92);
+
+}
+.modal-result {
+    background-color:  var(--Azul-claro);
+    width:300px ;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--white);
+    font-size: 1.2rem;
+    font-family: montserrat-semi-bold;
+    padding: 1%;
+    border: none;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }

@@ -41,8 +41,11 @@
                     <h9 class="preposition-schedule">a</h9>
                     <input list="opciones" id="myInput" name="end_reserv_time"  class="input-schedule  update-booking-input" type="time" value="<%=reservationData.end_reserv_time%>" min="00:00" max="23:59">
                 </div>
-                <label class="amenity-label submit-label column-span-2">
-                    <input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios" id="-btn-submit-updateData">
+                <label class="amenity-label submit-label ">
+                    <input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios" id="btn-submit-updateData">
+                </label>
+                <label class="amenity-label cancel-label ">
+                    <input type="button" class="btn-submit  btn-cancel " value="Cancelar Reserva" id="btn-cancel-booking">
                 </label>
             </form>
         </div>

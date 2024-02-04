@@ -54,7 +54,7 @@ body{
     background-color: #eeeeee;
 }
 .ocupations_state_false{
-    background-color:;
+    background-color: none;
 }
 .column-1{
     grid-column: 1;
@@ -139,6 +139,7 @@ body{
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
+    margin-top: 15px;
 }
 .boton-editar img{
     width: 25px;

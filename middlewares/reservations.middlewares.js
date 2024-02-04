@@ -24,7 +24,7 @@ const getLinkForBookingValidations =async (req = request, res = response, next)=
     const token = req.cookies.authorization
     const apartament_id= req.params.apartament_id
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist(' El apartamento para el que solicitas el token',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
         next()
     } catch (error) {
@@ -55,7 +55,7 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
         validatePhoneNumber(renter_phone)
         ValidationIdOrLevel('id del apartamento que reserva',id_apartament_reservations)
         ValidationIdOrLevel('id de la amenidad',id_amenity_reserved);
-        await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
+        // await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
         const {start_time, end_time} =await userExist('La amenidad que intentas reservar',amenities,id_amenity_reserved,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         await verifyAviableTime(id_amenity_reserved,reservation_date,start_reserv_time,end_reserv_time)
         validationTime(start_time,start_reserv_time,true)
@@ -149,7 +149,7 @@ const getEventsOfAmenityValidationsAdmin =  async (req = request , res = respons
     try {
         validationDates(date,'fecha del calendario')
         ValidationIdOrLevel('id de la amenidad',amenity_id);
-        await tokenValidation(token,user,'user_id',['user_type', 'name', 'lastname', 'email', 'phone_number', 'dpi', 'password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['user_type', 'name', 'lastname', 'email', 'phone_number', 'dpi', 'password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist('La amenidad del que intentas recuperar los eventos',amenities,amenity_id,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
         next()
     } catch (error) {

@@ -10,27 +10,28 @@ import {
     formatEventsArray
 } from '../public/js/helpers.js';
 (function($, window, document) {
-    
-    // Configura tus opciones de calendario aquí
-   const bookingBtns= $('.booking-btn');
+    const bookingBtns = $('.booking-btn');
+    let countClicks = 0;
+    const calendarsCreated = new Set(); // Utilizamos un Set para registrar IDs de calendario creados
 
-   bookingBtns.each((index,bookingBtn)=> {
-
-    $(bookingBtn).on('click',async function({currentTarget}){
-            const parentAmenityContent =$(currentTarget).parents('.amenity')
-            const calendarID=parentAmenityContent.find('.calendar').attr('id')
-            const amenity_id=parentAmenityContent.find('.amenity-form input[name="amenity_id"]').val()
-            // const menityEvents =await makeRequest(BASE_URL+'user/events/?'+`amenity_id=${amenity_id}&date=${date}`,'GET', null,{});
-           try{
-            createCalendarObjectAndInsertEventsForCalendar(calendarID,amenity_id)
-           }catch (error) {
-            // mostrar el error del calendario
+    bookingBtns.each((index, bookingBtn) => {
+        $(bookingBtn).on('click', async function ({ currentTarget }) {
+            countClicks = countClicks + 1;
+            const parentAmenityContent = $(currentTarget).parents('.amenity');
+            const calendarID = parentAmenityContent.find('.calendar').attr('id');
+            const amenity_id = parentAmenityContent.find('.amenity-form input[name="amenity_id"]').val();
+            
+            try {
+                // Verificar si el calendario ya fue creado para este ID
+                if (!calendarsCreated.has(calendarID)) {
+                    await createCalendarObjectAndInsertEventsForCalendar(calendarID, amenity_id);
+                    calendarsCreated.add(calendarID); // Agregar el ID al Set
+                }
+            } catch (error) {
                 console.log(error.message);
-           } 
-        })
-    })
-
-   
+            }
+        });
+    });
 
 
 const createCalendarObjectAndInsertEventsForCalendar =async(idToAttachCalendar,amenity_id)=>{

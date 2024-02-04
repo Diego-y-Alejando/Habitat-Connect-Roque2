@@ -7,7 +7,8 @@ const {request, response }= require('express');
 const {sequelizeObj}= require('../database/config');
 const {
     findData,
-    updateData
+    updateData,
+    changeObjectNames
 }= require('../helpers/helpers')
 const features_apartaments = require('../models/features_apartament.model')
 const getApartaments= async(req= request , res = response)=>{
@@ -44,25 +45,16 @@ const getApartaments= async(req= request , res = response)=>{
 const getApartament = async(req = request , res = response)=>{
 
     try {
-
         // aplicar la carga diferida separando los datos devueltos 
         const features_apartament = await findData(features_apartaments,req.apartament.id_features_apartament,'feature_id',['feature_id']);
-        
-        console.log(features_apartament);
+        const allApartamentData={
+            ...req.apartament,
+            features_apartament
+        }
         return res.render(apartmentDetailHTML,{
             BASE_URL:process.env.BASE_URL,
-            apartamentData:{
-                ...req.apartament,
-                features_apartament
-            },
+            allApartamentData
         })
-
-        // return res.json({
-        //     apartamentData:req.apartament,
-        //     features_apartament,
-        //     ok:true
-        // })
-
         
     } catch (error) {
         return res.status(400).json({
@@ -82,7 +74,7 @@ const updateParkingData = async(req=request , res = response, next)=>{
         }); 
         if (update>0) {
             return res.status(200).json({
-                msg:'Se ha actualizado el registro',
+                msg:'Se han actualizado los datos  de parqueo',
                 ok:true
             });
         }  
@@ -108,7 +100,7 @@ const updatePedestrianData = async(req=request , res = response, next)=>{
         }); 
         if (update>0) {
             return res.status(200).json({
-                msg:'Se ha actualizado el registro',
+                msg:'Se ha actualizado los stickers peatonales',
                 ok:true
             });
         }  
@@ -125,6 +117,7 @@ const updatePedestrianData = async(req=request , res = response, next)=>{
 const changeOcupationState= async(req = request , res = response , next)=>{
     const apartament_id = req.params.apartament_id
     try {
+      
         const updatedData = await updateData(apartament,req.body,apartament_id,'apartament_id')
         return res.status(200).json({
             msg:updatedData,
@@ -142,10 +135,12 @@ const  updateLanlordData= async(req = request , res = response)=>{
     const apartament_id = req.params.apartament_id
     const {name,phone_number}= req.body
     try {
-        const updatedLandlordData = await updateData(apartament,{
-            landlord_name:name,
-            phone_number_landlord:phone_number
-        },apartament_id,'apartament_id')
+        const newDataLanlord = changeObjectNames(req.body,{
+            name: 'landlord_name',
+            phone_number: 'phone_number_landlord'
+        });
+        console.log(newDataLanlord);
+        const updatedLandlordData = await updateData(apartament,newDataLanlord,apartament_id,'apartament_id')
         return res.status(200).json({
             msg:updatedLandlordData,
             ok:true
@@ -161,12 +156,14 @@ const updateTenantData = async(req = request , res = response)=>{
     const apartament_id = req.params.apartament_id
     const {name,phone_number}= req.body
     try {
-        const updateTenantData = await updateData(apartament,{
-            tenant_name:name,
-            phone_number_tenant:phone_number
-        },apartament_id,'apartament_id')
+        const newDataTenant = changeObjectNames(req.body,{
+            name: 'tenant_name',
+            phone_number: 'phone_number_tenant'
+        })
+        const updateTenantData = await updateData(apartament,newDataTenant,apartament_id,'apartament_id')
         return res.status(200).json({
             msg:updateTenantData,
+            dataUpdated:req.body,
             ok:true
         })
     } catch (error) {

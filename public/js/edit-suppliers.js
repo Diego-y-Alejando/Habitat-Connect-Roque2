@@ -3,22 +3,23 @@ import{
     headers,
     makeRequest
 } from './helpers.js'
+
 $(document).ready(function() {
 
     $('#table-suppliers tbody').on('click','.provider_name',async function(evet){
-        console.log('clik');
+        
         $("#edit-supplier").removeClass("hide");
         $("#edit-supplier").animate({
             opacity:1
         }),400;
-        
+
         // trae los datos 
-        const selectedRow = $(this).parent()
-        const id_row = selectedRow.attr('id')
+        const selectedRow = $(this).parent();
+        const id_row = selectedRow.attr('id');
         const editSupplierInputs = $('#edit-suplier-form').find('input.providers-input');
         try {
 
-            const remaingDataProvider =await makeRequest(`${BASE_URL}admin/data/provider/${id_row}`,'GET',null,{}) 
+            const remaingDataProvider = await makeRequest(`${BASE_URL}admin/data/provider/${id_row}`,'GET',null,{}) 
             if(!remaingDataProvider.ok){
                 throw new Error(remaingDataProvider.error)
             }
@@ -28,7 +29,7 @@ $(document).ready(function() {
                 const inputName = $(this).attr('name')
                 const fieldRow= selectedRow.find(`.${inputName}`);
                 if (fieldRow.length>0) {
-                        element.value=fieldRow.text()
+                    element.value=fieldRow.text();
                 }else{
                     element.value = remaingDataProvider.provider[inputName]
                 }
@@ -36,6 +37,14 @@ $(document).ready(function() {
         } catch (error) {
             console.log(error);
         }
+
+        $("#Return-suppliers").click(function(event) {
+            $("#edit-supplier").addClass("hide");
+            $("#edit-supplier").animate({
+                opacity:0
+            }),400;
+        });
+
     })
 
     $(".record-supplier-name").click(function(event) {  

@@ -1,21 +1,42 @@
 const {request , response}=require('express');
 const {
-    updateData
+    updateData,
+    changeObjectNames
 }= require('../helpers/helpers')
 const maintenance_record = require('../models/maintenance_record.model')
 const getMaintenanceApartament =async(req = request, res = response)=>{
     const apartament_id = req.query.apartament_id
     const current_year = req.query.current_year
+    let newData
     try {
+        console.log(current_year);
         const maintenanceData = await maintenance_record.findAll({
             where:{
                 id_apartament_maintenance:apartament_id,
                 current_year:current_year
             },
-            attributes:['january','february','march','april','june','juli','august','september','october','november','december']
+            attributes:['january','february','march','april','may','june','juli','august','september','october','november','december']
         }); 
+        if (maintenanceData.length>0) {
+            newData = changeObjectNames(maintenanceData[0].dataValues,{
+                january: 'ENE',
+                february: 'FEB',
+                may:'MAY',
+                march: 'MAR',
+                april: 'ABR',
+                june: 'JUN',
+                juli: 'JUL',
+                august: 'AGO',
+                september: 'SEP',
+                october: 'OCT',
+                november: 'NOV',
+                december: 'DIC',
+            })
+        }else{
+            newData=[];
+        }
         return res.status(200).json({
-            maintenanceData,
+            maintenanceData:newData,
             ok:true
         })
     }catch (error) {
@@ -43,8 +64,8 @@ const updateMaintenance= async (req = request , res = response)=>{
         })
 
             return res.status(200).json({
-            msg:updateData,
-            maintenanceMsg:req.msgLateFee,
+            msg:req.msgLateFee,
+            paid_status:req.paid,
             ok:true
         })
     } catch (error) {
