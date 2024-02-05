@@ -79,7 +79,7 @@ import{
                             resultOfRequestElement.addClass('succes-result');
                             resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
                         }else{
-                            $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(bookingAmenity.msg)
+                            $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').append(bookingAmenity.msg)
                         }
                    }      
                 }

@@ -145,7 +145,6 @@ import  {
                 }
             
         } catch (error) {
-            console.log(error);
             if($(this).find('span.result-request').length==0){
                 resultOfRequestElement.text(error.message);
                 resultOfRequestElement.addClass('error-input');
@@ -155,19 +154,40 @@ import  {
             }
         }
     })
-
+    // cancelar reserva
     const btnCancelBooking =$('#btn-cancel-booking')
     btnCancelBooking.click(async function(event){
-        // const resultOfRequestElement = $('<span class="result-request "></span>');
+        const resultRequest = $('<span class="result-request"></span>');
         try {
-            const url = new URL("http://localhost:8080/user/get/my/reservation/?reserv_id=37&apartament_id=2")
+            const url = new URL(window.location.href)
             // Extraer el valor de reserv_id
             const reservId = url.searchParams.get("reserv_id");
             const cancelBooking = await makeRequest(BASE_URL+'user/cancel/my/reservation/'+reservId,'POST', {},{});
-            if(cancelBooking) throw new Error(cancelBooking.error)
-            $("#btn-sumit-updateData").attr('disabled',true)
+            if(!cancelBooking.ok) throw new Error(cancelBooking.error)
+            $('#btn-submit-updateData').attr('disabled',true).css({
+                backgroundColor:'#a3b8e1'
+           })
+           $(this).attr('disabled',true).css({
+                backgroundColor:'#a3b8e1'
+            })
+            if($(this).parent().find('span.result-request').length==0){
+                console.log('asdasd');
+                resultRequest.text(cancelBooking.msg);
+                resultRequest.addClass('succes-result');
+                resultRequest.insertBefore($(this).parent().find('#btn-cancel-booking'));
+            }else{
+                console.log('tiene span');
+                $(this).parent().find('span.result-request').removeClass('error-input').addClass('succes-result').text(cancelBooking.msg)
+            }
+         
         } catch (error) {
-            console.log(error);
+            if($(this).parent().find('span.result-request').length==0){
+                resultRequest.text(error.message);
+                resultRequest.addClass('error-input');
+                resultRequest.insertBefore($(this).find('#btn-cancel-booking'));
+            }else{
+                $(this).parent().find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+            }
         }
     })
     const updateBookingDataValidations =(inputName,inputValue)=>{

@@ -41,6 +41,7 @@ const bookingAmenity = async (req = request , res = response)=>{
             where:{
                 id_amenity_reserved:id_amenity_reserved,
                 reservation_date: reservation_date,
+                reserv_state:1,
                 start_reserv_time:{
                     [Op.lte]: end_reserv_time
                 },
@@ -198,6 +199,7 @@ const getEventsOfAmenity = async (req = request , res = response)=>{
         const events = await reservations.findAll({
             where:{
                 id_amenity_reserved:amenity_id,
+                reserv_state:1,
                 reservation_date:{
                     [Op.between]:[start_month,end_month]
                 }
