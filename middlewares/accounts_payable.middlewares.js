@@ -70,7 +70,7 @@ const getAccountPayableDataValidations = async(req = request , res = response, n
     const token = req.cookies.authorization
     const account_id = req.params.account_id
     try {
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         ValidationIdOrLevel('id de la cuenta por pagar',account_id);
         await  userExist('La cuenta por pagar ',accounts_payable,account_id,'account_id',['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
         next()
@@ -96,12 +96,13 @@ const updateAccountPayableValidations = async(req = request , res = response, ne
     }= req.body;
 
     try {
+        console.log( req.body);
         updatedAccountPayableValidations(req.body)
-        await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);;
+        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);;
         ValidationIdOrLevel('id de la cuenta por pagar',account_id);
-        await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_id',[ 'bank','account_number','type_account']);
+        // await  userExist('La cuenta de banco que solicita',bank_accounts,id_bank_account,'account_',[ 'bank','account_number','type_account']);
         // hacer un innerJoin entre estos dos modelos 
-        await  userExist('El provdeedor', providers,id_provider_account,'provider_id',[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description']);
+        // await  userExist('El provdeedor', providers,id_provider_account,'provider_id',[ 'provider_name', 'phone_number', 'bank_account', 'bank_name', 'type_account', 'payment_methods', 'service_description']);
         await  userExist('La cuenta por pagar ',accounts_payable,account_id,'account_id',['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
         next();
     }catch (error) {
@@ -118,7 +119,6 @@ const changeAccountPaidStatusValidations = async(req = request , res = response,
         paid,
         account_id
     }=req.body
-
     try {
         // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await  userExist('La cuenta por pagar ',accounts_payable,account_id,'account_id',['invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']);
@@ -138,6 +138,7 @@ const updatedAccountPayableValidations =(objectBody)=>{
             validationInvoiceId(value)
         },
         'invoice_date':(value)=>{
+            console.log(value);
             validationDates(value,'fecha de factura')
         },
         'concept':(value)=>{
@@ -153,15 +154,17 @@ const updatedAccountPayableValidations =(objectBody)=>{
             validationPaidStatus(value)
         },
         'id_bank_account':(value)=>{
+            console.log(value);
             ValidationIdOrLevel('id de la cuenta bancaria ',value)
         },
         'id_provider_account':(value)=>{
+            console.log(value);
             ValidationIdOrLevel('id del provedor ',value)
         }
     }
     Object.keys(objectBody).forEach(propertyName=>{
         if (accountPayableDataValidations.hasOwnProperty(propertyName)) {
-            accountPayableDataValidations[propertyName](accountPayableDataValidations[propertyName])
+            accountPayableDataValidations[propertyName](objectBody[propertyName])
         }else{
             throw new Error('Se han enviado propiedades inválidas');
         }

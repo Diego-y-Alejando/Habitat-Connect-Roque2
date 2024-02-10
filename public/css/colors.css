@@ -78,7 +78,7 @@
     background-color:  var(--Azul-claro);
     width:300px ;
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;

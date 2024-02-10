@@ -50,49 +50,49 @@ providersInput.on('change',function({currentTarget}){
         }   
     }
 })
-// createProviderForm.on('submit', async function(event){
-//     event.preventDefault()
-//     const resultOfRequestElement = $('<span class="result-request "></span>');
+createProviderForm.on('submit', async function(event){
+    event.preventDefault()
+    const resultOfRequestElement = $('<span class="result-request "></span>');
 
-//     try {
-//         if (Object.keys(dataProvider).length===0) {
-//             throw new Error('No puedes enviar un proveedor vacío')
-//         }
-//         if (Object.keys(errorsProvider).length > 0) {
-//             throw new Error('Corrige los errores del formulario')
-//         }else{
-//             const createProvider = await makeRequest(BASE_URL+'admin/create/provider/','POST', dataProvider,{})
-//             if (!createProvider.ok)throw new Error(createProvider.error)
-//             if($(this).find('span.result-request').length==0){
-//                 resultOfRequestElement.text(createProvider.msg);
-//                 resultOfRequestElement.addClass('succes-result');
-//                 resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+    try {
+        if (Object.keys(dataProvider).length===0) {
+            throw new Error('No puedes enviar un proveedor vacío')
+        }
+        if (Object.keys(errorsProvider).length > 0) {
+            throw new Error('Corrige los errores del formulario')
+        }else{
+            const createProvider = await makeRequest(BASE_URL+'admin/create/provider/','POST', dataProvider,{})
+            if (!createProvider.ok)throw new Error(createProvider.error)
+            if($(this).find('span.result-request').length==0){
+                resultOfRequestElement.text(createProvider.msg);
+                resultOfRequestElement.addClass('succes-result');
+                resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
 
-//             }else{
-//                 $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
-//             }
-//             [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
-//                 tableSuppliersTbody.prepend(`
-//                     <tr class='table-row' id=${provider_id}>
-//                         <td class='provider_name record-supplier-name'>${provider_name}</td>
-//                         <td>${phone_number}</td>
-//                         <td>${bank_account}</td>
-//                         <td>${bank_name}</td>
-//                         <td>${type_account}</td>
-//                     </tr>
-//                 `);
-//             });
-//         }
-//     } catch (error) {
-//         if($(this).find('span.result-request').length==0){
-//             resultOfRequestElement.text(error.message);
-//             resultOfRequestElement.addClass('error-input');
-//             resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
-//         }else{
-//             $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
-//         }    
-//     }
-// })
+            }else{
+                $(this).find('span.result-request').removeClass('error-input').addClass('succes-result').text(createProvider.msg)
+            }
+            [createProvider.data].forEach(({provider_id,provider_name , phone_number, bank_account ,bank_name, type_account}) => {
+                tableSuppliersTbody.prepend(`
+                    <tr class='table-row' id=${provider_id}>
+                        <td class='provider_name record-supplier-name'>${provider_name}</td>
+                        <td class="phone_number">${phone_number}</td>
+                        <td class="bank_account">${bank_account}</td>
+                        <td class="bank_name">${bank_name}</td>
+                        <td class="type_account">${type_account}</td>
+                    </tr>
+                `);
+            });
+        }
+    } catch (error) {
+        if($(this).find('span.result-request').length==0){
+            resultOfRequestElement.text(error.message);
+            resultOfRequestElement.addClass('error-input');
+            resultOfRequestElement.insertBefore($(this).find('.btn-submit'));
+        }else{
+            $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
+        }    
+    }
+})
 
 iconSaveEditProvider.click(async function(event){
     
@@ -108,10 +108,11 @@ iconSaveEditProvider.click(async function(event){
         
             const provider_id =$('#supplier_id').val()
             const editProvider = await makeRequest(BASE_URL+'admin/update/provider/'+provider_id,'POST', dataProvider,{});
+            console.log(editProvider);
             if (!editProvider.ok) {
                 throw new Error(editProvider.error)
             }
-            const rowEdit = tableSuppliers.find(`#${provider_id}`).find('td')
+            const rowEdit = tableSuppliersTbody.find(`#${provider_id}`).find('td')
             if($(this).parent().find('span.result-request').length==0){
                 resultOfRequestElement.text(editProvider.msg);
                 resultOfRequestElement.addClass('succes-result');
@@ -137,7 +138,16 @@ iconSaveEditProvider.click(async function(event){
         }
     }
 })
-
+// CERRAR LA VENTANA MODAL DE CREAR PROVEEDOR
+$("#Return-suppliers").click(function(event) {
+    $("#edit-supplier").addClass("hide");
+    $("#edit-supplier").animate({
+        opacity:0
+    },400);
+    dataProvider ={}
+    errorsProvider ={}
+    $('.result-request').text('')
+});
 /* =======================
     Crear CUENTA POR PAGAR
 ========================== */
@@ -146,10 +156,10 @@ let dataAccountPayable ={}
 let errorsAccountPyable ={}
 const createAccountPayableForm = $('#create-account-payable-form')
 const accountPayableInput = $('.account-payable-input');
-const tableAccountsPayableTbody = $('#table-accounts-payables')
+const tableAccountsPayableTbody = $('#table-accounts-payables tbody')
 accountPayableInput.on('change',function({currentTarget}){
     const siblingErrorSpan = $(currentTarget).siblings('span')
-
+   
     try {
         errorsAccountPyable[currentTarget.name]?delete errorsAccountPyable[currentTarget.name]:errorsAccountPyable={}
         if(siblingErrorSpan.length>0){
@@ -178,12 +188,9 @@ createAccountPayableForm.on('submit',async function(event){
     event.preventDefault()
     const resultOfRequestElement = $('<span class="result-request "></span>');
     try {
-        if (Object.keys(dataAccountPayable).length===0) {
-            throw new Error('No puedes enviar una cuenta por pagar  vacía')
-        }
-        if (Object.keys(errorsAccountPyable).length > 0) {
-            throw new Error('Corrige los errores del formulario')
-        }const createAccountPayable = await makeRequest(BASE_URL+'admin/create/account/payable','POST', dataAccountPayable,{})
+        if (Object.keys(dataAccountPayable).length===0) throw new Error('No puedes enviar una cuenta por pagar  vacía')
+        if (Object.keys(errorsAccountPyable).length > 0)throw new Error('Corrige los errores del formulario')
+        const createAccountPayable = await makeRequest(BASE_URL+'admin/create/account/payable','POST', dataAccountPayable,{})
         if (!createAccountPayable.ok)throw new Error(createAccountPayable.error)
         if($(this).find('span.result-request').length==0){
             resultOfRequestElement.text(createAccountPayable.msg);
@@ -195,7 +202,7 @@ createAccountPayableForm.on('submit',async function(event){
         [createAccountPayable.data].forEach(({account_id,invoice_date,amount ,paid, invoice_id ,provider_name, id_provider_account, provider_id}) => {
             tableAccountsPayableTbody.prepend(`
                 <tr class='table-row' id=${account_id}>
-                    <td class='' id='${provider_id}'>${provider_name}</td>
+                    <td class="account-payable-suplier-name">${provider_name}</td>
                     <td class="invoice_id">${invoice_id}</td>
                     <td class="invoice_date">${invoice_date}</td>
                     <td class="amount">${amount}</td>
@@ -213,6 +220,63 @@ createAccountPayableForm.on('submit',async function(event){
             $(this).find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message)
         }    
     }
+})
+$('#btn-edit-record').on('click', '.save-edit-account-payable', async function(event){
+    event.preventDefault();
+    const resultOfRequestElement = $('<span class="result-request"></span>');
+    try {
+        if (Object.keys(dataAccountPayable).length === 0) throw new Error('No has editado la cuenta');
+        if (Object.keys(errorsAccountPyable).length > 0) throw new Error('Corrige los errores del formulario');
+
+        const account_id = $('#account_payable_id').val();
+        const updateAccountPayable = await makeRequest(BASE_URL + 'admin/update/account/payable/' + account_id, 'POST', dataAccountPayable, {});
+        
+        if (!updateAccountPayable.ok) throw new Error(updateAccountPayable.error);
+
+        const rowEdit = tableAccountsPayableTbody.find(`#${account_id}`).find('td');
+        
+        if ($(this).parent().find('span.result-request').length == 0) {
+            resultOfRequestElement.text(updateAccountPayable.msg);
+            resultOfRequestElement.addClass('succes-result');
+            $(this).parent().prepend(resultOfRequestElement);
+        } else {
+            $(this).parent().find('span.result-request').removeClass('error-input').addClass('succes-result').text(updateAccountPayable.msg);
+        }
+        rowEdit.each((index, field)=>{
+            if (updateAccountPayable.updatedData[field.classList[0]]) {
+                field.textContent=updateAccountPayable.updatedData[field.classList[0]]
+            } 
+        })
+        if (updateAccountPayable.updatedData['id_provider_account']) {
+           rowEdit[0].textContent= $('#select-edit-provider_name option[value="' + updateAccountPayable.updatedData.id_provider_account + '"]').text();
+        }
+    } catch (error) {
+        if ($(this).parent().find('span.result-request').length == 0) {
+            resultOfRequestElement.text(error.message);
+            resultOfRequestElement.addClass('error-input');
+            $(this).parent().prepend(resultOfRequestElement);
+        } else {
+            $(this).parent().find('span.result-request').removeClass('succes-result').addClass('error-input').text(error.message);
+        }
+    }
+});
+
+
+$('.cerrar-ventana').on('click', function(event){
+    event.preventDefault()
+    dataAccountPayable ={}
+    errorsAccountPyable ={}
+    dataProvider ={}
+    errorsProvider ={}
+    const closeContainer =$(this).closest('.modal-window');
+    $('.input-finance-forms').val('')
+    $('.result-request').text('')
+    $(".select-finance-form").prop("selectedIndex", 0);
+    closeContainer.animate({
+        opacity:0
+    }, 400).css({
+        display: 'none',
+    });
 })
 
 const updatedAccountPayableValidations =(inputName,inputValue)=>{
@@ -240,7 +304,8 @@ const updatedAccountPayableValidations =(inputName,inputValue)=>{
         },
         'id_bank_account':(value)=>{
             ValidationIdOrLevel('id de la cuenta ',value)
-        }
+        },
+       
     }
     if (accountPayableDataValidations.hasOwnProperty(inputName)) {
         accountPayableDataValidations[inputName](inputValue)

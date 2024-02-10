@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/public/css/modalWindow.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        
+   
     </style>
     <title>Finanzas</title>
 </head>
@@ -63,16 +63,17 @@
                 Regresar
             </a>
             <form class="info-finance-card" id="edit-account-payable-form">
-                <h3 class="title-finance-form col-span-2">Editar Cuenta por pagar</h4>
+                <h3 class="title-finance-form col-span-2">Editar Cuenta por pagar</h3>
+                <input type="hidden" value="" id="account_payable_id">
                 <label for="" class="bold darkblue label-finance-form">Fecha de factura:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
+                    <input type="date"name="invoice_date"  class="gray input-finance-forms account-payable-input" placeholder="[Fecha de factura]" disabled autocomplete="off"></input>
                 </label>
                 <label for="" class="bold darkblue label-finance-form">No. de factura:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[No. de factura]" disabled autocomplete="off"></input>
+                    <input type="text"name="invoice_id"  class="gray input-finance-forms account-payable-input" placeholder="[No. de factura]" disabled autocomplete="off"></input>
                 </label>
                 <label class="bold dark-blue label-finance-form">
                     Proveedor de cuenta
-                    <select class=" account-payable-input select-finance-form" name="select-provider">
+                    <select class=" account-payable-input select-finance-form" name="id_provider_account" id="select-edit-provider_name">
                         <option value="0" selected disabled>Selecciona proveedor</option>
                         <% providers.forEach(function(provider) { %>
                             <option value="<%=provider.provider_id%>"><%= provider.provider_name%></option>
@@ -81,35 +82,27 @@
                 </label>
                 <label for="" class="bold darkblue label-finance-form">
                     Cuenta para pagar
-                    <select class="account-payable-input select-finance-form" name="select-bank-account">
-                        <option value="0"s selected disabled>Selecciona cuenta</option>
+                    <select class="account-payable-input select-finance-form" name="id_bank_account">
+                        <option value="0" selected disabled>Selecciona cuenta</option>
                         <% accounts.forEach(function(account) { %>
                             <option value="<%=account.account_id%>"><%= account.account_number%></option>
                           <% }); %>
                     </select>                                   
                 </label>
-
-                <label for="" class="bold darkblue label-finance-form">Monto:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Monto]" disabled autocomplete="off"></input>
+                <label for="" class="bold darkblue label-finance-form">Monto :
+                    <input type="text"name="amount"  class="gray input-finance-forms account-payable-input" placeholder="[Monto]" disabled autocomplete="off"></input>
                 </label>
-              
-                <label for="" class="bold darkblue label-suplier-form">Métodos de pago:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Metodo de pago]" disabled autocomplete="off"></input>   
-                </label>
-
                 <label for="" class="bold darkblue label-suplier-form">Numero de transaccion:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
+                    <input type="text" name="number_of_transaction" class="gray input-finance-forms account-payable-input" placeholder="[Numero de transaccion]" disabled autocomplete="off"></input>
                 </label>
 
                 <label for="" class="bold darkblue label-finance-form">Concepto:
-                    <input type="text" class="gray input-finance-forms account-payable-input" placeholder="[Concepto]" disabled autocomplete="off"></input>
+                    <input type="text"name="concept"  class="gray input-finance-forms account-payable-input" placeholder="[Concepto]" disabled autocomplete="off"></input>
                 </label>
-
             </form>
-            
             <a href="#" class="boton-editar" id="btn-edit-record">
-                <img src="/public/icons/editar-texto.png" alt="edit" id="btn-edit-record-img" class="">
-                <img src="/public/icons/save_icon.png" alt="edit" id="btn-save-record-img" id="save-edit-provider" class="hide">
+                <img src="/public/icons/editar-texto.png" alt="edit" id="btn-edit-record-img" >
+                <!-- <img src="/public/icons/save_icon.png" alt="edit" id="btn-save-record-img" id="save-edit-provider" class="hide"> -->
             </a>
         </div>
     </section>
@@ -132,10 +125,10 @@
     <main class="container-content">
         <section>
             <nav class="secondary-menu sub-menu" id="sub-menu">
-                <a class="item-menu profile-item" href="/public/controlPanel.html">
+                <!-- <a class="item-menu profile-item" href="/public/controlPanel.html">
                     <img alt="return-icon" src="/public/icons/backward_icon.png" class="return-icon">
                     Regresar
-                </a>
+                </a> -->
                 <a class="subitem-menu item-sub-menu" href="#" data-target="suppliers">
                     Proveedores
                     <span class="selected-item-line"></span>
@@ -144,10 +137,10 @@
                     Historial de cuentas por pagas
                     <span class="selected-item-line hide"></span>
                 </a>
-                <a class="subitem-menu item-sub-menu" href="#" data-target="activity-report">
+                <!-- <a class="subitem-menu item-sub-menu" href="#" data-target="activity-report">
                     Informe de actividades
                     <span class="selected-item-line hide"></span>
-                </a>
+                </a> -->
             </nav>
         </section>
 
@@ -160,7 +153,7 @@
                     <div class="modal-window" id="modal-window">
                         <div class="finance-card aling-self montserrat-light">
                             <div class="return">
-                                <a class="a-return" href="" id="Return-suppliers">
+                                <a class="a-return cerrar-ventana" href="" id="Return-suppliers">
                                     <img alt="return-icon" src="/public/icons/backward_icon.png" class="return-button">
                                     Regresar
                                 </a>
@@ -319,7 +312,7 @@
                         <button class=" display-modal-window title-create-element">Crear cuenta por pagar</button>
                         <div class="modal-window" id="modal-window">
                             <div class="finance-card aling-self montserrat-light">
-                                <a class="return" href="/public/controlPanel.html" id="Return-record">
+                                <a class="return cerrar-ventana"  id="Return-record">
                                     <img alt="return-icon" src="/public/icons/backward_icon.png" class="return-button">
                                     Regresar
                                 </a>
@@ -376,7 +369,7 @@
                                     <th>Proveedor</th>
                                     <th>No. factura</th>
                                     <th>Fecha</th>
-                                    <th>Monto</th>
+                                    <th>Monto en Q</th>
                                     <th>Pagado/no pagado</th>
                                 </tr>
                             </thead>
@@ -401,12 +394,12 @@
     <script type="module" src="/public/js/finance.js"></script>
     <script type="module" src="/public/js/menu.js"></script>
     <script type="module" src="/public/js/submenu.js"></script>
-    <script type="module" src="/public/js/edit-suppliers.js"></script>
     <script type="module" src="/public/js/edit-record.js"></script>
     <script type="module" src="/public/js/filter-record.js"></script>
     <script type="module" src="/public/js/handleScrollLoading.js"></script>
     <script type="module" src="/public/js/handleModalWindow.js"></script>
     <script type="module" src="/public/js/handleFinanceForms.js"></script>
+    <script type="module" src="/public/js/edit-suppliers.js"></script>
     
 </body>
 </html>
