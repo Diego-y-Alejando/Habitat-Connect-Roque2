@@ -11,47 +11,36 @@
 <body>
 
     <header>
-        <h1 class="newyork-font white center --> heading">Bienvenido</h1>
-        <h2 class="montserrat-light beige --> sub-heading">Vive, conéctate y prospera</h2>
+        <h1 class="heading">Bienvenido</h1>
+        <h2 class="sub-heading">Vive, conéctate y prospera</h2>
     </header>
     
     <main>
-        <form class="form montserrat-light --> login-form" id="login-form --> loginForm">
-            <h3 class="montserrat-light white center --> title-login-form">Inicia Sesión</h3>
-            <select id="accountType" class="input-credentials --> select-login-form" title = "Seleccione el tipo de cuenta">
-                <option value = 0 disabled selected>Tipo de cuenta</option>
+        <form class="login-form" id="login-form --> loginForm">
+            <h3 class="title-login-form">Inicia Sesión</h3>
+            <select id="accountType" class="select-login-form" title = "Seleccione el tipo de cuenta">
+                <option value = "0" disabled selected>Tipo de cuenta</option>
                 <option value = "admin">Administrador</option>
                 <option value = "security">Seguridad</option>
             </select>
             
-            <label for="inputEmail" class="label-credentials montserrat-light white --> label-login-form">Correo Electrónico</label>
-            <input id="inputEmail" name="email" type="email" placeholder="Correo Electrónico" class="input-credentials --> input-login-form" autocomplete="off">
+            <label for="inputEmail" class="label-login-form">Correo Electrónico</label>
+            <input id="inputEmail" name="email" type="email" placeholder="Correo Electrónico" class="input-login-form" autocomplete="off">
             
-            <label for="inputPassword" class="label-credentials montserrat-light white --> label-login-form" >Contraseña</label>
-            <input id="inputPassword" name="password" type="password" placeholder="Contraseña" class="input-credentials --> input-login-form" autocomplete="off">
+            <label for="inputPassword" class="label-login-form" >Contraseña</label>
+            <input id="inputPassword" name="password" type="password" placeholder="Contraseña" class="input-login-form" autocomplete="off">
             
             <fieldset class="container-remidme-session">
                 <label for="remindme-session-login-form">Recuérdame</label>
                 <input type="checkbox" name="recuerdarme" id="remindme-session-login-form">
             </fieldset>
             
-            <input type="submit" value="Ingresar" id="buttonon-login --> buttonLogin"> 
+            <input type="submit" value="Ingresar" id="buttonLogin"> 
         </form>
     </main>
 
     <footer>
         <div id="name" class="footer-colaborator-name">
-            <div class = "nameHabitad center">
-                <p class="newyork-font white">Habitat</p>
-                <p class="montserrat-light">Connect</p>
-            </div>
-            <div class ="nameClient montserrat-light white center">
-                <p>NOMBRE</p>
-                <p>EDIFICIO</p>
-            </div>
-            
-            
-            <!-- cambiar lo de arriba por lo de abajo -->
             <p class="app-name">
                 <span>
                     Habitad
@@ -60,7 +49,6 @@
                     Connect
                 </span>
             </p>
-
             <p class="colab-name">
                 <span>
                     NOMBRE
@@ -69,9 +57,7 @@
                     EDIFICIO
                 </span>
             </p>
-
         </div>
-
     </footer>
 
     <aside class="building-image"></aside>

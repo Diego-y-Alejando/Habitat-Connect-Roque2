@@ -6,7 +6,7 @@
     padding: 0;
 }
 body {
-    font-family: Arial, sans-serif;
+    font-family: montserrat-light;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -26,9 +26,7 @@ header{
     border-top-right-radius: 20px;
     border-color: var(--Azul-oscuro);
     background-color: var(--Azul-oscuro);
-    color: var(--Beige);
 }
-
 main{
     display: flex;
     flex-direction: column;
@@ -57,7 +55,7 @@ aside{
     right: 0;
     width: 52%;
     height: 100%; 
-    background-image: url('../icons/backgroundLogin.jpg');
+    background-image: url('../icons/backgroundLogin.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -65,208 +63,70 @@ aside{
 }
 
 
-h1 {
+
+
+.heading{
     font-size: 5rem;
     font-weight: 100;
+    color: var(--white);
+    font-family: newYork;
     margin: 0px;
     line-height: 4rem;
 }
-
-h2{
+.sub-heading{
     margin-top: 0px;
     font-size: 1.5rem;
     font-weight: 100;
     line-height: 2rem;
+    color: var(--Beige);
 }
-
-h3{
-    font-size: 1.3rem;
-    font-weight: 600;
-    font-family: montserrat-light;
-    margin: 17px 0px 8px 0px;
-}
-
-.form {
+.login-form{
     display: flex;
     flex-direction: column;
     width: 60%;
     border-radius: 20px;
     background-color: var(--Azul);
-    padding: 0px 40px;
+    padding: 0px 40px 30px;
     gap: 10px;
 }
-
-.input-credentials{
+.title-login-form{
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 17px 0px 8px 0px;
+    color: var(--white);
+    text-align: center;
+}
+.select-login-form{
+    border: none;
+    cursor: pointer;
+    padding: 7px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+}
+.select-login-form:hover{
+    opacity: 0.8;
+}
+.label-login-form{
+    font-size: 18px;
+    font-weight: 100;
+    color: var(--white);
+}
+.input-login-form{
     padding: 7px;
     font-size: 18px;
     border-radius: 5px;
     border: none;
     outline: none;
 }
-.label-credentials{
-    font-size: 18px;
-    font-weight: 100;
-}
-
-.link{
-    font-size: 15px;
-}
-#recuerdame{
-    font-size: 14px;
-}
-#password-details{
+.container-remidme-session{
     display: flex;
-    align-content: center;
-    justify-content: space-between;
+    flex-direction: row-reverse;
     align-items: center;
-    justify-items: stretch;
-    flex-direction: row;
-    font-size: 14px;
-    font-family: montserrat-light;
-    height: 20px;
-}
-#password-details label{
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-}
-
-#password-details a{
-    font-size: 14px;
-    font-family: montserrat-light;
-    text-align: end;
-}
-
-.link{
-    text-decoration: none;
-    color: var(--white);
-}
-.link:hover{
-    color: var(--Beige);
-}
-
-#buttonon-login{
-    padding: 10px 15px;
-    font-size: 15px;
-    background-color: var(--Beige);
-    border-radius: 5px;
-    color: #000000;
+    justify-content: start;
     border: none;
-    cursor: pointer;
 }
-
-#buttonon-login:hover {
-    background-color: var(--Cafe);
-    opacity: 0.9;
-    
-}
-
-.line-with-text {
-    display: flex;
-    align-items: center;
-    color: var(--white);
-}
-
-.line{
-    flex-grow: 1;
-    border: none;
-    height: 1px;
-    background-color: #ccc;
-    margin: 0 5px;
-}
-
-.text {
-    white-space: nowrap;
-    font-size: 0.7rem;
-    font-weight: 100;
-    font-family: montserrat-light;
-}
-
-#login-external{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
-}
-
-#login-external a:first-child img{
-    width: 40px;
-}
-
-#login-external a:last-child img{
-    width: 31px;
-    padding-left: 8px;
-    padding-top: 3px;
-}
-
-#login-external a img:hover{
-    opacity: 0.7;
-}
-
-#pRegister{
-    margin-top: 0px;
-    margin-bottom: 30px;
-    font-size: 0.7;
-    color: #ffffff;
-}
-
-#pRegister a:hover{
-    color: var(--Cafe);
-}
-
-#name{
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: 100;
-}
-
-.nameClient p{
-    font-weight: 100;
-}
-
-.nameHabitad,
-.nameClient{
-    flex: 1;
-}
-
-.nameHabitad p,
-.nameClient p{
-    margin: 0;
-    padding: 0 20px;
-    font-size: 25px;
-    line-height: 76%;
-}
-
-.nameClient{
-    content: "";
-    border-left: 1px solid #ffffff;
-    height: 100%;
-    margin: 0;    
-}
-
-.error {
-    border-color: rgb(255, 79, 79);
-}
-
-.input-error{
-    color: rgb(255, 79, 79);
-    font-size: 12px;
-    line-height: 4px;
-}
-
-
-
-.hidden{
-    display: none;
-}
-.hide{
-    display: none;
-}
-
-input[type="checkbox"] {
+#remindme-session-login-form {
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -280,13 +140,76 @@ input[type="checkbox"] {
     cursor: pointer; 
 }
 
-input[type="checkbox"]:checked {
+#remindme-session-login-form:checked {
     background-color: var(--Beige); 
 }
 
-input[type="checkbox"]:hover {
+#remindme-session-login-form {
     opacity: 0.7; 
 }
+.container-remidme-session label{
+    font-weight: 100;
+    color: var(--white);
+}
+
+
+#buttonLogin{
+    padding: 10px 15px;
+    font-size: 15px;
+    background-color: var(--Beige);
+    border-radius: 5px;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+}
+
+#buttonLogin:hover {
+    background-color: var(--Cafe);
+    opacity: 0.9;
+    
+}
+
+.footer-colaborator-name{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 100;
+}
+
+.app-name , .colab-name{
+    flex: 1;
+    text-align: center;
+    line-height: 20px;
+}
+
+.app-name span, .colab-name span{
+    margin: 0;
+    padding: 0 20px;
+    font-size: 25px;
+}
+
+.colab-name{
+    content: "";
+    border-left: 1px solid #ffffff;
+    height: 100%;
+    margin: 0;    
+    font-weight: 100;
+    color: var(--white);
+}
+.app-name{
+    width: 0px;
+}
+
+.app-name span:first-child{
+    color: var(--white);
+    font-family: newYork;
+}
+
+
+
+
+
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     body {
