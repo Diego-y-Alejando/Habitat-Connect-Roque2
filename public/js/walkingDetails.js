@@ -17,7 +17,6 @@ $(document).ready(function() {
 
     btnEditPedestrianData.on('click','#img-edit-walking-info',function(event) {
         event.preventDefault();
-      
         $(this).attr('src', '/public/icons/save_icon.png').addClass('save-pedestrian-data').removeAttr('id')
         btnDisabled.prop('disabled',false).removeClass('enabled')
         inputPedestrianSticker.removeAttr('disabled');
@@ -87,7 +86,7 @@ $(document).ready(function() {
     }
     $('#btn-edit-pedestrian-info').on('click','.save-pedestrian-data',async function(event){
         event.preventDefault()
-        console.log(event);
+        console.log('click en save');
         try {
             const currentUrl = window.location.href;
             const apartamentoIdMatch = currentUrl.match(/\/apartamento\/(\d+)/);
@@ -102,11 +101,11 @@ $(document).ready(function() {
                 if (!requestUpdateData.ok) throw new Error(requestUpdateData.error)
                 $('#modal-result').text(requestUpdateData.msg).addClass('modal-result').fadeIn(2000).delay(2000).fadeOut(2000).promise().done(function() {
                     $('#modal-result').text('');
+                    $(this).removeClass('save-pedestrian-data').attr('src','/public/icons/editar-texto.png').attr('id','img-edit-parking-info');
+
                 }); 
             }else{
-                console.log('no se disparo');
-                console.log($(this).removeClass());
-                $(this).removeClass('save-pedestrian-data').attr('src','/public/icons/editar-texto.png').attr('id','img-edit-pedestrian-info');
+                $(this).removeClass('save-pedestrian-data').attr('src','/public/icons/editar-texto.png').attr('id','img-edit-walking-info');
             }
                 btnDisabled.addClass('enabled')
                 btnDisabled.prop('disabled',true)

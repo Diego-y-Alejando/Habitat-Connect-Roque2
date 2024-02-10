@@ -105,9 +105,10 @@ const getAccountsPayable= async(req = request , res = response)=>{
                 where:{
                     provider_id:Sequelize.col('id_provider_account')
                 },
-                attributes:['provider_name']
+                attributes:['provider_name','provider_id']
             }]
         });
+
         const totalPages = Math.ceil(result.cout / 10);
         return res.status(200).json({
             accountsPayableList:result,
@@ -129,7 +130,7 @@ const getAccountPayable = async(req = request , res = response)=>{
             where:{
                 account_id:account_id
             },
-            attributes:['account_id', 'invoice_id', 'invoice_date', 'concept', 'amount', 'number_of_transaction', 'paid', 'id_bank_account', 'id_provider_account']
+            attributes:[ 'concept', 'number_of_transaction', 'id_bank_account', 'id_provider_account']
         });
         return res.status(200).json({
             account:account,

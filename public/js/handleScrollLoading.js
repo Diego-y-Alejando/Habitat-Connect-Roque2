@@ -204,13 +204,12 @@ $(document).ready(function () {
             }
             tableAccountsPayableTbody.empty()
             accountsPayableList.accountsPayableList.rows.forEach(({account_id,invoice_date,amount ,paid, invoice_id ,accountHaveProvider}) => {
-                
                 tableAccountsPayableTbody.append(`
                     <tr class='table-row' id=${account_id}>
                         <td class='account-payable-suplier-name'>${accountHaveProvider.provider_name}</td>
                         <td class="invoice_id">${invoice_id}</td>
                         <td class="invoice_date">${invoice_date}</td>
-                        <td class="amount">${amount}</td>
+                        <td class="amount">${amount.toString()}</td>
                         <td class="paid"><input type="checkbox" id="${invoice_id}" ${paid == 1 ? 'checked' : ''}><label class="label-filter" for="${invoice_id}"></label></td>
                     </tr>
                 `);
@@ -219,7 +218,7 @@ $(document).ready(function () {
         } catch (error) {
             tableAccountsPayableTbody.prepend(`
             <tr class='table-row'>
-                <td class='account-payable-suplier-name'></td>
+                <td class=''></td>
                 <td class="invoice_id">Hubo un error</td>
                 <td class="invoice_date">${error.message}</td>
                 <td class="amount"></td>

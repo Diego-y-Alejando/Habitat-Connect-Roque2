@@ -188,8 +188,6 @@ $(document).ready(function() {
                     $(this).removeClass('save-parking-data').attr('src','/public/icons/editar-texto.png').attr('id','img-edit-parking-info');
                 }); 
             }else{
-                console.log('no se disparo');
-                console.log($(this).removeClass());
                 $(this).removeClass('save-parking-data').attr('src','/public/icons/editar-texto.png').attr('id','img-edit-parking-info');
             }
             

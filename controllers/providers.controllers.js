@@ -108,7 +108,7 @@ const updateProvider = async (req = request , res = response )=>{
     try {
         const updateProvider =await updateData(providers,req.body,provider_id,'provider_id')
         return res.status(200).json({
-            updateProvider,
+            msg:updateProvider,
             updatedData:req.body,
             ok:true
         })

@@ -1,22 +1,12 @@
 $(document).ready(function() {
-    $("#btn-edit-record").click(function(event) {
+   
+    $('#btn-edit-record').click(function(event) {
         event.preventDefault();
-        if ($("#btn-save-record-img").hasClass("hide")) {
-            $("#btn-save-record-img").removeClass("hide");
-            $("#btn-edit-record-img").addClass("hide");
-            $(".input-form").removeAttr("disabled");
-        }else{
-            $("#btn-save-record-img").addClass("hide");
-            $("#btn-edit-record-img").removeClass("hide");
-            $(".input-form").attr("disabled", "disabled");
-            //AQUI SE ACTUALIZARIA EN BD
-        }
+        $("#btn-edit-record-img").attr('src', '/public/icons/save_icon.png').addClass('save-edit-account-payable');
+        $('#edit-account-payable-form').find('.account-payable-input').prop('disabled',false);
     });
-
     $("#btn_filter").click(function(event) {
-        console.log("FILTROOO");
         event.preventDefault();
-    
         if($("#filter-record-for-pay").hasClass("hide")){
             $("#filter-record-for-pay").
             removeClass("hide")

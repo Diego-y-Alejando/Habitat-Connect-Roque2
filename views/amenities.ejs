@@ -13,7 +13,9 @@
 
 </head>
 <body>
-    <a href=""><img class="backward-icon" alt="Regresar" src="/public/icons/backward_icon.png" /></a>
+    <% if(user_type ==='admin'){ %>
+        <a href="" class="back-to"><img class="backward-icon" alt="Regresar" src="/public/icons/backward_icon.png" /></a>
+    <% } %>
     <div class="general-title">
        
         <h2 class="app-title"> HABITAT CONNECT</h2>

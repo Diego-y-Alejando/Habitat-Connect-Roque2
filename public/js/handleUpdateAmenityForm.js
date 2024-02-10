@@ -14,6 +14,12 @@ import{
 const updateamenityForms = $('.edit-amenity-form');
 const updateAmenityInputs = $('.update-amenity-input');
 
+    $(".back-to").on("click", function(event) {
+    // Previene el comportamiento predeterminado del enlace
+    event.preventDefault();
+    // Utiliza window.history.back() para volver a la página anterior
+    window.history.back();
+    });
     let dataAmenityToUpdate={}
     let errors={}
     // recorre todos los formularios
@@ -52,7 +58,7 @@ const updateAmenityInputs = $('.update-amenity-input');
             try {
                 event.preventDefault();
                 if (Object.keys(dataAmenityToUpdate).length===0) {
-                    throw new Error('No puedes enviar Vacia tu reserva')
+                    throw new Error('No puedes enviar Vacios los datos de la amenidad')
                 }
                 if (Object.keys(errors).length > 0) {
                   throw new Error('Corrige los errores del formulario')
@@ -118,35 +124,35 @@ const updateAmenityDataValidations =(inputName,inputValue)=>{
     }
 }
 // actualiza el contenido dde lo que se actualizó
-    const updateAmenityContent =(updatedDataAmenity,objetToChangeText)=>{
-        let newText=''
-        const text = objetToChangeText.text()
-        const regexReplaceData ={
-            'rent_cost':{
-                regex:/hora Q[\d]{2,3}\.[\d]{2}$/m,
-                concatText:'hora Q'
-            },
-            'start_time':{
-                regex:/\bHorario\b ([0-9]|1[0-9]|2[0-4]):([0-5][0-9])/mi,
-                concatText:'Horario'
-            },
-            'end_time':{
-                regex:/a (0[0-9]|1[0-9]|2[0-4]):([0-5][0-9])/m,
-                concatText:'a '
-            },
-            'additional_cost_per_hour':{
-                regex:/ extra a Q[\d]{2,3}\.[\d]{2}$/m,
-                concatText:'extra a Q'
-            }
+const updateAmenityContent = (updatedDataAmenity, objetToChangeText) => {
+    let newText = objetToChangeText.text();
+
+    const regexReplaceData = {
+        'rent_cost': {
+            regex: /Costo por hora Q[\d]{2,}\.[\d]{2}$/m,
+            concatText: 'Costo por hora Q'
+        },
+        'start_time': {
+            regex: /Horario ([0-9]|1[0-9]|2[0-3]):([0-5][0-9]) a/m,
+            concatText: 'Horario '
+        },
+        'end_time': {
+            regex: /a (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])/m,
+            concatText: 'a '
+        },
+        'additional_cost_per_hour': {
+            regex: /Hora extra a Q[\d]{2,}\.[\d]{2}$/m,
+            concatText: 'Hora extra a Q'
         }
-        Object.entries(regexReplaceData).forEach(([propertyName, propertyValue]) => {
-            if (updatedDataAmenity.hasOwnProperty(propertyName)) {    
-                newText = text.replace(propertyValue.regex,`${propertyValue.concatText + updatedDataAmenity[propertyName]}`)
-                
-            }
-        })
-        console.log(newText);
-        objetToChangeText.text(newText)
-    
-    }
+    };
+
+    Object.entries(regexReplaceData).forEach(([propertyName, propertyValue]) => {
+        if (updatedDataAmenity.hasOwnProperty(propertyName)) {
+            newText = newText.replace(propertyValue.regex, `${propertyValue.concatText + updatedDataAmenity[propertyName]}`);
+        }
+    });
+
+    objetToChangeText.text(newText);
+}
+
 }(window.jQuery, window, document));
