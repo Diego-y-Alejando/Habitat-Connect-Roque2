@@ -63,10 +63,8 @@ aside{
 }
 
 
-
-
 .heading{
-    font-size: 5rem;
+    font-size: 5em;
     font-weight: 100;
     color: var(--white);
     font-family: newYork;
@@ -75,7 +73,7 @@ aside{
 }
 .sub-heading{
     margin-top: 0px;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: 100;
     line-height: 2rem;
     color: var(--Beige);
@@ -90,7 +88,7 @@ aside{
     gap: 10px;
 }
 .title-login-form{
-    font-size: 1.3rem;
+    font-size: 1.5em;
     font-weight: 600;
     margin: 17px 0px 8px 0px;
     color: var(--white);
@@ -108,13 +106,13 @@ aside{
     opacity: 0.8;
 }
 .label-login-form{
-    font-size: 18px;
+    font-size: 1.2em;
     font-weight: 100;
     color: var(--white);
 }
 .input-login-form{
     padding: 7px;
-    font-size: 18px;
+    font-size: 1.2em;
     border-radius: 5px;
     border: none;
     outline: none;
@@ -126,7 +124,7 @@ aside{
     justify-content: start;
     border: none;
 }
-#remindme-session-login-form {
+.container-remidme-session input{
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -140,30 +138,27 @@ aside{
     cursor: pointer; 
 }
 
-#remindme-session-login-form:checked {
+.container-remidme-session input:checked{
     background-color: var(--Beige); 
 }
 
-#remindme-session-login-form {
+.container-remidme-session input:hover {
     opacity: 0.7; 
 }
 .container-remidme-session label{
     font-weight: 100;
     color: var(--white);
 }
-
-
-#buttonLogin{
+.button-login-form{
     padding: 10px 15px;
-    font-size: 15px;
+    font-size: 1.2em;
     background-color: var(--Beige);
     border-radius: 5px;
     color: #000000;
     border: none;
     cursor: pointer;
 }
-
-#buttonLogin:hover {
+.button-login-form:hover {
     background-color: var(--Cafe);
     opacity: 0.9;
     
@@ -171,9 +166,8 @@ aside{
 
 .footer-colaborator-name{
     display: flex;
-    margin-top: 20px;
+    margin: 20px 0;
     align-items: center;
-    font-size: 2rem;
     font-weight: 100;
 }
 
@@ -186,7 +180,7 @@ aside{
 .app-name span, .colab-name span{
     margin: 0;
     padding: 0 20px;
-    font-size: 25px;
+    font-size: 1.7em;
 }
 
 .colab-name{
@@ -205,9 +199,6 @@ aside{
     color: var(--white);
     font-family: newYork;
 }
-
-
-
 
 
 
@@ -239,29 +230,28 @@ aside{
         border-bottom-left-radius: 20px;
         padding: 0px 20px 20px 20px;
     }
-
-    h1{
+    .heading{
         font-size: 3.5rem;
         line-height: 3.5rem
     }
-    h2{
+    .sub-heading{
         font-size: 1rem;
         line-height: 1rem;
         margin-bottom: 20px;
     }
-    h3{
-        font-size: 1.5rem;
+    .title-login-form{
+        font-size: 1.2rem;
     }
-    .form{
+    .login-form{
         height: 100%;
-        padding: 0px 20px;
+        padding: 0px 40px 30px;
         width: 100%;
         gap: 15px;
     }
 
-    .nameHabitad p, .nameClient p {
-        padding: 0 10px;
-        font-size: 18px;
+    .app-name , .colab-name {
+        padding: 0px;
+        font-size: 0.75em;
     }
 }
 
@@ -295,37 +285,53 @@ aside{
         width: 80%;
         border-bottom-right-radius: 20px;
         border-bottom-left-radius: 20px;
-        padding: 0px 20px 20px 20px;
+        padding: 0px 10px 10px 10px;
     }
     
-    h1{
+    .heading{
         font-size: 2rem;
         line-height: 2rem
     }
-    h2{
+    .sub-heading{
         font-size: 0.7rem;
         line-height: 0.7rem;
         margin-bottom: 20px;
     }
-    h3{
+    .title-login-form{
         font-size: 1rem;
     }
-    .form{
+    .login-form{
         height: 100%;
-        padding: 0px 20px;
+        padding: 0px 40px 20px;
         width: 100%;
         gap: 15px;
     }
-    .label-credentials{
-        font-size: 14px;
-    }
-    .input-credentials{
+    .select-login-form{
         padding: 5px;
-        font-size: 14px;
+        font-size: 0.7em;
     }
-    .nameHabitad p, .nameClient p {
-        padding: 0 10px;
-        font-size: 18px;
+    .label-login-form{
+        font-size: 0.7em;
+    }
+    .input-login-form{
+        padding: 5px;
+        font-size: 0.7em;
+    }
+    .container-remidme-session input{
+        width: 15px;
+        height: 15px;
+        margin-right: 4px;
+    }
+    .container-remidme-session label{
+        font-size: 0.7em;
+    }
+    .button-login-form{
+        padding: 7px 10px;
+        font-size: 0.7em;
+    }
+    .app-name , .colab-name {
+        padding: 0px;
+        font-size: 0.6em;
     }
 }
 
