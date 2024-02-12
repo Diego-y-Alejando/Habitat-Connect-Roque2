@@ -30,3 +30,14 @@ Thumbs.db
 # Archivos de paquete
 package-lock.json
 yarn.lock
+
+# Archivos relacionados con la configuración y la sensibilidad de los datos
+/config/config.json
+/config/.env
+
+# Archivos de volúmenes de Docker Compose
+/docker-compose.yml
+/docker-compose.override.yml
+
+# Archivos de datos de MySQL
+/data/
