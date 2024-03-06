@@ -8,7 +8,7 @@ import{
 }from "./helpers.js"
 
 $(document).ready(function() {
-
+    console.log('loggin funciona');
     $("#buttonon-login").click(function(event) {
 
         const email = $("#input-email").val();

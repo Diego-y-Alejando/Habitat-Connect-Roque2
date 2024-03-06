@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="/public/css/login.css" integrity="<%= loginStyleSheetHash%>">
     <title>Habitad Connect - Iniciar Sesión</title>
 </head>
 <body>
@@ -76,10 +76,9 @@
     <aside>
         <div class="building-image">
     </aside>
+    <script src="/public/js/jquery-3.6.3.min.js" integrity="<%= jqueryHash %>"></script>
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="module" src="/public/js/validators.js"></script>
-    <script type="module" src="/public/js/login.js"></script>
+    <script type="module" src="/public/js/login.js" integrity="<%= loginScriptHash %>"></script>
     
 </body>
 </html>

@@ -50,5 +50,4 @@ import {
         }
         
     }
-
  }(window.jQuery, window, document));

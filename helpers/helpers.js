@@ -1,6 +1,7 @@
 // Generación de tokens
 const jwt = require('jsonwebtoken');
 const {Sequelize}=require('sequelize')
+
 const jwtGenerate =(id,user_type,secret,expiresTime)=>{
     return new Promise((resolve,reject)=>{
         const payload ={id,user_type}
@@ -23,9 +24,7 @@ const hashingPassword = (password)=>{
     return hash
 }
 const updateData = async(model,objectToEdit,searchField, targetField)=>{
-    
     try {
-
         const update = await model.update(objectToEdit,{
             where:{
                 [targetField]:searchField
@@ -42,7 +41,6 @@ const updateData = async(model,objectToEdit,searchField, targetField)=>{
  
 }
 const findData=async(model, searchField, targetField, excludeArr)=>{
-    
     try {
         const foundData= await model.findOne({
             where:{
@@ -133,6 +131,8 @@ const cookieOptions = {
     secure: true, // Solo en conexiones HTTPS
     sameSite: 'strict', // Restringir a solicitudes del mismo sitio
     maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida en milisegundos (1 día)
+    // agregar la propiedad  domain: para aceptar solo de determinados dominios o subdominios
+    // agrgar la propiedad path para restringir la cookie solo a las rutas deseadas 
 };
 const getDataValuesOnly= (array)=>{
     let newArr=[]
@@ -142,7 +142,34 @@ const getDataValuesOnly= (array)=>{
     });
     return newArr
 }
+const crypto = require('crypto')
+const fs = require('fs');
+const generateHashForFile = (fileForCreateHash)=>{
+    try {
+      
+        const content = fs.readFileSync(fileForCreateHash, 'utf-8');
+        const hash = crypto.createHash('sha256').update(content).digest('base64');
 
+        return `sha256-${hash}`;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+const jqueryHash = ()=>{
+    const jqueryFile = 'public/js/jquery-3.6.3.min.js'
+    const jqueryHash =  generateHashForFile(jqueryFile);
+    return jqueryHash
+}
+const corsOptions = {
+    origin: [
+      `${process.env.BASE_URL}`,
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'], 
+    credentials: true,
+    maxAge: 600 // 10 minutos
+  }
 module.exports={
     jwtGenerate,
     hashingPassword,
@@ -154,5 +181,8 @@ module.exports={
     formatHour,
     changeObjectNames,
     cookieOptions,
-    getDataValuesOnly
+    getDataValuesOnly,
+    generateHashForFile,
+    jqueryHash,
+    corsOptions
 }
