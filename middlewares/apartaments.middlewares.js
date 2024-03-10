@@ -49,7 +49,7 @@ const updateParkingDataValidations = async(req= request , res = response , next)
 
         // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
         await userExist('El apartamento que solicita',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-
+        // console.log(req.body);
         updateParkingDataValidationsBody(req.body)
         next()
     }catch (error) {

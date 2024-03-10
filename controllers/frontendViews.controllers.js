@@ -7,12 +7,24 @@ const financeHTML = path.join(__dirname, '..','views','finance.ejs');
 const providers = require('../models/providers.model')
 const bank_accounts = require('../models/bank_accounts.model');
 const {
-    getDataValuesOnly 
-
+    getDataValuesOnly ,
+    generateHashForFile,
+    jqueryHash
 } = require('../helpers/helpers')
+
+const logginFileRelativeRoutesArr = ['public/js/login.js','public/css/login.css','public/js/jquery-3.6.3.min.js']
+
+
 const frontendLoggin = (req = request , res = response)=>{
     const logginHTML = path.join(__dirname, '..','views', 'login.ejs');
-    res.render(logginHTML,{BASE_URL:process.env.BASE_URL});
+    const hashArray = []
+    logginFileRelativeRoutesArr.forEach((element)=>{
+       let hashFileValue= generateHashForFile(element)
+       hashArray.push(hashFileValue)
+    })
+    // console.log(generateHashForFile('public/js/login.js'));
+    // console.log(hashArray[0]);
+    res.render(logginHTML,{BASE_URL:process.env.BASE_URL, loginScriptHash:hashArray[0], loginStyleSheetHash:hashArray[1], jqueryHash:jqueryHash()});
 }
 const getFinanceFrontend = async(req = request , res = response)=>{
     try {
