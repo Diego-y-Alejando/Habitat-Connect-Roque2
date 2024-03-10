@@ -1,6 +1,6 @@
 const {Sequelize}= require('sequelize');
 
-   
+
 const db_name =process.env.DB_NAME;
 const db_user =process.env.DB_USER;
 const db_pass= process.env.DB_PASS;
@@ -14,16 +14,14 @@ const sequelizeObj = new Sequelize(db_name, db_user, db_pass,{
     port: db_port
 })
 
-const testConnection=async()=>{
-    const test= sequelizeObj;
+const testConnection = async () => {
     try {
-        await sequelizeObj.authenticate()
-        console.log('conexion exitosa');
+        await sequelizeObj.authenticate();
+        console.log('Conexión exitosa');
     } catch (error) {
-        console.error('unable to connect',error);
-        
+        console.error(`No se pudo conectar, reintentando`, error);
     }
-}
+};
 
 module.exports={
     sequelizeObj,

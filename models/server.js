@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const {testConnection} = require('../database/config');
 class Server {
     constructor(){
         this.app=express();
@@ -10,6 +11,10 @@ class Server {
         this.userPath='/user'
         this.routes()
         this.port =process.env.PORT
+    }
+    async dbConnection(){
+        await testConnection();
+
     }
     middlewares(){
         this.app.use(cookieParser());

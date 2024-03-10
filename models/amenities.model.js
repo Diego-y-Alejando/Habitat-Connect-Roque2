@@ -57,4 +57,4 @@ const amenities = sequelizeObj.define(
         updatedAt:false
     }
 )
-module.exports=amenities
+module.exports= amenities;
