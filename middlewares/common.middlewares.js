@@ -53,7 +53,6 @@ const validationPath=(path,regexPath)=>{
     }
   }
 const bodyVerification=(object,allowProperties)=>{
-  console.log(object);
   if (!object || typeof object !== 'object' || Object.keys(object).length==0) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }

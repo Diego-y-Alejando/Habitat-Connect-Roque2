@@ -5,7 +5,7 @@ const {cookieOptions}= require('../helpers/helpers')
 const {
     jwtGenerate,
     hashingPassword,
-    updateData
+    updateData,
 }= require('../helpers/helpers')
 const loggin = async (req= request , res = response)=>{
     try {
