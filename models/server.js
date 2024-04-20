@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const {corsOptions}= require('../helpers/helpers.js')
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const {
     checkDuplicateQueryParams,
     checkDuplicateBodyParams
@@ -23,7 +24,7 @@ class Server {
 
     }
     middlewares(){
-        this.app.use(helmet)
+        this.app.use(helmet())
         this.app.use(compression)
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
