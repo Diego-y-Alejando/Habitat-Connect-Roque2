@@ -2,6 +2,10 @@
 *{
     margin: 0;
     padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 body{
     display: grid;
@@ -24,19 +28,48 @@ body{
     top: 5%;
     left: 5%;
 }
-.app-title{
-    width: min-content;
- 
+.app-name , .colab-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 3rem;
+    line-height: 2.5rem;
 }
-.title-separator{
-    background-color: #6e4734;
-    margin: 0 3% 0 3%;
-  
+
+.line{
+    height: 100px;
+    width: 1px;    
+    background-color: var(--Cafe);
 }
-.tower-name{
-    margin: auto;
-    margin-left: 0;
+
+.app-name span, .colab-name span{
+    margin: 0;
+    padding: 0 20px;
 }
+
+.colab-name{
+    margin: 0;    
+    color: var(--Cafe);
+}
+
+.colab-name span{
+    font-weight: 900;
+}
+
+.app-name span:first-child{
+    color: var(--Cafe);
+    font-weight: 800;
+    font-family: newYork;
+}
+.app-name span:last-child{
+    color: var(--Cafe);
+    font-weight: 800;
+    font-family: montserrat-light;
+}
+
+
 /* container amenities */
 .container-amenities-list{
     display: flex;

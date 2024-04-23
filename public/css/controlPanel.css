@@ -4,6 +4,10 @@
 *{
     margin: 0;
     padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 
 body{
@@ -12,6 +16,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
+
 
 .container-grid-apartaments{
     display: grid;
@@ -157,11 +162,14 @@ body{
 
 @media screen and (max-width: 767px) {
     .filter-level {
-        width: 80%;
+        width: 50%;
     }
     .container-grid-apartaments {
         width: 90%;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .see-more{
+        width: 70%;
     }
     
 }

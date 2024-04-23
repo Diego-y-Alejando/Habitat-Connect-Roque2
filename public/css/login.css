@@ -59,7 +59,7 @@ aside{
     right: 0;
     width: 52%;
     height: 100%; 
-    background-image: url('../icons/backgroundLogin.webp');
+    background-image: url('../icons/RQ10.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -191,9 +191,13 @@ aside{
     padding: 0 20px;
     font-size: 1.7em;
 }
+.line{
+    height: 50px;
+    width: 1px;    
+    background-color: var(--white);
+}
 
 .colab-name{
-    border-left: 1px solid #ffffff;
     height: 100%;
     margin: 0;    
     color: var(--white);
