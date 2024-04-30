@@ -3,30 +3,7 @@
 @import url('./controlPanel.css');
 @import url('./apartmentDetails.css');
 
-.table{
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2%;
-}
-.table-titel{
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    height: 50px;
-    background-color: var(--Azul-oscuro);
-    color: var(--white);
-}
-th{
-    padding-left: 2%;
-}
-td{
-    padding-left: 2%;
-}
-.table-row{
-    height: 50px;
-}
-.table tbody tr:nth-child(odd) {
-    background-color: lightgray; 
-}
+
 .provider_name{
     cursor: pointer;
 }
@@ -227,14 +204,7 @@ td{
     display: flex;
     place-content: start;
 }
-input[type="checkbox"] {
-    display: none;
-  
-}
-input[type="radio"] {
-    display: none;
-  
-}
+
 .label-filter{
     display: flex;
     width: 20px;

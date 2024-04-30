@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/controlPanel.css">
+    <link rel="stylesheet" href="../css/controlPanelSecurity.css"><link rel="stylesheet" href="./css/finance.css">
+
+
+
+    <title>Panel de control</title>
+</head>
+<body>
+    <header>
+        <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
+    </header>
+    <div class="menu-toggle" id="menu-toggle">
+        <img class="filter-icon-menu" id="filter-icon" src="../icons/filter-white-icon.png">
+    </div>
+    <nav class="menu" id="menu">
+        <label class="item-menu-filter"><input type="radio" name="filter-value" value="home-visit" class="radio-button-filter" checked>Visitas domésticas</label>
+        <label class="item-menu-filter"><input type="radio" name="filter-value" value="employee-visit" class="radio-button-filter">Visitas de empleado</label>
+        <label class="item-menu-filter"><input type="radio" name="filter-value" value="delivery" class="radio-button-filter">Paquetería</label>
+    </nav>
+    
+    <main class="container-content">
+        <!-- ventana modal -->
+        <section class="modal-window" id="modal-window">
+            <div class="content-modal-window">
+            </div>
+        </section>
+        <label class="search-label" for="search">
+            <input type="text" class="search-input" name="search" placeholder="Buscar">
+            <img src="../icons/lupa 1.png" class="search-icon">
+        </label>
+        <h2 class="title-section" id="title-section">Visitas domésticas</h2>
+        <section class="container-tables table-active" id="home-visit">
+            <button class="create-element-button" id="create-home-visit">Crear visita doméstica</button>
+            <table class="table montserrat-light" id="table-home-visit">
+                <thead class="table-title">
+                    <tr class="title-row">
+                        <th>Apto.</th>
+                        <th>Visitante</th>
+                        <th>DPI</th>
+                        <th>Marcar</th>
+                    </tr>
+                </thead>
+                <tbody class="table-content">
+                    <tr class="table-row" id="1" >
+                        <td data-apartament-number="1-7">1-7</td>
+                        <td class="td-name" data-name="Pedro martinez">Pedro martinez</td>
+                        <td >3998-77800-0101</td>
+                        <td data-state="0"><input type="checkbox" class="table-checkbox"/></td>
+                    </tr>     
+                </tbody>
+            </table>             
+        </section>
+
+        <section    class="container-tables"      id="delivery">
+            <button class="create-element-button" id="create-delivery">Crear paquete</button>
+            <table class="table montserrat-light" id="table-delivery">
+                <thead class="table-title">
+                    <tr class="title-row">
+                        <th>Apto.</th>
+                        <th>Residente</th>
+                        <th>Empresa</th>
+                        <th>Marcar</th>
+                    </tr>
+                </thead>
+                <tbody class="table-content">
+                    <tr class="table-row" id="1" >
+                        <td data-apartament-number="1-7">1-7</td>
+                        <td class="td-name" data-name="Pedro martinez">Pedro martinez</td>
+                        <td >Molvu S.A</td>
+                        <td data-state="0"><input type="checkbox" class="table-checkbox"/></td>
+                    </tr>     
+                </tbody>
+            </table>             
+        </section>
+        <section    class="container-tables"      id="employee-visit">
+            <table class="table montserrat-light" id="table-apartament-employees">
+                <thead class="table-title">
+                    <tr class="title-row">
+                        <th>Apto.</th>
+                        <th>Empleado</th>
+                        <th>DPI</th>
+                        <th>Marcar</th>
+                    </tr>
+                </thead>
+                <tbody class="table-content">
+                    <tr class="table-row" id="1" >
+                        <td data-apartament-number="1-7">1-7</td>
+                        <td class="td-name" data-name="Pedro martinez">Pedro martinez</td>
+                        <td >1234-45700-0101</td>
+                        <td data-state="0"><input type="checkbox" class="table-checkbox"/></td>
+                    </tr>  
+                </tbody>
+            </table>             
+        </section>
+
+        
+    </main>
+
+    <script src="../js/jquery-3.6.3.min.js"></script>
+    <script type="module" src="../js/menu.js"></script>
+    <script type="module" src="../js/handleSecurityPanel.js"></script>
+</body>
+</html>
