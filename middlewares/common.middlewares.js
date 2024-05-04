@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const regex=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
+const regex=/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
 const  {findData} = require('../helpers/helpers');
 const validateName = (name ,size) => {
     if (!name) {
@@ -7,7 +7,7 @@ const validateName = (name ,size) => {
     } else if (!regex.test(name)) {
       throw new Error('El nombre sólo puede contener letras y espacios')
     }else if(name.trim().length>size){
-      throw new Error('El nombre se exede de 55 caracteres puedes colocar unicamente dos nombres ')
+      throw new Error(`El nombre se exede de ${size} caracteres puedes colocar unicamente dos nombres` )
     }
 }
 const validateLastName = (lastName,size) => {
@@ -132,6 +132,7 @@ const tokenValidation = async (token, model, targetField, excludeArr, secretKey,
   try {
     if (!token) throw new Error('No se ha enviado el token');
     const { id, user_type } = jwt.verify(token, secretKey);
+    
     if (!user_type || !allowUsers.includes(user_type)) throw new Error('El token es inválido');
 
     const user = await findData(model, id, targetField, excludeArr);
@@ -199,21 +200,7 @@ const validationOcupationState = (state) => {
     throw new Error('El estado  de ocupacion no es correcto')
   }
 }
-const isTicketOpen=async(message,model,searchField,targetField,findActiveState,excludeArr)=>{
-  try {
-      const  ticket =  await model.findOne({
-          where:{
-              [targetField]:searchField,
-              state:1
-          }
-      })
-      if (ticket) {
-          throw new Error(message)
-      }
-  } catch (error) {
-      throw new Error(error)
-  }
-}
+
 const objectOwner=(idToken,employeeToken,message)=>{
   if (idToken!= employeeToken) {
     throw new Error(message)
@@ -303,7 +290,16 @@ const validatePage =(page)=>{
       throw new Error('La pagina no puede venir vacía')
   }
   if (!regexPage.test(page)) {
-    throw new Error('La paginacion es invalida')
+    throw new Error('La paginacion es inválida')
+  }
+}
+const validationVisitStatus =(visit_status)=>{
+  const regexVisitStatus=/^[1-2]+$/
+  if (!visit_status) {
+      throw new Error('El estatus de la visita  no puede venir vacío')
+  }
+  if (!regexVisitStatus.test(visit_status)) {
+    throw new Error('El estatus de la visita es inválida')
   }
 }
 module.exports ={
@@ -327,7 +323,6 @@ module.exports ={
     validationParagraph,
     validationDates,
     validationOcupationState,
-    isTicketOpen,
     objectOwner,
     compareDates,
     validationYear,
@@ -336,6 +331,7 @@ module.exports ={
     compareHours,
     ValidationPaidStatus,
     validationMonth,
-    validatePage
+    validatePage,
+    validationVisitStatus
     
 }

@@ -60,8 +60,8 @@ const findData=async(model, searchField, targetField, excludeArr)=>{
     }
 }
 
-const { startOfMonth, endOfMonth , format } = require('date-fns');
-
+const { startOfMonth, endOfMonth , format , toDate } = require('date-fns');
+const {fromZonedTime } = require('date-fns-tz');
 function getStartAndEndOfMonth(dateString) {
     const date = new Date(dateString);
     let dayOfDate = date.getDate();  // Cambiado de getUTCDate a getDate
@@ -169,7 +169,23 @@ const corsOptions = {
     exposedHeaders: ['Content-Range', 'X-Content-Range'], 
     credentials: true,
     maxAge: 600 // 10 minutos
-  }
+}
+
+
+
+const formatDateAndHour = () => {
+  const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
+
+  const now = new Date();
+  const utcDate = toDate(now);
+  const centralAmericaDate = fromZonedTime(utcDate, centralAmericaTimezone);
+
+  const dateTimeFormat = 'yyyy-MM-dd HH:mm';
+  const formattedDateTime = format(centralAmericaDate, dateTimeFormat, { timeZone: centralAmericaTimezone });
+
+  return formattedDateTime;
+};
+
 module.exports={
     jwtGenerate,
     hashingPassword,
@@ -184,5 +200,6 @@ module.exports={
     getDataValuesOnly,
     generateHashForFile,
     jqueryHash,
-    corsOptions
+    corsOptions,
+    formatDateAndHour
 }

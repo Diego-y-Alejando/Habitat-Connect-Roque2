@@ -238,7 +238,7 @@ const findTimeConflictWithOtherReservations=async(reserv_id,reservation_date,sta
                 [Op.gte]: start_reserv_time
             } 
         })
-        console.log('datavalues',dataValues);
+    
     } catch (error) {
         throw new Error(error)
     }

@@ -20,7 +20,7 @@ import {
         const contentsModalWindow ={
             // formulario de crear visita domestica 
             'create-home-visit':`
-                <form class="form-modal-window">
+                <form class="form-modal-window" id="create-home-visit">
                     <h3 class="title-form">Creando visita doméstica</h3>
                     <select class="select-form" name="apartament_id">
                         <option class="option-select" disabled selected>Apartamento que visita</option>

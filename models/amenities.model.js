@@ -47,6 +47,10 @@ const amenities = sequelizeObj.define(
         nickName :{
             type:DataTypes.CHAR,
             allowNull:false
+        },
+        time_limit :{
+            type:DataTypes.INTEGER,
+            allowNull:false
         }
     },
     {
