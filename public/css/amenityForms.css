@@ -1,19 +1,19 @@
 @import url('./colors.css');
-.amenity-form{
-    width: 50%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(2,50%);
-    place-self: center;
-    place-items: center;
-    background-color: var(--white);
-    position: relative;
 
+.amenity-form{
+    width: 30%;
+    display: flex;
+    padding: 50px;
+    gap:10px;
+    flex-direction: column;
+    justify-content: start;
+    background-color: var(--white);
 }
-.edit-amenity-form{
-    margin: auto; 
-    grid-template-rows: repeat(5,1fr);
+.title-schedule{
+    font-family: montserrat-regular;
+    font-size: 18px;
 }
+
 .amenity-for-booking{
     text-align: center;
     font-family: montserrat-semi-bold;
@@ -21,8 +21,11 @@
 }
 
 .amenity-label{
-    width: 75%;
-    display: grid;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
     font-family: montserrat-regular;
     font-size: 18px;
 }
@@ -31,7 +34,7 @@
     outline: none;
     border: none;
     border-bottom: 0.5px solid #cac7c7;
-    margin-top:4%;
+    margin-top:10px;
     font-family: montserrat-light;
     font-size: 18px;
 }
@@ -40,31 +43,31 @@
     font-size: 18px;
 }
 .label-booking-schedule{
-    grid-template-columns: 45% 15% 45%;
+    flex-direction: row;
+    justify-content: space-between;
 }
-.column-span-2 {
-    grid-column: span 2;
 
-}
-.title-schedule{
-    grid-column: span 3;
-}
 .input-schedule{
-    grid-row: 2;
     width:100%;
     border:none;
     border-bottom: 0.5px solid #cac7c7;
     font-size: 18px;
-   font-family: montserrat-light;
+    font-family: montserrat-light;
 }
-
+.dropdown-schedule{
+    width: 140px;
+    padding: 10px;
+    font-size: 16px;
+    border:none;
+}
 .preposition-schedule{
-    grid-row: 2;
-    margin:auto;
+    font-size: 18px;
+    padding-top: 10px;
 }
 
 .btn-submit{
-    padding: 5px 10px 5px 10px;
+    padding: 15px 10px 15px 10px;
+    font-size: 18px;
     border: none;
     background-color: var(--Azul-claro);
     color: white;
@@ -73,4 +76,44 @@
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .amenity-form{
+        width: 90.5%;
+    }
+    .amenity-label{
+        height: 100px;
+        font-size: 16px;
+    }
+    .amenity-input{
+        font-size: 16px;
+    }
+}   
+
+
+@media screen and (max-width: 767px) {
+    .amenity-form{
+        width: 95%;
+        padding: 0 20px;
+    }
+    .amenity-label{
+        height: 60px;
+        font-size: 14px;
+    }
+    .amenity-input{
+        font-size: 14px;
+        width: 100%;
+    }
+    .input-schedule{
+        font-size: 14px;
+    }
+    .dropdown-schedule{
+        font-size: 14px;
+        padding: 7px;
+    }
+    .btn-submit{
+        font-size: 14px;
+        padding: 10px 5px;
+    }
 }

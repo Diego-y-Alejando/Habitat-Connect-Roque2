@@ -1,7 +1,7 @@
 
 @import url('./colors.css');
 .calendar{
-    width: 50%;
+    width: 70%;
     height: 100%;
     background-color: #efefef;
     top: 50%;
@@ -13,7 +13,7 @@
 .ec-toolbar{
     background-color: var(--Azul);
     margin-bottom: 0.2em !important;
-    padding: 1% ;
+    padding: 20px;
     color: white;
 }
 .ec-title{
@@ -31,4 +31,54 @@
  
 .ec-content .ec-today{
     background-color: var(--white) !important;
+}
+
+
+
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .calendar{
+        width: 100%;
+        margin-top: 40px;
+    }
+    .ec-toolbar{
+        padding: 20px;
+    }
+    .ec-title{
+        font-size: 1.5rem;
+    }
+    .ec-header, .ec-all-day, .ec-body, .ec-days, .ec-day{
+        font-size: 1rem;
+    }
+    .ec-button{
+        font-size: 1rem;
+    }
+    .ec-content .ec-today{
+        font-size: 1rem;
+    }
+}   
+
+
+@media screen and (max-width: 767px) {
+    .calendar{
+        width: 100%;
+        margin-top: 40px;
+    }
+    .ec-toolbar{
+        padding: 10px;
+    }
+    .ec-title{
+        font-size: 0.9rem;
+    }
+    .ec-header, .ec-all-day, .ec-body, .ec-days, .ec-day{
+        font-size: 1rem;
+
+    }
+    .ec-button{
+        font-size: 0.9rem;
+        padding: 5px !important;
+    }
+    .ec-content .ec-today{
+        font-size: 1rem;
+    }
 }

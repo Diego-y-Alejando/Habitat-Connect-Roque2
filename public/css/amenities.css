@@ -11,23 +11,32 @@ body{
     display: grid;
     background-color: #fefefe;
 }
+.go-back {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-left: 3%;
+    transform: translateY(-50%);
+}
+.go-back a{
+    width: 70px;
+    height: auto;
+}
+.backward-icon{
+    width: 70px;
+}
 .general-title{
     display: flex;
     justify-self: center;
+    align-items: center;
     justify-content: center;
     font-size: 2.1rem;
-    margin-top: 3%;
+    height: 175px;
     color: #6e4734;
-    width: 40%;
+    width: 100%;
     position: relative;
 }
-.backward-icon{
-    width: 5%;
-    height: auto;
-    position: absolute;
-    top: 5%;
-    left: 5%;
-}
+
 .app-name , .colab-name{
     display: flex;
     flex-direction: column;
@@ -72,20 +81,22 @@ body{
 
 /* container amenities */
 .container-amenities-list{
-    display: flex;
+    display: grid;
     width: 90%;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     justify-content: center;
     justify-self: center;
     gap: 2%;
-    margin-top: 5%;
 }
 .amenity{
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    padding-bottom: 1%;
+    padding-bottom: 10px;
     background: #efefef;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-radius: 30px;
+    height: auto;
 }
 .img-amenity{
     width: 100%;
@@ -94,15 +105,27 @@ body{
     border-top-left-radius: 30px;
 }
 .amenity-data{
-    display: grid;
-    grid-template-columns: 70% 30%;
-    place-items: center;    
+    display: flex;
+    gap: 30px;
+    flex-direction: column; 
+    align-items: center;   
+}
+.amenity-info{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: space-around;
+    padding: 0 10px;
 }
 .amenity-name{
-    grid-column: span 2;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 20px;
     font-family: montserrat-semi-bold;
+}
+.amenity-days{
+    font-family: montserrat-regular;
+    font-size: 1.2rem;
+    color: #484848;
 }
 .icon-amenity{
     width: 50%;
@@ -113,17 +136,21 @@ body{
     font-family: montserrat-regular;
     font-size: 1rem;
     color: #484848;
-    grid-column:  2;
-    margin-right: 115%;
-    white-space:pre;
+    width: 50%;
+}
+.data-schedule-cost ul{
+    list-style: circle;
+    padding: 0;
 }
 .booking-btn{
-    width: 20%;
-    grid-column: span 2;
+    width: 50%;
     background: var(--Azul-claro);
     text-decoration: none;
+    text-align: center;
+    font-family: montserrat-semi-bold;
+    font-size: 14px;
     border: none;
-    padding: 1% ;
+    padding: 10px ;
     color: white;
     border-radius: 25px;
     -webkit-border-radius: 25px;
@@ -133,5 +160,31 @@ body{
     cursor: pointer;
 }
 /* CALENDARIO Y EL FORMULARIO */
+
+
+
+
+@media screen and (max-width: 767px) {
+    .app-name , .colab-name{
+        font-size: 1.7rem;
+        line-height: 1.4rem;
+    }
+    .app-name span, .colab-name span{
+        padding: 0 10px;
+    }
+    .line{
+        height: 40px;
+        padding-bottom: 10px;
+    }
+    .go-back a{
+        width: 48px;
+    }
+    .backward-icon{
+        width: 48px;
+    }
+    .amenity-data{
+        grid-template-columns: 1fr;
+    }
+}
 
 

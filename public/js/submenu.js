@@ -1,18 +1,19 @@
 $(document).ready(function() {
 
-    const firstElement = $("#menu").find(".subitem-menu").first();
+    $(".container-item").hide();
     const menuToggle = $("#menu-toggle");
     const menu = $("#sub-menu");
     const menuWidth = 250; 
     let menuOpen = false;
 
+    const firstElement = $("#sub-menu").find(".subitem-menu").first();
+    $("#" + firstElement.data("target")).show();
 
     $(".subitem-menu").click(function(event) {
         event.preventDefault();
         const target = $(this).data("target");
-        $(".container-item").hide();
-        $('.container-item').removeClass('content-active')
-        $("#" + target).show().addClass('content-active');
+        $(".container-item").hide().removeClass('hide');
+        $("#" + target).show().addClass('hide');
         $(".subitem-menu").find(".selected-item-line").addClass("hide");
         $(this).find(".selected-item-line").removeClass("hide").attr('id','show');
     });

@@ -13,8 +13,14 @@
     <script src="./js/jquery-3.6.3.min.js"></script>
 </head>
 <body>
-    <a href="./controlPanel.html"><img class="backward-icon" alt="Regresar" src="./icons/backward_icon.png" /></a>
+    
+    
     <header class="general-title">
+        <nav class="go-back">
+            <a href="./controlPanel.html" >
+                <img class="backward-icon" alt="Regresar" src="./icons/backward_icon.png" />
+            </a>
+        </nav>
         <h2 class="app-name"> 
             <span>HABITAT </span>
             <span>CONNECT</span>
@@ -32,29 +38,42 @@
             <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
             <article class="amenity-data">
                 <h2 class="amenity-name">Deck Azotea</h2>
-                <img class="icon-amenity" src="./icons/amenity_2.png">
-                <p class="data-schedule-cost">
-                <b>Lunes a sábado</b>
-                Horario 08:00 a 23:00
-                Alquiler 6hrs Q200.00
-                Hora extra a Q60.00</p>
+                <div class="amenity-info">
+                    <img title="Image" class="icon-amenity" src="./icons/amenity_2.png">
+                    <div class="data-schedule-cost">
+                        <p class="amenity-days">Lunes a sábado</p>
+                        <ul>
+                            <li class="amenity-hours">
+                                Horario: 08:00 a 23:00
+                            </li>
+                            <li class="amenity-normal-price">
+                                Alquiler: 6hrs Q200.00
+                            </li>
+                            <li class="amenity-extra-price">
+                                Hora extra: a Q60.00
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <button class="display-modal-window booking-btn" id="booking-amenity-btn">Editar</button>
             </article>
             <div class="modal-window">
                 <div class="content-modal-window">
-                    <form class="amenity-form edit-amenity-form" id="roof-deck-form">
+                    <span class="close-window" id="close-window">X</span>
+                    <div  class="calendar" id ="bussines-center-calendar"></div>
+                    <form class="amenity-form" id="roof-deck-form">
                         <h2 class="amenity-for-booking">Deck azotea</h2>
-                        <span class="close-window" id="close-window">X</span>
-                        <label class="amenity-label name justify-end" for="name">
+                        
+                        <label class="amenity-label name" for="name">
                            Costo de renta 
                             <input type="number" min="0" name="rent_cost"  step="0.01" class="amenity-input" placeholder="Precio de renta">
                         </label>
-                        <label class="amenity-label phone_number justify-start" for="phone_number">
+                        <label class="amenity-label phone_number" for="phone_number">
                             Costo por hora extra 
                             <input type="number" min="0" name="additional_cost_per_hour" step="0.01" class="amenity-input" placeholder="Costo extra por hora">
                         </label>
+                        <span class="title-schedule">Horario de la ameinidad</span> 
                         <label class="amenity-label label-booking-schedule ">
-                            <span class="title-schedule">Horario de la ameinidad</span> 
                             <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
                                 <option>Inicio</option>
                                 <option>08:00</option>
@@ -73,120 +92,7 @@
                 
             </div>
         </section>
-        <!-- bussnies center -->
-        <section class="amenity">
-            <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
-            <article class="amenity-data">
-                <h2 class="amenity-name">Sala de reuniones </h2>
-                <img class="icon-amenity" src="./icons/amenity_2.png">
-                <p class="data-schedule-cost">
-                <b>Lunes a sábado</b>
-                Horario 08:00 a 23:00
-                Alquiler 6hrs Q200.00
-                Hora extra a Q60.00</p>
-                <button class="display-modal-window booking-btn">Reservar</button>
-            </article>
-            <div class="modal-window">
-                <div class="content-modal-window">
-                    
-                    <div  class="calendar" id ="bussines-center-calendar">
-                        
-                    </div>
-                    <form class="amenity-form" id="bussines-center-form">
-                        <h2 class="amenity-for-booking">Sala de reuniones</h2>
-                        <span class="close-window" id="close-window">X</span>
-                        <label class="amenity-label name justify-end" for="name">
-                            Nombre  del Responsable
-                            <input type="text" name="name" class="amenity-input" placeholder="Nombre">
-                        </label>
-                        <label class="amenity-label phone_number justify-start" for="phone_number">
-                            Teléfono del Responsable
-                            <input type="text" name="name" class="amenity-input" placeholder="Teléfono">
-                        </label>
-                        <label class="amenity-label justify-end date_input" for="date">
-                            Fecha de la reserva
-                            <input type="date" name="date" class="amenity-input" placeholder="">
-                        </label>
-                        <label class="amenity-label label-booking-schedule justify-start">
-                            <span class="title-schedule">Horario de la reserva</span> 
-                            <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
-                                <option>Inicio</option>
-                                <option>08:00</option>
-                                <option>08:00</option>
-                            </select>
-                           <span class="preposition-schedule">a</span>
-                        
-            
-                            <input list="opciones" id="myInput" name="myInput" type="time" placeholder="Hola"/>
 
-                            <datalist id="opciones">
-                            <option value="Opción 1">
-                            <option value="Opción 2">
-                            <option value="Opción 3">
-                            <!-- Agrega más opciones según sea necesario -->
-                            </datalist>
-
-                        </label>
-                       <input type="submit" class="btn-submit" value="Registrar reserva">
-                    </form>
-                </div>
-                
-            </div>
-        </section>
-        <!-- Salon social -->
-        <section class="amenity">
-            <img class=" img-amenity" src="./icons/deck3.jpeg" alt="deck-azotea"/>
-            <article class="amenity-data">
-                <h2 class="amenity-name">Salón social</h2>
-                <img class="icon-amenity" src="./icons/amenity_2.png">
-                <p class="data-schedule-cost">
-                <b>Lunes a sábado</b>
-                Horario  08:00 a 23:00
-                Alquiler 6hrs Q200.00
-                Hora extra a Q60.00</p>
-                <button class="display-modal-window booking-btn">Reservar</button>
-            </article>
-            <div class="modal-window">
-                <div class="content-modal-window">
-                    
-                    <div  class="calendar" id ="social-hall-calendar">
-                        
-                    </div>
-                    <form class="amenity-form" id="social-hall-form">
-                        <h2 class="amenity-for-booking">Salón social</h2>
-                        <span class="close-window" id="close-window">X</span>
-                        <label class="amenity-label name justify-end" for="name">
-                            Nombre  del Responsable
-                            <input type="text" name="name" class="amenity-input" placeholder="Nombre">
-                        </label>
-                        <label class="amenity-label phone_number justify-start" for="phone_number">
-                            Teléfono del Responsable
-                            <input type="text" name="name" class="amenity-input" placeholder="Teléfono">
-                        </label>
-                        <label class="amenity-label justify-end date_input" for="date">
-                            Fecha de la reserva
-                            <input type="date" name="date" class="amenity-input" placeholder="">
-                        </label>
-                        <label class="amenity-label label-booking-schedule justify-start">
-                            <span class="title-schedule">Horario de la reserva</span> 
-                            <select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
-                                <option>Inicio</option>
-                                <option>08:00</option>
-                                <option>08:00</option>
-                            </select>
-                           <span class="preposition-schedule">a</span>
-                            <select class="dropdown-schedule" name="end_reserv_time" id="end_reserv_time">
-                                <option>Fin</option>
-                                <option>08:00</option>
-                                <option>08:00</option>
-                            </select>
-                        </label>
-                       <input type="submit" class="btn-submit" value="Registrar reserva">
-                    </form>
-                </div>
-                
-            </div>
-        </section>
     </div>
     
     

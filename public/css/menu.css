@@ -101,8 +101,7 @@ header::before {
 .menu {
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px 0;
     margin-top: 20px;
     background-color: var(--white);
     display: flex;
