@@ -33,14 +33,19 @@
 				Fecha de la reserva
 				<input type="date" name="reservation_date" class="amenity-input  booking-input" placeholder="">
 			</label>
-			<div class="amenity-label label-booking-schedule">
-				<h9 class="title-schedule">Horario de la reserva</h9>
-				<input list="opciones" id="myInput" name="start_reserv_time" class="input-schedule booking-amenity-input"
-					type="time" placeholder="Apertura">
-				<h9 class="preposition-schedule">a</h9>
-				<input list="opciones" id="myInput" name="end_reserv_time" class="input-schedule booking-amenity-input"
-					type="time" placeholder="Cierre">
-			</div>
+			<label class="amenity-label label-booking-schedule ">
+				<select class="dropdown-schedule" name="start_reserv_time" id="start_reserv_time">
+						<option>Inicio</option>
+						<option>08:00</option>
+						<option>08:00</option>
+				</select>
+			 <span class="preposition-schedule">a</span>
+				<select class="dropdown-schedule" name="end_reserv_time" id="end_reserv_time">
+						<option>Fin</option>
+						<option>08:00</option>
+						<option>08:00</option>
+				</select>
+		</label>
 			<label class="amenity-label submit-label column-span-2">
 				<input type="submit" class="btn-submit  btn-submit-update-amenity" value="Guardar cambios"
 					id="<%=nickName%>-btn-submit-updateData">
