@@ -28,8 +28,8 @@ const {
 
 router.post('/create/home-visit/',createHomeVisitValidations,createHomeVisitController)
 router.post('/check/home-visit/',checkHomeVisitValidations,checkHomeVisitController);
-router.get('/get/home-visits/',getHomeVisitisControllers);
-router.get('/search/home-visits',searchHomeVistisController);
+router.get('/get/home-visit/',getHomeVisitisControllers);
+router.get('/search/home-visit',searchHomeVistisController);
 router.post('/undo/check/home-visit',undoCheckHomeVisitController)
 
 /*=========================
@@ -51,8 +51,8 @@ const {
 }= require('../controllers/securityControllers/packageDelivery.controllers.js');
 router.post('/create/package-delivery/',createPackageDeliveryValidations,createPackageDeliveryController);
 router.post('/check/package-delivery/',checkPackageDeliveryValidations,checkPackageDeliveryController);
-router.get('/get/packages-deliveries/',getPackageDeliveriesValidations,getPackageDeliveryController)
-router.get('/search/package-delivery',searchPackageDeliveryController);
+router.get('/get/package-delivery/',getPackageDeliveriesValidations,getPackageDeliveryController)
+router.get('/search/delivery',searchPackageDeliveryController);
 router.post('/undo/check/package-delivery',undoCheckPackageDeliveryValidations,undoCheckPackageDeliveryController);
 
 

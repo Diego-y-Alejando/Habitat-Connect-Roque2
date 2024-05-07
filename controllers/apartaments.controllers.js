@@ -139,7 +139,6 @@ const  updateLanlordData= async(req = request , res = response)=>{
             name: 'landlord_name',
             phone_number: 'phone_number_landlord'
         });
-        console.log(newDataLanlord);
         const updatedLandlordData = await updateData(apartament,newDataLanlord,apartament_id,'apartament_id')
         return res.status(200).json({
             msg:updatedLandlordData,

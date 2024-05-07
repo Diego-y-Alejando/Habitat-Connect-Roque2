@@ -229,7 +229,7 @@ header::before {
         margin-top: 170px;
         border-top-right-radius: 30px;
         border-top-left-radius: 30px;
-        min-height: 75vh;
+        min-height: 80vh;
     }
     .app-name , .colab-name{
         font-size: 1.7rem;

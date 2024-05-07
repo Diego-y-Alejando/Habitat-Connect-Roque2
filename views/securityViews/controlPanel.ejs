@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/menu.css">
     <link rel="stylesheet" href="/public/css/controlPanel.css">
-    <link rel="stylesheet" href="/public/css/controlPanelSecurity.css"><link rel="stylesheet" href="./css/finance.css">
+    <link rel="stylesheet" href="/public/css/controlPanelSecurity.css">
 
 
 
@@ -21,7 +21,7 @@
     <nav class="menu" id="menu">
         <label class="item-menu-filter"><input type="radio" name="filter-value" value="home-visit" class="radio-button-filter" checked>Visitas domésticas</label>
         <label class="item-menu-filter"><input type="radio" name="filter-value" value="employee-visit" class="radio-button-filter">Visitas de empleado</label>
-        <label class="item-menu-filter"><input type="radio" name="filter-value" value="delivery" class="radio-button-filter">Paquetería</label>
+        <label class="item-menu-filter"><input type="radio" name="filter-value" value="package-delivery" class="radio-button-filter">Paquetería</label>
     </nav>
     
     <main class="container-content">
@@ -31,7 +31,7 @@
             </div>
         </section>
         <label class="search-label" for="search">
-            <input type="text" class="search-input" name="search" placeholder="Buscar">
+            <input type="text" class="search-input" name="search" placeholder="Buscar" id="search-input">
             <img src="/public/icons/lupa 1.png" class="search-icon">
         </label>
         <h2 class="title-section" id="title-section">Visitas domésticas</h2>
@@ -48,19 +48,14 @@
                     </tr>
                 </thead>
                 <tbody class="table-content">
-                    <tr class="table-row" id="1" >
-                        <td data-apartament-number="1-7">1-7</td>
-                        <td class="td-name" data-name="Pedro martinez">Pedro martinez</td>
-                        <td >3998-77800-0101</td>
-                        <td data-state="0"><input type="checkbox" class="table-checkbox"/></td>
-                    </tr>     
+    
                 </tbody>
             </table>             
         </section>
  <!-- =========TABLA PACKAGE DELIVERY =========-->
-        <section    class="container-tables"      id="delivery">
-            <button class="create-element-button" id="create-delivery">Crear paquete</button>
-            <table class="table montserrat-light" id="table-delivery">
+        <section    class="container-tables"      id="package-delivery">
+            <button class="create-element-button" id="create-package-delivery">Crear paquete</button>
+            <table class="table montserrat-light" id="table-package-delivery">
                 <thead class="table-title">
                     <tr class="title-row">
                         <th>Apto.</th>
@@ -74,7 +69,7 @@
                         <td data-apartament-number="1-7">1-7</td>
                         <td class="td-name" data-name="Pedro martinez">Pedro martinez</td>
                         <td >Molvu S.A</td>
-                        <td data-state="0"><input type="checkbox" class="table-checkbox"/></td>
+                        <td data-state="0"><input type="checkbox" class="table-checkbox entry-checked"/></td>
                     </tr>     
                 </tbody>
             </table>             
@@ -107,5 +102,7 @@
     <script src="/public/js/jquery-3.6.3.min.js"></script>
     <script type="module" src="/public/js/menu.js"></script>
     <script type="module" src="/public/js/handleSecurityPanel.js"></script>
+    <script type="module" src="/public/js/handleScrollLoading.js"></script>
+    <script type="module" src="/public/js/handleSecurityForms.js"></script>
 </body>
 </html>

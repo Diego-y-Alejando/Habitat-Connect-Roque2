@@ -13,7 +13,7 @@ $(document).ready(function () {
         if (menuOpen) {
             menu.animate({ left: -menuWidth }, 300);
             menuOpen = false;
-            menuToggle.find('#filter-icon').attr('src','../icons/filter-white-icon.png').css({
+            menuToggle.find('#filter-icon').attr('src','/public/icons/filter-white-icon.png').css({
                                                                                             'width':'10%',
                                                                                             'marginTop':'0%',
                                                                                             'marginLeft':'0%'
@@ -21,7 +21,7 @@ $(document).ready(function () {
         } else {
             menu.animate({ left: 0 }, 300); 
             menuOpen = true;
-            menuToggle.find('#filter-icon').attr('src','../icons/cerrar.png').css({
+            menuToggle.find('#filter-icon').attr('src','/public/icons/cerrar.png').css({
                                                                                     'width':'7%',
                                                                                     'marginTop':'5%',
                                                                                     'marginLeft':'2%'

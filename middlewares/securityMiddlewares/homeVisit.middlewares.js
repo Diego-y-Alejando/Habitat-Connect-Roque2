@@ -6,7 +6,8 @@ const {
     ValidationIdOrLevel,
     tokenValidation,
     userExist,
-    validationVisitStatus
+    validationVisitStatus,
+    validatePage
 } = require('../common.middlewares')
 
 const home_visit = require('../../models/homeVisit.model');
@@ -50,6 +51,7 @@ const checkHomeVisitValidations = async (req = request , res = response , next)=
 const getHomeVisitsValidations = async (req = request , res = response , next)=>{
     const page = parseInt(req.query.page)
     const token = req.cookies.authorization
+   
     try {
         validatePage(page);
         await tokenValidation(token,security_user,'security_user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['security']);
@@ -64,7 +66,9 @@ const getHomeVisitsValidations = async (req = request , res = response , next)=>
 const searchHomeVisitsValidations = async (req = request , res = response , next)=>{
     const token = req.cookies.authorization
     const searchData = req.query.searchData
+    const page = req.query.page 
     try {
+        validatePage(page)
         await tokenValidation(token,security_user,'security_user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['security']);
         next();
     } catch (error) {

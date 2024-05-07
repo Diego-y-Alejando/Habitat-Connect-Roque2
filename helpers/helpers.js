@@ -126,6 +126,7 @@ const changeObjectNames =(originalObject,objectPropertiesForChange)=>{
         return newObject
     }, {});
 }
+
 const cookieOptions = {
     httpOnly: true, // Solo accesible desde el servidor
     secure: true, // Solo en conexiones HTTPS
@@ -172,7 +173,6 @@ const corsOptions = {
 }
 
 
-
 const formatDateAndHour = () => {
   const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
 
@@ -180,11 +180,12 @@ const formatDateAndHour = () => {
   const utcDate = toDate(now);
   const centralAmericaDate = fromZonedTime(utcDate, centralAmericaTimezone);
 
-  const dateTimeFormat = 'yyyy-MM-dd HH:mm';
+  const dateTimeFormat = 'yyyy-MM-dd KK:mm';
   const formattedDateTime = format(centralAmericaDate, dateTimeFormat, { timeZone: centralAmericaTimezone });
 
   return formattedDateTime;
 };
+
 
 module.exports={
     jwtGenerate,

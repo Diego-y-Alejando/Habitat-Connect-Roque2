@@ -8,13 +8,13 @@ import {
 
     const buttonCreateElement=$('#create-home-visit');
     const modalWindow = $('#modal-window')
-    const buttonCreateDelivery =$('#create-delivery')
-   
+    const buttonCreateDelivery =$('#create-package-delivery')
+
     buttonCreateElement.on('click',function(event){
         handleModalWindow('create-home-visit',modalWindow,null)
     });
     buttonCreateDelivery.on('click',function(event){
-        handleModalWindow('create-delivery',modalWindow,null)
+        handleModalWindow('create-package-delivery',modalWindow,null)
     });
     const handleModalWindow =(typeContent,container,dataForCheck)=>{
         const contentsModalWindow ={
@@ -22,27 +22,29 @@ import {
             'create-home-visit':`
                 <form class="form-modal-window" id="create-home-visit">
                     <h3 class="title-form">Creando visita doméstica</h3>
-                    <select class="select-form" name="apartament_id">
-                        <option class="option-select" disabled selected>Apartamento que visita</option>
-                        <option class="option-select" value="">1-6</option>
-                        <option class="option-select" value="">1-7</option>
-                    </select>
-                    <label class="label-modal-form ">
-                        <input type="text" class="input-form" placeholder="Nombre del residente">
+                    <label class="label-modal-form" for="apartament_id">
+                        <select class="select-form home-visit-input" name="apartament_id" >
+                            <option class="option-select" disabled selected>Apartamento que visita</option>
+                            <option class="option-select" value="1">1-1</option>
+                            <option class="option-select" value="2">1-2</option>
+                        </select>
                     </label>
-                    <label class="label-modal-form ">
-                        <input type="text" class="input-form" placeholder="Nombre del visitante">
+                    <label class="label-modal-form " for="resident_name">
+                        <input type="text" class="input-form home-visit-input" placeholder="Nombre del residente" name="resident_name">
                     </label>
-                    <label class="label-modal-form ">
-                        <input type="text" class="input-form" placeholder="Identificacion del visitante">
+                    <label class="label-modal-form " for="visitors_name">
+                        <input type="text" class="input-form home-visit-input" placeholder="Nombre del visitante" name="visitors_name">
+                    </label>
+                    <label class="label-modal-form " for="dpi">
+                        <input type="text" class="input-form home-visit-input" placeholder="Identificacion del visitante" name="dpi">
                     </label>
                     <div class="container-buttons">
-                        <input type="button" class="btn-form btn-submit " value="Guardar">
+                        <input type="submit" class="btn-form btn-submit " value="Registrar" id="submit-home-visit">
                         <input type="button" class="btn-form btn-cancel " value="Cancelar" id="close-modal-window">
                     </div>
                 </form>`,
             //formulario de crear delivery 
-            'create-delivery': `
+            'create-package-delivery': `
                 <form class="form-modal-window">
                     <h3 class="title-form">Creando entrega de paquete</h3>
                     <select class="select-form" name="apartament_id">
@@ -57,14 +59,14 @@ import {
                         <input type="text" class="input-form" placeholder="Nombre de la empresa">
                     </label>
                     <div class="container-buttons">
-                        <input type="button" class="btn-form btn-submit " value="Guardar">
+                        <input type="button" class="btn-form btn-submit " value="Guardar" >
                         <input type="button" class="btn-form btn-cancel " value="Cancelar" id="close-modal-window">
                     </div>
                 </form>`,
             'check-foreinger':(object)=>{
                 return `
                 <div class="container-check-item">
-                    <img class="check-icon" src="../icons/marca-de-verificacion png.png">
+                    <img class="check-icon" src="/public/icons/marca-de-verificacion png.png">
                     <h3 class="check-title">${object.message}</h3>
                     <span class="apartament-number">Apartamento # ${object.apartament}</span>
                     <span class="foreinger-name">${object.name}</span>  
@@ -72,8 +74,17 @@ import {
                     <spa class="field-value">${object.date}</spa>
                     <span class="field-name">Hora :</span>
                     <spa class="field-value">${object.hour}</spa>
-                    <input type="hidden" id="${object.id}" data-state="${object.state}">
+                    <input type="hidden" data-id="${object.id}" data-state="${object.state}" name="id" >
+                    <input type="hidden" data-prev-state="${object.prevState}" name="prevState">
+                    <input type="hidden" data-url-to-send=${object.visitType} name="visitType">
                     <button class="btn-undo" id="close-modal-window"><strong>Deshacer</strong> acción</button>
+                </div>`
+            }, 
+            'error':(error)=>{
+                return `
+                <div class="container-check-item">
+                    <img class="check-icon" src="/public/icons/cancelar.png">
+                    <h3 class="error-title">${error}</h3>
                 </div>`
             }
         }
@@ -89,21 +100,19 @@ import {
       
         // cierra la ventana automatica para el marcaje
         let handleTimeout;
-        if (dataForCheck) {
-            console.log('true');
-            handleTimeout = setTimeout(() => {
-                container.css({
-                    display: 'none',
-                }).animate({
-                        opacity:0
-                    }, 400);
-            }, 7000);
-           
-        }
+        // if (dataForCheck) {
+        //     console.log('true');
+        //     handleTimeout = setTimeout(() => {
+        //         container.css({
+        //             display: 'none',
+        //         }).animate({
+        //                 opacity:0
+        //             }, 400);
+        //     }, 7000);
+        // }
           // cierra la ventana modal con un boton 
           const btnCloseModalWindow = $('#close-modal-window')
           btnCloseModalWindow.on('click',function(event){
-            console.log('click');
               container.css({
                   display: 'none',
               }).animate({
@@ -113,7 +122,9 @@ import {
             clearTimeout(handleTimeout)
           });
     }
-
+/*==========================================================================
+            SHOW CONTENT CONTROLLER
+===========================================================================*/
     const radioFilter = $('.radio-button-filter');
     radioFilter.on('change', function (event) {
        handleTitleSection(event.target.value);
@@ -122,7 +133,7 @@ import {
     const handleTitleSection =(filterSelected)=>{
         const titleSectionOptions ={
             'home-visit':'Visitas domésticas',
-            'delivery':'Entrega de paquetería',
+            'package-delivery':'Entrega de paquetería',
             'employee-visit':'Visitas de empleado'
         }
         const titleSection = $('#title-section')
@@ -142,26 +153,37 @@ import {
     $('#table-home-visit tbody').on('click', 'input[type="checkbox"]', function(event) {
 
         const dataForCheckHomeVisit = dataRowCollection($(this))
-
+        dataForCheckHomeVisit.visitType='home-visit'
+        dataForCheckHomeVisit.prevState = parseInt(dataForCheckHomeVisit.state)
         dataForCheckHomeVisit.state = parseInt(dataForCheckHomeVisit.state) + 1;
         dataForCheckHomeVisit.message = dataForCheckHomeVisit.state === 1 ? 'ENTRADA REGISTRADA' : 'SALIDA REGISTRADA';
         if (dataForCheckHomeVisit.state === 2)$(this).prop('disabled', true);
-        
-
-        // linea para actualizar el estado 
-        // $(this).parent().attr('data-state', dataForCheckHomeVisit.state)
-       
+        event.dataForCheckHomeVisit = dataForCheckHomeVisit
         handleModalWindow('check-foreinger',modalWindow,dataForCheckHomeVisit)
     })
 
-    $('#table-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
-        // aqui se maneja la peticion
+    $('#table-home-visit tbody').on('click', 'input[type="checkbox"]', async function(event) {
+       try {
+            const {id,state}= event.dataForCheckHomeVisit
+            const sendCheckHomeVisit = {
+                visit_id:id,
+                visit_status:state
+            }
+            const checkHomeVisitRequest = await makeRequest(`${BASE_URL}seguridad/check/home-visit/`,'POST',sendCheckHomeVisit,{})
+            if (!checkHomeVisitRequest.ok) throw new Error(checkHomeVisitRequest.error);
+            
+            handleModalWindow('check-foreinger',modalWindow,event.dataForCheckHomeVisit)
+            event.dataForCheckHomeVisit.state===1?$(this).addClass('entry-checked'):$(this).removeClass('entry-checked').prop('disabled',true)
+            $(this).parent().attr('data-state', checkHomeVisitRequest.newStatus);
+        } catch (error) {
+            handleModalWindow('error',modalWindow,error.message)
+       }
     })
 /*==========================================================================
                 HANDLE DELIVERY
 ===========================================================================*/
-    const deliveryTable = $('#table-delivery');
-    $('#table-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
+    const deliveryTable = $('#table-package-delivery');
+    $('#table-package-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
         const dataForCheckDelivery = dataRowCollection($(this))
     
         dataForCheckDelivery.state = parseInt(dataForCheckDelivery.state) + 1;
@@ -172,7 +194,7 @@ import {
         handleModalWindow('check-foreinger',modalWindow,dataForCheckDelivery)
     })
 
-    $('#table-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
+    $('#table-package-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
             //se maneja la peticion 
     })
 
@@ -182,7 +204,7 @@ import {
     $('#table-apartament-employees tbody').on('click', 'input[type="checkbox"]', function(event) {
 
         const dataForCheckEmployee = dataRowCollection($(this))
-        console.log(dataForCheckEmployee);
+    
         dataForCheckEmployee.state = parseInt(dataForCheckEmployee.state) + 1;
         dataForCheckEmployee.message = dataForCheckEmployee.state === 1 ? 'ENTRADA REGISTRADA' : 'SALIDA REGISTRADA';
         if (dataForCheckEmployee.state === 2)$(this).prop('disabled', true);
@@ -229,6 +251,35 @@ import {
     }
       
       
-     
+/*==========================================================================
+                HANDLE UNDO ACTION
+===========================================================================*/  
+modalWindow.on('click','.btn-undo',async function(event){
+    try {
+        const valuesForUndo = [];
+        const dataInputsAttributes = ['data-id', 'data-prev-state', 'data-url-to-send'];
+        
+        $(this).siblings('input').each((index, element) => {
+            const attributeValue = $(element).attr(dataInputsAttributes[index]);
+            valuesForUndo.push(attributeValue);
+        });
+        
+        // Ahora, valuesForUndo contiene los valores en el mismo orden que los atributos.
+
+       const undoRequest = await makeRequest(`${BASE_URL}seguridad/undo/check/${valuesForUndo[2]}`,'POST',{"visit_id":valuesForUndo[0],"prevState":valuesForUndo[1] },{})
+       if (!undoRequest.ok) throw new Error(undoRequest.error)
+   
+        $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).children('td').eq(3).attr('data-state',undoRequest.prevState)
+        if (undoRequest.prevState=='0') {
+            $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).find('input[type="checkbox"]').removeClass('entry-checked')
+        }
+        if (undoRequest.prevState=='1') {
+            $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).find('input[type="checkbox"]').addClass('entry-checked').prop('disabled',false)
+        }
+
+    } catch (error) {
+        handleModalWindow('error',modalWindow,error.message)
+    }
+})
  
 }(window.jQuery, window, document));

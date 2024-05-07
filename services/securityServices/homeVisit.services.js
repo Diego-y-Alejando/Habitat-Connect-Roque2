@@ -21,13 +21,22 @@ const checkHomeVistiService = async(checkHomeVisitData,home_visit_id)=>{
          throw new Error(error)
      }
 }
-const getAllHomeVisitsService =async (page)=>{
+const getAllHomeVisitsService =async (page,searchData)=>{
     try {
+       
+        const whereForSearch =  {
+            [Op.or]: [
+              { visitors_name: { [Op.like]: `%${searchData}%` } }, 
+              { dpi: { [Op.like]: `%${searchData}%` } } ,
+              {resident_name: { [Op.like]: `%${searchData}%` }}
+            ]
+          }
         const offset = (page - 1) * 10;
         return  await home_visit.findAndCountAll({
             attributes: ['home_visit_id', 'visitors_name', 'dpi',  'home_visit_state' ],
             offset,
             limit: 10,
+            where: searchData? whereForSearch :{},
             order: [['home_visit_id', 'DESC']],
             include:[{
                 model:apartament,
@@ -43,9 +52,10 @@ const getAllHomeVisitsService =async (page)=>{
         throw new Error(error)
     }
 }
-const searchHomeVistisService =async(searchData)=>{
+const searchHomeVistisService =async(searchData,page)=>{
     try {
-        return  await home_visit.findAll({
+        const offset = (page - 1) * 10;
+        return  await home_visit.findAndCountAll({
             where: {
               [Op.or]: [
                 { visitors_name: { [Op.like]: `%${searchData}%` } }, 
@@ -54,6 +64,7 @@ const searchHomeVistisService =async(searchData)=>{
               ]
             },
             attributes: ['home_visit_id', 'visitors_name', 'dpi',  'home_visit_state' ],
+            limit: 10,
             order: [['home_visit_id', 'DESC']],
             include:[{
                 model:apartament,
