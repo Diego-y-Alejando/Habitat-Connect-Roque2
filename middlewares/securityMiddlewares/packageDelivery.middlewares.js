@@ -37,7 +37,7 @@ const checkPackageDeliveryValidations = async (req = request , res = response , 
     const token = req.cookies.authorization
     try {
         ValidationIdOrLevel('id del paquete ',delivery_id);
-        validationVisitStatus(delivery_status);
+        validationPackageDeliveryStatus(delivery_status);
         await userExist('El paquete  que intenta marcar',package_delivery,delivery_id,'package_delivery_id',[ 'resident_name', 'company_name', 'delivery_time', 'package_delivery_state', 'id_package_recipient', 'id_delivery_creator', 'id_apartament_package' ]);
         const {id} = await tokenValidation(token,security_user,'security_user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['security']);
         req.id_receptor = id
@@ -79,12 +79,12 @@ const searchPackageValidations =async(req = request , res = response, next)=>{
     }
 }
 const undoCheckPackageDeliveryValidations =async(req = request , res = response,next)=>{
-    const {delivery_id,prevState}= req.body
+    const {visit_id,prevState}= req.body
     const token = req.cookies.authorization
     try{
-        ValidationIdOrLevel('id del paquete',delivery_id);
-        validationVisitStatus(prevState);
-        await userExist('El paquete  que intenta marcar',package_delivery,delivery_id,'package_delivery_id',[ 'resident_name', 'company_name', 'delivery_time', 'package_delivery_state', 'id_package_recipient', 'id_delivery_creator', 'id_apartament_package' ]);
+        ValidationIdOrLevel('id del paquete',visit_id);
+        validationPackageDeliveryStatus(prevState);
+        await userExist('El paquete  que intenta marcar',package_delivery,visit_id,'package_delivery_id',[ 'resident_name', 'company_name', 'delivery_time', 'package_delivery_state', 'id_package_recipient', 'id_delivery_creator', 'id_apartament_package' ]);
         await tokenValidation(token,security_user,'security_user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['security']);
         next();
     } catch (error) {
@@ -109,3 +109,12 @@ const validateCompanyName =(company_name)=>{
         throw new Error('El nombre de la empresa solo puede contener letras, números y puntos')
     }
 }
+const validationPackageDeliveryStatus =(visit_status)=>{
+    const regexVisitStatus=/^[0-2]+$/
+    if (!visit_status) {
+        throw new Error('El estatus de la visita  no puede venir vacío')
+    }
+    if (!regexVisitStatus.test(visit_status)) {
+      throw new Error('El estatus de la visita es inválida')
+    }
+  }

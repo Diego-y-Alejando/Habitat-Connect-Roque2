@@ -8,7 +8,8 @@ const {
     undoCheckPackageDeliveryService
 }= require('../../services/securityServices/packageDelivery.services')
 const {
-    formatDateAndHour
+    formatDateAndHour,
+    changeObjectNames
 }= require('../../helpers/helpers');
 const createPackageDeliveryController = async (req = request , res = response)=>{
     const {resident_name,company_name,apartament_id}=req.body
@@ -24,11 +25,12 @@ const createPackageDeliveryController = async (req = request , res = response)=>
       })
       return res.status(200).json({
             ok:true,
+            msg:'Has creado el paquete',
             packageDeliveryData:{
-                delivery_id:dataValues.package_delivery_id,
-                resident_name:dataValues.resident_name,
+                visit_id:dataValues.package_delivery_id,
+                data_name:dataValues.resident_name,
                 company_name:dataValues.company_name,
-                delivery_state:dataValues.package_delivery_state
+                data_state:dataValues.package_delivery_state
             }
       })
     } catch (error) {
@@ -42,7 +44,7 @@ const checkPackageDeliveryController = async (req = request , res = response)=>{
 
     const {delivery_id,delivery_status} = req.body
     try {
-        if (delivery_status==1) {
+        if (delivery_status>1) {
             throw new Error('Ya se ha recibido este paquete ')
         }
         const dateTime = formatDateAndHour()
@@ -65,19 +67,42 @@ const checkPackageDeliveryController = async (req = request , res = response)=>{
         })
     }
 }
-const getPackageDeliveryController = async (req = request , res = response)=>{
+const getAllPackageDeliveryController = async (req = request , res = response)=>{
     const page=parseInt(req.query.page)
+    const searchData = req.query.searchData
+
     try {
-        const result = await getAllPackageDeliveryService(page)
+        const result = await getAllPackageDeliveryService(page,searchData)
+        const totalPages = Math.ceil(result.count/10)
         if (result.rows.length===0) {
             return res.status(200).json({
                 msg:'Ya no hay mas paquetes',
                 lastPage:page,
-                ok:true
+                allRows:[],
+                ok:true,
+                totalPages:totalPages
             })
-        }
+        }  
+        const newRows =result.rows.map(({dataValues}) => {         
+            let newObject ={
+                ...dataValues,
+                'data_apartament_number':dataValues['packageForApartament'].apartament_number
+            }
+            delete newObject['packageForApartament']
+            return changeObjectNames(newObject,{
+                package_delivery_id:'visit_id',
+                resident_name:'data_name',
+                company_name:'company_name',
+                package_delivery_state:'data_state',
+                data_apartament_number:'data_apartament_number'
+            });
+        });
+        
         return res.status(200).json({
-            result,
+            allRows:newRows,
+            count:result.count,
+            currentPage:page,
+            totalPages:totalPages,
             ok:true
         })
       
@@ -105,9 +130,9 @@ const searchPackageDeliveryController = async (req = request , res = response)=>
     }
 }
 const undoCheckPackageDeliveryController = async (req = request , res = response)=>{
-    const {delivery_id,prevState}= req.body
+    const {visit_id,prevState}= req.body
     try {
-        const undoCheckPackageDelivery = await undoCheckPackageDeliveryService(delivery_id)
+        const undoCheckPackageDelivery = await undoCheckPackageDeliveryService(visit_id)
         console.log(undoCheckPackageDelivery);
         if (undoCheckPackageDelivery<1) {
             throw new Error('No se ha podido deshacer la acción');
@@ -127,7 +152,7 @@ const undoCheckPackageDeliveryController = async (req = request , res = response
 module.exports= {
     createPackageDeliveryController,
     checkPackageDeliveryController,
-    getPackageDeliveryController,
+    getAllPackageDeliveryController,
     searchPackageDeliveryController,
     undoCheckPackageDeliveryController
 

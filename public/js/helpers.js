@@ -146,12 +146,12 @@ const addVisitToTable =(positionToAdd,tableToAdd,dataToAdd)=>{
 
     const addRowTypes ={
         'prepend':(tableToAdd,dataToAdd)=>{
-            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi}) => {
+            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi,company_name}) => {
                 tableToAdd.prepend(`
                     <tr class="table-row" id="${visit_id}" >
                         <td data-apartament-number="${data_apartament_number}">${data_apartament_number}</td>
                         <td class="td-name" data-name="${data_name}">${data_name}</td>
-                        <td >${dpi}</td>
+                        <td >${dpi?dpi:company_name}</td>
                         <td data-state="${data_state}"><input type="checkbox" class="table-checkbox"/></td>
                     </tr>   
                 `)
@@ -159,13 +159,13 @@ const addVisitToTable =(positionToAdd,tableToAdd,dataToAdd)=>{
     
         },
         'append':(tableToAdd,dataToAdd)=>{
-            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi}) => {
+            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi,company_name}) => {
                 tableToAdd.append(`
                     <tr class="table-row" id="${visit_id}" >
                         <td data-apartament-number="${data_apartament_number}">${data_apartament_number}</td>
                         <td class="td-name" data-name="${data_name}">${data_name}</td>
-                        <td >${dpi}</td>
-                        <td data-state="${data_state}"><input type="checkbox" class="table-checkbox ${data_state===1?'entry-checked':true}" ${data_state===2?'disabled':true}/></td>
+                        <td >${dpi?dpi:company_name}</td>
+                        <td data-state="${data_state}"><input type="checkbox" class="table-checkbox ${data_state===1 ?'entry-checked':true}" ${data_state===2 &&(!company_name) ?'disabled':data_state===1 &&company_name? 'disabled':'' }/></td>
                     </tr>   
                 `)
             });

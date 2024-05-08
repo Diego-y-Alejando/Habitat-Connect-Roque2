@@ -14,10 +14,7 @@ const {
 const viewSecurityControlPanelController=(req = request ,res = response)=>{
     try {
         res.render(securityControlPanel,{BASE_URL:process.env.BASE_URL});
-        // return res.status(404).json({
-        //     message:securityControlPanel,
-        //     ok:false
-        // })
+        
 
     } catch (error) {
         return res.status(404).json({

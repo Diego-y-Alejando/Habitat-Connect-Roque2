@@ -1,7 +1,8 @@
 import {
     validateName,
     validateDpi,
-    ValidationIdOrLevel
+    ValidationIdOrLevel,
+    validateCompanyName
 } from './validators.js'
 
 import {
@@ -25,7 +26,7 @@ import {
             errosHomevisit[currentTarget.name]?delete errosHomevisit[currentTarget.name]:errosHomevisit={}
             handleInputErrors(currentTarget,'');
             
-            createHomeVisitValidations(currentTarget.name,currentTarget.value);
+            validations(currentTarget.name,currentTarget.value);
             dataHomeVisit={
                 ...dataHomeVisit,
                 [currentTarget.name]:currentTarget.value
@@ -39,8 +40,8 @@ import {
             handleInputErrors(currentTarget,error.message)
         }
     })
-    
-    modalWindow.on('submit','#create-home-visit', async function (event){
+
+    modalWindow.on('submit','#form-create-home-visit', async function (event){
         event.preventDefault()
         const btnSubmitHomeVisit =$(event.currentTarget).find('#submit-home-visit')
         try {
@@ -66,18 +67,74 @@ import {
             }, 5000);
         } catch (error) {
             showRequestFormResult(btnSubmitHomeVisit,error.message)
-            console.log(error);
+          
         }
    
     })
-    const createHomeVisitValidations=(inputName,inputValue)=>{
-        const homeVisitValidations ={
+   
+
+/*==========================================================================
+          PACKAGE DELIVERY
+===========================================================================*/
+    let errorsPackageDelivery ={}
+    let dataPackageDelivery={}
+    modalWindow.on('change','.package-delivery-input',function({currentTarget}){
+        try {
+            errorsPackageDelivery[currentTarget.name]?delete errorsPackageDelivery[currentTarget.name]:errorsPackageDelivery={}
+            handleInputErrors(currentTarget,'');
+            validations(currentTarget.name,currentTarget.value);
+            dataPackageDelivery={
+                ...dataPackageDelivery,
+                [currentTarget.name]:currentTarget.value
+            }
+            if (currentTarget.name==='apartament_id')dataPackageDelivery.apartament_number = currentTarget.options[currentTarget.selectedIndex].text
+        } catch (error){
+            errorsPackageDelivery={
+                ...errorsPackageDelivery,
+                [currentTarget.name]:error.message
+            }
+            handleInputErrors(currentTarget,error.message)
+        }
+    })
+    modalWindow.on('submit','#form-create-package-delivery', async function (event){
+        event.preventDefault()
+        const btnSubmitPackageDelivery =$(event.currentTarget).find('#submit-package-delivery')
+        try {
+           
+            const apartament_number= dataPackageDelivery.apartament_number
+            delete dataPackageDelivery.apartament_number
+            if (Object.keys(dataPackageDelivery).length===0 ||Object.keys(dataPackageDelivery).length<3 )throw new Error('Debes completar todos los campos ')
+            const packageDeliveryCreated= await makeRequest(BASE_URL+'seguridad/create/package-delivery','POST', dataPackageDelivery,{})   
+            if (!packageDeliveryCreated.ok) throw new Error(packageDeliveryCreated.error)
+                packageDeliveryCreated.packageDeliveryData ={
+                    ...packageDeliveryCreated.packageDeliveryData,
+                   data_apartament_number:apartament_number
+                }
+            addVisitToTable('prepend',$('#table-package-delivery tbody'),packageDeliveryCreated.packageDeliveryData)
+            showRequestFormResult(btnSubmitPackageDelivery,packageDeliveryCreated.msg)
+            if (packageDeliveryCreated.ok) {
+                $('.package-delivery-input').val('')
+                $('.select-form').prop('selectedIndex',0);
+                dataPackageDelivery={}
+            }
+            setTimeout(() => {
+                showRequestFormResult(btnSubmitPackageDelivery,'')
+            }, 5000);
+        } catch (error) {
+            showRequestFormResult(btnSubmitPackageDelivery,error.message)
+        }
+    })
+    const validations=(inputName,inputValue)=>{
+        const objectValidations ={
             'resident_name':(value)=>{
                 validateName(value,30)
             },
             'visitors_name':(value)=>{
                 validateName(value,30)
 
+            },
+            'company_name':(value)=>{
+                validateCompanyName(value)
             },
             'dpi':(value)=>{
                 validateDpi(value)
@@ -86,15 +143,12 @@ import {
                 ValidationIdOrLevel('id del apartamento ',value)
             }
         }
-        if (homeVisitValidations.hasOwnProperty(inputName)) {
-            homeVisitValidations[inputName](inputValue)
+        if (objectValidations.hasOwnProperty(inputName)) {
+            objectValidations[inputName](inputValue)
     
         }else{
             throw new Error(`Input inválido: ${inputName}`);
         }
     }
-    
- 
- 
    
 }(window.jQuery, window, document))

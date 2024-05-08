@@ -59,6 +59,9 @@ input[type="radio"]:checked{
     color: var(--Azul);
     font-family: montserrat-regular;
 }
+.error-input{
+    text-align: center;
+}
 .select-form{
     background-color: var(--Azul-oscuro);
     color: var(--white);
@@ -200,8 +203,6 @@ input[type="radio"]:checked{
 }
 tbody td{
     color: var(--Azul-oscuro);
-    height: 50px;
-    line-height: 20px;
 }
 .table-checkbox{
     appearance: none;
@@ -396,8 +397,8 @@ tbody td{
       font-size: 1.7rem;
     }
     .container-tables{
-        max-height: 60vh;
-        min-height: 60vh;
+        max-height:65vh;
+        min-height:65vh;
     }
     .create-element-button{
         padding: 1%;
@@ -410,6 +411,10 @@ tbody td{
     }
     .table-title{
         height: 50px;
+    }
+    tbody td{
+        height: 60px;
+
     }
     .table-checkbox{
         width: 20px;

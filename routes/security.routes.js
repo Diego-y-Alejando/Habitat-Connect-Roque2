@@ -45,13 +45,13 @@ const {
 const {
     createPackageDeliveryController,
     checkPackageDeliveryController,
-    getPackageDeliveryController,
+    getAllPackageDeliveryController,
     searchPackageDeliveryController,
     undoCheckPackageDeliveryController
 }= require('../controllers/securityControllers/packageDelivery.controllers.js');
 router.post('/create/package-delivery/',createPackageDeliveryValidations,createPackageDeliveryController);
 router.post('/check/package-delivery/',checkPackageDeliveryValidations,checkPackageDeliveryController);
-router.get('/get/package-delivery/',getPackageDeliveriesValidations,getPackageDeliveryController)
+router.get('/get/package-delivery/',getAllPackageDeliveryController)
 router.get('/search/delivery',searchPackageDeliveryController);
 router.post('/undo/check/package-delivery',undoCheckPackageDeliveryValidations,undoCheckPackageDeliveryController);
 

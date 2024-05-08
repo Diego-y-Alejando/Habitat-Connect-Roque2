@@ -304,6 +304,14 @@ const ValidationStickerValues=(stickerNumber)=>{
       throw  new Error(error)
   }
 }
+const validateCompanyName =(company_name)=>{
+  const regexCompanyName = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9. ]+$/
+  if (!company_name) {
+      throw new Error('El nombre de la empresa no puede venir vacío');
+  }if (!regexCompanyName.test(company_name)) {
+      throw new Error('El nombre de la empresa solo puede contener letras, números y puntos')
+  }
+}
 export {
     validateName,
     validateLastName,
@@ -334,6 +342,7 @@ export {
     validateTypeAccount,
     validatePaymentMethod,
     validateBankName,
-    ValidationStickerValues
+    ValidationStickerValues,
+    validateCompanyName
     
 }

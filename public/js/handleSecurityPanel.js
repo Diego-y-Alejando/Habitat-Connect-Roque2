@@ -20,7 +20,7 @@ import {
         const contentsModalWindow ={
             // formulario de crear visita domestica 
             'create-home-visit':`
-                <form class="form-modal-window" id="create-home-visit">
+                <form class="form-modal-window" id="form-create-home-visit">
                     <h3 class="title-form">Creando visita doméstica</h3>
                     <label class="label-modal-form" for="apartament_id">
                         <select class="select-form home-visit-input" name="apartament_id" >
@@ -45,21 +45,23 @@ import {
                 </form>`,
             //formulario de crear delivery 
             'create-package-delivery': `
-                <form class="form-modal-window">
+                <form class="form-modal-window" id="form-create-package-delivery">
                     <h3 class="title-form">Creando entrega de paquete</h3>
-                    <select class="select-form" name="apartament_id">
-                        <option class="option-select" disabled selected>Apartamento que recibe</option>
-                        <option class="option-select" value="">1-6</option>
-                        <option class="option-select" value="">1-7</option>
-                    </select>
-                    <label class="label-modal-form ">
-                        <input type="text" class="input-form" placeholder="Nombre del residente">
+                    <label class="label-modal-form" for="apartament_id">
+                        <select class="select-form package-delivery-input" name="apartament_id" >
+                            <option class="option-select" disabled selected>Apartamento que visita</option>
+                            <option class="option-select" value="1">1-1</option>
+                            <option class="option-select" value="2">1-2</option>
+                        </select>
                     </label>
                     <label class="label-modal-form ">
-                        <input type="text" class="input-form" placeholder="Nombre de la empresa">
+                        <input type="text" class="input-form package-delivery-input" placeholder="Nombre del residente" name="resident_name">
+                    </label>
+                    <label class="label-modal-form ">
+                        <input type="text" class="input-form package-delivery-input" placeholder="Nombre de la empresa" name="company_name">
                     </label>
                     <div class="container-buttons">
-                        <input type="button" class="btn-form btn-submit " value="Guardar" >
+                        <input type="submit" class="btn-form btn-submit " value="Guardar"  id="submit-package-delivery">
                         <input type="button" class="btn-form btn-cancel " value="Cancelar" id="close-modal-window">
                     </div>
                 </form>`,
@@ -185,17 +187,30 @@ import {
     const deliveryTable = $('#table-package-delivery');
     $('#table-package-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
         const dataForCheckDelivery = dataRowCollection($(this))
-    
+        dataForCheckDelivery.visitType='package-delivery'
+        dataForCheckDelivery.prevState = parseInt(dataForCheckDelivery.state)
         dataForCheckDelivery.state = parseInt(dataForCheckDelivery.state) + 1;
         dataForCheckDelivery.message = 'PAQUETE RECIBIDO'
-        if (dataForCheckDelivery.state === 1)$(this).prop('disabled', true);
-        // $(this).parent().attr('data-state', dataForCheckDelivery.state)
-
-        handleModalWindow('check-foreinger',modalWindow,dataForCheckDelivery)
+        event.dataForCheckDelivery=dataForCheckDelivery
+        
     })
 
-    $('#table-package-delivery tbody').on('click', 'input[type="checkbox"]', function(event) {
-            //se maneja la peticion 
+    $('#table-package-delivery tbody').on('click', 'input[type="checkbox"]', async function(event) {
+        try {
+            const {id,state}= event.dataForCheckDelivery
+            const sendCheckPackageDelivery = {
+                delivery_id:id,
+                delivery_status:state
+            }
+            const checkPackageDeliveryRequest = await makeRequest(`${BASE_URL}seguridad/check/package-delivery/`,'POST',sendCheckPackageDelivery,{})
+            if (!checkPackageDeliveryRequest.ok) throw new Error(checkPackageDeliveryRequest.error);
+            console.log(event.dataForCheckDelivery);
+            handleModalWindow('check-foreinger',modalWindow,event.dataForCheckDelivery)
+            if (checkPackageDeliveryRequest.newStatus=== 1)$(this).prop('disabled', true);
+            $(this).parent().attr('data-state', checkPackageDeliveryRequest.newStatus)
+        } catch (error) {
+            handleModalWindow('error',modalWindow,error.message)
+        }
     })
 
 /*==========================================================================
@@ -256,29 +271,28 @@ import {
 ===========================================================================*/  
 modalWindow.on('click','.btn-undo',async function(event){
     try {
-        const valuesForUndo = [];
         const dataInputsAttributes = ['data-id', 'data-prev-state', 'data-url-to-send'];
-        
-        $(this).siblings('input').each((index, element) => {
-            const attributeValue = $(element).attr(dataInputsAttributes[index]);
-            valuesForUndo.push(attributeValue);
-        });
-        
-        // Ahora, valuesForUndo contiene los valores en el mismo orden que los atributos.
+        const [visitId, prevState, urlToSend] = $(this).siblings('input').map((index, element) => $(element).attr(dataInputsAttributes[index])).get();
+    
+        const undoRequest = await makeRequest(`${BASE_URL}seguridad/undo/check/${urlToSend}`, 'POST', { visit_id: visitId, prevState }, {});
+        if (!undoRequest.ok) throw new Error(undoRequest.error);
+        const $row = $(`#table-${urlToSend} tbody tr#${visitId}`);
+        $row.children('td').eq(3).attr('data-state', undoRequest.prevState);
 
-       const undoRequest = await makeRequest(`${BASE_URL}seguridad/undo/check/${valuesForUndo[2]}`,'POST',{"visit_id":valuesForUndo[0],"prevState":valuesForUndo[1] },{})
-       if (!undoRequest.ok) throw new Error(undoRequest.error)
-   
-        $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).children('td').eq(3).attr('data-state',undoRequest.prevState)
-        if (undoRequest.prevState=='0') {
-            $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).find('input[type="checkbox"]').removeClass('entry-checked')
+        if (urlToSend === 'home-visit' || urlToSend === 'employe-visit') {
+            if (undoRequest.prevState=='0') {
+                $row.find('input[type="checkbox"]').removeClass('entry-checked')
+            }
+        }if(urlToSend==='package-delivery'){
+            if (undoRequest.prevState=='0') {
+                $row.find('input[type="checkbox"]').prop('disabled',false)
+            }
         }
-        if (undoRequest.prevState=='1') {
-            $(`#table-${valuesForUndo[2]} tbody`).find(`tr#${valuesForUndo[0]}`).find('input[type="checkbox"]').addClass('entry-checked').prop('disabled',false)
+        else if(undoRequest.prevState=='1') {
+            $row.find('input[type="checkbox"]').addClass('entry-checked').prop('disabled',false)
         }
-
     } catch (error) {
-        handleModalWindow('error',modalWindow,error.message)
+        handleModalWindow('error', modalWindow, error.message);
     }
 })
  

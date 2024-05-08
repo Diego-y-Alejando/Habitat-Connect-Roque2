@@ -20,14 +20,21 @@ const checkPackageDeliveryService =async(delivery_id,checkPackageData)=>{
         throw error
     }
 }
-const getAllPackageDeliveryService =async (page)=>{
+const getAllPackageDeliveryService =async (page,searchData)=>{
     
     try {
+        const whereForSearch ={
+            [Op.or]: [
+                { resident_name: { [Op.like]: `%${searchData}%` } }, 
+                { company_name: { [Op.like]: `%${searchData}%` } } 
+            ]
+        }
         const offset = (page - 1) * 10;
         return  await package_delivery.findAndCountAll({
             attributes: ['package_delivery_id', 'resident_name', 'company_name',  'package_delivery_state' ],
             offset,
             limit: 10,
+            where: searchData? whereForSearch :{},
             order: [['package_delivery_id', 'DESC']],
             include:[{
                 model:apartament,

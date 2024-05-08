@@ -84,12 +84,15 @@ const getHomeVisitisControllers = async (req = request , res = response )=>{
     try {
 
        const result = await getAllHomeVisitsService(page,searchData)
+       const totalPages = Math.ceil(result.count/10)
+
         if (result.rows.length===0) {
             return res.status(200).json({
                 msg:'Ya no hay mas visitas domésticas ',
                 lastPage:page,
-                homeVisits:[],
-                ok:true
+                allRows:[],
+                ok:true,
+                totalPages
             })
         }
         // cambia de nombre a los registros y elimina la propiedad homeVisitForApartament para hacer una sola propiedad c
@@ -108,10 +111,11 @@ const getHomeVisitisControllers = async (req = request , res = response )=>{
             });
         });
         return res.status(200).json({
-            homeVisits:newRows,
+            allRows:newRows,
             count:result.count,
             currentPage:page,
-            ok:true
+            ok:true,
+            totalPages
         })
      
     } catch (error) {
