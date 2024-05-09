@@ -25,8 +25,8 @@ import {
                     <label class="label-modal-form" for="apartament_id">
                         <select class="select-form home-visit-input" name="apartament_id" >
                             <option class="option-select" disabled selected>Apartamento que visita</option>
-                            <option class="option-select" value="1">1-1</option>
-                            <option class="option-select" value="2">1-2</option>
+                            <option class="option-select" value="1">1-2</option>
+                            <option class="option-select" value="2">1-3</option>
                         </select>
                     </label>
                     <label class="label-modal-form " for="resident_name">
@@ -50,8 +50,8 @@ import {
                     <label class="label-modal-form" for="apartament_id">
                         <select class="select-form package-delivery-input" name="apartament_id" >
                             <option class="option-select" disabled selected>Apartamento que visita</option>
-                            <option class="option-select" value="1">1-1</option>
-                            <option class="option-select" value="2">1-2</option>
+                            <option class="option-select" value="1">1-2</option>
+                            <option class="option-select" value="2">1-3</option>
                         </select>
                     </label>
                     <label class="label-modal-form ">
@@ -102,16 +102,16 @@ import {
       
         // cierra la ventana automatica para el marcaje
         let handleTimeout;
-        // if (dataForCheck) {
-        //     console.log('true');
-        //     handleTimeout = setTimeout(() => {
-        //         container.css({
-        //             display: 'none',
-        //         }).animate({
-        //                 opacity:0
-        //             }, 400);
-        //     }, 7000);
-        // }
+        if (dataForCheck) {
+            console.log('true');
+            handleTimeout = setTimeout(() => {
+                container.css({
+                    display: 'none',
+                }).animate({
+                        opacity:0
+                    }, 400);
+            }, 7000);
+        }
           // cierra la ventana modal con un boton 
           const btnCloseModalWindow = $('#close-modal-window')
           btnCloseModalWindow.on('click',function(event){

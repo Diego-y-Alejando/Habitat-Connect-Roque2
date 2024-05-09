@@ -51,6 +51,11 @@ $(document).ready(function () {
                 'marginTop':'0%',
                 'marginLeft':'0%'
             })
+            menuToggle.find('#filter-icon').attr('src','/public/icons/filter-white-icon.png').css({
+                'width':'10%',
+                'marginTop':'0%',
+                'marginLeft':'0%'
+            })
         }
     });
 
