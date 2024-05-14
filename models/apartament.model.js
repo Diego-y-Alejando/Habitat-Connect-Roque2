@@ -32,55 +32,6 @@ const apartament = sequelizeObj.define(
                 notEmpty:true
             }
         },
-        pedestrian_cards:{
-            type:DataTypes.JSON,
-            allowNull:false,
-            validate:{
-                notEmpty:true
-            }
-        },
-        parking_data:{
-            type:DataTypes.JSON,
-            allowNull:false,
-            validate:{
-                notEmpty:true
-            }
-        },
-        tenant_name:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            type:DataTypes.CHAR,
-            validate:{
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/,
-                len:[0,65],
-                notEmpty:true
-            }
-        },
-        phone_number_tenant:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            unique:true,
-            validate:{
-                notEmpty:true,
-                is:/^\d{4}-\d{4}$/
-            }
-        },
-        landlord_name:{
-            type:DataTypes.CHAR,
-            validate:{
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/,
-                len:[0,65],
-                notEmpty:true
-            }
-        },
-        phone_number_landlord:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^\d{4}-\d{4}$/
-            }
-        },
         // llave foranea 
         id_features_apartament:{
             type:DataTypes.INTEGER,
@@ -89,7 +40,6 @@ const apartament = sequelizeObj.define(
                 model: features_apartaments,
                 key: 'feature_id'
             }
-        
         },
         ocupation_state:{
             type:DataTypes.TINYINT,

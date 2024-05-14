@@ -16,15 +16,15 @@ class Server {
         this.middlewares();
         this.adminPath='/admin'
         this.userPath='/user'
+        this.securityPath='/seguridad'
         this.routes()
         this.port =process.env.PORT
     }
     async dbConnection(){
         await testConnection();
-
     }
     middlewares(){
-        this.app.use(helmet())
+        // this.app.use(helmet())
         this.app.use(compression)
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
@@ -44,6 +44,7 @@ class Server {
     
         this.app.use(this.adminPath, require('../routes/admin.routes'));
         this.app.use(this.userPath, require('../routes/user.routes'));
+        this.app.use(this.securityPath, require('../routes/security.routes'));
         this.app.use('/public',express.static('public'));
         this.app.use('/dist', express.static(path.join(__dirname,'../dist')));
         

@@ -1,79 +1,67 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const providers= sequelizeObj.define(
-    'providers',{
-        provider_id:{
+const security_user = sequelizeObj.define(
+    'security_user',{
+        security_user_id:{
             type:DataTypes.INTEGER,
+            autoIncrement:true,
             primaryKey:true,
             unique:true,
-            autoIncrement:true,
             allowNull:false
         },
-        provider_name:{
+        user_type:{
             type:DataTypes.CHAR,
             allowNull:false,
             validate:{
                 notEmpty:true,
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ0-9.,\s]+$/
             }
         },
-        phone_number:{
+        name:{
             type:DataTypes.CHAR,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
+            }
+        },
+        lastname:{
+            type:DataTypes.CHAR,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
+            }
+        },
+        email:{
+            type:DataTypes.CHAR,
+            unique:true,
             allowNull:false,
             unique:true,
             validate:{
+                isEmail:true,
+                is:/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/,
+                len:[5,100],
                 notEmpty:true,
-                is:/^\d{4}-\d{4}$/
             }
         },
-        bank_account:{
-            type:DataTypes.INTEGER,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^\d+$/
-            }
-        },
-        bank_name:{
+        password:{
             type:DataTypes.CHAR,
             allowNull:false,
             validate:{
-                notEmpty:true,
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
-            }
-        },
-        type_account:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
-            }
-        },
-        payment_methods:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
-            }
-        },
-        service_description:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ,\s]+$/
+                notEmpty:true
             }
         }
-
-    },{
+    },
+    {
         sequelize:sequelizeObj,
-        modelName:"providers",
+        modelName:"security_user",
         freezeTableName:true,
         createdAt:false,
-        updatedAt:false
+        updatedAt:false,
+        logging: console.log
     }
+
 )
-module.exports = providers
+
+module.exports= security_user

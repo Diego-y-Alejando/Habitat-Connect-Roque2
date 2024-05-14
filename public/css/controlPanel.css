@@ -9,15 +9,12 @@
     -ms-user-select: none;
     user-select: none; 
 }
-
 body{
     background-color: var(--Azul-oscuro);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-
 .container-grid-apartaments{
     display: grid;
     width: 75%;
@@ -31,7 +28,6 @@ body{
     justify-content: center;
     font-family: montserrat-regular;
     margin-top: 3%;
-
 }
 .filter-level{
     width: 30%;
@@ -87,14 +83,12 @@ body{
     justify-content: center;
     gap: 3%;
 }
-
 .apartament-name{
     width: 100%;
     overflow: hidden;
     font-size: 15px;
     color: #484848;
-    font-family: montserrat-semi-bold;
-    
+    font-family: montserrat-semi-bold;   
 }
 .primary-data{
     font-family: montserrat-regular;
@@ -125,7 +119,6 @@ body{
     -ms-transition: all 0.5ms ease-in;
     -o-transition: all 0.5ms ease-in;
 }
-
 .input-form{
     height: 30px;
     border: none;

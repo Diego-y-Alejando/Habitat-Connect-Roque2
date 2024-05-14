@@ -125,11 +125,65 @@ const defaultMaintenanceMonth = `
         <div class="circle circle-grey"></div>
     </div>
 `
+const handleInputErrors =(currentTarget,errorMessage)=>{
+    const siblingErrorSpan = $(currentTarget).siblings('span');
+    if(siblingErrorSpan.length==0 && errorMessage.length>0){
+        $(`<span class="error-input col-span-2">${errorMessage}</span>`).insertAfter($(currentTarget));
+    }else{
+        siblingErrorSpan.text(errorMessage)
+    }  
+}
+const showRequestFormResult =(currentTarget,errorMessage)=>{
+    const siblingErrorSpan = currentTarget.siblings('span');
+    if(siblingErrorSpan.length==0 && errorMessage.length>0){
+        $(`<span class="result-request">${errorMessage}</span>`).insertBefore(currentTarget);
+    }else{
+        siblingErrorSpan.text(errorMessage)
+    } 
+}
+
+const addVisitToTable =(positionToAdd,tableToAdd,dataToAdd)=>{
+
+    const addRowTypes ={
+        'prepend':(tableToAdd,dataToAdd)=>{
+            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi,company_name}) => {
+                tableToAdd.prepend(`
+                    <tr class="table-row" id="${visit_id}" >
+                        <td data-apartament-number="${data_apartament_number}">${data_apartament_number}</td>
+                        <td class="td-name" data-name="${data_name}">${data_name}</td>
+                        <td >${dpi?dpi:company_name}</td>
+                        <td data-state="${data_state}"><input type="checkbox" class="table-checkbox"/></td>
+                    </tr>   
+                `)
+            });
+    
+        },
+        'append':(tableToAdd,dataToAdd)=>{
+            [dataToAdd].forEach(({visit_id,data_name, data_state ,data_apartament_number,dpi,company_name}) => {
+                tableToAdd.append(`
+                    <tr class="table-row" id="${visit_id}" >
+                        <td data-apartament-number="${data_apartament_number}">${data_apartament_number}</td>
+                        <td class="td-name" data-name="${data_name}">${data_name}</td>
+                        <td >${dpi?dpi:company_name}</td>
+                        <td data-state="${data_state}"><input type="checkbox" class="table-checkbox ${data_state===1 ?'entry-checked':true}" ${data_state===2 &&(!company_name) ?'disabled':data_state===1 &&company_name? 'disabled':'' }/></td>
+                    </tr>   
+                `)
+            });
+        }
+    }
+
+    addRowTypes[positionToAdd](tableToAdd,dataToAdd)
+   
+}
 export{
     BASE_URL,
     headers,
     makeRequest,
     apartamentItemGenerator,
     formatEventsArray,
-    defaultMaintenanceMonth
+    defaultMaintenanceMonth,
+    handleInputErrors,
+    showRequestFormResult,
+    addVisitToTable
+    
 }
