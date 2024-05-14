@@ -1,7 +1,7 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
-const apartament = require('../models/apartament.model');
-const security_user = require('../models/securityUser.model');
+const resident_users = require('../models/resident_users.model');
+const security_users = require('../models/securityUser.model');
 const package_delivery = sequelizeObj.define(
     'package_delivery',{
         package_delivery_id:{
@@ -45,7 +45,7 @@ const package_delivery = sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:true,
             references: {
-                model: security_user,
+                model: security_users,
                 key: 'security_user_id'
             }
         },
@@ -53,19 +53,10 @@ const package_delivery = sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:false,
             references: {
-                model: security_user,
-                key: 'security_user_id'
-            }
-        },
-        id_apartament_package:{
-            type:DataTypes.INTEGER,
-            allowNull:false,
-            references: {
-                model: apartament,
-                key: 'apartament_id'
+                model: resident_users,
+                key: 'resident_user_id'
             }
         }
-
     },
     {
         sequelize:sequelizeObj,
@@ -79,32 +70,22 @@ const package_delivery = sequelizeObj.define(
 
 // relacion apartamento paquete 
 
-apartament.hasMany(package_delivery,{
-    as:'apartamentMakeDelivery',
-    foreignKey:'id_apartament_package'
-});
-package_delivery.belongsTo(apartament,{
-    as:'packageForApartament',
-    foreignKey:'id_apartament_package'
-});
-
-// relacion creador paquete 
-
-security_user.hasMany(package_delivery,{
-    as:'securityUserCreatePackage',
+resident_users.hasMany(package_delivery,{
+    as:'residentRequestPackage',
     foreignKey:'id_delivery_creator'
 });
-package_delivery.belongsTo(security_user,{
-    as:'packageCreateForSecurityUser',
+package_delivery.belongsTo(resident_users,{
+    as:'packageForResident',
     foreignKey:'id_delivery_creator'
 });
+
 
 // relacion receptor de paquete
-security_user.hasMany(package_delivery,{
+security_users.hasMany(package_delivery,{
     as:'securityUserRecipientPackage',
     foreignKey:'id_package_recipient'
 });
-package_delivery.belongsTo(security_user,{
+package_delivery.belongsTo(security_users,{
     as:'packageReceivedBy',
     foreignKey:'id_package_recipient'
 });

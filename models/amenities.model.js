@@ -44,12 +44,13 @@ const amenities = sequelizeObj.define(
             type:DataTypes.DECIMAL(10,2),
             allowNull:false
         },
+        time_limit :{
+            type:DataTypes.FLOAT,
+            allowNull:false,
+            defaultValue:'0'
+        },
         nickName :{
             type:DataTypes.CHAR,
-            allowNull:false
-        },
-        time_limit :{
-            type:DataTypes.INTEGER,
             allowNull:false
         }
     },

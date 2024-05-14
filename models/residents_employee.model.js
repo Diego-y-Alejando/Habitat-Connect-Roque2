@@ -1,21 +1,14 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const user = sequelizeObj.define(
-    'user',{
-        user_id:{
+const residents_employee = sequelizeObj.define(
+    'residents_employee',{
+        maid_id:{
             type:DataTypes.INTEGER,
+            autoIncrement:true,
             primaryKey:true,
             unique:true,
-            autoIncrement:true,
             allowNull:false
-        },
-        user_type:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-            }
         },
         name:{
             type:DataTypes.CHAR,
@@ -33,27 +26,6 @@ const user = sequelizeObj.define(
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
             }
         },
-        email:{
-            type:DataTypes.CHAR,
-            unique:true,
-            allowNull:false,
-            unique:true,
-            validate:{
-                isEmail:true,
-                is:/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/,
-                len:[5,100],
-                notEmpty:true,
-            }
-        },
-        phone_number:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            unique:true,
-            validate:{
-                notEmpty:true,
-                is:/^\(\d{3}\)\d{4}-\d{4}$/
-            }
-        },
         dpi:{
             type:DataTypes.CHAR,
             allowNull:false,
@@ -64,21 +36,26 @@ const user = sequelizeObj.define(
                     notEmpty: true,
             }
         },
-        password:{
+        phone_number:{
             type:DataTypes.CHAR,
             allowNull:false,
+            unique:true,
             validate:{
-                notEmpty:true
+                notEmpty:true,
+                is:/^\(\d{3}\)\d{4}-\d{4}$/
             }
         }
 
-    },{
+    },
+    {
         sequelize:sequelizeObj,
-        modelName:"user",
+        modelName:"residents_employee",
         freezeTableName:true,
         createdAt:false,
-        updatedAt:false
+        updatedAt:false,
+        logging: console.log 
     }
+
 )
 
-module.exports= user
+module.exports = residents_employee

@@ -64,11 +64,3 @@ const  {getLinkForBookingValidations,getEventsOfAmenityValidationsAdmin}= requir
 const {getLinkForBooking,getEventsOfAmenity}= require('../controllers/reservations.controllers')
 router.get('/get/link/for/booking/:apartament_id',getLinkForBookingValidations,getLinkForBooking);
 router.get('/events/',getEventsOfAmenityValidationsAdmin,getEventsOfAmenity);
-/* ===================
-    RUTAS FRONTEND
-======================*/
-const {
-    frontendLoggin,
-} = require('../controllers/frontendViews.controllers')
-router.get('/login',frontendLoggin);
-module.exports=router;

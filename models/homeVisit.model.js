@@ -1,8 +1,8 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const security_user = require('./securityUser.model')
-const apartament = require('./apartament.model')
+const resident_users = require('./resident_user.model')
+const security_users = require('./security_users.model')
 const home_visit = sequelizeObj.define(
     'home_visit',{
         home_visit_id:{
@@ -16,7 +16,7 @@ const home_visit = sequelizeObj.define(
             type:DataTypes.CHAR,
             validate:{
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/,
-                len:[0,65],
+                len:[0,60],
                 notEmpty:true
             }
         },
@@ -24,7 +24,7 @@ const home_visit = sequelizeObj.define(
             type:DataTypes.CHAR,
             validate:{
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/,
-                len:[0,65],
+                len:[0,60],
                 notEmpty:true
             }
         },
@@ -63,18 +63,27 @@ const home_visit = sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:false,
             references: {
+                model: resident_users,
+                key: 'resident_user_id'
+            }
+       },
+       id_entry_visit_checked:{
+            type:DataTypes.INTEGER,
+            allowNull:true,
+            references: {
                 model: security_user,
                 key: 'security_user_id'
             }
-       },
-        id_apartament_visit:{
+        },
+       id_exit_visit_checked:{
             type:DataTypes.INTEGER,
-            allowNull:false,
+            allowNull:true,
             references: {
-                model: apartament,
-                key: 'apartament_id'
+                model: security_user,
+                key: 'security_user_id'
             }
-       }
+        }       
+    
     },{
         sequelize:sequelizeObj,
         modelName:"home_visit",
@@ -85,21 +94,36 @@ const home_visit = sequelizeObj.define(
     }
 )
 
-apartament.hasMany(home_visit,{
-    as:'apartamentHaveHomeVisit',
-    foreignKey:'id_apartament_visit'
-});
-home_visit.belongsTo(apartament,{
-    as:'HomeVisitForApartament',
-    foreignKey:'id_apartament_visit'
-});
 
-security_user.hasMany(home_visit,{
-    as:'securityCreateVisit',
+// RELACION DE MARCAJE DE ENTRADA 
+security_users.hasMany(home_visit,{
+    as:'securityUserCheckEntryVisit',
+    foreignKey:'id_entry_visit_checked'
+})
+home_visit.belongsTo(security_users,{
+    as:'EntryVisitWasCheckedForSecurityUser',
+    foreignKey:'id_entry_visit_checked'
+})
+
+
+// RELACION DE MARCAJE DE SALIDA 
+security_users.hasMany(home_visit,{
+    as:'securityUserCheckExitVisit',
+    foreignKey:'id_exit_visit_checked'
+})
+home_visit.belongsTo(security_users,{
+    as:'ExitVisitWasCheckedForSecurityUser',
+    foreignKey:'id_exit_visit_checked'
+})
+
+
+// RELACION RESIDENTE CREADOR DE VISITA
+resident_users.hasMany(home_visit,{
+    as:'residentCreateVisit',
     foreignKey:'id_visit_creator'
 })
-home_visit.belongsTo(security_user,{
-    as:'homeVisitCreatedBy',
+home_visit.belongsTo(resident_users,{
+    as:'homVisitWasCreateForResident',
     foreignKey:'id_visit_creator'
 })
 
