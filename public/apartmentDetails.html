@@ -8,8 +8,22 @@
     <title>Detalles Apartamento</title>
 </head>
 <body>
+
     <header>
-        <h1 class="app-name beige" ><span class="newyork-font white">Habitat</span> Connect</h1>
+        <h1 class="app-name">
+            <span>
+                Habitat
+            </span>
+            <span>
+                Connect
+            </span>
+        </h1>
+        <div class="line"></div>
+        <h2 class="colab-name">
+            <span>
+                ROQUE 2
+            </span>
+        </h2>
     </header>
 
     <div class="menu-toggle" id="menu-toggle">
@@ -18,56 +32,22 @@
         <div class="bar"></div>
     </div>
 
-    <nav class="menu menu-hide">
-        <a class="item-menu profile-item">
-            <img alt="profile-icon" src="./icons/profile.png" class="profile-icon">
-            Hola, adnmistrador
+    <nav class="sub-menu" id="sub-menu">
+        <a class="item-menu profile-item" href="./controlPanel.html">
+            <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
+            Regresar
         </a>
-        <a class="item-menu selected-item" href="./controlPanel.html">Inicio</a>
-        <a class="item-menu" href="./amenities.html">Amenidades</a>
-        <a class="item-menu" href="./finance.html">Finanzas</a>
-        <a class="item-menu" href="">Configuración</a>
+        <a class="subitem-menu" href="#" data-target="apartment-data">
+            Datos del apto
+            <span class="selected-item-line"></span>
+        </a>
     </nav>
 
     <main class="container-content">
-        
-        <section>
-            <nav class="secondary-menu sub-menu" id="sub-menu">
-
-                <a class="item-menu profile-item" href="./controlPanel.html">
-                    <img alt="return-icon" src="./icons/backward_icon.png" class="return-icon">
-                    Regresar
-                </a>
-                
-                <a class="subitem-menu item-sub-menu" href="#" data-target="apartment-data">
-                    Datos del apto
-                    <span class="selected-item-line"></span>
-                </a>
-                
-                
-                <a class="subitem-menu item-sub-menu" href="#" data-target="ocupaccy-info">
-                    Propietario e inquilino
-                    <span class="selected-item-line hide"></span>
-                </a>
-                
-                <a class="subitem-menu item-sub-menu" href="#" data-target="entry-stickers">
-                    Stickers de entrada
-                    <span class="selected-item-line hide"></span>
-                </a>
-                
-                <a class="subitem-menu item-sub-menu" href="#" data-target="maintenance">
-                    Mantenimiento
-                    <span class="selected-item-line hide"></span>
-                </a>
-            </nav>
-
-        </section>
 
         <section class="container-datos">
             <ul class="container-list">
-
                 <li class="container-item" id="apartment-data">
-
                     <section class="apt-details">
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
@@ -221,78 +201,7 @@
                         </div>
                     </section>
                 </li>
-                <li class="container-item montserrat-light" id="maintenance">
-                    <section class="information-maintenance-status">
-                        <div class="circle circle-red"></div>
-                        <p>Impago</p>
-                        <div class="circle circle-yellow"></div>
-                        <p>Pago con Moroso</p>
-                        <div class="circle circle-green"></div>
-                        <p>Pago en tiempo</p>
-                    </section>
-                    <section class="maintenace-calendar">
-                        <div class="calendar-nav grid-column-6">
-                            <div class="calendar-nav-item" id="calendar-go-back">
-                                <p id="calendar-go-back">&lt</p>
-                            </div>
-                            <div class="calendar-nav-item">
-                                <p class="calendar-nav-title"></p>
-                            </div>
-                            <div class="calendar-nav-item" id="calendar-go-next">
-                                <p id="calendar-go-next">&gt</p>
-                            </div>
-                        </div>
-                        <div class="calendar-month" id="maina">
-                            ENE
-                            <div class="circle"></div>
-                            
-                        </div>
-                        <div class="calendar-month">
-                            FEB
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            MAR
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            ABR
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            MAY
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            JUN
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            JUL
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            AGO
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            SEP
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            OCT
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            NOV
-                            <div class="circle"></div>
-                        </div>
-                        <div class="calendar-month">
-                            DEC
-                            <div class="circle"></div>
-                        </div>
-                    </section>
-                </li>
+
             </ul>
                 
         </section>
@@ -307,6 +216,5 @@
     <script type="module" src="./js/tenantDetails.js"></script>
     <script type="module" src="./js/parkingDetails.js"></script>
     <script type="module" src="./js/walkingDetails.js"></script>
-    <script type="module" src="./js/maintenanceDetails.js"></script>
 </body>
 </html>
