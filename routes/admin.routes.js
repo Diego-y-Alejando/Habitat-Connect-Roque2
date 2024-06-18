@@ -1,74 +1,63 @@
 const {Router, response, request}= require('express');
 const router = Router()
-const {
-    loggin
-}= require('../controllers/loggin.controllers');
-const {
-    logginValidations
-}= require('../middlewares/logginValidations.middlewares');
-router.post('/login',logginValidations,loggin);
+
+
+const {adminAutenticationValidations}= require('../middlewares/jwt.middlewares')
+
 /*=======================
-    RUTAS DE APARTAMENTO 
+    RUTAS PARA CREAR USUARIOS RESIDENTES 
 =========================*/
+const {createUserValidations}= require('../middlewares/users.middlewares');
+const {createResidentUserController} = require('../controllers/users.controllers')
+router.post('/create/resident/',adminAutenticationValidations,createUserValidations,createResidentUserController);
+
+
 const {
     getApartamentsValidations,
-    getApartamentValidations,
-    updateParkingDataValidations,
-    updatePedestrianDataValidations,
-    changeOcupationStateValidations,
-    updateLandlordOrTenantDataValidations,
+    getApartamentDetailValidations,
+    updateLandlordDataValidations,
     updateApartamentNameValidations,
+    
     getControlPanelValidations
 }= require('../middlewares/apartaments.middlewares')
 const {
-    getApartaments,
-    getApartament,
-    updateParkingData,
-    updatePedestrianData,
-    changeOcupationState,
-    updateLanlordData,
-    updateTenantData,
-    updateApartamentName,
-    getControlPanel
+    getApartamentsListController,
+    getApartamentDetailController,
+    updateApartamentNameController,
+    getResidentAndLandlordController,
+    updateLandlordDataController,
 }= require('../controllers/apartaments.controllers');
-router.get('/apartamentos/:level',getApartamentsValidations,getApartaments);
-router.get('/apartamentos/',getControlPanelValidations,getControlPanel)
-// aplicar carga diferida al momento de lanzarlo a produccón
-router.get('/apartamento/:apartament_id',getApartamentValidations,getApartament);
-router.post('/update/data/parking/:apartament_id',updateParkingDataValidations, updateParkingData);
-router.post('/update/data/pedestrian/:apartament_id',updatePedestrianDataValidations, updatePedestrianData);
-router.post('/update/ocupation/state/:apartament_id',changeOcupationStateValidations, changeOcupationState);
-router.post('/update/landlord/data/:apartament_id',updateLandlordOrTenantDataValidations, updateLanlordData);
-router.post('/update/tenant/data/:apartament_id',updateLandlordOrTenantDataValidations,updateTenantData);
-router.post('/update/apartament/name/:apartament_id',updateApartamentNameValidations,updateApartamentName);
+router.get('/apartamentos/:level',getApartamentsValidations,getApartamentsListController);
+router.get('/apartamento/:apartament_id',getApartamentDetailValidations,getApartamentDetailController);
+router.get('/resident-landlord/data/:apartament_id',getApartamentDetailValidations,getResidentAndLandlordController);
+router.post('/update/apartament/name/:apartament_id',updateApartamentNameValidations,updateApartamentNameController);
+//router.post('/update/landlord/data/:apartament_id',updateLandlordDataValidations, updateLandlordDataController);
 
 /*=======================
     RUTAS DE AMENIDADES para el admin
 =========================*/
 const {
-    getAmenitiesValidations,
     updateAmenityDataValidations,
-    getAmenitiesForBookingValidations
+    ableAndDisabledAmenityValidations
 } = require('../middlewares/amenities.middlewares');
 const {
-    getAmenities,
+    getAmenitiesListController,
     updateAmenityData,
+    disableAmenityController,
+    ableAmenityController
 }= require('../controllers/amenities.controllers')
-router.get('/amenities/',getAmenitiesValidations,getAmenities);
-router.post('/update/amenity/data/:amenity_id',updateAmenityDataValidations,updateAmenityData);
-
+router.get('/amenities/',adminAutenticationValidations,getAmenitiesListController);
+router.post('/update/amenity/data/:amenity_id',adminAutenticationValidations,updateAmenityDataValidations,updateAmenityData);
+router.post('/disabled/amenity',adminAutenticationValidations, ableAndDisabledAmenityValidations, disableAmenityController)
+router.post('/able/amenity',adminAutenticationValidations, ableAndDisabledAmenityValidations, ableAmenityController)
 /*=======================
-    Obtener el link para la reserva del usuario 
+    RUTAS DE VISTAS ADMIN 
 =========================*/
-const  {getLinkForBookingValidations,getEventsOfAmenityValidationsAdmin}= require('../middlewares/reservations.middlewares');
-const {getLinkForBooking,getEventsOfAmenity}= require('../controllers/reservations.controllers')
-router.get('/get/link/for/booking/:apartament_id',getLinkForBookingValidations,getLinkForBooking);
-router.get('/events/',getEventsOfAmenityValidationsAdmin,getEventsOfAmenity);
-/* ===================
-    RUTAS FRONTEND
-======================*/
-const {
-    frontendLoggin,
-} = require('../controllers/frontendViews.controllers')
-router.get('/login',frontendLoggin);
+const{
+    getAdminControlPanelController
+}= require('../controllers/views.controllers')
+router.get('/panel-de-control/',getAdminControlPanelController)
+
+
+
 module.exports=router;

@@ -14,8 +14,9 @@ class Server {
     constructor(){
         this.app=express();
         this.middlewares();
-        this.adminPath='/admin'
-        this.userPath='/user'
+        this.usersPath ='/users'
+        this.adminPath='/administracion'
+        this.residentPath='/residente'
         this.securityPath='/seguridad'
         this.routes()
         this.port =process.env.PORT
@@ -43,14 +44,15 @@ class Server {
     routes(){
     
         this.app.use(this.adminPath, require('../routes/admin.routes'));
-        this.app.use(this.userPath, require('../routes/user.routes'));
-        this.app.use(this.securityPath, require('../routes/security.routes'));
+        this.app.use(this.residentPath, require('../routes/resident.routes'));
+        // this.app.use(this.securityPath, require('../routes/security.routes'));
+        this.app.use(this.usersPath, require('../routes/users.routes'));
         this.app.use('/public',express.static('public'));
         this.app.use('/dist', express.static(path.join(__dirname,'../dist')));
         
         this.app.set('view engine', 'ejs');
         this.app.set('views', express.static('public'));
-       
+        
     }
     listen(){
         this.app.listen(this.port,()=>{

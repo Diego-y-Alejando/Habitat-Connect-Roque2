@@ -34,14 +34,14 @@ const apartamentItemGenerator =(apartamentList,containerGridApartaments,BASE_URL
     const arrayApartament =[]
     apartamentList.forEach(apartament => {
         const apartamentHtml =` 
-        <a class="apartament-item ${apartament.ocupation_state==1?'ocupation_state_false':'ocupation_state_false'}" href="${BASE_URL}admin/apartamento/${apartament.apartament_id}">
+        <a class="apartament-item ${apartament.ocupation_state==1?'ocupation_state_false':'ocupation_state_false'}" href="${BASE_URL}administracion/apartamento/${apartament.apartament_id}">
             <h3 class="apartament-number column-span-2 ">Apartamento <span class="special-text-apto">#${apartament.apartament_number}</span></h3>
-            <span class="secondary-data column-span-2">Primer nivel| ${apartament.apartamentFeatures.area} mts2</span>
+            <span class="secondary-data column-span-2">Primer nivel| ${apartament.area} mts2</span>
             <img alt="Torre" src="/public/icons/tower.png" class="tower-icon column-1 "/>
             <div class=" container-primary-data column-2">
                 <h2 class="apartament-name">${apartament.apartament_name}</h2>
-                <h4 class="primary-data">P:${apartament.phone_number_landlord}</h4>
-                <h4 class="primary-data">I:${apartament.phone_number_tenant?apartament.phone_number_tenant:'No tiene'}</h4>
+                <h4 class="primary-data">P:0000-0000</h4>
+                <h4 class="primary-data">R:${apartament.resdient_phone?apartament.resdient_phone:'No tiene'}</h4>
                 <span class="see-more">Ver más</span>
             </div>
         </a>`

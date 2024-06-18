@@ -1,7 +1,7 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const apartament = require('./apartament.model')
+const resident_users = require('./resident_users.model')
 const amenities = require('./amenities.model')
 const reservations= sequelizeObj.define(
     'reservations',{
@@ -36,6 +36,20 @@ const reservations= sequelizeObj.define(
             //     notEmpty:true
             // }
         },
+        total_hours:{
+            type:DataTypes.DOUBLE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        },
+        booking_price:{
+            type:DataTypes.DOUBLE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        },
         renter_name:{
             type:DataTypes.CHAR,
             allowNull:false,
@@ -60,12 +74,12 @@ const reservations= sequelizeObj.define(
             }
         },
         // llaves foraneas
-        id_apartament_reservations:{
+        id_resident_reserv:{
             type:DataTypes.INTEGER,
             allowNull:false,
             references: {
-                model: apartament,
-                key: 'apartament_id'
+                model: resident_users,
+                key: 'resident_user_id'
             }
         },
         id_amenity_reserved:{
@@ -85,14 +99,14 @@ const reservations= sequelizeObj.define(
     }
 )
 // Relacion de reserva de apto
-reservations.belongsTo(apartament,{
+reservations.belongsTo(resident_users,{
     as:'reservationHaveRenter',
-    foreignKey:'id_apartament_reservations'
+    foreignKey:'id_resident_reserv'
 });
 
-apartament.hasMany(reservations,{
-    as:'apartamentMakeReservation',
-    foreignKey:'id_apartament_reservations'
+resident_users.hasMany(reservations,{
+    as:'residentMakeReservations',
+    foreignKey:'id_resident_reserv'
 })
 // relacion reserva con amenidad
 reservations.belongsTo(amenities,{

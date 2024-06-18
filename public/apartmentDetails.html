@@ -39,7 +39,10 @@
         </a>
         <a class="subitem-menu" href="#" data-target="apartment-data">
             Datos del apto
-            <span class="selected-item-line"></span>
+            <span class="selected-item-line hide"></span>
+        </a>
+        <a class="subitem-menu" href="#" data-target="landlord-and-resident-data">
+            Datos de Residente y propietario
         </a>
     </nav>
 
@@ -52,10 +55,6 @@
                         <p class="montserrat-light center bold">Apto <span class="gray">#1-1</span></p>
                         <p class="level montserrat-light gray">
                             Primer nivel
-                            <label for="occupy" class="montserrat-light gray label-center">
-                                Habitado    
-                                <input type="checkbox" name="occupy" id="ocupay-checkbox">
-                            </label>
                         </p>
                         <label for="family" class="label-input">
                             <img src="./icons/tower.png" alt="Apartamento" id="apartment-icon">
@@ -78,9 +77,7 @@
                         <p class="infor-row gray ">Mora <span>Q150.00</span></p>
                     </section>
                 </li>
-
-                <li class="container-item" id="ocupaccy-info">
-
+                <li class="container-item" id="landlord-and-resident-data">
                     <section class="apt-details">
                         <p class="montserrat-light center bold ">Datos de propietario</p>
                         
@@ -107,11 +104,8 @@
                             </a>
                         </div>
                     </section>
-
                     <section class="apt-info">
-
                         <p class="montserrat-light center bold">Datos de Inquilino</p>
-                        
                         <label for="" class="montserrat-light">
                             <p class="level montserrat-light bold black">Nombre</p>
                             <div class="label-error">
@@ -126,84 +120,9 @@
                                 <p id="error-input-tenant-phone" class="input-error hide"></p>
                             </div>
                         </label>
-                        <div class="edit" >
-                            <a href="" id="btn-tenant-edit">
-                                <img src="./icons/editar-texto.png" alt="Icon-Edit" id="img-edit-tenant">
-                                <img src="./icons/save_icon.png" alt="edit" id="img-save-tenant" class="hide">
-                            </a>
-                        </div>
-                    </section>
-
-                </li>
-                <li class="container-item" id="entry-stickers">
-
-                    <section class="apt-details">
-                        <p class="montserrat-light center bold ">Datos de parqueo</p>
-                        
-                        <div class="info-details montserrat-light" id="parking-stikers-container">
-                            <p class="bold black">Stickers de parqueo</p>
-                        </div>
-                        <form>
-                            <label for="" class="label-input">
-                                <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-stickers" disabled autocomplete="off">
-                                <div class="edit">
-                                    <a href="" id="btn-add-parking-stikers" class="enabled">
-                                        <img src="./icons/mas.png" alt="Icon-Editt" id="img-add-parking-stickers" >
-                                    </a>
-                                </div>
-                            </label>
-                        </form>
-                        
-                        <div class="info-details montserrat-light">
-                            <p class="bold black">Parqueos asignados</p>
-                            <p class="info-row gray">13<span>primer nivel</span></p>
-                            <p class="info-row gray">12<span>primer nivel</span></p>
-                        </div>
-
-                        <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-parking-slot" disabled autocomplete="off">
-                            <div class="edit">
-                                <a href="" id="btn-add-parking-slot" class="enabled">
-                                    <img src="./icons/mas.png" alt="Icon-Edit" id="img-add-parking-slot" >
-                                </a>
-                            </div>
-                        </label>
-
-                        <div class="edit" >
-                            <a href="" id="btn-edit-parking-info">
-                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-parking-info">
-                                <img src="./icons/save_icon.png" alt="edit" id="img-save-parking-info" class="hide">
-                            </a>
-                        </div>
-                    </section>
-
-                    <section class="apt-info">
-
-                        <p class="montserrat-light center bold">Datos de entrada peatonal</p>
-                        
-                        <div class="info-details montserrat-light" id="walking-stickers-container">
-                            <p class="bold black">Stickers de entrada</p>
-                        </div>
-
-                        <label for="" class="label-input">
-                            <input type="text" name="" placeholder="" class="input-form bold montserrat-light" id="input-walking-info" disabled autocomplete="off">
-                            <div class="edit">
-                                <a href="" class="enabled" id="btn-add-walking-info">
-                                <img src="./icons/mas.png" alt="Icon-Edit">
-                            </a>
-                            </div>
-                        </label>
-                        <div class="edit" >
-                            <a href="" id="btn-edit-walking-info">
-                                <img src="./icons/editar-texto.png" alt="edit" id="img-edit-walking-info">
-                                <img src="./icons/save_icon.png" alt="edit" id="img-save-walking-info" class="hide">
-                            </a>
-                        </div>
                     </section>
                 </li>
-
-            </ul>
-                
+            </ul>      
         </section>
         
     </main>
@@ -212,9 +131,5 @@
     <script type="module" src="./js/apartmentDetails.js"></script>
     <script type="module" src="./js/menu.js"></script>
     <script type="module" src="./js/submenu.js"></script>
-    <script type="module" src="./js/ownerDetails.js"></script>
-    <script type="module" src="./js/tenantDetails.js"></script>
-    <script type="module" src="./js/parkingDetails.js"></script>
-    <script type="module" src="./js/walkingDetails.js"></script>
 </body>
 </html>

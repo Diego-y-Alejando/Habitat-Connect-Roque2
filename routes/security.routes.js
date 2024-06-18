@@ -2,7 +2,7 @@ const {Router, response, request}= require('express');
 const router = Router()
 const {
     viewSecurityControlPanelController
-}= require('../controllers/securityControllers/securityViewsController')
+}= require('../controllers/securityViewsController')
 
 router.get('/panel-de-control/',viewSecurityControlPanelController);
 
@@ -16,19 +16,18 @@ const {
     getHomeVisitsValidations,
     searchHomeVisitsValidations,
     undoCheckHomeVisitValidations
-
-} = require ('../middlewares/securityMiddlewares/homeVisit.middlewares')
+    getHomeVisitsValidations,
+} = require ('../middlewares/homeVisit.middlewares')
 const {
     createHomeVisitController,
     checkHomeVisitController,
-    getHomeVisitisControllers,
+    getAllHomeVisitsForSecurityControlller,
     searchHomeVistisController,
     undoCheckHomeVisitController
-}= require('../controllers/securityControllers/homeVisit.controllers')
+}= require('../controllers/homeVisit.controllers')
 
-router.post('/create/home-visit/',createHomeVisitValidations,createHomeVisitController)
 router.post('/check/home-visit/',checkHomeVisitValidations,checkHomeVisitController);
-router.get('/get/home-visit/',getHomeVisitisControllers);
+router.get('/get/home-visit/',getAllHomeVisitsForSecurityControlller);
 router.get('/search/home-visit',searchHomeVistisController);
 router.post('/undo/check/home-visit',undoCheckHomeVisitController)
 
@@ -41,14 +40,14 @@ const {
     getPackageDeliveriesValidations,
     searchPackageDeliveryValidations,
     undoCheckPackageDeliveryValidations
-}= require('../middlewares/securityMiddlewares/packageDelivery.middlewares')
+}= require('../middlewares/packageDelivery.middlewares')
 const {
     createPackageDeliveryController,
     checkPackageDeliveryController,
     getAllPackageDeliveryController,
     searchPackageDeliveryController,
     undoCheckPackageDeliveryController
-}= require('../controllers/securityControllers/packageDelivery.controllers.js');
+}= require('../controllers/packageDelivery.controllers.js');
 router.post('/create/package-delivery/',createPackageDeliveryValidations,createPackageDeliveryController);
 router.post('/check/package-delivery/',checkPackageDeliveryValidations,checkPackageDeliveryController);
 router.get('/get/package-delivery/',getAllPackageDeliveryController)

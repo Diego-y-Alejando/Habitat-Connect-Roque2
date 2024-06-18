@@ -1,8 +1,8 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const user = sequelizeObj.define(
-    'user',{
+const users = sequelizeObj.define(
+    'users',{
         user_id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
@@ -15,6 +15,7 @@ const user = sequelizeObj.define(
             allowNull:false,
             validate:{
                 notEmpty:true,
+                is:/\b(resident|admin|security)\b/
             }
         },
         name:{
@@ -51,7 +52,7 @@ const user = sequelizeObj.define(
             unique:true,
             validate:{
                 notEmpty:true,
-                is:/^\(\d{3}\)\d{4}-\d{4}$/
+                is:/^[0-9]{4}-[0-9]{4}/
             }
         },
         dpi:{
@@ -74,11 +75,11 @@ const user = sequelizeObj.define(
 
     },{
         sequelize:sequelizeObj,
-        modelName:"user",
+        modelName:"users",
         freezeTableName:true,
         createdAt:false,
         updatedAt:false
     }
 )
 
-module.exports= user
+module.exports= users

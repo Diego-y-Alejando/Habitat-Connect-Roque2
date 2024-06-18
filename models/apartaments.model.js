@@ -2,8 +2,9 @@ const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
 const features_apartaments= require('./features_apartament.model');
-const apartament = sequelizeObj.define(
-    'apartament',{
+const resident_users = require('./resident_users.model')
+const apartaments = sequelizeObj.define(
+    'apartaments',{
         apartament_id:{
             type:DataTypes.INTEGER,
             autoIncrement:true,
@@ -41,18 +42,20 @@ const apartament = sequelizeObj.define(
                 key: 'feature_id'
             }
         },
-        ocupation_state:{
-            type:DataTypes.TINYINT,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/^0|1/
+        id_resident_apartament:{
+            type:DataTypes.INTEGER,
+            allowNull:true,
+            unique:true,
+            references: {
+                model: resident_users,
+                key: 'resident_user_id'
             }
-        }
+        },
+        
     },
     {
         sequelize:sequelizeObj,
-        modelName:"apartament",
+        modelName:"apartaments",
         freezeTableName:true,
         createdAt:false,
         updatedAt:false,
@@ -60,14 +63,23 @@ const apartament = sequelizeObj.define(
     }
 
 );
-
-features_apartaments.hasMany(apartament,{
+// RELACION DE CARACTERÏSTICAS APARTAMENTO 
+features_apartaments.hasMany(apartaments,{
     as:'featuresOfApartament',
     foreignKey:'id_features_apartament'
 });
-apartament.belongsTo(features_apartaments,{
+apartaments.belongsTo(features_apartaments,{
     as:'apartamentFeatures',
     foreignKey:'id_features_apartament'
 });
+// RELACION DEL RESIDENTE APARTAMENT
+resident_users.hasOne(apartaments,{
+    as:'residentOccupiesApartament',
+    foreignKey:'id_resident_apartament'
+});
+apartaments.belongsTo(resident_users,{
+    as:'apartamentHaveResident',
+    foreignKey:'id_resident_apartament'
+});
 
-module.exports=apartament
+module.exports=apartaments

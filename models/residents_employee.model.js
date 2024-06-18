@@ -1,21 +1,14 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const security_user = sequelizeObj.define(
-    'security_user',{
-        security_user_id:{
+const residents_employee = sequelizeObj.define(
+    'residents_employee',{
+        maid_id:{
             type:DataTypes.INTEGER,
             autoIncrement:true,
             primaryKey:true,
             unique:true,
             allowNull:false
-        },
-        user_type:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-            }
         },
         name:{
             type:DataTypes.CHAR,
@@ -33,35 +26,39 @@ const security_user = sequelizeObj.define(
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s]+$/
             }
         },
-        email:{
+        dpi:{
             type:DataTypes.CHAR,
-            unique:true,
             allowNull:false,
             unique:true,
-            validate:{
-                isEmail:true,
-                is:/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/,
-                len:[5,100],
-                notEmpty:true,
+            validate: {
+                    is:['^[0-9-]+$'],
+                    len:[14,15],
+                    notEmpty: true,
             }
         },
-        password:{
+        phone_number:{
             type:DataTypes.CHAR,
             allowNull:false,
+            unique:true,
             validate:{
-                notEmpty:true
+                notEmpty:true,
+                is:/^[0-9]{4}-[0-9]{4}/
             }
-        }
+        },
+        occupation_list:{
+            type:DataTypes.JSON,
+            allowNull:false,
+        },
     },
     {
         sequelize:sequelizeObj,
-        modelName:"security_user",
+        modelName:"residents_employee",
         freezeTableName:true,
         createdAt:false,
         updatedAt:false,
-        logging: console.log
+        logging: console.log 
     }
 
 )
 
-module.exports= security_user
+module.exports = residents_employee
