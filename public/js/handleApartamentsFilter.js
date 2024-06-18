@@ -6,12 +6,12 @@ import {
     apartamentItemGenerator
 } from './helpers.js'
 (function($, window, document) {
-
+    console.log('cargo');
     const SelectFilterLevel = document.getElementById('filter-level');
     document.addEventListener("DOMContentLoaded", async function() {
         try {
             //TO DO Verificar que el localStorage no contenga ningun nivel ya registrado 
-            const dataApartaments = await makeRequest(`${BASE_URL}admin/apartamentos/${SelectFilterLevel.value}`, 'GET', null,{});
+            const dataApartaments = await makeRequest(`${BASE_URL}administracion/apartamentos/${SelectFilterLevel.value}`, 'GET', null,{});
             apartamentItemGenerator(dataApartaments.level_1,$('#container-grid-apartaments'),BASE_URL);
             localStorage.setItem('apartamentsLevels', JSON.stringify({level_1:dataApartaments.level_1}));
         } catch (error){
@@ -36,7 +36,7 @@ import {
             for (let index = 0; index < levelsOnLocalStorage.length; index++) {
                 // verifica si el nivel solicitado existe o no 
                 if(!levelsOnLocalStorage[index].includes(`level_${levelSelected}`)){
-                    const remaningData =await makeRequest(BASE_URL+'admin/apartamentos/'+levelSelected,'GET',null,{});
+                    const remaningData =await makeRequest(BASE_URL+'administracion/apartamentos/'+levelSelected,'GET',null,{});
                     localStorage.setItem('apartamentsLevels',JSON.stringify({
                         ...dataApartamentOnLocalStorage,
                         ...remaningData

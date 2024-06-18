@@ -12,6 +12,14 @@ const employee_visits = sequelizeObj.define(
             autoIncrement:true,
             allowNull:false
         },
+        visit_date:{
+            type:DataTypes.DATE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+                //is:
+            }
+        },
         id_entry_employee_checked:{
             type:DataTypes.INTEGER,
             allowNull:true,
@@ -30,7 +38,7 @@ const employee_visits = sequelizeObj.define(
         },
         id_relationship_visit:{
             type:DataTypes.INTEGER,
-            allowNull:true,
+            allowNull:false,
             references: {
                 model: resident_users,
                 key: 'resident_user_id'

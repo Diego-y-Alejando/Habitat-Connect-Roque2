@@ -2,8 +2,9 @@ const {request,response}= require('express');
 const path = require('path');
 const logginHTML = path.join(__dirname, '..','views', 'login.ejs');
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
-const financeHTML = path.join(__dirname, '..','views','finance.ejs');
 
+
+const apartmentDetailHTML = path.join(__dirname, '..','views','apartmentDetails.ejs');
 
 
 const {
@@ -26,6 +27,26 @@ const frontendLoggin = (req = request , res = response)=>{
     res.render(logginHTML,{BASE_URL:process.env.BASE_URL, loginScriptHash:hashArray[0], loginStyleSheetHash:hashArray[1], jqueryHash:jqueryHash()});
 }
 
+const adminControlPanel = path.join(__dirname, '..','views','adminControlPanel.ejs');
+
+
+const getAdminControlPanelController =(req = request , res = response)=>{
+    try {
+        
+        return  res.render(adminControlPanel,{
+            BASE_URL:process.env.BASE_URL
+        });
+    } catch (error) {
+        return  res.render(error404HTML,{
+            error:error.message,
+            ok:false
+        });
+    }
+}
+
+
+
 module.exports={
-    frontendLoggin
+    frontendLoggin,
+    getAdminControlPanelController
 }

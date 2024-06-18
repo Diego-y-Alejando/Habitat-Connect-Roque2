@@ -1,39 +1,25 @@
 const {request , response} = require('express');
-const amenities = require('../models/amenities.model');
+
 const {Sequelize} = require('sequelize')
-const {
-    updateData,
-    formatHour
-}= require('../helpers/helpers')
 const path = require('path');
+const {
+    getAmenitiesListService,
+    updateAmenityService
+}= require('../services/amenities.services');
 const amenitiesHTML = path.join(__dirname, '..','views','amenities.ejs');
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
-const getAmenities = async (req = request , res = response)=>{
+const getAmenitiesListController = async (req = request , res = response)=>{
     try {
-        const amenitiesData = await amenities.findAll({
-            attributes:['amenity_id', 'amenity_name', 'rent_cost', 'start_time', 'end_time', 'additional_cost_per_hour','nickName']
+        const amenitiesList = await getAmenitiesListService();
+        return res.status(200).json({
+            amenities:amenitiesList
         })
-        const amenitiesFormated = amenitiesData.map(amenity => {
-            const starHour = amenity.start_time; // Asume que 'horaInicio' es el nombre de tu columna
-            const endHour = amenity.end_time; // Asume que 'horaInicio' es el nombre de tu columna
-              
-            // Verifica si la starHour tiene un valor antes de intentar formatear
-             const formatStartHour = starHour ?formatHour(starHour) : null;
-             const formatEndHour =endHour ?formatHour(endHour) : null;
-              
-            return {
-              ...amenity.get(),
-              formatStartHour,
-              formatEndHour
-            };
-          });
-          
-        return  res.render(amenitiesHTML,{
-            amenitiesData:amenitiesFormated,
-            BASE_URL:process.env.BASE_URL,
-            ok:false,
-            user_type:req.user_type
-        });
+        // return  res.render(amenitiesHTML,{
+        //     amenitiesData:amenitiesFormated,
+        //     BASE_URL:process.env.BASE_URL,
+        //     ok:false,
+        //     user_type:req.user_type
+        // });
     } catch (error) {
         return res.render(error404HTML,{
             error:error.message,
@@ -46,12 +32,46 @@ const getAmenities = async (req = request , res = response)=>{
 const updateAmenityData = async (req = request , res = response)=>{
     const amenity_id = req.params.amenity_id
     try {
-        const updatedAmenityData =  await updateData(amenities,req.body,amenity_id,'amenity_id');
-        return res.status(200).json({
-            msg:'Se ha actualizado La amenidad',
-            updatedData : req.body,
+       const updateAmenity = await updateAmenityService(req.body,amenity_id)
+       return res.status(200).json({
+            msg:updateAmenity,
             ok:true
+       })
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
         })
+    }
+}
+const disableAmenityController = async (req = request , res = response)=>{
+    const amenity_id =req.params.amenity_id
+    try {
+        const updateAmenity = await updateAmenityService({
+            is_disabled:'0'
+        },amenity_id)
+        return res.status(200).json({
+            msg:updateAmenity,
+            ok:true
+       })
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        })
+    }
+}
+const ableAmenityController = async (req = request , res = response)=>{
+    const amenity_id= req.params.amenity_id
+    try {
+        const updateAmenity = await updateAmenityService({
+            is_disabled:'1'
+        },amenity_id)
+        return res.status(200).json({
+            msg:updateAmenity,
+            ok:true
+       })
+
     } catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -61,8 +81,10 @@ const updateAmenityData = async (req = request , res = response)=>{
 }
 
 module.exports ={
-    getAmenities,
+    getAmenitiesListController,
     updateAmenityData,
+    disableAmenityController,
+    ableAmenityController
 }
 
 

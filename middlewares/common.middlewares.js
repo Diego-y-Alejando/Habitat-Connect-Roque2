@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const regex=/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
-const  {findData} = require('../helpers/helpers');
+const  {findData,getCurrentDateAndTime} = require('../helpers/helpers');
 const validateName = (name ,size) => {
     if (!name) {
       throw new Error('El nombre es obligatorio')
@@ -107,35 +107,27 @@ const validateSupervisor=(supervisor)=>{
       throw new Error('Para él supervisor unicamente debes colocar el nombre')
   }
 }
-const userExist =async(message,model, searchField, targetField, excludeArr )=>{
+const recordExist =async(message,model, record_id)=>{
   try{
-   const searchRecord = await model.findOne({
-      where:{
-        [targetField]:searchField
-      },
-      attributes:{
-        exclude:excludeArr
-      }
-    });
 
-    if (!searchRecord) {
-      throw new Error(`${message} no existe`);
+    const recordSearched = await model.findByPk(record_id)
+    if (!recordSearched) {
+      throw new Error(`${message}`);
     }
-    return searchRecord.dataValues 
    } catch (error) {
-      throw new Error(error);
+      throw (error);
    }
 }
 
-const tokenValidation = async (token, model, targetField, excludeArr, secretKey, allowUsers) => {
+const tokenValidation = async (token, model, secretKey, allowUsers) => {
   
   try {
     if (!token) throw new Error('No se ha enviado el token');
     const { id, user_type } = jwt.verify(token, secretKey);
-    
+    console.log(id,user_type);
     if (!user_type || !allowUsers.includes(user_type)) throw new Error('El token es inválido');
 
-    const user = await findData(model, id, targetField, excludeArr);
+    const user = await model.findByPk(id)
     if (!user) throw new Error('El usuario no existe en la base de datos');
 
     return {
@@ -176,19 +168,19 @@ const allowAcction =(employePosition,requirePosition)=>{
     throw new Error('No tienes permiso para realizar esta acción');
   }
 }
-const validationParagraph =(paragaph)=>{
-  const regexParagraph=/^[ a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9,. ]+/
-  if (!regexParagraph.test(paragaph)) {
-    throw new Error('El parrafo contiene caractéres no válidos ,solo se permiten comas,puntos y números')
+const validationOccupationValue =(occupation)=>{
+  const regexOcupation=/\b(Carpintero|Plomero|Electricista|Limpieza|Cerrajero|Pintor|Albañil|Contratista)\b/
+  if (!regexOcupation.test(occupation)) {
+    throw new Error('La ocupacion del empleado no es válida')
   }
 }
-const validationDates=(date,campo)=>{
+const validationDates=(date,message)=>{
   const regexDate = /^(\d{4})-(0[1-9]|1[012])-(0[1-9]|[1-2]\d|3[0-1])/
   if (!date) {
-    throw new Error(`El campo ${campo} no puede venir vacío`)
+    throw new Error(`${message} no puede venir vacío`)
   }
   if(!regexDate.test(date)){
-    throw new Error(`El campo ${campo} tiene un formato inválido`)
+    throw new Error(`${message }tiene un formato inválido`)
   }
 }
 const validationOcupationState = (state) => {
@@ -206,7 +198,7 @@ const objectOwner=(idToken,employeeToken,message)=>{
     throw new Error(message)
   }
 }
-const compareDates=(openning_date,closing_date)=>{
+const validateIfBookingDateIsBeforeToday=(openning_date,closing_date)=>{
   const diferenciaEnMilisegundos = closing_date - openning_date;
   // Convierte la diferencia en días dividiendo por la cantidad de milisegundos en un día
   const diasDiferencia = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
@@ -245,27 +237,7 @@ const validationHour = (hour, message)=>{
     throw new Error(`La hora de ${message} contiene caracteres no válidos `)
   }
 }
-const compareHours =(start_time,end_time,flag,message)=>{
-    const [start_hour, start_minutes] = start_time.split(':').map(Number);
-    const [end_hour, end_minutes] = end_time.split(':').map(Number);
 
-    const inicioMS = (start_hour * 60 + start_minutes) * 60 * 1000;
-    const finMS = (end_hour * 60 + end_minutes) * 60 * 1000;
-
-    const diferenciaHoras = (finMS - inicioMS)/3600000;
-    if (diferenciaHoras<0) {
-        throw new Error('Asegúrate de que la hora de inicio sea anterior a la hora de finalización')
-    }
-    if (flag) {
-      if (diferenciaHoras<10) {
-        throw new Error(message)
-      }
-    }if (!flag) {
-      if (diferenciaHoras>6) {
-        throw new Error(message);
-      }
-    }
-}
 const ValidationPaidStatus=(paid_status)=>{
   // 1 pago a tiempo 2 pago con mora 3 impago
   const regexPaidStatus=/^1|2|3/
@@ -302,6 +274,47 @@ const validationVisitStatus =(visit_status)=>{
     throw new Error('El estatus de la visita es inválida')
   }
 }
+const {differenceInDays,isAfter}= require('date-fns')
+const checkIsAfterToday =(date,message)=>{
+ 
+   const todayDate = getCurrentDateAndTime('yyyy-MM-dd')
+   const days = differenceInDays(date,todayDate)
+   
+    if (days<0) {
+        throw new Error(message)
+    }
+}
+const validationQueryParams =(queryParams)=>{
+  const  objectValidations = {
+      'page':(value)=>{
+          validatePage(parseInt(value));
+      },
+      'searchData':(value)=>{
+          const regex=/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]+$/
+          const regexDpi= /^[0-9-]+$/
+          if(!regexDpi.test(value)&& !regex.test(value)){
+              throw new Error('Contiene caracteres no válidos ')
+          }
+      },
+      'date':(value)=>{
+          validationDates(value,'La fecha que busca')
+          checkIsAfterToday(value,'No puedes acceder a registros antiguas')
+      },
+      'upCommingVisits':(value)=>{
+        const regexSearchAfterToday =/^[1-2]+$/
+        if (!regexSearchAfterToday.test(value)) {
+          throw new Error('El parametro searchAfterToday tiene un valor incorrecto')
+        }
+      }
+  }
+  Object.keys(queryParams).forEach(propertyName=>{
+      if (objectValidations.hasOwnProperty(propertyName)) {
+          objectValidations[propertyName](queryParams[propertyName])
+      }else{
+          throw new Error('Se han enviado propiedades inválidas');
+      }
+  })
+}
 module.exports ={
     validateName,
     validateLastName,
@@ -314,24 +327,25 @@ module.exports ={
     validationDepartament,
     validatePosition,
     validateSupervisor,
-    userExist,
+    recordExist,
     tokenValidation,
     validationOfIdenticatedlId,
     paramsValidation,
     ValidationIdOrLevel,
     allowAcction,
-    validationParagraph,
+    validationOccupationValue,
     validationDates,
     validationOcupationState,
     objectOwner,
-    compareDates,
+    validateIfBookingDateIsBeforeToday,
     validationYear,
     validationCost,
     validationHour,
-    compareHours,
     ValidationPaidStatus,
     validationMonth,
     validatePage,
-    validationVisitStatus
+    validationVisitStatus,
+    checkIsAfterToday,
+    validationQueryParams
     
 }

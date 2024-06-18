@@ -36,6 +36,20 @@ const reservations= sequelizeObj.define(
             //     notEmpty:true
             // }
         },
+        total_hours:{
+            type:DataTypes.DOUBLE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        },
+        booking_price:{
+            type:DataTypes.DOUBLE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        },
         renter_name:{
             type:DataTypes.CHAR,
             allowNull:false,

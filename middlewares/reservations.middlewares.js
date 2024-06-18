@@ -8,32 +8,23 @@ const {
     validationDates,
     ValidationIdOrLevel,
     tokenValidation,
-    userExist,
+    recordExist,
     validationHour,
-    compareHours
+    compareHours,
+    checkIsAfterToday,
+    validatePage
 } = require('./common.middlewares')
 const {
     hourAdder,
-    innerJoinChildToFatherTables
+    calculatorNumnberOfMinutesBeetwenTwoHours
 }= require('../helpers/helpers')
 const reservations = require('../models/reservations.model');
 const amenities = require('../models/amenities.model');
-const apartament = require('../models/apartament.model')
-const user = require('../models/user.model')
-const getLinkForBookingValidations =async (req = request, res = response, next)=>{
-    const token = req.cookies.authorization
-    const apartament_id= req.params.apartament_id
-    try {
-        // await tokenValidation(token,user,'user_id',['name','lastname','email','phone_number','dpi','password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist(' El apartamento para el que solicitas el token',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-        next()
-    } catch (error) {
-        return res.status(400).json({
-            error:error.message,
-            ok:false
-        })
-    }
-}
+const users = require('../models/users.model')
+const {
+    getAmenityDataForBookingValidations
+}= require('../services/amenities.services')
+
 const bookingAmenityValidations = async (req = request, res = response, next)=>{
     const token = req.headers.authorization
     const {
@@ -42,38 +33,45 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
         end_reserv_time,
         renter_name,
         renter_phone,
-        id_apartament_reservations,
         id_amenity_reserved
     } = req.body 
     try {
-        bodyVerification(req.body,['reservation_date', 'start_reserv_time', 'end_reserv_time', 'renter_name', 'renter_phone', 'id_apartament_reservations', 'id_amenity_reserved'])
+        bodyVerification(req.body,['reservation_date', 'start_reserv_time', 'end_reserv_time', 'renter_name', 'renter_phone', 'id_amenity_reserved'])
         validationDates(reservation_date,'fecha de reservación');
+        checkIsAfterToday(reservation_date,'No se puede realizar una reserva antes de hoy')
         validationHour(start_reserv_time,'inicio de reserva');
         validationHour(end_reserv_time,'cierre de reserva');
-        compareHours(start_reserv_time,end_reserv_time,false,'No puedes reservar mas de 6 horas una amenidad ')
         validateName(renter_name,65);
-        validatePhoneNumber(renter_phone)
-        ValidationIdOrLevel('id del apartamento que reserva',id_apartament_reservations)
+        validatePhoneNumber(renter_phone);
         ValidationIdOrLevel('id de la amenidad',id_amenity_reserved);
-        // await tokenValidation(token,apartament,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state'],process.env.SECRETKEYFORBOOKING,['user']);
-        const {start_time, end_time} =await userExist('La amenidad que intentas reservar',amenities,id_amenity_reserved,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
-        await verifyAviableTime(id_amenity_reserved,reservation_date,start_reserv_time,end_reserv_time)
-        validationTime(start_time,start_reserv_time,true)
-        validationTime(end_time,end_reserv_time,false)
+        await recordExist('La amenidad que intentas reservar no existe',amenities,id_amenity_reserved);
+        validationIfStartBookingTimeIsAfterBookingEndTime(start_reserv_time,end_reserv_time);
+        const {free_hours,time_limit,start_time,end_time,rent_cost}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+        validationIfBookingStartTimeIsAfterAmenityOpennig(start_reserv_time,start_time);
+        validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
+        validationIfTotalBookingHoursDoesNotExceedTheAllolHours(start_reserv_time,end_reserv_time,time_limit);
+
+        const totalBookingHours = (calculatorNumnberOfMinutesBeetwenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
+        const booking_price = calculatorBookingPrice(free_hours,rent_cost,totalBookingHours);
+        req.body={
+            ...req.body,
+            'booking_price':booking_price,
+            'total_hours':totalBookingHours,
+            'id_resident_reserv':req.resident_id
+        }
         next();
     } catch (error) {
         return res.status(400).json({
             error:error.message,
-            ok:false
+            ok:'false'
         })
     }
 }
 const getMyBookingValidations = async(req = request , res = response, next)=>{
-    const {reserv_id,apartament_id} = req.query
+    const {reserv_id} = req.query
     try{
         ValidationIdOrLevel('id de tu reserva ',reserv_id)
-        await userExist('El apartamento que reserva',apartament,apartament_id,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-        await userExist('La reservacion que intentas recuperar',reservations,reserv_id,'reserv_id',[ 'reservation_date', 'start_reserv_time', 'end_reserv_time', 'renter_name', 'renter_phone', 'id_apartament_reservations', 'id_amenity_reserved']);
+        await recordExist('La reserva que intentas recuperar no existe',reservations,reserv_id);
         next();
     }catch (error){
         return res.status(400).json({
@@ -85,30 +83,36 @@ const getMyBookingValidations = async(req = request , res = response, next)=>{
 const updateBookingValidations = async (req = request , res = response, next)=>{
     const {
         reserv_id,
-        id_apartament_reservations,
         reservation_date,
         start_reserv_time,
         end_reserv_time,
         renter_name,
         renter_phone,
+        id_amenity_reserved
     } = req.body 
     try{
        
         updateBookingDataValidations(req.body)
-        await userExist('El apartamento que reserva',apartament,id_apartament_reservations,'apartament_id',['apartament_number', 'apartament_name', 'apartament_level', 'pedestrian_cards', 'parking_data', 'tenant_name', 'phone_number_tenant', 'landlord_name', 'phone_number_landlord', 'id_features_apartament', 'ocupation_state']);
-        const {dataValues,reservationHaveAmenity}= await innerJoinChildToFatherTables(reservations,amenities,'id_amenity_reserved','reservationHaveAmenity',reserv_id,'reserv_id',['reserv_id','id_amenity_reserved'],['start_time','end_time'],'No existe la reserva que deseas recuperar');
-        // validaciones adicionales
+        await recordExist('La reserva que intentas editar no existe',reservations,reserv_id);
         const hasDate = req.body['reservation_date']?true:false 
         if (hasDate){
-            const {id_amenity_reserved}=dataValues    
-            const {start_time, end_time} = reservationHaveAmenity.dataValues;
-            compareHours(start_reserv_time,end_reserv_time,false,'No puedes reservar mas de 6 horas una amenidad ')
-            await verifyAviableTime(id_amenity_reserved,reservation_date,start_reserv_time,end_reserv_time,reserv_id)
+            checkIsAfterToday(reservation_date,'No se puede realizar una reserva antes de hoy')
+            validationIfStartBookingTimeIsAfterBookingEndTime(start_reserv_time,end_reserv_time);
             await findTimeConflictWithOtherReservations(reserv_id,reservation_date,start_reserv_time,end_reserv_time);
-            validationTime(start_time,start_reserv_time,true);
-            validationTime(end_time,end_reserv_time,false);
+            const {free_hours,time_limit,start_time,end_time,rent_cost}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+            validationIfBookingStartTimeIsAfterAmenityOpennig(start_reserv_time,start_time);
+            validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
+            validationIfTotalBookingHoursDoesNotExceedTheAllolHours(start_reserv_time,end_reserv_time,time_limit);
+
+            const totalBookingHours = (calculatorNumnberOfMinutesBeetwenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
+            const booking_price = calculatorBookingPrice(free_hours,rent_cost,totalBookingHours);
+            req.body={
+                ...req.body,
+                'booking_price':booking_price,
+                'total_hours':totalBookingHours,
+            }  
         }   
-        next()
+        next();
     }catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -120,7 +124,7 @@ const cancelBookingValidations= async (req = request , res = response, next)=>{
     const reserv_id = req.params.reserv_id
     try {
         ValidationIdOrLevel('id de la reserva',reserv_id)
-        await userExist('La reservación que intentas recuperar',reservations,reserv_id,'reserv_id',[ 'reservation_date', 'start_reserv_time', 'end_reserv_time', 'renter_name', 'renter_phone', 'id_apartament_reservations', 'id_amenity_reserved']);   
+        await recordExist('La reserva que intentas editar no existe',reservations,reserv_id);
         next();
     } catch (error) {
         return res.status(400).json({
@@ -129,12 +133,24 @@ const cancelBookingValidations= async (req = request , res = response, next)=>{
         });
     }
 }
-const getEventsOfAmenityValidationsUser = async (req = request , res = response, next)=>{
+const getEventsOfAmenityValidations = async (req = request , res = response, next)=>{
     const {amenity_id,date} = req.query 
     try {
         validationDates(date,'fecha del calendario')
         ValidationIdOrLevel('id de la amenidad',amenity_id);
-        await userExist('La amenidad de la que intentas recuperar los eventos',amenities,amenity_id,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
+        await recordExist('La amenidad ',amenities,amenity_id);
+        next();
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        });
+    }
+}
+const getMyBookingListValidations =async(req = request , res = response, next)=>{
+    const page = req.query.page
+    try {
+        validatePage(page);
         next()
     } catch (error) {
         return res.status(400).json({
@@ -143,101 +159,40 @@ const getEventsOfAmenityValidationsUser = async (req = request , res = response,
         });
     }
 }
-const getEventsOfAmenityValidationsAdmin =  async (req = request , res = response, next)=>{
-    const {amenity_id,date} = req.query 
-    const token = req.cookies.authorization
-    try {
-        validationDates(date,'fecha del calendario')
-        ValidationIdOrLevel('id de la amenidad',amenity_id);
-        // await tokenValidation(token,user,'user_id',['user_type', 'name', 'lastname', 'email', 'phone_number', 'dpi', 'password'],process.env.SECRETKEYAUTH,['admin']);
-        await userExist('La amenidad del que intentas recuperar los eventos',amenities,amenity_id,'amenity_id',['amenity_name', 'rent_cost', 'additional_cost_per_hour']);
-        next()
-    } catch (error) {
-        return res.status(400).json({
-            error:error.message,
-            ok:false
-        });
-    }
-}
+
 module.exports={
-    getLinkForBookingValidations,
     bookingAmenityValidations,
     updateBookingValidations, 
     getMyBookingValidations ,
     cancelBookingValidations,
-    getEventsOfAmenityValidationsUser,
-    getEventsOfAmenityValidationsAdmin,
+    getMyBookingListValidations,
+    getEventsOfAmenityValidations
+    
 }
-// me verifica que no haya excedido la cantidad de reservas en un dia 
-const verifyAviableTime =async(amenity_id,date,start_reserv_time,end_reserv_time,reserv_id=0)=>{
-    let hourDifference;
-    let totalHoursPerReservation=[];
+
+const findTimeConflictWithOtherReservations=async(reserv_id,reservation_date,start_reserv_time,end_reserv_time)=>{
     try {
-        const reservationsList = await reservations.findAll({
+        const result = await reservations.findOne({
             where:{
+                reserv_state:'1',
+                reservation_date:{
+                    [Op.eq]:reservation_date
+                },
                 reserv_id:{ 
                     [Op.not]: reserv_id 
                 },
-                id_amenity_reserved:amenity_id,
-                reservation_date:date,
-                reserv_state:1
-            },
-            attributes:['start_reserv_time','end_reserv_time']
-        })
-        reservationsList.forEach((reservation) => {
-            hourDifference= hourAdder(reservation.start_reserv_time,reservation.end_reserv_time);
-            totalHoursPerReservation.push(hourDifference)
-        });
-        let  totalHours = totalHoursPerReservation.reduce((acumulador, hours) => acumulador + hours, 0);
-        if (Math.ceil(totalHours)>=10 ) {
-            throw new Error('Ya no hay espacio para mas reservas');
-        }else if(totalHours<10){
-            hourDifference=hourAdder(start_reserv_time,end_reserv_time);
-            totalHoursPerReservation.push(hourDifference);
-            totalHours = totalHoursPerReservation.reduce((acumulador, hours) => acumulador + hours, 0);
-            if (Math.ceil(totalHours)>10 ) {
-                throw new Error('Revisa los horarios ya no hay espacio para tu reserva');
+                start_reserv_time:{
+                    [Op.lte]: end_reserv_time
+                },
+                end_reserv_time:{
+                    [Op.gte]: start_reserv_time
+                }
             }
-        }
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-// Valida que la el tiempo de una reserva ya sea el incial o el final  de dicha reserva no sea previo al
-// el horario de apertura de una amenidad  o  posterior al cierre de la amenidad, el true o false me permite controlar esos estados  
-const validationTime = (amenity_time,reserv_time,flag)=>{
-    const [amenity_time_hour, amenity_time_minutes] = amenity_time.split(':').map(Number);
-    const [reserv_time_hour,reserv_time_minutes] = reserv_time.split(':').map(Number);
-
-    const amenity_time_ms = (amenity_time_hour * 60 + amenity_time_minutes) * 60 * 1000;
-    const reserv_time_ms = (reserv_time_hour * 60 + reserv_time_minutes) * 60 * 1000;
-
-    const difference = (amenity_time_ms - reserv_time_ms)/3600000;
-    
-    if(!flag) {
-        if (Math.floor(difference)<0) {
-            throw new Error(`La reserva no puede iniciar antes de las ${amenity_time}`)
-        }
-    }
-    if(flag) {
-        if (difference>0) {
-            throw new Error(`La reserva no puede terminar despues  de las ${amenity_time}`)
-        }
-    }
-}
-const findTimeConflictWithOtherReservations=async(reserv_id,reservation_date,start_reserv_time,end_reserv_time)=>{
-    try {
-        const {dataValues} = await reservations.findOne({
-            reserv_id:{ 
-                [Op.not]: reserv_id 
-            },
-            start_reserv_time:{
-                [Op.lte]: end_reserv_time
-            },
-            end_reserv_time:{
-                [Op.gte]: start_reserv_time
-            } 
+           
         })
+        if (result) {
+            throw new Error('El horario que seleccionaste esta ocupado')
+        }
     
     } catch (error) {
         throw new Error(error)
@@ -249,7 +204,7 @@ const updateBookingDataValidations =(body)=>{
             validateName(value,55)
         },
         'renter_phone':(value)=>{
-            validatePersonalPhone(value)
+            validatePhoneNumber(value)
         },
         'reservation_date':(value)=>{
             validationDates(value,'fecha de reserva')
@@ -259,13 +214,13 @@ const updateBookingDataValidations =(body)=>{
 
         },
         'end_reserv_time':(value)=>{
-            validationHour(value,'Inicio de la reserva');
-        },
-        'id_apartament_reservations':(value)=>{
-            ValidationIdOrLevel('id del apartamento que reserva',value);
+            validationHour(value,'Final de la reserva');
         },
         'reserv_id':(value)=>{
             ValidationIdOrLevel('id de la reserva',value);
+        },
+        'id_amenity_reserved':(value)=>{
+            ValidationIdOrLevel('id de la amenidad',value);
         }
     }
     Object.keys(body).forEach(propertyName=>{
@@ -276,6 +231,44 @@ const updateBookingDataValidations =(body)=>{
         }
     })
 }
-// FUNCION QUE ME AYUDA A RECUPERAR LOS HORARIOS DE LA AMENIDAD que se ha reservado a travez del id de la reservacion
-//  y recuepera el id de la amenidad 
+
+const validationIfBookingStartTimeIsAfterAmenityOpennig= (booking_start_time,amenity_opening_time)=>{
+
+    const difference= calculatorNumnberOfMinutesBeetwenTwoHours(amenity_opening_time,booking_start_time)
+    
+    if (difference<0) {
+        throw new Error('La hora de inicio de tu reserva no coincide con el horario de apertura de la amenidad');
+    }
+    
+}
+const validationIfBookingEndTimeIsBeforeClosingTime =(booking_end_time,amenity_closing_time)=>{
+    const  difference = calculatorNumnberOfMinutesBeetwenTwoHours(amenity_closing_time,booking_end_time);
+   
+    if (difference>0) {
+        throw new Error('La hora de finalización de reserva no coincide con el horario de cierre de la amenidad');
+
+    }
+}
+const validationIfStartBookingTimeIsAfterBookingEndTime =(booking_start_time,booking_end_time)=>{
+    const difference= calculatorNumnberOfMinutesBeetwenTwoHours(booking_start_time,booking_end_time);
+
+    if (difference<0) {
+        throw new Error('La reserva no puede inicar despues del la hora de finalización')
+    }
+}
+
+const validationIfTotalBookingHoursDoesNotExceedTheAllolHours =(booking_start_time,booking_end_time, time_limit)=>{
+    const totalBookingMinutes = calculatorNumnberOfMinutesBeetwenTwoHours(booking_start_time,booking_end_time);
+    if ((time_limit*60)<totalBookingMinutes) {
+        throw new Error(`La reserva no puede tener mas de ${time_limit} hora(s)`)
+    }
+
+}
+const calculatorBookingPrice =(free_hours,rent_cost,totalBookingHours)=>{
+    if (free_hours>=totalBookingHours) {
+        return 0.00
+    }else if (free_hours<totalBookingHours){
+        return  (rent_cost * totalBookingHours).toFixed(2)
+    }
+}
 

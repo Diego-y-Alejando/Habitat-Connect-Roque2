@@ -1,6 +1,7 @@
 // Generación de tokens
 const jwt = require('jsonwebtoken');
 const {Sequelize}=require('sequelize')
+const nodemailer = require('nodemailer');
 
 const jwtGenerate =(id,user_type,secret,expiresTime)=>{
     return new Promise((resolve,reject)=>{
@@ -60,7 +61,7 @@ const findData=async(model, searchField, targetField, excludeArr)=>{
     }
 }
 
-const { startOfMonth, endOfMonth , format , toDate } = require('date-fns');
+const { startOfMonth, endOfMonth , format , toDate,differenceInHours ,differenceInMinutes  } = require('date-fns');
 const {fromZonedTime } = require('date-fns-tz');
 function getStartAndEndOfMonth(dateString) {
     const date = new Date(dateString);
@@ -77,7 +78,12 @@ function getStartAndEndOfMonth(dateString) {
         end_month: format(endOfMonth(newDate), 'yyyy-MM-dd'),
     };
 }
-
+const calculatorNumnberOfMinutesBeetwenTwoHours =(initial_hour,final_hour)=>{
+    const initial_date = new Date(`1970-01-01T${initial_hour}`);
+    const final_date = new Date(`1970-01-01T${final_hour}`);  
+    
+    return differenceInMinutes(final_date,initial_date);
+}
 const hourAdder =(start_reserv_time,end_reserv_time)=>{
     
     const [start_hour, start_minutes] = start_reserv_time.split(':').map(Number);
@@ -89,31 +95,7 @@ const hourAdder =(start_reserv_time,end_reserv_time)=>{
     return hourDifference
     
 }
-const innerJoinChildToFatherTables =async(childModel,fatherModel,foreignKeyName,relationshipName,searchFieldChildTable,targetFieldChildTable,fieldsChildTable,filedsFatherTable,errorMessage)=>{
-    try {
-        const fields = await childModel.findOne({
-            where:{
-                [targetFieldChildTable]:searchFieldChildTable
-            },
-            attributes:fieldsChildTable,
-            include:[{
-                model:fatherModel,
-                as:relationshipName,
-                where:{
-                    amenity_id:Sequelize.col(foreignKeyName)
-                },
-                attributes:filedsFatherTable
-            }]
-        })
-        if (!fields) {
-            throw (errorMessage)
-        }
-        return fields
-    } catch (error) {
-        throw  new Error (error)
-    }
 
-}
 const formatHour=(hora)=> {
     const dateObj = new Date(`1970-01-01 ${hora}`);
     const opciones = { hour: 'numeric', minute: 'numeric' };
@@ -173,28 +155,52 @@ const corsOptions = {
 }
 
 
-const formatDateAndHour = () => {
-  const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
+const getCurrentDateAndTime = (dateTimeFormat) => {
+    // formatos 
+    // yyyy-MM-dd KK:mm obtener fecha y hora con formato 24hrs
+    // yyyy-MM-dd obtenr solo fecha 
+    const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
+    
+    const now = new Date();
+    const utcDate = toDate(now);
 
-  const now = new Date();
-  const utcDate = toDate(now);
-  const centralAmericaDate = fromZonedTime(utcDate, centralAmericaTimezone);
+    // Ajustar la fecha por un día antes de aplicar la zona horaria
+    const adjustedUtcDate = new Date(utcDate.getTime() - (24 * 60 * 60 * 1000));
+    const centralAmericaDate = fromZonedTime(adjustedUtcDate, centralAmericaTimezone);
+    const formattedDateTime = format(centralAmericaDate, dateTimeFormat, { timeZone: centralAmericaTimezone });
 
-  const dateTimeFormat = 'yyyy-MM-dd KK:mm';
-  const formattedDateTime = format(centralAmericaDate, dateTimeFormat, { timeZone: centralAmericaTimezone });
-
-  return formattedDateTime;
+    return formattedDateTime;
 };
+const sendEmail  =(token,typeEmailContent,receptorEmail)=>{
 
+}
+const chooseContentForEmail =(emailContent)=>{
+    const contents={
+        'update-email':(token)=>{
+            return`
+                <html>
+                <head>
+                  <title>Confirmación de cambio de correo electrónico</title>
+                </head>
+                <body>
+                  <h2>Confirmación de cambio de correo electrónico</h2>
+                  <p>Se ha solicitado un cambio de correo electrónico. Por favor, confirma el cambio haciendo clic en el siguiente botón:</p>
+                  <a href="http://localhost:8080/confirm/change/email/?token=${token}">Entra aqui paraa confirmar el cambio de correo</a>
+                </body>
+                </html>
+              `;
+        }
 
+    }
+}
 module.exports={
     jwtGenerate,
     hashingPassword,
     updateData,
     findData,
     getStartAndEndOfMonth,
+    calculatorNumnberOfMinutesBeetwenTwoHours,
     hourAdder,
-    innerJoinChildToFatherTables,
     formatHour,
     changeObjectNames,
     cookieOptions,
@@ -202,5 +208,5 @@ module.exports={
     generateHashForFile,
     jqueryHash,
     corsOptions,
-    formatDateAndHour
+    getCurrentDateAndTime
 }

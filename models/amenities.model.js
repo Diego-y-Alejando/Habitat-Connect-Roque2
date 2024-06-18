@@ -40,6 +40,10 @@ const amenities = sequelizeObj.define(
                 is:/^([01]\d|2[0-3]):([0-5]\d)/
             }
         },
+        free_hours:{
+            type:DataTypes.FLOAT,
+            defaultValue:'0'
+        },
         additional_cost_per_hour:{
             type:DataTypes.DECIMAL(10,2),
             allowNull:false
@@ -51,6 +55,10 @@ const amenities = sequelizeObj.define(
         },
         nickName :{
             type:DataTypes.CHAR,
+            allowNull:false
+        },
+        is_disabled:{
+            type:DataTypes.TINYINT,
             allowNull:false
         }
     },

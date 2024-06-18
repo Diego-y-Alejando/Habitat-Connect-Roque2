@@ -42,10 +42,13 @@ const residents_employee = sequelizeObj.define(
             unique:true,
             validate:{
                 notEmpty:true,
-                is:/^\(\d{3}\)\d{4}-\d{4}$/
+                is:/^[0-9]{4}-[0-9]{4}/
             }
-        }
-
+        },
+        occupation_list:{
+            type:DataTypes.JSON,
+            allowNull:false,
+        },
     },
     {
         sequelize:sequelizeObj,

@@ -10,14 +10,6 @@ const admin_users = sequelizeObj.define(
             autoIncrement:true,
             allowNull:false
         },
-        user_type:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/b(admin)\b/
-            }
-        },
         id_admin_user:{
             type:DataTypes.INTEGER,
             allowNull:true,

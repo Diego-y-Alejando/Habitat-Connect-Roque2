@@ -2,13 +2,21 @@ const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
 const users = sequelizeObj.define(
-    'employee_visits',{
+    'users',{
         user_id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
             unique:true,
             autoIncrement:true,
             allowNull:false
+        },
+        user_type:{
+            type:DataTypes.CHAR,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                is:/\b(resident|admin|security)\b/
+            }
         },
         name:{
             type:DataTypes.CHAR,
@@ -44,7 +52,7 @@ const users = sequelizeObj.define(
             unique:true,
             validate:{
                 notEmpty:true,
-                is:/^\(\d{3}\)\d{4}-\d{4}$/
+                is:/^[0-9]{4}-[0-9]{4}/
             }
         },
         dpi:{

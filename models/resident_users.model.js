@@ -4,20 +4,12 @@ const {sequelizeObj}= require('../database/config');
 const users = require('./users.model')
 const resident_users = sequelizeObj.define(
     'resident_users',{
-        admin_user_id:{
+        resident_user_id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
             unique:true,
             autoIncrement:true,
             allowNull:false
-        },
-        user_type:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/b(resident)\b/
-            }
         },
         id_resident_user:{
             type:DataTypes.INTEGER,

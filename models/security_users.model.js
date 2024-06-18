@@ -11,14 +11,6 @@ const security_users = sequelizeObj.define(
             unique:true,
             allowNull:false
         },
-        user_type:{
-            type:DataTypes.CHAR,
-            allowNull:false,
-            validate:{
-                notEmpty:true,
-                is:/b(security)\b/
-            }
-        },
         id_security_user:{
             type:DataTypes.INTEGER,
             allowNull:true,

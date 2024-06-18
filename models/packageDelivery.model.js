@@ -1,7 +1,7 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 const resident_users = require('../models/resident_users.model');
-const security_users = require('../models/securityUser.model');
+const security_users = require('../models/security_users.model');
 const package_delivery = sequelizeObj.define(
     'package_delivery',{
         package_delivery_id:{
@@ -13,6 +13,7 @@ const package_delivery = sequelizeObj.define(
         },
         resident_name:{
             type:DataTypes.CHAR,
+            allowNull:false,
             validate:{
                 is:/^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ0-9\s]+$/,
                 len:[0,65],
@@ -21,13 +22,23 @@ const package_delivery = sequelizeObj.define(
         },
         company_name:{
             type:DataTypes.CHAR,
+            allowNull:false,
             validate:{
                 is:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9. ]+$/,
                 len:[0,65],
                 notEmpty:true
             }
         },
-        delivery_time:{
+        delivery_date:{
+            type:DataTypes.DATE,
+            allowNull:false,
+            validate:{
+                isDate:true,
+                isAfter:'2000-01-01',
+                isBefore:'2050-01-01',
+            }
+        },
+        arrive_time:{
             type:DataTypes.DATE,
             allowNull:true,
             validate:{
@@ -55,6 +66,13 @@ const package_delivery = sequelizeObj.define(
             references: {
                 model: resident_users,
                 key: 'resident_user_id'
+            }
+        },
+        cancel_state:{
+            type:DataTypes.TINYINT,
+            allowNull:false,
+            validate:{
+                notEmpty:true
             }
         }
     },

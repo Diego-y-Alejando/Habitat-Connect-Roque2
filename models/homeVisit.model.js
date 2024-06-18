@@ -1,7 +1,7 @@
 const {DataTypes, Model}= require('sequelize');
 const {sequelizeObj}= require('../database/config');
 
-const resident_users = require('./resident_user.model')
+const resident_users = require('./resident_users.model')
 const security_users = require('./security_users.model')
 const home_visit = sequelizeObj.define(
     'home_visit',{
@@ -38,6 +38,14 @@ const home_visit = sequelizeObj.define(
                     notEmpty: true,
             }
         },
+        visit_date:{
+            type:DataTypes.DATE,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+                //is:
+            }
+        },
         start_visit_time:{
             type:DataTypes.DATE,
             allowNull:true,
@@ -71,7 +79,7 @@ const home_visit = sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:true,
             references: {
-                model: security_user,
+                model: security_users,
                 key: 'security_user_id'
             }
         },
@@ -79,10 +87,17 @@ const home_visit = sequelizeObj.define(
             type:DataTypes.INTEGER,
             allowNull:true,
             references: {
-                model: security_user,
+                model: security_users,
                 key: 'security_user_id'
             }
-        }       
+        },
+        cancel_state:{
+            type:DataTypes.TINYINT,
+            allowNull:false,
+            validate:{
+                notEmpty:true
+            }
+        }     
     
     },{
         sequelize:sequelizeObj,
