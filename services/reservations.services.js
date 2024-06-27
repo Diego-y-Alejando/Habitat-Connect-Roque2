@@ -63,21 +63,12 @@ const getMyBookingService=async (reserv_id,resident_id)=>{
                 id_resident_reserv:resident_id,
                 reserv_state:1          
             },
-            attributes:['renter_name', 'renter_phone'],
-            include: [
-                {
-                  model: amenities, // Modelo asociado (por ejemplo, PostModel)
-                  as:'reservationHaveAmenity',
-                  attributes: ['amenity_name'] ,// Columnas que deseas recuperar del modelo asociado
-                  foreignKey: 'id_amenity_reserved'
-                }
-              ]
+            attributes:['renter_name', 'renter_phone','id_amenity_reserved'],
         });
         if(!reservation) throw new Error('No existe esta reserva')
         
         return {
                 booking_data:reservation.get(),
-                amenity_name:reservation.get().reservationHaveAmenity.dataValues.amenity_name
             }
     } catch (error) {
         throw error
@@ -104,7 +95,7 @@ const getMyBookingListService =async(page, resident_id,columns)=>{
                     model:amenities,
                     as:'reservationHaveAmenity',
                     foreignKey:'id_amenity_reserved',
-                    attributes:['amenity_name']
+                    attributes:['amenity_name']    
                 }
             ]
         });
@@ -195,6 +186,7 @@ const getEventsOfAmenityService=async (amenity_id,start_month,end_month,columns)
         throw error
     }
 }
+
 module.exports ={
     bookingAmenityService,
     getMyBookingService,

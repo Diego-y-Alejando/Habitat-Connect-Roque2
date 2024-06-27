@@ -46,11 +46,12 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
         ValidationIdOrLevel('id de la amenidad',id_amenity_reserved);
         await recordExist('La amenidad que intentas reservar no existe',amenities,id_amenity_reserved);
         validationIfStartBookingTimeIsAfterBookingEndTime(start_reserv_time,end_reserv_time);
-        const {free_hours,time_limit,start_time,end_time,rent_cost}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+        const {free_hours,time_limit,start_time,end_time,rent_cost, is_disabled}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+        if (is_disabled===0) throw new Error('La amenidad se encuentra deshabilitada')
         validationIfBookingStartTimeIsAfterAmenityOpennig(start_reserv_time,start_time);
         validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
         validationIfTotalBookingHoursDoesNotExceedTheAllolHours(start_reserv_time,end_reserv_time,time_limit);
-
+        
         const totalBookingHours = (calculatorNumnberOfMinutesBeetwenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
         const booking_price = calculatorBookingPrice(free_hours,rent_cost,totalBookingHours);
         req.body={
@@ -68,7 +69,7 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
     }
 }
 const getMyBookingValidations = async(req = request , res = response, next)=>{
-    const {reserv_id} = req.query
+    const reserv_id = req.params.reserv_id
     try{
         ValidationIdOrLevel('id de tu reserva ',reserv_id)
         await recordExist('La reserva que intentas recuperar no existe',reservations,reserv_id);
@@ -99,7 +100,10 @@ const updateBookingValidations = async (req = request , res = response, next)=>{
             checkIsAfterToday(reservation_date,'No se puede realizar una reserva antes de hoy')
             validationIfStartBookingTimeIsAfterBookingEndTime(start_reserv_time,end_reserv_time);
             await findTimeConflictWithOtherReservations(reserv_id,reservation_date,start_reserv_time,end_reserv_time);
-            const {free_hours,time_limit,start_time,end_time,rent_cost}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+            const {free_hours,time_limit,start_time,end_time,rent_cost,is_disabled}= await getAmenityDataForBookingValidations(id_amenity_reserved);
+            
+            if (is_disabled==0) throw new Error('La amenidad se encuentra deshabilitada')
+            
             validationIfBookingStartTimeIsAfterAmenityOpennig(start_reserv_time,start_time);
             validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
             validationIfTotalBookingHoursDoesNotExceedTheAllolHours(start_reserv_time,end_reserv_time,time_limit);

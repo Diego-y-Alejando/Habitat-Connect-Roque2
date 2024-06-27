@@ -5,12 +5,14 @@ const resident_employee_relationships = require('../models/resident_employee_rel
 const {
     recordExist,
     validatePhoneNumber, 
-    ValidationIdOrLevel
+    ValidationIdOrLevel,
+    bodyVerification
 }= require('../middlewares/common.middlewares');
 const createRelationshipValidation= async(req = request , res = response , next)=>{
     const {boss_phone_number_1,boss_phone_number_2}= req.body
     const maid_id = req.params.maid_id
     try {
+        bodyVerification(req.body,['boss_phone_number_1','boss_phone_number_2'])
         if (!req.resident_id) throw new Error('No  viene el id del residente ')
         if (boss_phone_number_1===boss_phone_number_2) throw new Error('Los teléfonos de los encargados no pueden ser iguales')
         await recordExist('El empleado que solicitas', residents_employee,maid_id)
@@ -71,9 +73,12 @@ const updateBossPhoneNumberValidation =async(req = request , res = response, nex
         })
     }
 }
-const endRelationshipValidation = async (req = request, res = response)=>{
-    try {  
-        
+const endRelationshipValidation = async (req = request, res = response , next)=>{
+    const relationship_id = req.params.relationship_id  
+    try {   
+        ValidationIdOrLevel('id de la relacion',relationship_id)
+        await recordExist('La relacion que intentas terminar ', resident_employee_relationships,relationship_id)
+        next()
     } catch (error) {
         return res.status(400).json({
             error:error.message,

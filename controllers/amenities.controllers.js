@@ -4,7 +4,8 @@ const {Sequelize} = require('sequelize')
 const path = require('path');
 const {
     getAmenitiesListService,
-    updateAmenityService
+    updateAmenityService,
+    getAmenityDetailService
 }= require('../services/amenities.services');
 const amenitiesHTML = path.join(__dirname, '..','views','amenities.ejs');
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
@@ -12,7 +13,8 @@ const getAmenitiesListController = async (req = request , res = response)=>{
     try {
         const amenitiesList = await getAmenitiesListService();
         return res.status(200).json({
-            amenities:amenitiesList
+            amenities:amenitiesList,
+            ok: true
         })
         // return  res.render(amenitiesHTML,{
         //     amenitiesData:amenitiesFormated,
@@ -80,11 +82,27 @@ const ableAmenityController = async (req = request , res = response)=>{
     }
 }
 
+const getAmenityDetailController = async( req = request , res = response)=>{
+    const amenity_id = req.params.amenity_id
+    try {
+        const data= await getAmenityDetailService(amenity_id,['rent_cost', 'start_time', 'end_time', 'free_hours', 'additional_cost_per_hour', 'time_limit', 'is_disabled'])
+        return res.status(200).json({
+            data,
+            ok: true
+        })
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        })
+    }
+}
 module.exports ={
     getAmenitiesListController,
     updateAmenityData,
     disableAmenityController,
-    ableAmenityController
+    ableAmenityController,
+    getAmenityDetailController
 }
 
 

@@ -8,8 +8,11 @@ const {
     checkDuplicateQueryParams,
     checkDuplicateBodyParams
 } = require('../middlewares/duplicateParameters.middlewares');
-
+const swaggerUI= require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
 const compression = require('../middlewares/compression.middleware')
+
+
 class Server {
     constructor(){
         this.app=express();
@@ -18,14 +21,39 @@ class Server {
         this.adminPath='/administracion'
         this.residentPath='/residente'
         this.securityPath='/seguridad'
-        this.routes()
         this.port =process.env.PORT
+        this.swaggerJsDoc=swaggerJsDoc
+        this.swaggerUI = swaggerUI
+        this.swaggerSpec ={
+            definition:{
+                openapi:'3.0.0',
+                info:{
+                    title:'Habitat connect Roque 2',
+                    version:"1.0.0"
+                },
+                servers:[
+                    {
+                        url:`${process.env.BASE_URL}/residente/api-doc`
+                    },
+                    {
+                        url:`${process.env.BASE_URL}/administracion/api-doc`
+                    },
+                    {
+                         url:`${process.env.BASE_URL}/seguridad/api-doc`
+                    },
+                ],
+            },
+            apis:[`${path.join(__dirname,"../routes/documentation routes/resident.docs.js")}`],
+        }
+        this.swaggerDocs = this.swaggerJsDoc(this.swaggerSpec);
+        this.routes();  
     }
     async dbConnection(){
         await testConnection();
     }
     middlewares(){
         // this.app.use(helmet())
+        
         this.app.use(compression)
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
@@ -42,7 +70,7 @@ class Server {
         // this.app.use(checkDuplicateBodyParams)    
     }
     routes(){
-    
+        this.app.use(`${this.residentPath}/api-doc`,this.swaggerUI.serve,this.swaggerUI.setup(this.swaggerDocs))
         this.app.use(this.adminPath, require('../routes/admin.routes'));
         this.app.use(this.residentPath, require('../routes/resident.routes'));
         // this.app.use(this.securityPath, require('../routes/security.routes'));

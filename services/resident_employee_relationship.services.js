@@ -1,5 +1,6 @@
 const resident_employee_relationships= require('../models/resident_employee_relationships.model')
 const {Op}= require('sequelize')
+
 const createRelationshipService = async(maid_id,resident_id,dataToInsert)=>{
     const {boss_phone_number_1,boss_phone_number_2}= dataToInsert
     try {
@@ -55,9 +56,17 @@ const updateBossPhoneNumberService = async (maid_id, resident_id,dataToEdit)=>{
     }
 }
 
-const endRelationshipService = async(maid_id,resident_id)=>{
+const endRelationshipService = async(relationship_id, transaction)=>{
     try {
-        
+        const result = await resident_employee_relationships.destroy(
+            {
+                where:{
+                    relationship_id:relationship_id
+                },
+                transaction
+            }
+        )
+        return 'Has Terminado tu relacion con el empleado'
     } catch (error) {
         throw error
     }
