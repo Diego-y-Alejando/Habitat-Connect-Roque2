@@ -3,8 +3,13 @@ const {
     createRelationshipService,
     getRelationshipDetailsService,
     updateBossPhoneNumberService,
-    endRelationshipService
+    endRelationshipService,
+    
 }= require('../services/resident_employee_relationship.services')
+const {
+    deleteResidentEmployeeScheduleService
+}= require('../services/resident_employee_schedule.services.js')
+const {sequelizeObj} =require('../database/config')
 const createRelationshipController= async(req = request , res = response )=>{
     const maid_id = req.params.maid_id
 
@@ -48,19 +53,31 @@ const updateBossPhoneNumberController = async(req = request , res = response)=>{
         })
     } catch (error) {
         return res.status(400).json({
-            error:error.message,
+            error:error,
             ok:false
         })
     }
 }
 
 const endRelationshipController = async( req = request , res = response)=>{
+    const relationship_id = req.params.relationship_id
+
     try {
         
+        const transactionResponse = await sequelizeObj.transaction(async endRelationshipTransaction=>{
+        
+            await endRelationshipService(relationship_id,endRelationshipTransaction)
+            await deleteResidentEmployeeScheduleService(relationship_id,endRelationshipTransaction)
+            // eliminar las visitas 
+        });
+        return res.status(200).json({
+            msg:'Has terminado tu relacion con el empleado',
+            ok:true
+        })
     } catch (error) {
         return res.status(400).json({
             error:error.message,
-            ok:false
+            ok:'false'
         })
     }
 }

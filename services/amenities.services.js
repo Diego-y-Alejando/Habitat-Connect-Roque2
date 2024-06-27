@@ -25,7 +25,7 @@ const getAmenitiesListService = async ()=>{
         throw error
     }
 }
-const getAmenityInfoService =async(amenity_id,columns)=>{
+const getAmenityDetailService =async(amenity_id,columns)=>{
     try {
         const amenity = await amenities.findOne({
             where:{
@@ -58,7 +58,7 @@ const getAmenityDataForBookingValidations =async(amenity_id)=>{
             where:{
                 amenity_id:amenity_id
             },
-            attributes:['free_hours','time_limit','start_time','end_time', 'number_of_hours_opened','rent_cost']
+            attributes:['free_hours','time_limit','start_time','end_time', 'number_of_hours_opened','rent_cost','is_disabled']
         });
         return {
             free_hours:dataValues.free_hours,
@@ -66,7 +66,8 @@ const getAmenityDataForBookingValidations =async(amenity_id)=>{
             start_time:dataValues.start_time,
             end_time:dataValues.end_time,
             rent_cost:dataValues.rent_cost,
-            hours_opened:dataValues.number_of_hours_opened
+            hours_opened:dataValues.number_of_hours_opened,
+            is_disabled:dataValues.is_disabled
         }
     } catch (error) {
         throw error
@@ -74,7 +75,7 @@ const getAmenityDataForBookingValidations =async(amenity_id)=>{
 }
 module.exports ={
     getAmenitiesListService,
-    getAmenityInfoService,
+    getAmenityDetailService,
     updateAmenityService,
     getAmenityDataForBookingValidations
 }

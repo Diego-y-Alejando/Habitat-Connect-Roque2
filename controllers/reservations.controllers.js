@@ -35,7 +35,7 @@ const bookingAmenityController = async (req = request , res = response)=>{
     try {
         let newData
         const {data,msg} = await bookingAmenityService(req.body)
-        const {amenity_name}= await getAmenityInfoService(data.id_amenity_reserved,['amenity_name'])
+        const {amenity_name}= await getAmenityInfoService(data.id_amenity_reserved,['amenity_name']);
         delete data.renter_name
         delete data.renter_phone
         delete data.id_amenity_reserved
@@ -58,26 +58,19 @@ const bookingAmenityController = async (req = request , res = response)=>{
 }
 
 const getMyBookingController = async(req = request , res = response)=>{
-    const {reserv_id} = req.query
+    const reserv_id = req.params.reserv_id
     try {
-        const {booking_data,amenity_name} =await getMyBookingService (reserv_id,req.resident_id)
-        delete booking_data.reservationHaveAmenity
+        const {booking_data} =await getMyBookingService (reserv_id,req.resident_id)
         return res.status(200).json({
-             booking_data:{
-                ...booking_data,
-                amenity_name
-            },
-             ok:true
-        })
-        // return  res.render(myBookinHTML,{
-        //    reservationData:reservation.get(),
-        //    amenityData:reservation.get().reservationHaveAmenity.dataValues
-        // });
+            ...booking_data,
+            ok:true
+        });
+        
     } catch (error) {
-        return  res.render(error404HTML,{
+        return res.status(400).json({
             error:error.message,
             ok:false
-        });
+        })
     }
 }
 const updateBookingController = async (req = request , res = response)=>{

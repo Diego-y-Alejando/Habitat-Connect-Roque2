@@ -1,7 +1,6 @@
 const {Router, response, request}= require('express');
 const router = Router();
 
-
 const {residentAutenticationValidations} = require('../middlewares/jwt.middlewares');
 /*=======================
 RUTAS DEL PERFIL 
@@ -62,12 +61,12 @@ const {
     updateBossPhoneNumberController,
     endRelationshipController
 }= require('../controllers/residentEmployeRelationship.controllers');
-router.post('/create/realtionship/:maid_id',residentAutenticationValidations,createRelationshipValidation,createRelationshipController);
+// se utiliza el id del empleado porque en la carga incial del frontend lo primero que se obtiene es el id del empleado lo que permite encontrar la relacion rapidamente junto con el id del residente en el token
+router.post('/create/relationship/:maid_id',residentAutenticationValidations,createRelationshipValidation,createRelationshipController);
 router.get('/relationship/details/:maid_id',residentAutenticationValidations,getRelationshipDetailsValidation,getRelationshipDetailsController);
-router.post('/update/relationship/info/:maid_id',residentAutenticationValidations,updateBossPhoneNumberValidation,updateBossPhoneNumberController)
-
-//HACE FALTA REALIZAR LA RUTA DE ELIMINAR LA RELACIÖN  
-router.delete('/end/relationship/:maid_id',residentAutenticationValidations, endRelationshipValidation, endRelationshipController);
+router.post('/update/relationship/info/:maid_id',residentAutenticationValidations,updateBossPhoneNumberValidation,updateBossPhoneNumberController) 
+// NO OLVIDAR BORRAR LAS VISITAS DEL EMPLEADO AL TERMINAR LA RELACIÓN
+router.delete('/end/relationship/:relationship_id',residentAutenticationValidations, endRelationshipValidation, endRelationshipController);
 /*====================================
 RUTAS DEL HORARIO DE LA RELACION
 ======================================*/
@@ -83,7 +82,7 @@ const {
 } = require('../controllers/resident_employee_schedule.controllers')
 router.post('/create/schedule/for/relationship/',residentAutenticationValidations,createScheduleValidation , createScheduleController);
 router.get('/relationship/schedule/:relationship_id',residentAutenticationValidations ,getScheduleValidation,getScheduleController);
-router.post('/edit/schedule/:relationship_id',residentAutenticationValidations , editScheduleValidation, editScheduleController);
+router.post('/update/schedule/:relationship_id',residentAutenticationValidations , editScheduleValidation, editScheduleController);
 /*==========================
 RUTAS DE VISITAS DOMESTICAS
 ===========================*/
@@ -104,7 +103,7 @@ const {
 }= require('../controllers/homeVisit.controllers');
 router.post('/create/home-visit',residentAutenticationValidations,createHomeVisitValidations,createHomeVisitController)
 router.get('/get/home-visit/:visit_id',residentAutenticationValidations,getHomeVisitValidations,getHomeVisitController)
-router.post('/edit/home-visit/:visit_id',residentAutenticationValidations,editHomeVisitValidations,editHomeVisitController);
+router.post('/update/home-visit/:visit_id',residentAutenticationValidations,editHomeVisitValidations,editHomeVisitController);
 router.post('/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,cancelHomeVisitController);
 router.post('/undo/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,undoCancelHomeVisitController);
 router.get('/get/list/home-visit',residentAutenticationValidations,getAllHomeVisitsValidations,getAllHomeVisitForResidentController);
@@ -127,8 +126,8 @@ const {
     getAllPackageDeliveryForResidentsController
 }= require('../controllers/packageDelivery.controllers.js');
 router.post('/create/package-delivery',residentAutenticationValidations,createPackageDeliveryValidations,createPackageDeliveryController)
-router.post('/edit/package-delivery/:visit_id',residentAutenticationValidations,editPackageDeliveryValidations,editPackageDeliveryController);
 router.get('/get/package-delivery/:visit_id',residentAutenticationValidations,getPackageDeliveryInfoValidations,getPackageDeliveryInfoController)
+router.post('/update/package-delivery/:visit_id',residentAutenticationValidations,editPackageDeliveryValidations,editPackageDeliveryController);
 router.post('/cancel/package-delivery/:visit_id',residentAutenticationValidations, cancelOrUndoCancelPackageDeliveryValidations , cancelPackageDeliveryController);
 router.post('/undo/cancel/package-delivery/:visit_id',residentAutenticationValidations,cancelOrUndoCancelPackageDeliveryValidations, undoCancelPackageDeliveryController);
 router.get('/get/list/package-delivery',residentAutenticationValidations,getAllPackageDeliveryValidations,getAllPackageDeliveryForResidentsController)
@@ -153,7 +152,7 @@ const {
     getEventsOfAmenityController
 }= require('../controllers/reservations.controllers');
 router.post('/booking/amenity/',residentAutenticationValidations,bookingAmenityValidations,bookingAmenityController);
-router.get('/get/my/booking/',residentAutenticationValidations,getMyBookingValidations, getMyBookingController);
+router.get('/get/my/booking/:reserv_id',residentAutenticationValidations,getMyBookingValidations, getMyBookingController);
 router.get('/get/my/booking/list',residentAutenticationValidations,getMyBookingListValidations,getMyBookingListController)
 router.post('/update/my/booking/',residentAutenticationValidations,updateBookingValidations,updateBookingController);
 router.post('/cancel/my/booking/:reserv_id',residentAutenticationValidations,cancelBookingValidations,cancelBookingController);
@@ -163,8 +162,13 @@ RUTAS DE AMENIDADES
 =========================*/
 const {
     getAmenitiesListController,
-}= require('../controllers/amenities.controllers')
+    getAmenityDetailController
+}= require('../controllers/amenities.controllers');
+const {
+    getAmenityDetailValidations
+}= require('../middlewares/amenities.middlewares')
 router.get('/amenities/',residentAutenticationValidations,getAmenitiesListController)
+router.get('/get/amenity/detail/:amenity_id',residentAutenticationValidations,getAmenityDetailValidations,getAmenityDetailController)
 
 
 module.exports=router

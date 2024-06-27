@@ -8,7 +8,7 @@ const {
     recordExist,
     validationCost,
     validationHour,
-    ValidationIdOrLeve,
+    ValidationIdOrLevel,
 }= require('./common.middlewares')
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
 const {
@@ -48,9 +48,24 @@ const ableAndDisabledAmenityValidations = async(req = request, res = response, n
         });
     }
 }
+
+const getAmenityDetailValidations = async( req= request , res = response, next)=>{
+    const amenity_id = req.params.amenity_id
+    try {
+        ValidationIdOrLevel('id de la amenidad',amenity_id)
+        await recordExist('La amenidad que intenta obtener no existe',amenities,amenity_id);
+        next()
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        });
+    }
+}
 module.exports ={
     updateAmenityDataValidations,
-    ableAndDisabledAmenityValidations
+    ableAndDisabledAmenityValidations,
+    getAmenityDetailValidations,
 }
 
 const updateAmenityDataValidationsBody =(body,start_time,end_time)=>{

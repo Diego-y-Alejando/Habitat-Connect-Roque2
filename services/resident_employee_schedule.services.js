@@ -51,9 +51,24 @@ const editScheduleService = async(relationship_id,dataToEdit)=>{
         throw error.message
     }
 }
-
+const deleteResidentEmployeeScheduleService = async(relationship_id, transaction)=>{
+    try {
+        const result = await resident_employee_schedule.destroy(
+            {
+                where:{
+                    id_relationship_schedule:relationship_id
+                },
+                transaction
+            }
+        )
+        return 'Has Terminado tu relacion con el empleado'
+    } catch (error) {
+        throw error
+    }
+}
 module.exports ={
     createScheduleService,
     getScheduleService,
-    editScheduleService
+    editScheduleService,
+    deleteResidentEmployeeScheduleService
 }
