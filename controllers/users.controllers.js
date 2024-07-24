@@ -1,6 +1,9 @@
 const {request,response}= require('express');
 const path = require('path');
-const {cookieOptions}= require('../helpers/helpers')
+const {cookieOptions,saveSession}= require('../helpers/helpers')
+const {
+    redisClient
+}  =require('../redis/redisClient')
 const {
     jwtGenerate,
     hashingPassword,
@@ -23,26 +26,33 @@ const {sequelizeObj} =require('../database/config')
 
 const loginController = async (req= request , res = response)=>{
 
-    const {user_id,user_type}= req.userData
+    const {user_id,user_type,name}= req.userData
     try {
         const getIdForTokenService = {
             admin: getAdminIdService,
             resident: getResidentIdService,
             security: getSecurityIdService,
         };
-          
         let idForToken;
         if (getIdForTokenService[user_type]) {
             idForToken = await getIdForTokenService[user_type](user_id);
         }else{
             throw new Error('El tipo de usuario no es correcto');
         }
-        const token = await jwtGenerate(idForToken,user_type,process.env.SECRETKEYAUTH,'4h')
-        res.cookie('authorization', token, cookieOptions);  
+        const token = await jwtGenerate(idForToken,user_type,process.env.SECRETKEYAUTH,'24h')
+        req.session.user = {
+            user_type:user_type,
+            name:name
+        }
+        await saveSession(req);
+        res.cookie('authorization', token, cookieOptions); 
         return res.status(200).json({
-            msg:'Has iniciado sesion',
-            ok:true,
-        })
+            user_type,
+            name,
+            session:req.session
+        });
+     
+       
     } catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -50,6 +60,7 @@ const loginController = async (req= request , res = response)=>{
         })
     }
 }
+
 // SOLO CREA USUARIOS DE TIPO RESIDENTE 
 const createResidentUserController = async (req = request , res = response)=>{
     const {name,lastname,email,phone_number,dpi,apartament_id,apartament_name} = req.body 
@@ -125,6 +136,7 @@ const updateUserInfoController =async (req = request , res = response)=>{
         })
     }
 }
+
 
 module.exports= {
     loginController,

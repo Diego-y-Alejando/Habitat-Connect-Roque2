@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const {corsOptions}= require('../helpers/helpers.js')
+const {corsOptions, cookieOptions}= require('../helpers/helpers.js')
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const {
@@ -11,11 +11,18 @@ const {
 const swaggerUI= require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
 const compression = require('../middlewares/compression.middleware')
-
+const {
+    generateSecret,
+    RedisStore,
+    session,
+    redisClient,
+    redisConnection
+}=require('../redis/redisClient')
 
 class Server {
     constructor(){
         this.app=express();
+        this.testRedisConnection();
         this.middlewares();
         this.usersPath ='/users'
         this.adminPath='/administracion'
@@ -51,13 +58,16 @@ class Server {
     async dbConnection(){
         await testConnection();
     }
+    testRedisConnection(){
+        redisConnection();
+    }
     middlewares(){
         // this.app.use(helmet())
         
+        this.app.use(express.json())
         this.app.use(compression)
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
-        this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }));
         this.app.disable('x-powered-by');
         this.app.use((req, res, next) => {
@@ -66,6 +76,19 @@ class Server {
             }
             next();
         });
+        this.app.use(session({
+            store: new RedisStore({ client: redisClient }),
+            secret:  generateSecret(),
+            name: 'session', // Usar un nombre de cookie personalizado
+            resave: false,
+            saveUninitialized: false,
+            rolling: true, // Reiniciar el tiempo de expiración en cada respuesta
+            cookie:cookieOptions
+          }))
+        this.app.use ((req,res, next)=>{
+            console.log(req.cookies);
+            next()
+        })
         // this.app.use(checkDuplicateQueryParams)
         // this.app.use(checkDuplicateBodyParams)    
     }
@@ -74,7 +97,7 @@ class Server {
         this.app.use(this.adminPath, require('../routes/admin.routes'));
         this.app.use(this.residentPath, require('../routes/resident.routes'));
         // this.app.use(this.securityPath, require('../routes/security.routes'));
-        this.app.use(this.usersPath, require('../routes/users.routes'));
+        this.app.use(require('../routes/users.routes'));
         this.app.use('/public',express.static('public'));
         this.app.use('/dist', express.static(path.join(__dirname,'../dist')));
         

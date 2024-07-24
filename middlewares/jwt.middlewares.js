@@ -9,6 +9,9 @@ const resident_users = require('../models/resident_users.model')
 const adminAutenticationValidations =async (req = request , res = response,next)=>{
     const token = req.cookies.authorization
     try {
+        if (!req.session.user) {
+            throw new Error('No has iniciado sesion')
+          }
         await tokenValidation(token,admin_users,process.env.SECRETKEYAUTH,['admin'])
         next();
     } catch (error) {
@@ -21,6 +24,10 @@ const adminAutenticationValidations =async (req = request , res = response,next)
 const residentAutenticationValidations =async (req = request , res = response,next)=>{
     const token = req.cookies.authorization
     try {
+        console.log(req.session);
+        if (!req.session.user) {
+            throw new Error('No has iniciado sesion')
+          }
         const {id,user_type} = await tokenValidation(token,resident_users,process.env.SECRETKEYAUTH,['resident'])
         req.resident_id= id
         req.user_type= user_type

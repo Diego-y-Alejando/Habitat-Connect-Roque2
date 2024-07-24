@@ -19,16 +19,17 @@ const users = require('../models/users.model');
 const security_users = require('../models/security_users.model');
 const apartaments= require('../models/apartaments.model')
 const loginValidations=async  (req= request, res = response, next)=>{
-    const {email}= req.body
+    const {email ,password}= req.body
     try {
         bodyVerification(req.body,['email','password']);
         validationEmail(email);
-        validationPassword(req.body.password);
+        validationPassword(password);
         
-        const {user_id,user_type,pass}= await checkUserEmailExistAndReturnPasswordService(email)
+        const {user_id,user_type,pass,name}= await checkUserEmailExistAndReturnPasswordService(email)
         req.userData={
             'user_id':user_id,
-            'user_type':user_type
+            'user_type':user_type,
+            'name': name
         }
        
         // const validatePassword = bcrypt.compareSync(req.body.password,pass);

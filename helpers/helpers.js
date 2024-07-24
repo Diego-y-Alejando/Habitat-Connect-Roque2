@@ -111,7 +111,7 @@ const changeObjectNames =(originalObject,objectPropertiesForChange)=>{
 
 const cookieOptions = {
     httpOnly: true, // Solo accesible desde el servidor
-    secure: true, // Solo en conexiones HTTPS
+    secure: false, // Solo en conexiones HTTPS
     sameSite: 'strict', // Restringir a solicitudes del mismo sitio
     maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida en milisegundos (1 día)
     // agregar la propiedad  domain: para aceptar solo de determinados dominios o subdominios
@@ -145,13 +145,13 @@ const jqueryHash = ()=>{
 }
 const corsOptions = {
     origin: [
-      `${process.env.BASE_URL}`,
+      'http://localhost:5173'
     ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Range', 'X-Content-Range'], 
     credentials: true,
-    maxAge: 600 // 10 minutos
+    maxAge: 600, // 10 minutos
 }
 
 
@@ -193,6 +193,19 @@ const chooseContentForEmail =(emailContent)=>{
 
     }
 }
+
+const saveSession = (req) => {
+    return new Promise((resolve, reject) => {
+        req.session.save((err) => {
+            if (err) {
+                console.error('Error al guardar la sesión:', err);
+                reject(new Error('Error al guardar la sesión'));
+            } else {
+                resolve();
+            }
+        });
+    });
+};
 module.exports={
     jwtGenerate,
     hashingPassword,
@@ -208,5 +221,6 @@ module.exports={
     generateHashForFile,
     jqueryHash,
     corsOptions,
-    getCurrentDateAndTime
+    getCurrentDateAndTime,
+    saveSession
 }

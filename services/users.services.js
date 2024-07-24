@@ -7,14 +7,15 @@ const checkUserEmailExistAndReturnPasswordService =async (email)=>{
             where:{
                 email:email
             },
-            attributes: ['user_id', 'user_type', 'password'],
+            attributes: ['user_id', 'user_type', 'password','name'],
         })
         if (!result) throw new Error('No existe el usuario')
         const {dataValues}=result
         return {
             'user_id':dataValues.user_id,
             'user_type':dataValues.user_type,
-            'pass':dataValues.password
+            'pass':dataValues.password,
+            'name': dataValues.name
         }
     } catch (error) {
         throw error
