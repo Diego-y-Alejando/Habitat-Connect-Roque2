@@ -70,12 +70,6 @@ class Server {
         this.app.use(cors(corsOptions));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.disable('x-powered-by');
-        this.app.use((req, res, next) => {
-            if (req.path.endsWith('.js')) {
-                res.type('text/javascript');
-            }
-            next();
-        });
         this.app.use(session({
             store: new RedisStore({ client: redisClient }),
             secret:  generateSecret(),
@@ -85,10 +79,6 @@ class Server {
             rolling: true, // Reiniciar el tiempo de expiración en cada respuesta
             cookie:cookieOptions
           }))
-        this.app.use ((req,res, next)=>{
-            console.log(req.cookies);
-            next()
-        })
         // this.app.use(checkDuplicateQueryParams)
         // this.app.use(checkDuplicateBodyParams)    
     }

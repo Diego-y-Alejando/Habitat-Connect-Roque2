@@ -49,7 +49,6 @@ const loginController = async (req= request , res = response)=>{
         return res.status(200).json({
             user_type,
             name,
-            session:req.session
         });
      
        
@@ -60,7 +59,28 @@ const loginController = async (req= request , res = response)=>{
         })
     }
 }
+const logOutController =(req = request , res = response)=>{
+    try {
+        if (req.session) {
+            req.session.destroy((err) => {
+              if (err) throw new Error(err)
 
+              res.clearCookie('session'); // Nombre por defecto de la cookie de sesión
+              res.clearCookie('authorization')
+              return res.status(200).json({
+                msg:'Sesion cerrada exitosamente'
+              })
+            });
+        } else {
+            throw new Error('No Hay sesiones activas')
+        }
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        })
+    }
+}
 // SOLO CREA USUARIOS DE TIPO RESIDENTE 
 const createResidentUserController = async (req = request , res = response)=>{
     const {name,lastname,email,phone_number,dpi,apartament_id,apartament_name} = req.body 
@@ -140,6 +160,7 @@ const updateUserInfoController =async (req = request , res = response)=>{
 
 module.exports= {
     loginController,
+    logOutController,
     createResidentUserController,
     getMyResidentUserInfoController,
     updateUserInfoController    

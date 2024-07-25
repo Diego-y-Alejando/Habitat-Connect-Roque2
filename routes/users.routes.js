@@ -3,13 +3,9 @@ const router = Router()
 
 
 
-const {loginController}= require('../controllers/users.controllers');
+const {loginController,logOutController}= require('../controllers/users.controllers');
 const {loginValidations}= require('../middlewares/users.middlewares');
 router.post('/login',loginValidations,loginController);
 
-/* ===================
-    RUTAS FRONTEND
-======================*/
-const {frontendLoggin} = require('../controllers/views.controllers')
-router.get('/login',frontendLoggin);
+router.post('/log-out/',logOutController);
 module.exports=router;
