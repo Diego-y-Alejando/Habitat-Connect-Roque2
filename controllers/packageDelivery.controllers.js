@@ -79,7 +79,7 @@ const getAllPackageDeliveryForResidentsController = async (req = request , res =
     const upCommingVisits = req.query.upCommingVisits? req.query.upCommingVisits :1
     const packages_recieved = req.query.packages_recieved? req.query.packages_recieved:0
     try {
-        const result = await getAllPackageDeliveryService(page,'resident-request',req.resident_id,dateForSearch,searchData,packages_recieved,['package_delivery_id','company_name','delivery_date','package_delivery_state'],upCommingVisits)
+        const result = await getAllPackageDeliveryService(page,'resident-request',req.resident_id,dateForSearch,searchData,packages_recieved,['package_delivery_id','company_name','delivery_date','package_delivery_state','cancel_state'],upCommingVisits)
         const totalPages = Math.ceil(result.count/10)
         if (result.rows.length===0) {
             return res.status(200).json({

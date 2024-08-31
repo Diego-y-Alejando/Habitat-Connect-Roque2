@@ -168,7 +168,7 @@ const {
     getAmenityDetailValidations
 }= require('../middlewares/amenities.middlewares')
 router.get('/amenities/',residentAutenticationValidations,getAmenitiesListController)
-router.get('/get/amenity/detail/:amenity_id',residentAutenticationValidations,getAmenityDetailValidations,getAmenityDetailController)
+router.get('/amenity/detail/:amenity_name',residentAutenticationValidations,getAmenityDetailValidations,getAmenityDetailController)
 
 
 module.exports=router

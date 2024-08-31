@@ -103,9 +103,9 @@ const getAllHomeVisitForResidentController = async (req = request , res = respon
     const dateForSearch = req.query.date || getCurrentDateAndTime('yyyy-MM-dd');
     const upCommingVisits = req.query.upCommingVisits || 1
     try {
-       const result = await getAllHomeVisitsService(page, 'resident-request',req.resident_id,dateForSearch,searchData,['home_visit_id', 'visitors_name','home_visit_state','dpi' ],upCommingVisits)
+       const result = await getAllHomeVisitsService(page, 'resident-request',req.resident_id,dateForSearch,searchData,['home_visit_id', 'visitors_name','home_visit_state','cancel_state'],upCommingVisits)
        const totalPages = Math.ceil(result.count/10)
-       // cambia de nombre a los registros y elimina la propiedad homeVisitForApartament para hacer una sola propiedad c
+       // cambia de nombre a los registros y elimina la propiedad homeVisitForApartament para hacer una sola propiedad 
        const newRows =result.rows.map(({dataValues}) => {         
            let newObject ={
                ...dataValues,

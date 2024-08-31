@@ -26,7 +26,7 @@ const getApartamentsListController= async(req= request , res = response)=>{
                 area :apartamentFeatures['dataValues'].area,
                 resdient_phone :apartamentHaveResident['dataValues']['residentHaveUserInfo'].phone_number
            }
-        })
+        });
         console.log(newApartamentList);
         return res.status(200).json({
             [`level_${level}`]:newApartamentList,

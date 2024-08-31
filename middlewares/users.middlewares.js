@@ -14,7 +14,9 @@ const {
 const {
     checkUserEmailExistAndReturnPasswordService
 }= require('../services/users.services')
-
+const {
+    redisClient
+}  =require('../redis/redisClient')
 const users = require('../models/users.model');
 const security_users = require('../models/security_users.model');
 const apartaments= require('../models/apartaments.model')

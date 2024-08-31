@@ -16,12 +16,6 @@ const getAmenitiesListController = async (req = request , res = response)=>{
             amenities:amenitiesList,
             ok: true
         })
-        // return  res.render(amenitiesHTML,{
-        //     amenitiesData:amenitiesFormated,
-        //     BASE_URL:process.env.BASE_URL,
-        //     ok:false,
-        //     user_type:req.user_type
-        // });
     } catch (error) {
         return res.render(error404HTML,{
             error:error.message,
@@ -83,11 +77,11 @@ const ableAmenityController = async (req = request , res = response)=>{
 }
 
 const getAmenityDetailController = async( req = request , res = response)=>{
-    const amenity_id = req.params.amenity_id
+    const amenity_name = req.params.amenity_name
     try {
-        const data= await getAmenityDetailService(amenity_id,['rent_cost', 'start_time', 'end_time', 'free_hours', 'additional_cost_per_hour', 'time_limit', 'is_disabled'])
+        const amenity= await getAmenityDetailService(amenity_name,['amenity_id','rent_cost', 'start_time', 'end_time', 'free_hours', 'additional_cost_per_hour', 'time_limit', 'is_disabled'])
         return res.status(200).json({
-            data,
+            amenity,
             ok: true
         })
     } catch (error) {

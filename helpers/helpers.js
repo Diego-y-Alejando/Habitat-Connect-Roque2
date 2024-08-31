@@ -7,7 +7,7 @@ const jwtGenerate =(id,user_type,secret,expiresTime)=>{
     return new Promise((resolve,reject)=>{
         const payload ={id,user_type}
         jwt.sign(payload,secret,{
-            expiresIn:expiresTime
+            expiresIn:24 * 60 * 60
         },(err,token)=>{
             if (err) {
                 reject("no se pudo generar el token")
@@ -111,8 +111,8 @@ const changeObjectNames =(originalObject,objectPropertiesForChange)=>{
 
 const cookieOptions = {
     httpOnly: true, // Solo accesible desde el servidor
-    secure: false, // Solo en conexiones HTTPS
-    sameSite: 'strict', // Restringir a solicitudes del mismo sitio
+    //secure: false, // Solo en conexiones HTTPS
+    // sameSite: 'strict', // Restringir a solicitudes del mismo sitio
     maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida en milisegundos (1 día)
     // agregar la propiedad  domain: para aceptar solo de determinados dominios o subdominios
     // agrgar la propiedad path para restringir la cookie solo a las rutas deseadas 
@@ -145,7 +145,8 @@ const jqueryHash = ()=>{
 }
 const corsOptions = {
     origin: [
-      'http://localhost:5173'
+      'http://localhost:5173/',
+      'http://localhost:5173',
     ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -201,6 +202,8 @@ const saveSession = (req) => {
                 console.error('Error al guardar la sesión:', err);
                 reject(new Error('Error al guardar la sesión'));
             } else {
+                
+                
                 resolve();
             }
         });

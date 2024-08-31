@@ -26,7 +26,7 @@ class Server {
         this.middlewares();
         this.usersPath ='/users'
         this.adminPath='/administracion'
-        this.residentPath='/residente'
+        this.residentPath='/resident'
         this.securityPath='/seguridad'
         this.port =process.env.PORT
         this.swaggerJsDoc=swaggerJsDoc
@@ -70,9 +70,10 @@ class Server {
         this.app.use(cors(corsOptions));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.disable('x-powered-by');
+        // this
         this.app.use(session({
-            store: new RedisStore({ client: redisClient }),
-            secret:  generateSecret(),
+            store: new RedisStore({ client: redisClient,prefix: "sess:" }),
+            secret: '123456788',// se debe implementar un sistema de gestion de secretos generateSecret(),
             name: 'session', // Usar un nombre de cookie personalizado
             resave: false,
             saveUninitialized: false,

@@ -17,9 +17,6 @@ const {
     cancelBookingService,
     getEventsOfAmenityService
 }= require('../services/reservations.services')
-const {
-    getAmenityInfoService
-}= require('../services/amenities.services')
 const bookingAmenityController = async (req = request , res = response)=>{
     const {
         reservation_date,
@@ -35,14 +32,12 @@ const bookingAmenityController = async (req = request , res = response)=>{
     try {
         let newData
         const {data,msg} = await bookingAmenityService(req.body)
-        const {amenity_name}= await getAmenityInfoService(data.id_amenity_reserved,['amenity_name']);
         delete data.renter_name
         delete data.renter_phone
         delete data.id_amenity_reserved
         delete data.id_resident_reserv
         newData = {
-            ...data,
-            'amenity_name':amenity_name
+            ...data
         }
         return res.status(200).json({
             ok:true,

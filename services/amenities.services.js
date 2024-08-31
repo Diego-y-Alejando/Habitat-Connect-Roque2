@@ -5,35 +5,41 @@ const {
 const getAmenitiesListService = async ()=>{
     try {
         const amenitiesData = await amenities.findAll({
-            attributes:['amenity_id', 'amenity_name', 'rent_cost', 'start_time', 'end_time','time_limit','additional_cost_per_hour','nickName']
+            attributes:['amenity_id', 'amenity_name', 'rent_cost', 'start_time', 'end_time','time_limit','free_hours']
         })
         return  amenitiesData.map(amenity => {
-            const startHour = amenity.start_time; // Asume que 'horaInicio' es el nombre de tu columna
-            const endHour = amenity.end_time; // Asume que 'horaInicio' es el nombre de tu columna
-              
+            const startHour = amenity.start_time;
+            const endHour = amenity.end_time; 
+
             // Verifica si la startHour tiene un valor antes de intentar formatear
-             const formatStartHour = startHour ?formatHour(startHour) : null;
-             const formatEndHour =endHour ?formatHour(endHour) : null;
-            
+            const start_time = startHour ?formatHour(startHour) : null;
+            const end_time =endHour ?formatHour(endHour) : null;
+            delete amenity.get().start_time
+            delete amenity.get().end_time
             return {
               ...amenity.get(),
-              formatStartHour,
-              formatEndHour
+              start_time,
+              end_time
             };
           });
     } catch (error) {
         throw error
     }
 }
-const getAmenityDetailService =async(amenity_id,columns)=>{
+const getAmenityDetailService =async(amenity_name,columns)=>{
     try {
         const amenity = await amenities.findOne({
             where:{
-                amenity_id:amenity_id
+                amenity_name:amenity_name
             },
             attributes:columns
         })
-        return amenity.get()
+        if(!amenity){
+            throw new Error('No existe la amenidad')
+        }else{
+            return amenity.get()
+
+        }
     } catch (error) {
         throw error
     }
@@ -58,7 +64,7 @@ const getAmenityDataForBookingValidations =async(amenity_id)=>{
             where:{
                 amenity_id:amenity_id
             },
-            attributes:['free_hours','time_limit','start_time','end_time', 'number_of_hours_opened','rent_cost','is_disabled']
+            attributes:['free_hours','time_limit','start_time','end_time','rent_cost','is_disabled']
         });
         return {
             free_hours:dataValues.free_hours,
@@ -66,7 +72,6 @@ const getAmenityDataForBookingValidations =async(amenity_id)=>{
             start_time:dataValues.start_time,
             end_time:dataValues.end_time,
             rent_cost:dataValues.rent_cost,
-            hours_opened:dataValues.number_of_hours_opened,
             is_disabled:dataValues.is_disabled
         }
     } catch (error) {

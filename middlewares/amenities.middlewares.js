@@ -9,6 +9,7 @@ const {
     validationCost,
     validationHour,
     ValidationIdOrLevel,
+    validateName
 }= require('./common.middlewares')
 const error404HTML = path.join(__dirname, '..','views','404.ejs');
 const {
@@ -49,12 +50,11 @@ const ableAndDisabledAmenityValidations = async(req = request, res = response, n
     }
 }
 
-const getAmenityDetailValidations = async( req= request , res = response, next)=>{
-    const amenity_id = req.params.amenity_id
+const getAmenityDetailValidations = ( req= request , res = response, next)=>{
+    const amenity_name = req.params.amenity_name
     try {
-        ValidationIdOrLevel('id de la amenidad',amenity_id)
-        await recordExist('La amenidad que intenta obtener no existe',amenities,amenity_id);
-        next()
+        validateName(amenity_name,55);
+        next();
     } catch (error) {
         return res.status(400).json({
             error:error.message,

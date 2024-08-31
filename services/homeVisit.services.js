@@ -22,54 +22,24 @@ const checkHomeVisitService = async(checkHomeVisitData,home_visit_id)=>{
          throw new Error(error)
      }
 }
-const getAllHomeVisitsService =async (page,user_request,resident_id,dateForSearch,searchData,columns,upCommingVisits)=>{
-    try {
-       let whereObj={}
-        if (user_request ='resident_request') {
-            if (upCommingVisits==='2') {
-                whereObj= {
-                    id_visit_creator:resident_id,
-                    visit_date:{
-                       [Op.gte] :dateForSearch
-                    },
-                    [Op.or]: [
-                        { visitors_name: { [Op.like]: `%${searchData}%` } }, 
-                        { dpi: { [Op.like]: `%${searchData}%` } } ,
-                    ]
-                }
-            }else{
-                whereObj= {
-                    id_visit_creator:resident_id,
-                    visit_date:dateForSearch,
-                    [Op.or]: [
-                        { visitors_name: { [Op.like]: `%${searchData}%` } }, 
-                        { dpi: { [Op.like]: `%${searchData}%` } } ,
-                    ]
-                }
-            }
-           
-        }else if(user_request='security_user'){
-            whereObj={
-                visit_date:dateForSearch,
-                [Op.or]: [
-                    { visitors_name: { [Op.like]: `%${searchData}%` } }, 
-                    { resident_name: { [Op.like]: `%${searchData}%` } }, 
-                    { dpi: { [Op.like]: `%${searchData}%` } } ,
-                ]
-            }
-        }
-        const offset = (page - 1) * 10;
-        return  await home_visit.findAndCountAll({
-            attributes: columns,
-            offset,
-            limit: 10,
-            where:whereObj,
-            order: [['home_visit_id', 'DESC']],
-        });
 
-    } catch (error) {
-        throw new Error(error)
-    }
+
+const getAllHomeVisitsService =async (page,user_request,resident_id,dateForSearch,searchData,columns,upcomingVisits)=>{
+    try {
+        const whereObj = buildWhereClause(user_request, resident_id, dateForSearch, searchData, upcomingVisits);
+        
+        const offset = (page - 1) * 10;
+        
+        return await home_visit.findAndCountAll({
+          attributes: columns,
+          offset,
+          limit: 10,
+          where: whereObj,
+          order: [['home_visit_id', 'DESC']],
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
 }
 const undoCheckHomeService = async(home_visit_id,prevHomeVisitData)=>{
     try {
@@ -159,3 +129,27 @@ module.exports={
     cancelHomeVisitService,
     undoCancelHomeVisitService
 }
+const buildWhereClause = (user_request, resident_id, dateForSearch, searchData, upcomingVisits) => {
+    const baseSearchCondition = [
+      { visitors_name: { [Op.like]: `%${searchData}%` } },
+      { dpi: { [Op.like]: `%${searchData}%` } },
+    ];
+  
+    if (user_request === 'resident_request') {
+      return {
+        id_visit_creator: resident_id,
+        visit_date: upcomingVisits === '2' ? { [Op.gte]: dateForSearch } : dateForSearch,
+        [Op.or]: baseSearchCondition,
+      };
+    } else if (user_request === 'security_user') {
+      return {
+        visit_date: dateForSearch,
+        [Op.or]: [
+          ...baseSearchCondition,
+          { resident_name: { [Op.like]: `%${searchData}%` } },
+        ],
+      };
+    }
+  
+    return {};
+};

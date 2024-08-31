@@ -13,7 +13,6 @@ const {
 
 const apartaments = require('../models/apartaments.model')
 const getApartamentsValidations=async(req=request , res = response, next)=>{
-    
     const level = req.params.level
     try {
         ValidationIdOrLevel('nivel deseado',level)

@@ -49,9 +49,9 @@ const loginController = async (req= request , res = response)=>{
         return res.status(200).json({
             user_type,
             name,
+            ok:true
         });
      
-       
     } catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -64,7 +64,7 @@ const logOutController =(req = request , res = response)=>{
         if (req.session) {
             req.session.destroy((err) => {
               if (err) throw new Error(err)
-
+              
               res.clearCookie('session'); // Nombre por defecto de la cookie de sesión
               res.clearCookie('authorization')
               return res.status(200).json({
@@ -74,6 +74,22 @@ const logOutController =(req = request , res = response)=>{
         } else {
             throw new Error('No Hay sesiones activas')
         }
+    } catch (error) {
+        return res.status(400).json({
+            error:error.message,
+            ok:false
+        })
+    }
+}
+const checkAuthController =  async (req = request , res = response)=>{
+    try {
+        if (!req.user) {
+           throw new Error('No viene el token de autenticación')
+        }
+        return res.status(200).json({
+            ...req.user, 
+            ok:true
+        })
     } catch (error) {
         return res.status(400).json({
             error:error.message,
@@ -160,6 +176,7 @@ const updateUserInfoController =async (req = request , res = response)=>{
 
 module.exports= {
     loginController,
+    checkAuthController,
     logOutController,
     createResidentUserController,
     getMyResidentUserInfoController,

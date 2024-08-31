@@ -56,9 +56,9 @@ const bodyVerification=(object,allowProperties)=>{
   if (!object || typeof object !== 'object' || Object.keys(object).length==0) {
       throw new Error(`el objeto ${object} no es valido o viene vacio`) 
   }
-    else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
-      throw new Error('Contiene propiedades no válidas');
-    }
+  else if (!Object.keys(object).every(property => allowProperties.includes(property))) {
+    throw new Error('Contiene propiedades no válidas');
+  }
 }
 const validationEmail=(email)=>{
     const regexEmail =/^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
@@ -82,31 +82,8 @@ const validationPassword=(password)=>{
     }
 
 }
-const validationDepartament=(departaments)=>{
-  const allowDepartaments =['SALES-D','PROD-D','MED-D','RECEPTION-D','MANAGER-D'];
-  if (!departaments) {
-    throw new Error('El departamento no puede venir vacío')
-  }
-  if (!allowDepartaments.includes(departaments)) {
-    throw new Error('Departamento incorrecto'); 
-  }
-}
-const validatePosition =(position)=>{
-  const allowPositions=['Jefa de departamento','Asistente principal','Asistente secundario','Gerente comercial','Apoyo al paciente','Recepcionista','Dentista']
-  if(position==='nulo') {
-    throw new Error('Debes asignar una posición');
-  }if(!allowPositions.includes(position)) {
-    throw new Error('La posicion es incorrecta');
-  }
-}
-const validateSupervisor=(supervisor)=>{
-  if (!supervisor) {
-    throw new Error('El supervisor no puede venir vacío')
-  }
-  if (!regex.test(supervisor)) {
-      throw new Error('Para él supervisor unicamente debes colocar el nombre')
-  }
-}
+
+
 const recordExist =async(message,model, record_id)=>{
   try{
 
@@ -324,9 +301,6 @@ module.exports ={
     bodyVerification,
     validationEmail,
     validationPassword,
-    validationDepartament,
-    validatePosition,
-    validateSupervisor,
     recordExist,
     tokenValidation,
     validationOfIdenticatedlId,

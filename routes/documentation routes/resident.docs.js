@@ -338,7 +338,7 @@
  *                          home_visit_id: 1,
  *                          visitors_name: "Jose Javier",
  *                          home_visit_state: 0|1,
- *                          dpi : 0000-00000-0000
+ *                          cancel_state: 0 | 1
  *                      }
  *         ]
  * 

@@ -27,10 +27,10 @@ const {
     getResidentAndLandlordController,
     updateLandlordDataController,
 }= require('../controllers/apartaments.controllers');
-router.get('/apartamentos/:level',getApartamentsValidations,getApartamentsListController);
-router.get('/apartamento/:apartament_id',getApartamentDetailValidations,getApartamentDetailController);
+router.get('/apartment/:level',getApartamentsValidations,getApartamentsListController);
+router.get('/apartment/:apartament_id',getApartamentDetailValidations,getApartamentDetailController);
 router.get('/resident-landlord/data/:apartament_id',getApartamentDetailValidations,getResidentAndLandlordController);
-router.post('/update/apartament/name/:apartament_id',updateApartamentNameValidations,updateApartamentNameController);
+router.post('/update/apartment/name/:apartament_id',updateApartamentNameValidations,updateApartamentNameController);
 //router.post('/update/landlord/data/:apartament_id',updateLandlordDataValidations, updateLandlordDataController);
 
 /*=======================

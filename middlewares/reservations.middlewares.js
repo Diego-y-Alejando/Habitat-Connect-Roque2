@@ -64,7 +64,7 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
     } catch (error) {
         return res.status(400).json({
             error:error.message,
-            ok:'false'
+            ok:false
         })
     }
 }
