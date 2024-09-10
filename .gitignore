@@ -41,3 +41,6 @@ yarn.lock
 
 # Archivos de datos de MySQL
 /data/
+
+# Archivos SQL
+**/*.sql

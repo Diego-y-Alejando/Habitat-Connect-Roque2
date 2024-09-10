@@ -1,0 +1,68 @@
+version: 
+
+services:
+  app:
+    container_name: 
+    build:
+      context: 
+      dockerfile: 
+    ports:
+      - 
+    env_file:
+      - 
+    environment:
+      - 
+      - 
+      - 
+    depends_on:
+      - 
+      - 
+    volumes:
+      - 
+      - 
+    networks:
+      - 
+
+  mysqldb:
+    container_name: 
+    build:
+      dockerfile: 
+    env_file:
+      - 
+    restart: 
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+    ports:
+      - 
+    volumes:
+      - 
+      - 
+    networks:
+      - 
+
+  redis:
+    container_name: 
+    image: 
+    command: 
+    restart: 
+    ports:
+      - 
+    env_file:
+      - 
+    environment:
+      - 
+    volumes:
+      - 
+    networks:
+      - 
+
+volumes:
+  mysql-data:
+    driver: 
+  redis-data:
+    driver: 
+
+networks:
+  app-network:
+    driver: 
