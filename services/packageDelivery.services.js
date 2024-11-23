@@ -2,7 +2,9 @@ const package_delivery= require('../models/packageDelivery.model');
 
 const {Sequelize,Op}=require('sequelize')
 const {
-    getCurrentDateAndTime
+    getCurrentDateAndTime,
+    changeObjectNames,
+    getDayWithDate
 }= require('../helpers/helpers')
 const createPackageDeliveryService = async (packaDeliveryData)=>{
     try {
@@ -23,41 +25,41 @@ const checkPackageDeliveryService =async(delivery_id,checkPackageData)=>{
         throw error
     }
 }
-const getAllPackageDeliveryService =async (page,user_request,resident_id,dateForSearch,searchData,packages_recieved,columns,upCommingVisits)=>{
+const getAllPackageDeliveryService =async (page,user_request,resident_id,searchData,columns,packageFilter)=>{
     
     try {
-        let whereObj={}
-        if (user_request ='resident_request') {
-            if (upCommingVisits==='2') {
-                whereObj= {
-                    id_delivery_creator:resident_id,
-                    delivery_date:{
-                       [Op.gte] :dateForSearch
-                    },
-                    [Op.or]: [
-                        { company_name: { [Op.like]: `%${searchData}%` } }
-                    ],
-                    package_delivery_state:packages_recieved
-                }
-            }else{
-                whereObj= {
-                    id_delivery_creator:resident_id,
-                    delivery_date:dateForSearch,
-                    [Op.or]: [
-                        { company_name: { [Op.like]: `%${searchData}%` } }
-                    ],
-                    package_delivery_state:packages_recieved
-                }  
-            }
-        }
+        let whereObj=buildWhereClause(user_request, resident_id,searchData,packageFilter)
+     
+     
         const offset = (page - 1) * 10;
-        return  await package_delivery.findAndCountAll({
+        const {rows,count} = await package_delivery.findAndCountAll({
             attributes:columns,
             offset,
             limit: 10,
             where: whereObj,
             order: [['package_delivery_id', 'DESC']],
+            raw:true
         });
+        const totalPages = Math.ceil(count/10)
+        const newRows =rows.map((package,index) => {         
+            let newObject ={
+                ...package
+            }
+            return changeObjectNames(newObject,{
+                package_delivery_id:'visit_id',
+                company_name:'company_name',
+                package_delivery_state:'package_state',
+                delivery_date:'delivery_date',
+                cancel_state:'cancel_state'
+            });
+        });
+
+        return {
+            totalPages,
+            count,
+            currentPage:page,
+            packageList: newRows.length>0? newRows:[]
+        }
     } catch (error) {
         throw error
     }
@@ -135,7 +137,7 @@ const updatePackageDeliveryService =async(package_id,dataToEdit)=>{
             }
         })
         if (updatedDelivery<=0) throw new Error('No se pudo modificar el paquete')
-        return 'Has editado el paquete'
+        return dataToEdit
     } catch (error) {
         throw error
     }
@@ -166,7 +168,6 @@ const undoCancelPackageDeliveryService = async (package_id,resident_id)=>{
                 package_delivery_id:package_id
             }
         })
-        console.log('ESTE ES UNDORESULT',undoResult);
         if (undoResult<=0) throw new Error('No se ha podido deshacer la cancelación')
             
         return 'Has deshecho la acción'
@@ -184,4 +185,20 @@ module.exports={
     updatePackageDeliveryService,
     cancelPackageDeliveryService,
     undoCancelPackageDeliveryService
+}
+
+const buildWhereClause =(user_request,resident_id,searchData,packageFilter)=>{
+    const currentDate = getCurrentDateAndTime('yyyy-MM-dd');
+
+    if (user_request ==='resident') {
+        const whereObj ={
+            id_delivery_creator:resident_id,
+            [Op.or]: [
+                { company_name: { [Op.like]: `%${searchData}%` } }
+            ],
+            package_delivery_state: packageFilter ==='recieved' ? 1 : 0,
+            cancel_state : 1
+        };
+        return whereObj
+    }
 }

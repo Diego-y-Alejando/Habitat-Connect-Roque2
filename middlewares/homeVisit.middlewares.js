@@ -128,8 +128,11 @@ module.exports ={
 }
 const editHomeVisit =(body)=>{
     const homeVisitObjectValidations ={
+        'resident_name':(value)=>{
+            validateName(value,50);
+        },
         'visitors_name':(value)=>{
-            validateName(value,30);
+            validateName(value,50);
         },
         'dpi':(value)=>{
             validateDpi(value)

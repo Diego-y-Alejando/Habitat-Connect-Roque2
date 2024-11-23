@@ -26,7 +26,10 @@ const adminAutenticationValidations =async (req = request , res = response,next)
 const residentAutenticationValidations =async (req = request , res = response,next)=>{
     const token = req.cookies.authorization
     try {
-        console.log(req.session);
+        console.log(req.cookies);
+        console.log(req.session.user);
+        
+        
         if (!req.session.user) {
             throw new Error('No has iniciado sesion')
         }
@@ -59,16 +62,14 @@ const checkAuthValidations = async (req = request , res = response , next)=>{
     const token = req.cookies.authorization
     try {
         const sessionPrefix ='sess:'
-        const session = await redisClient.get(`${sessionPrefix}${req.sessionID}`)
-        if (!session) {
-            throw new Error('No estas autenticado')
-        }
-        const user =  JSON.parse(session).user
-        const {user_type,name}=user
-
-        if (token) {
+        
+        if (token && req.sessionID) {
+            const session = await redisClient.get(`${sessionPrefix}${req.sessionID}`)
+            const user =  JSON.parse(session).user
+            const {user_type,name}=user
             await validationsCheckAuthForJwt(user_type,token)
-            req.user =user        
+            req.user =user 
+              
         }
         next()
     } catch (error) {

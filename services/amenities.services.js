@@ -35,7 +35,7 @@ const getAmenityDetailService =async(amenity_name,columns)=>{
             attributes:columns
         })
         if(!amenity){
-            throw new Error('No existe la amenidad')
+            throw new Error(`No existe la amenidad "${amenity_name}"`)
         }else{
             return amenity.get()
 

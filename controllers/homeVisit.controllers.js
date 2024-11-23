@@ -35,9 +35,11 @@ const createHomeVisitController = async (req = request , res = response )=>{
             ok:true,
             visitData:{
                 visit_id:dataValues.home_visit_id,
-                data_name:dataValues.visitors_name,
+                visitors_name:dataValues.visitors_name,
                 dpi: dataValues.dpi,
-                data_state:dataValues.home_visit_state
+                visit_date:visit_date,
+                visit_state:dataValues.home_visit_state,
+                cancel_state:'1'
             }
         })
             
@@ -50,13 +52,13 @@ const createHomeVisitController = async (req = request , res = response )=>{
 }
 const editHomeVisitController =async(req = request , res = response)=>{
     const visit_id = req.params.visit_id
-    try {
-      const updatedHomeVisit = await editHomeVisitService(visit_id,req.resident_id,req.body);
+    try{
+      const dataUpdated = await editHomeVisitService(visit_id,req.resident_id,req.body);
       return res.status(200).json({
-        msg:updatedHomeVisit,
+        msg:'Has actualizado tu visita',
+        dataUpdated,
         ok:true
       })
-        
     } catch (error) {
         return res.status(404).json({
             error:error.message,
@@ -100,37 +102,33 @@ const checkHomeVisitController = async (req = request , res = response )=>{
 const getAllHomeVisitForResidentController = async (req = request , res = response )=>{
     const page=parseInt(req.query.page)
     const searchData = req.query.searchData ||''
-    const dateForSearch = req.query.date || getCurrentDateAndTime('yyyy-MM-dd');
-    const upCommingVisits = req.query.upCommingVisits || 1
+    const visitFilter = req.query.visitFilter
+    
     try {
-       const result = await getAllHomeVisitsService(page, 'resident-request',req.resident_id,dateForSearch,searchData,['home_visit_id', 'visitors_name','home_visit_state','cancel_state'],upCommingVisits)
-       const totalPages = Math.ceil(result.count/10)
-       // cambia de nombre a los registros y elimina la propiedad homeVisitForApartament para hacer una sola propiedad 
-       const newRows =result.rows.map(({dataValues}) => {         
-           let newObject ={
-               ...dataValues,
-            }
-            delete newObject['HomeVisitForApartament']
-            return changeObjectNames(newObject,{
-                home_visit_id:'visit_id',
-                visitors_name:'data_name',
-                dpi:'dpi',
-                home_visit_state:'data_state',
-                
-            });
-        });
-        if (result.rows.length===0) {
+       const {homeVisitList,totalPages,currentPage,count} = await getAllHomeVisitsService(page,'resident',req.resident_id,searchData,['home_visit_id', 'visitors_name','home_visit_state','cancel_state'],visitFilter)
+        if (totalPages==0) {
             return res.status(200).json({
-                msg:'Ya no hay mas visitas domésticas ',
-                lastPage:page,
-                allRows:[],
+                msg:'No tienes visitas domésticas ',
+                'home-visits':[],
                 ok:true,
                 totalPages
+
             })
         }
+        else if (currentPage === totalPages) {
+            return res.status(200).json({
+                'home-visits':homeVisitList,
+                msg:'No tienes más visitas',
+                ok:true,
+                count:count,
+                currentPage:page,
+                totalPages
+
+            });
+        }
         return res.status(200).json({
-            allRows:newRows,
-            count:result.count,
+            'home-visits':homeVisitList,
+            count:count,
             currentPage:page,
             ok:true,
             totalPages
@@ -174,6 +172,7 @@ const cancelHomeVisitController =async(req = request , res = response)=>{
         
         return res.status(200).json({
             msg:cancelHomeVisit,
+            cancel_state:0,
             ok:true
         })
         
@@ -190,6 +189,7 @@ const undoCancelHomeVisitController =async(req = request , res = response)=>{
         const undoCancel = await undoCancelHomeVisitService(visit_id,req.resident_id);
         return res.status(200).json({
             msg:undoCancel,
+            prevState:1,
             ok:true
         })
         
@@ -203,7 +203,7 @@ const undoCancelHomeVisitController =async(req = request , res = response)=>{
 const getHomeVisitController= async(req= request, res = response)=>{
     const visit_id = req.params.visit_id
     try {
-        const homeVisitResult = await getHomeVisitService(visit_id,req.resident_id,['resident_name','visitors_name','dpi','visit_date'])
+        const homeVisitResult = await getHomeVisitService(visit_id,req.resident_id,['resident_name','dpi','visit_date'])
         return res.status(200).json({
             visit:homeVisitResult,
             ok:true

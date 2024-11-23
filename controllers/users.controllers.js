@@ -84,12 +84,25 @@ const logOutController =(req = request , res = response)=>{
 const checkAuthController =  async (req = request , res = response)=>{
     try {
         if (!req.user) {
-           throw new Error('No viene el token de autenticación')
+            throw new Error('Debes iniciar sesión para acceder a los recursos')
         }
-        return res.status(200).json({
-            ...req.user, 
-            ok:true
-        })
+        req.session.reload(function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Error reloading session' });
+            }
+    
+            // Comprobar si el usuario está autenticado
+            if (req.session.user) {
+                // Si el usuario está autenticado, devolver los datos de la sesión
+                return res.status(200).json({
+                    msg: 'User is authenticated',
+                    ...req.session
+                });
+            } else {
+                // Si no está autenticado
+                return res.status(401).json({ message: 'User is not authenticated' });
+            }
+        });
     } catch (error) {
         return res.status(400).json({
             error:error.message,

@@ -13,7 +13,8 @@ const {
 }= require('../services/packageDelivery.services')
 const {
     getCurrentDateAndTime,
-    changeObjectNames
+    changeObjectNames,
+    getDayWithDate
 }= require('../helpers/helpers');
 const createPackageDeliveryController = async (req = request , res = response)=>{
     const {resident_name,company_name,delivery_date}=req.body
@@ -33,9 +34,10 @@ const createPackageDeliveryController = async (req = request , res = response)=>
             msg:'Has creado el paquete',
             packageDeliveryData:{
                 visit_id:dataValues.package_delivery_id,
-                data_name:dataValues.resident_name,
                 company_name:dataValues.company_name,
-                data_state:dataValues.package_delivery_state
+                package_state:dataValues.package_delivery_state,
+                cancel_state:1,
+                delivery_date: delivery_date
             }
       })
     } catch (error) {
@@ -74,38 +76,32 @@ const checkPackageDeliveryController = async (req = request , res = response)=>{
 }
 const getAllPackageDeliveryForResidentsController = async (req = request , res = response)=>{
     const page = parseInt(req.query.page)
-    const searchData = req.query.searchData ? req.query.searchData :''
-    const dateForSearch = req.query.date ?req.query.date: getCurrentDateAndTime('yyyy-MM-dd')
-    const upCommingVisits = req.query.upCommingVisits? req.query.upCommingVisits :1
-    const packages_recieved = req.query.packages_recieved? req.query.packages_recieved:0
+    const searchData = req.query.searchData || ''
+    const packageFilter = req.query.packageFilter
     try {
-        const result = await getAllPackageDeliveryService(page,'resident-request',req.resident_id,dateForSearch,searchData,packages_recieved,['package_delivery_id','company_name','delivery_date','package_delivery_state','cancel_state'],upCommingVisits)
-        const totalPages = Math.ceil(result.count/10)
-        if (result.rows.length===0) {
+        const {packageList,totalPages,currentPage,count} = await getAllPackageDeliveryService(page,'resident',req.resident_id,searchData,['package_delivery_id','company_name','delivery_date','package_delivery_state','cancel_state'],packageFilter)
+       
+        if (totalPages===0) {
             return res.status(200).json({
-                msg:'Ya no hay mas paquetes',
-                lastPage:page,
-                allRows:[],
+                msg:'No tienes paquetes registrados',
+                'package-deliveries':[],
                 ok:true,
-                totalPages:totalPages
-            })
-        }  
-        const newRows =result.rows.map(({dataValues}) => {         
-            let newObject ={
-                ...dataValues,
-            }
-           
-            return changeObjectNames(newObject,{
-                package_delivery_id:'visit_id',
-                company_name:'company_name',
-                package_delivery_state:'data_state',
-                delivery_date:'data_date'
+                totalPages
+            }) 
+        }else if ( currentPage === totalPages){
+            return res.status(200).json({
+                'package-deliveries':packageList,
+                msg:'No tienes más paquetes',
+                ok:true,
+                count:count,
+                currentPage:page,
+                totalPages
+
             });
-        });
-        
+        }
         return res.status(200).json({
-            allRows:newRows,
-            count:result.count,
+            'package-deliveries':packageList,
+            count:count,
             currentPage:page,
             totalPages:totalPages,
             ok:true
@@ -145,7 +141,8 @@ const editPackageDeliveryController =async (req = request, res = response)=>{
     try {
         const updatedPackageDelivery = await updatePackageDeliveryService(package_id,req.body)
         return res.status(200).json({
-            msg:updatedPackageDelivery,
+            msg:'Has editado tu paquete',
+            packageUpdated:{visit_id:package_id,...updatedPackageDelivery},
             ok:true
         })
     } catch (error) {
@@ -159,10 +156,10 @@ const editPackageDeliveryController =async (req = request, res = response)=>{
 const getPackageDeliveryInfoController =async (req = request, res = response)=>{
     const package_id = req.params.visit_id
     try {
-       const packageDelivery = await getPackageDeliveryInfoService(req.resident_id,package_id,['resident_name','company_name','delivery_date'])
+       const packageDelivery = await getPackageDeliveryInfoService(req.resident_id,package_id,['resident_name'])
         return res.status(200).json({
             ok:true,
-            data:packageDelivery
+            packageData:packageDelivery
         })
     } catch (error) {
         return res.status(404).json({
@@ -177,6 +174,7 @@ const cancelPackageDeliveryController=async(req = request , res = response)=>{
         const cancelResult = await cancelPackageDeliveryService(package_id,req.resident_id);
         return res.status(200).json({
             msg:cancelResult,
+            cancel_state:0,
             ok:true
         })
     } catch (error) {

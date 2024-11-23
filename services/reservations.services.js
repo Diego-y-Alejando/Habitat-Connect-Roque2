@@ -16,7 +16,7 @@ const bookingAmenityService = async(booking_data)=>{
         id_resident_reserv,
         id_amenity_reserved
     } = booking_data
-    try {
+    try{
         const [booking,created]=await reservations.findOrCreate({
             where:{
                 id_amenity_reserved:id_amenity_reserved,
@@ -31,15 +31,15 @@ const bookingAmenityService = async(booking_data)=>{
                 // reserv_state:1     
             },
             defaults: {
-            start_reserv_time:start_reserv_time,
-            end_reserv_time:end_reserv_time,
-            total_hours:total_hours,
-            booking_price:booking_price,
-            renter_name: renter_name,
-            renter_phone: renter_phone,
-            reserv_state:1,
-            id_resident_reserv: id_resident_reserv,
-            id_amenity_reserved: id_amenity_reserved
+                start_reserv_time:start_reserv_time,
+                end_reserv_time:end_reserv_time,
+                total_hours:total_hours,
+                booking_price:booking_price,
+                renter_name: renter_name,
+                renter_phone: renter_phone,
+                reserv_state:1,
+                id_resident_reserv: id_resident_reserv,
+                id_amenity_reserved: id_amenity_reserved
             }
         });
         if (created) {
@@ -55,21 +55,40 @@ const bookingAmenityService = async(booking_data)=>{
     }
 }
 
-const getMyBookingService=async (reserv_id,resident_id)=>{
+const getMyBookingService=async (id,resident_id)=>{
     try {
         const reservation = await reservations.findOne({
             where:{
-                reserv_id:reserv_id,
+                reserv_id:id,
                 id_resident_reserv:resident_id,
                 reserv_state:1          
             },
-            attributes:['renter_name', 'renter_phone','id_amenity_reserved'],
+            attributes:['reserv_id','reservation_date','start_reserv_time','end_reserv_time','total_hours','booking_price','id_amenity_reserved','renter_name','renter_phone'],
+            include:[
+                {
+                    model:amenities,
+                    as:'reservationHaveAmenity',
+                    foreignKey:'id_amenity_reserved',
+                    attributes:['amenity_name']    
+                }
+            ]
         });
         if(!reservation) throw new Error('No existe esta reserva')
-        
+
+        const {reserv_id,reservation_date,start_reserv_time,end_reserv_time,total_hours,booking_price,id_amenity_reserved,renter_name,renter_phone ,reservationHaveAmenity} = reservation.get();
+        const {amenity_name}= reservationHaveAmenity.get() 
         return {
-                booking_data:reservation.get(),
-            }
+            reserv_id,
+            reservation_date,
+            start_reserv_time,
+            end_reserv_time,
+            total_hours,
+            booking_price,
+            id_amenity_reserved,
+            renter_name,
+            renter_phone,
+            amenity_name
+        }
     } catch (error) {
         throw error
     }
@@ -89,6 +108,7 @@ const getMyBookingListService =async(page, resident_id,columns)=>{
                     [Op.gte]:todayDate
                 }
             },
+            raw: true,
             order: [['reservation_date', 'DESC']],
             include:[
                 {
@@ -99,14 +119,15 @@ const getMyBookingListService =async(page, resident_id,columns)=>{
                 }
             ]
         });
-        if (rows.length<=0) throw new Error('No hay reservar próximas') 
         const totalPages = Math.ceil(count/10)
-        const newRows = rows.map(({dataValues}) => {         
+        const newRows = rows.map((reserv,index) => {  
+           
+                   
             let newObject ={
-                ...dataValues,
-                'amenity_name':dataValues['reservationHaveAmenity'].amenity_name
+                ...reserv,
+                'amenity_name':reserv['reservationHaveAmenity.amenity_name']
             }
-            delete newObject['reservationHaveAmenity']
+            delete newObject['reservationHaveAmenity.amenity_name']
             return newObject
             
         });
@@ -114,7 +135,7 @@ const getMyBookingListService =async(page, resident_id,columns)=>{
             totalPages,
             count,
             currentPage:page,
-            bookingList:newRows
+            bookingList:newRows.length>0? newRows :[]
         }
 
     } catch (error) {
@@ -132,21 +153,7 @@ const updateBookingService =async ( reserv_id, dataToEdit)=>{
             }
         })
         if (updatedBooking<=0) throw new Error('No se ha podido actualizar la reserva')
-        if (dataToEdit['reservation_date']) {
-            const {start_reserv_time,end_reserv_time,reservation_date}=dataToEdit
-            delete dataToEdit.start_reserv_time
-            delete dataToEdit.end_reserv_time
-            delete dataToEdit.reservation_date
-            return {
-                ...dataToEdit,
-                id:reserv_id,
-                start:start_reserv_time,
-                end:end_reserv_time,
-                date:reservation_date
-            }
-        }else{
-            return dataToEdit  
-        }
+        return {reserv_id:reserv_id,...dataToEdit}
     } catch (error) {
         throw error
     }
@@ -170,17 +177,21 @@ const cancelBookingService = async (reserv_id,resident_id)=>{
     }
 }
 const getEventsOfAmenityService=async (amenity_id,start_month,end_month,columns)=>{
+    const todayDate = getCurrentDateAndTime('yyyy-MM-dd')
     try {
         return await reservations.findAll({
             where:{
                 id_amenity_reserved:amenity_id,
                 reserv_state:1,
+                
                 reservation_date:{
-                    [Op.between]:[start_month,end_month]
+                    [Op.between]:[start_month,end_month],
+                    [Op.gte]:todayDate
                 }
             },
             attributes:columns,
-            order: [['reservation_date', 'DESC']]
+            order: [['reservation_date', 'DESC']],
+            raw: true
         }); 
     } catch (error) {
         throw error

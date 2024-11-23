@@ -70,7 +70,6 @@ class Server {
         this.app.use(cors(corsOptions));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.disable('x-powered-by');
-        // this
         this.app.use(session({
             store: new RedisStore({ client: redisClient,prefix: "sess:" }),
             secret: '123456788',// se debe implementar un sistema de gestion de secretos generateSecret(),

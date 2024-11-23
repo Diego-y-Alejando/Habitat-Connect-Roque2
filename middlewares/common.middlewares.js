@@ -25,11 +25,11 @@ const validateDpi = (dpi) => {
     if (!dpi) {
       throw new Error('El DPI es obligatorio')
     } else if (!regexDpi.test(dpi)) {
-      throw new Error('El DPI sólo puede contener números y guiones')
+      throw new Error('El DPI tiene un formato incorrecto')
     }else if(dpi.trim().length>15){
       throw new Error('El dpi se exede de 15 caracteres revisa que este correcto ')
     }
-  }
+}
   
 const validatePhoneNumber = (phone) => {
     const regexPhone= /^\d{4}-\d{4}$/
@@ -40,7 +40,7 @@ const validatePhoneNumber = (phone) => {
     }else if(phone.trim().length>14){
       throw new Error('El numero de  teléfono se exede de 14 caracteres revisa que este correcto ')
     }
-  }
+}
 
 const validationPath=(path,regexPath)=>{
     if (!path) {
@@ -99,13 +99,12 @@ const recordExist =async(message,model, record_id)=>{
 const tokenValidation = async (token, model, secretKey, allowUsers) => {
   
   try {
-    if (!token) throw new Error('No se ha enviado el token');
+    if (!token) throw new Error('No se has iniciado sesión');
     const { id, user_type } = jwt.verify(token, secretKey);
-    console.log(id,user_type);
     if (!user_type || !allowUsers.includes(user_type)) throw new Error('El token es inválido');
 
     const user = await model.findByPk(id)
-    if (!user) throw new Error('El usuario no existe en la base de datos');
+    if (!user) throw new Error('El usuario autenticado no existe');
 
     return {
       id,
@@ -206,10 +205,12 @@ const validationCost = (cost, message)=>{
 }
 
 const validationHour = (hour, message)=>{
-  const regexHour = /^(0[0-9]|1[0-9]|2[0-4]):([0-5][0-9])/
-
+  const regexHour = /^(0[1-9]|1[0-9]|2[0-3]):([0-5][0-9])/ 
+  const extraRegexHour = /^(0[0]|2[4]):([0-5][0-9])/
   if (!hour) {
     throw new Error(`La hora de ${message} no puede venir vacía`);
+  }else if(extraRegexHour.test(hour)){
+    throw new Error(`Solo es posible ingresar hasta las 23:59`)
   }else if(!regexHour.test(hour)){
     throw new Error(`La hora de ${message} contiene caracteres no válidos `)
   }
@@ -275,12 +276,18 @@ const validationQueryParams =(queryParams)=>{
       },
       'date':(value)=>{
           validationDates(value,'La fecha que busca')
-          checkIsAfterToday(value,'No puedes acceder a registros antiguas')
+          checkIsAfterToday(value,'No puedes acceder a registros antiguos')
       },
-      'upCommingVisits':(value)=>{
-        const regexSearchAfterToday =/^[1-2]+$/
+      'visitFilter':(value)=>{
+        const regexSearchAfterToday =/^(today|upcomming)/
         if (!regexSearchAfterToday.test(value)) {
-          throw new Error('El parametro searchAfterToday tiene un valor incorrecto')
+          throw new Error('Parametro de visitas incorrecto')
+        }
+      },
+      'packageFilter':(value)=>{
+        const regexSearchAfterToday =/^(recieved|not recieved)/
+        if (!regexSearchAfterToday.test(value)) {
+          throw new Error('Parametro de paqueteria incorrecto')
         }
       }
   }

@@ -61,7 +61,7 @@ const findData=async(model, searchField, targetField, excludeArr)=>{
     }
 }
 
-const { startOfMonth, endOfMonth , format , toDate,differenceInHours ,differenceInMinutes  } = require('date-fns');
+const { startOfMonth, endOfMonth , format , toDate,differenceInHours ,differenceInMinutes,getDay} = require('date-fns');
 const {fromZonedTime } = require('date-fns-tz');
 function getStartAndEndOfMonth(dateString) {
     const date = new Date(dateString);
@@ -97,10 +97,16 @@ const hourAdder =(start_reserv_time,end_reserv_time)=>{
 }
 
 const formatHour=(hora)=> {
-    const dateObj = new Date(`1970-01-01 ${hora}`);
-    const opciones = { hour: 'numeric', minute: 'numeric' };
-    return dateObj.toLocaleTimeString('es-ES', opciones);
+    const spliHourArr = hora.split(':')
+    if (spliHourArr[0]==='24') {
+        return `24:${spliHourArr[1]}`
+    }else{
+        const dateObj = new Date(`1970-01-01 ${hora}`);
+        const opciones = { hour: 'numeric', minute: 'numeric' };
+        return dateObj.toLocaleTimeString('es-ES', opciones);
+    }
 }
+
 const changeObjectNames =(originalObject,objectPropertiesForChange)=>{
     return Object.keys(originalObject).reduce((newObject, originalProperty) => {
         const newPopertyName= objectPropertiesForChange[originalProperty]
@@ -144,32 +150,33 @@ const jqueryHash = ()=>{
     return jqueryHash
 }
 const corsOptions = {
-    origin: [
-      'http://localhost:5173/',
-      'http://localhost:5173',
-    ],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Range', 'X-Content-Range'], 
+    origin: function (origin, callback) {
+      const allowedOrigins = ['http://localhost:5173', 'http://localhost:5173'];
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
     credentials: true,
     maxAge: 600, // 10 minutos
-}
+  };
 
 
+const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
 const getCurrentDateAndTime = (dateTimeFormat) => {
     // formatos 
     // yyyy-MM-dd KK:mm obtener fecha y hora con formato 24hrs
     // yyyy-MM-dd obtenr solo fecha 
-    const centralAmericaTimezone = 'America/Guatemala'; // Puedes cambiar esta zona horaria por la que necesites en Centroamérica
-    
     const now = new Date();
     const utcDate = toDate(now);
-
     // Ajustar la fecha por un día antes de aplicar la zona horaria
     const adjustedUtcDate = new Date(utcDate.getTime() - (24 * 60 * 60 * 1000));
     const centralAmericaDate = fromZonedTime(adjustedUtcDate, centralAmericaTimezone);
     const formattedDateTime = format(centralAmericaDate, dateTimeFormat, { timeZone: centralAmericaTimezone });
-
     return formattedDateTime;
 };
 const sendEmail  =(token,typeEmailContent,receptorEmail)=>{
@@ -209,6 +216,13 @@ const saveSession = (req) => {
         });
     });
 };
+
+const getDayWithDate= (date)=>{
+    const centralAmericaDate = toDate(date, { timeZone: centralAmericaTimezone });  
+      const weekDays = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab']
+      const day = getDay(date)
+      return `${weekDays[day]}, ${format(centralAmericaDate, 'dd-MM-yyyy', { timeZone: centralAmericaTimezone })}`
+  }
 module.exports={
     jwtGenerate,
     hashingPassword,
@@ -225,5 +239,6 @@ module.exports={
     jqueryHash,
     corsOptions,
     getCurrentDateAndTime,
-    saveSession
+    saveSession,
+    getDayWithDate
 }

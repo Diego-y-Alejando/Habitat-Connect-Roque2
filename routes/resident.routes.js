@@ -103,9 +103,9 @@ const {
 }= require('../controllers/homeVisit.controllers');
 router.post('/create/home-visit',residentAutenticationValidations,createHomeVisitValidations,createHomeVisitController)
 router.get('/get/home-visit/:visit_id',residentAutenticationValidations,getHomeVisitValidations,getHomeVisitController)
-router.post('/update/home-visit/:visit_id',residentAutenticationValidations,editHomeVisitValidations,editHomeVisitController);
-router.post('/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,cancelHomeVisitController);
-router.post('/undo/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,undoCancelHomeVisitController);
+router.patch('/update/home-visit/:visit_id',residentAutenticationValidations,editHomeVisitValidations,editHomeVisitController);
+router.patch('/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,cancelHomeVisitController);
+router.patch('/undo/cancel/home-visit/:visit_id',residentAutenticationValidations,cancelOrUndoCancelValidations,undoCancelHomeVisitController);
 router.get('/get/list/home-visit',residentAutenticationValidations,getAllHomeVisitsValidations,getAllHomeVisitForResidentController);
 /*=========================
     PACKAGE DELIVERY
@@ -127,9 +127,9 @@ const {
 }= require('../controllers/packageDelivery.controllers.js');
 router.post('/create/package-delivery',residentAutenticationValidations,createPackageDeliveryValidations,createPackageDeliveryController)
 router.get('/get/package-delivery/:visit_id',residentAutenticationValidations,getPackageDeliveryInfoValidations,getPackageDeliveryInfoController)
-router.post('/update/package-delivery/:visit_id',residentAutenticationValidations,editPackageDeliveryValidations,editPackageDeliveryController);
-router.post('/cancel/package-delivery/:visit_id',residentAutenticationValidations, cancelOrUndoCancelPackageDeliveryValidations , cancelPackageDeliveryController);
-router.post('/undo/cancel/package-delivery/:visit_id',residentAutenticationValidations,cancelOrUndoCancelPackageDeliveryValidations, undoCancelPackageDeliveryController);
+router.patch('/update/package-delivery/:visit_id',residentAutenticationValidations,editPackageDeliveryValidations,editPackageDeliveryController);
+router.patch('/cancel/package-delivery/:visit_id',residentAutenticationValidations, cancelOrUndoCancelPackageDeliveryValidations , cancelPackageDeliveryController);
+router.patch('/undo/cancel/package-delivery/:visit_id',residentAutenticationValidations,cancelOrUndoCancelPackageDeliveryValidations, undoCancelPackageDeliveryController);
 router.get('/get/list/package-delivery',residentAutenticationValidations,getAllPackageDeliveryValidations,getAllPackageDeliveryForResidentsController)
 /*=======================
 RUTAS DE RESERVAS para el usuario
@@ -153,9 +153,9 @@ const {
 }= require('../controllers/reservations.controllers');
 router.post('/booking/amenity/',residentAutenticationValidations,bookingAmenityValidations,bookingAmenityController);
 router.get('/get/my/booking/:reserv_id',residentAutenticationValidations,getMyBookingValidations, getMyBookingController);
-router.get('/get/my/booking/list',residentAutenticationValidations,getMyBookingListValidations,getMyBookingListController)
-router.post('/update/my/booking/',residentAutenticationValidations,updateBookingValidations,updateBookingController);
-router.post('/cancel/my/booking/:reserv_id',residentAutenticationValidations,cancelBookingValidations,cancelBookingController);
+router.get('/get/my/bookings/',residentAutenticationValidations,getMyBookingListValidations,getMyBookingListController)
+router.patch('/update/my/booking/:reserv_id',residentAutenticationValidations,updateBookingValidations,updateBookingController);
+router.patch('/cancel/my/booking/:reserv_id',residentAutenticationValidations,cancelBookingValidations,cancelBookingController);
 router.get('/events/',residentAutenticationValidations,getEventsOfAmenityValidations,getEventsOfAmenityController);
 /*=======================
 RUTAS DE AMENIDADES 

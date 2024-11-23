@@ -81,7 +81,7 @@ const getAmenityDetailController = async( req = request , res = response)=>{
     try {
         const amenity= await getAmenityDetailService(amenity_name,['amenity_id','rent_cost', 'start_time', 'end_time', 'free_hours', 'additional_cost_per_hour', 'time_limit', 'is_disabled'])
         return res.status(200).json({
-            amenity,
+            amenity:amenity,
             ok: true
         })
     } catch (error) {

@@ -55,9 +55,9 @@ const bookingAmenityController = async (req = request , res = response)=>{
 const getMyBookingController = async(req = request , res = response)=>{
     const reserv_id = req.params.reserv_id
     try {
-        const {booking_data} =await getMyBookingService (reserv_id,req.resident_id)
+        const booking_data =await getMyBookingService (reserv_id,req.resident_id)
         return res.status(200).json({
-            ...booking_data,
+            booking:{ ...booking_data},
             ok:true
         });
         
@@ -70,7 +70,6 @@ const getMyBookingController = async(req = request , res = response)=>{
 }
 const updateBookingController = async (req = request , res = response)=>{
     const {
-        reserv_id,
         reservation_date,
         start_reserv_time,
         end_reserv_time,
@@ -78,13 +77,14 @@ const updateBookingController = async (req = request , res = response)=>{
         renter_phone,
         id_amenity_reserved
     } = req.body  
+    const reserv_id = req.params.reserv_id
     try {
-        delete req.body.reserv_id
         delete req.body.id_amenity_reserved
         const dataUpdated = await updateBookingService(reserv_id,req.body)
         return res.status(200).json({
             msg:'Se ha actualizado tu reserva',
-            dataUpdated
+            dataUpdated,
+            ok:true
         })
         
     }catch (error) {
@@ -116,12 +116,13 @@ const getEventsOfAmenityController = async (req = request , res = response)=>{
 
         const {start_month,end_month} =getStartAndEndOfMonth(date)
         const events = await getEventsOfAmenityService (amenity_id,start_month,end_month,['reserv_id','reservation_date','start_reserv_time','end_reserv_time'])
-
-        let newEvents=[]
+        
+        let newEvents=[];
         if (events.length>0){
             events.forEach(event => {
-                const eventdata = event.get();
-                const newObjectEvent=changeObjectNames(eventdata, {
+                event.start_reserv_time = `${event.reservation_date}T${event.start_reserv_time}`
+                event.end_reserv_time = `${event.reservation_date}T${event.end_reserv_time}`
+                const newObjectEvent=changeObjectNames(event, {
                     "reserv_id": "id",
                     "reservation_date": "date",
                     "start_reserv_time": "start",
@@ -142,11 +143,29 @@ const getEventsOfAmenityController = async (req = request , res = response)=>{
     }
 }
 const getMyBookingListController = async (req= request , res = response)=>{
-    const page = req.query.page
+    const page = parseInt(req.query.page)
     try {
-        const {bookingList,totalPages,currentPage,count} = await getMyBookingListService (page,req.resident_id,['reserv_id','reservation_date','start_reserv_time','end_reserv_time','total_hours','booking_price','id_amenity_reserved'])
+        const {bookingList,totalPages,currentPage,count} = await getMyBookingListService (page,req.resident_id,['reserv_id','reservation_date','start_reserv_time','end_reserv_time','total_hours','booking_price','id_amenity_reserved','renter_name','renter_phone'])
+        if (totalPages===0 ) {
+            return res.status(200).json({
+                msg:'No tienes reservas próximas',
+                reservations:[],
+                ok:true,
+                totalPages
+            });
+        }
+        else if( currentPage===totalPages){
+            return res.status(200).json({
+                msg:'No tienes más reservas próximas',
+                reservations:bookingList,
+                ok:true,
+                count,
+                currentPage:page,
+                totalPages
+            });
+        }
         return res.status(200).json({
-            bookingList,
+            reservations:bookingList,
             totalPages,
             currentPage,
             count,
