@@ -16,7 +16,7 @@ const {
 } = require('./common.middlewares')
 const {
     hourAdder,
-    calculatorNumnberOfMinutesBeetwenTwoHours
+    calculatorNumberOfMinutesBetweenTwoHours
 }= require('../helpers/helpers')
 const reservations = require('../models/reservations.model');
 const amenities = require('../models/amenities.model');
@@ -52,7 +52,7 @@ const bookingAmenityValidations = async (req = request, res = response, next)=>{
         validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
         validationIfTotalBookingHoursDoesNotExceedTheAllowHours(start_reserv_time,end_reserv_time,time_limit);
         
-        const totalBookingHours = (calculatorNumnberOfMinutesBeetwenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
+        const totalBookingHours = (calculatorNumberOfMinutesBetweenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
         const booking_price = calculatorBookingPrice(free_hours,rent_cost,totalBookingHours);
         req.body={
             ...req.body,
@@ -109,7 +109,7 @@ const updateBookingValidations = async (req = request , res = response, next)=>{
             validationIfBookingEndTimeIsBeforeClosingTime(end_reserv_time,end_time);
             validationIfTotalBookingHoursDoesNotExceedTheAllowHours(start_reserv_time,end_reserv_time,time_limit);
             
-            const totalBookingHours = (calculatorNumnberOfMinutesBeetwenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
+            const totalBookingHours = (calculatorNumberOfMinutesBetweenTwoHours(start_reserv_time, end_reserv_time) / 60).toFixed(2);
             const booking_price = calculatorBookingPrice(free_hours,rent_cost,totalBookingHours);
             req.body={
                 ...req.body,
@@ -154,9 +154,7 @@ const getEventsOfAmenityValidations = async (req = request , res = response, nex
 }
 const getMyBookingListValidations =async(req = request , res = response, next)=>{
     const page = req.query.page
-    try {
-        console.log(page);
-        
+    try {        
         validatePage(page);
         next()
     } catch (error) {
@@ -236,26 +234,26 @@ const updateBookingDataValidations =(body)=>{
 }
 
 const validationIfBookingStartTimeIsAfterAmenityOpennig= (booking_start_time,amenity_opening_time)=>{
-    const difference= calculatorNumnberOfMinutesBeetwenTwoHours(amenity_opening_time,booking_start_time)
+    const difference= calculatorNumberOfMinutesBetweenTwoHours(amenity_opening_time,booking_start_time)
     if (difference<0) {
         throw new Error('La hora de inicio de tu reserva no coincide con el horario de apertura de la amenidad');
     }   
 }
 const validationIfBookingEndTimeIsBeforeClosingTime =(booking_end_time,amenity_closing_time)=>{
-    const  difference = calculatorNumnberOfMinutesBeetwenTwoHours(amenity_closing_time,booking_end_time);
+    const  difference = calculatorNumberOfMinutesBetweenTwoHours(amenity_closing_time,booking_end_time);
     if (difference>0) {
         throw new Error('La hora de finalización de reserva no coincide con el horario de cierre de la amenidad');
     }
 }
 const validationIfStartBookingTimeIsAfterBookingEndTime =(booking_start_time,booking_end_time)=>{
-    const difference= calculatorNumnberOfMinutesBeetwenTwoHours(booking_start_time,booking_end_time);
+    const difference= calculatorNumberOfMinutesBetweenTwoHours(booking_start_time,booking_end_time);
     if (difference<0) {
         throw new Error('La reserva no puede comenzar después de la hora de fin.')
     }
 }
 
 const validationIfTotalBookingHoursDoesNotExceedTheAllowHours =(booking_start_time,booking_end_time, time_limit)=>{
-    const totalBookingMinutes = calculatorNumnberOfMinutesBeetwenTwoHours(booking_start_time,booking_end_time);
+    const totalBookingMinutes = calculatorNumberOfMinutesBetweenTwoHours(booking_start_time,booking_end_time);
     if ((time_limit*60)<totalBookingMinutes) {
         throw new Error(`La reserva no puede tener mas de ${time_limit} hora(s)`)
     }

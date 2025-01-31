@@ -109,18 +109,17 @@ const getPackageDeliveryInfoService =async(resident_id,package_id,columns)=>{
             where:{
                 package_delivery_id:package_id,
                 id_delivery_creator:resident_id,
-                delivery_date:{
-                    [Op.gte]:getCurrentDateAndTime('yyyy-MM-dd')
-                },
                 cancel_state:1
             },
-            attributes:columns
+            attributes:columns,
+            raw:true
         })
+        console.log(data,' paquete ');
+        
         if (!data) {
             throw new Error('No existe ese paquete');
         }
-        const {dataValues}= data
-        return dataValues
+        return data
     } catch (error) {
         throw error
     }

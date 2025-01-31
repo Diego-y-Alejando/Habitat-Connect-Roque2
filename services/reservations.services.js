@@ -2,7 +2,8 @@ const amenities = require('../models/amenities.model');
 const reservations = require('../models/reservations.model')
 const { Op, Sequelize } = require("sequelize");
 const {
-    getCurrentDateAndTime
+    getCurrentDateAndTime,
+    formatPrice
 }= require('../helpers/helpers')
 const bookingAmenityService = async(booking_data)=>{
     const {
@@ -63,6 +64,7 @@ const getMyBookingService=async (id,resident_id)=>{
                 id_resident_reserv:resident_id,
                 reserv_state:1          
             },
+        
             attributes:['reserv_id','reservation_date','start_reserv_time','end_reserv_time','total_hours','booking_price','id_amenity_reserved','renter_name','renter_phone'],
             include:[
                 {
@@ -83,7 +85,7 @@ const getMyBookingService=async (id,resident_id)=>{
             start_reserv_time,
             end_reserv_time,
             total_hours,
-            booking_price,
+            booking_price: formatPrice(booking_price),
             id_amenity_reserved,
             renter_name,
             renter_phone,
@@ -121,8 +123,7 @@ const getMyBookingListService =async(page, resident_id,columns)=>{
         });
         const totalPages = Math.ceil(count/10)
         const newRows = rows.map((reserv,index) => {  
-           
-                   
+            reserv.booking_price = formatPrice(reserv.booking_price)
             let newObject ={
                 ...reserv,
                 'amenity_name':reserv['reservationHaveAmenity.amenity_name']
@@ -206,3 +207,4 @@ module.exports ={
     cancelBookingService,
     getEventsOfAmenityService
 }
+

@@ -61,7 +61,7 @@ const findData=async(model, searchField, targetField, excludeArr)=>{
     }
 }
 
-const { startOfMonth, endOfMonth , format , toDate,differenceInHours ,differenceInMinutes,getDay} = require('date-fns');
+const { startOfMonth, endOfMonth , format , toDate,differenceInHours ,differenceInMinutes,getDay , isValid} = require('date-fns');
 const {fromZonedTime } = require('date-fns-tz');
 function getStartAndEndOfMonth(dateString) {
     const date = new Date(dateString);
@@ -78,12 +78,16 @@ function getStartAndEndOfMonth(dateString) {
         end_month: format(endOfMonth(newDate), 'yyyy-MM-dd'),
     };
 }
-const calculatorNumnberOfMinutesBeetwenTwoHours =(initial_hour,final_hour)=>{
-    const initial_date = new Date(`1970-01-01T${initial_hour}`);
-    const final_date = new Date(`1970-01-01T${final_hour}`);  
-    
-    return differenceInMinutes(final_date,initial_date);
-}
+const calculatorNumberOfMinutesBetweenTwoHours = (initial_hour, final_hour) => {
+   
+     // Crear fechas basadas en el tiempo (en UTC para evitar problemas de zonas horarias)
+    const baseDate = '1970-01-01'; // Día base para las fechas
+    const initial_date = new Date(`${baseDate}T${initial_hour}`); // UTC
+    const final_date = new Date(`${baseDate}T${final_hour}`); // UTC
+
+  // Calcular la diferencia en minutos
+  return differenceInMinutes(final_date, initial_date);
+};
 const hourAdder =(start_reserv_time,end_reserv_time)=>{
     
     const [start_hour, start_minutes] = start_reserv_time.split(':').map(Number);
@@ -222,14 +226,27 @@ const getDayWithDate= (date)=>{
       const weekDays = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab']
       const day = getDay(date)
       return `${weekDays[day]}, ${format(centralAmericaDate, 'dd-MM-yyyy', { timeZone: centralAmericaTimezone })}`
-  }
+}
+
+const formatPrice = (price)=>{
+    if (price===0) {
+        return new Intl.NumberFormat('en-US', { 
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+        }).format(price);       
+    }else if (price>0){
+        return price.toFixed(2)
+    }
+    return null
+    
+}
 module.exports={
     jwtGenerate,
     hashingPassword,
     updateData,
     findData,
     getStartAndEndOfMonth,
-    calculatorNumnberOfMinutesBeetwenTwoHours,
+    calculatorNumberOfMinutesBetweenTwoHours,
     hourAdder,
     formatHour,
     changeObjectNames,
@@ -240,5 +257,6 @@ module.exports={
     corsOptions,
     getCurrentDateAndTime,
     saveSession,
-    getDayWithDate
+    getDayWithDate,
+    formatPrice
 }
